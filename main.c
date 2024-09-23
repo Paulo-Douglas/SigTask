@@ -2,5 +2,6 @@
 
 int main(void) {
     menuPrincipal();
+    menuSobre();
     return 0;
 }
