@@ -1,4 +1,4 @@
-#include "menus/menus.h"
+#include "Menus/Menus.h"
 
 int main(void) {
     menuPrincipal();
