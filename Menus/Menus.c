@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include "Menus.h"
+
+void menuPrincipal(void) {
+    printf("\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("|                                                                   |\n");
+    printf("|           Sig-task: Sua genda de Tarefas e Compromissos           |\n");
+    printf("|                                                                   |\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("|                                                                   |\n");
+    printf("|                           [1] Usuários                            |\n");
+    printf("|                           [2] Gerir Equipes                       |\n");
+    printf("|                           [3] Agenda                              |\n");
+    printf("|                           [4] Tarefas                             |\n");
+    printf("|                           [5] Compromissos                        |\n");
+    printf("|                           [0] Sair                                |\n");
+    printf("|                                                                   |\n");
+    printf("---------------------------------------------------------------------\n");
+}
+
+void menuSobre(void) {
+    printf("\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("|                                                                   |\n");
+    printf("|                         Módulo Informações                        |\n");
+    printf("|                                                                   |\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("|                                                                   |\n");
+    printf("|            Universidade Federal do Rio Grande do Norte            |\n");
+    printf("|                Centro de Ensino Superior do Seridó                |\n");
+    printf("|              Departamento de Computação e Tecnologia              |\n");
+    printf("|                    Sistemas de Informação - BSI                   |\n");
+    printf("|                       Programação - DCT1106                       |\n");
+    printf("|                 Agenda de Tarefas e Compromissos                  |\n");
+    printf("---------------------------------------------------------------------\n");
+    printf("|                                                                   |\n");
+    printf("|       Desenvolvedores:                                            |\n");
+    printf("|                                                                   |\n");
+    printf("|               Nome: André Leandro de Medeiros Araújo              |\n");
+    printf("|               Email: andre.leandro.116@ufrn.edu.br                |\n");
+    printf("|               GitHub: https://github.com/andrewszada              |\n");
+    printf("|                                                                   |\n");
+    printf("|                                                                   |\n");
+    printf("|               Nome: Paulo Douglas Martins Dias                    |\n");
+    printf("|               Email: paulo.martins.132@ufrn.edu.br                |\n");
+    printf("|               GitHub: https://github.com/Paulo-Douglas            |\n");
+    printf("|                                                                   |\n");
+    printf("---------------------------------------------------------------------\n");
+}
