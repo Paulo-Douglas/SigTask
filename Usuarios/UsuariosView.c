@@ -13,3 +13,12 @@ void telaPrincipal(void) {
     printf("|                [0] Exibir Dados                |\n");
     printf("--------------------------------------------------\n");
 }
+
+void cadastroUsuario(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                      Cadastre - se                  |\n");
+    printf("-------------------------------------------------------\n");
+    printf("|      Nome      |      CPF      |      Telefone      |\n");
+    printf("-------------------------------------------------------\n");
+}
