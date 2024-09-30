@@ -1,7 +1,7 @@
 #ifndef USUARIOVIEW
 #define USUARIOVIEW
 
-void telaPrincipal(void);
-void cadastroUsuario(void);
+void menu_usuarios(void);
+void cadastrar_usuarios(void);
 
 #endif

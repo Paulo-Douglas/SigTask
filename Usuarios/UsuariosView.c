@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "UsuariosView.h"
 
-void telaPrincipal(void) {
+void menu_usuarios(void) {
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
@@ -14,7 +14,7 @@ void telaPrincipal(void) {
     printf("--------------------------------------------------\n");
 }
 
-void cadastroUsuario(void) {
+void cadastrar_usuarios(void) {
     printf("\n");
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
