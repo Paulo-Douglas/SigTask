@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "UsuariosView.h"
 
-void telaPrincipal(void) {
+void menu_usuarios(void) {
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
@@ -14,11 +14,32 @@ void telaPrincipal(void) {
     printf("--------------------------------------------------\n");
 }
 
-void cadastroUsuario(void) {
+void cadastrar_usuarios(void) {
     printf("\n");
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
+    printf("-------------------------------------------------------\n");
+}
+
+void exibir_dados(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                      Exibir Dados                   |\n");
+    printf("-------------------------------------------------------\n");
+}
+
+void alterar_dados(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                      Alterar Dados                  |\n");
+    printf("-------------------------------------------------------\n");
+}
+
+void excluir_usuario(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 }
