@@ -29,3 +29,10 @@ void exibir_dados(void) {
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
 }
+
+void alterar_dados(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                      Alterar Dados                  |\n");
+    printf("-------------------------------------------------------\n");
+}
