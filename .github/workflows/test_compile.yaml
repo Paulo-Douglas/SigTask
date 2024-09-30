@@ -3,7 +3,7 @@ name: Testes de compilação no C
 on:
   push:
     branches:
-      - SIG-2/user-view
+      - main
 
 jobs:
   compile_test:
