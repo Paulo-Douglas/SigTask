@@ -22,3 +22,10 @@ void cadastrar_usuarios(void) {
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
 }
+
+void exibir_dados(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                      Exibir Dados                   |\n");
+    printf("-------------------------------------------------------\n");
+}
