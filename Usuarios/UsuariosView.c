@@ -36,3 +36,10 @@ void alterar_dados(void) {
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 }
+
+void excluir_usuario(void) {
+    printf("\n");
+    printf("-------------------------------------------------------\n");
+    printf("|                     Excluir Usuário                 |\n");
+    printf("-------------------------------------------------------\n");
+}
