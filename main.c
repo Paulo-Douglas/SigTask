@@ -1,4 +1,4 @@
-#include "Menus/Menus.c"
+#include "Menus/Menus.h"
 #include "Usuarios/UsuariosView.h"
 
 int main(void) {
