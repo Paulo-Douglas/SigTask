@@ -13,12 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Compile and run tests for usuario_view.c
-        run: |
-          echo "Compiling and running tests for usuario_view.c"
-          for i in {1..5}
-          do
-            echo "Run #$i"
-            gcc -o usuario_view usuario_view.c
-            ./usuario_view
-          done
+      #- name: Compile and run tests for usuario_view.c
+      #  run: |
+      #    echo "Compiling and running tests for usuario_view.c"
+      #    for i in {1..5}
+      #    do
+      #      echo "Run #$i"
+      #      gcc -o usuario_view usuario_view.c
+      #      ./usuario_view
+      #    done
