@@ -32,9 +32,16 @@ void exibir_compromissos(void) {
 
 }    
 
-void editar_compromissos(void) { // Esta tela antecede a tela -> alterar dados
+void editar_compromissos(void) { 
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                 Editar Compromissos             |\n");
+    printf("--------------------------------------------------\n");
+}
+
+void excluir_compromissos(void) { 
+    printf("\n");
+    printf("--------------------------------------------------\n");
+    printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
 }
