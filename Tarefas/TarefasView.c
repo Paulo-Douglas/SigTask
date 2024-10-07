@@ -14,27 +14,30 @@ void tela_tarefas(void) {
 
 void cadastrar_tarefas(void){
     printf("\n");
-    printf("--------------------------------------------------\n");
-    printf("|                  Cadastro Tarefas              |\n");
-    printf("--------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("|                            Cadastro Tarefas                         |\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("|  Título  |  Descrição  |  Data  |  Turno  |  Prioridade  |  Status  |\n");
+    printf("-----------------------------------------------------------------------\n");
 }
 
-void exibir_tarefas(void){
+void exibir_tarefas(void){ // Esta tela antecede a tela que exibirá os dados das tarefas
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
+
 void editar_tarefas(void){
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
+
 void excluir_tarefas(void){
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
 }
-
