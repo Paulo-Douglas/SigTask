@@ -6,8 +6,8 @@ int main(void) {
     menuPrincipal();
     menu_usuarios();
     cadastrar_usuarios();
-    exibir_dados();
-    alterar_dados();
+    exibir_dados_usuario();
+    alterar_dados_usuario();
     excluir_usuario();
     menu_tarefas();
     cadastrar_tarefas();
@@ -15,7 +15,7 @@ int main(void) {
     editar_tarefas();
     excluir_tarefas();
     dados_tarefas();
-    alterar_dados();
+    alterar_dados_tarefas();
     menuSobre();
     return 0;
 }
