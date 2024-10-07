@@ -14,7 +14,7 @@ void menu_tarefas(void) {
     printf("--------------------------------------------------\n");
 }
 
-void cadastrar_tarefas(void){
+void cadastrar_tarefas(void) {
     printf("\n");
     printf("-----------------------------------------------------------------------\n");
     printf("|                            Cadastro Tarefas                         |\n");
@@ -23,21 +23,21 @@ void cadastrar_tarefas(void){
     printf("-----------------------------------------------------------------------\n");
 }
 
-void exibir_tarefas(void){ // Esta tela antecede a tela que exibirá os dados das tarefas
+void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
 
-void editar_tarefas(void){ // Esta tela antecede a tela -> alterar dados
+void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
 
-void excluir_tarefas(void){ // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
+void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
@@ -54,7 +54,7 @@ void dados_tarefas(void) { // será implementado as variveis de cada dado
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 }
 
-void alterar_dados(void) {
+void alterar_dados_tarefas(void) {
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Alterar Dados da Tarefa                                                            |\n");

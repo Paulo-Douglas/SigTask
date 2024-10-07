@@ -7,6 +7,6 @@ void exibir_tarefas(void);
 void editar_tarefas(void);
 void excluir_tarefas(void);
 void dados_tarefas(void);
-void alterar_dados(void);
+void alterar_dados_tarefas(void);
 
 #endif
