@@ -27,7 +27,14 @@ void cadastrar_compromissos(void) {
 void exibir_compromissos(void) { 
     printf("\n");
     printf("--------------------------------------------------\n");
-    printf("|                 Exibir compromissos           | \n");
+    printf("|                 Exibir Compromissos           | \n");
     printf("--------------------------------------------------\n");
 
 }    
+
+void editar_compromissos(void) { // Esta tela antecede a tela -> alterar dados
+    printf("\n");
+    printf("--------------------------------------------------\n");
+    printf("|                 Editar Compromissos             |\n");
+    printf("--------------------------------------------------\n");
+}
