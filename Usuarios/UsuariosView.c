@@ -23,14 +23,14 @@ void cadastrar_usuarios(void) {
     printf("-------------------------------------------------------\n");
 }
 
-void exibir_dados(void) {
+void exibir_dados_usuario(void) {
     printf("\n");
     printf("-------------------------------------------------------\n");
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
 }
 
-void alterar_dados(void) {
+void alterar_dados_usuario(void) {
     printf("\n");
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
