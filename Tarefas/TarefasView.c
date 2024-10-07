@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "TarefasView.h"
 
 void menu_tarefas(void) {
     printf("\n");
