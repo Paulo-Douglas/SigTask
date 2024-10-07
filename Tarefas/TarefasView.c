@@ -1,5 +1,6 @@
 #include <stdio.h>
-void tela_tarefas(void) {
+
+void menu_tarefas(void) {
     printf("\n");
     printf("---------------------------------------------------\n");
     printf("|                      Tarefas                    |\n");
