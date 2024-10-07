@@ -23,3 +23,11 @@ void cadastrar_compromissos(void) {
     printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
     printf("-------------------------------------------------------------------------------------\n");
 }
+
+void exibir_compromissos(void) { 
+    printf("\n");
+    printf("--------------------------------------------------\n");
+    printf("|                 Exibir compromissos           | \n");
+    printf("--------------------------------------------------\n");
+
+}    
