@@ -2,6 +2,7 @@
 #include "Menus.h"
 
 void menuPrincipal(void) {
+    char op;
     printf("\n");
     printf("---------------------------------------------------------------------\n");
     printf("|                                                                   |\n");
@@ -17,6 +18,8 @@ void menuPrincipal(void) {
     printf("|                           [0] Sair                                |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
+    printf("Escolha a opção desejada: ");
+    scanf("%c", op);
 }
 
 void menuSobre(void) {
