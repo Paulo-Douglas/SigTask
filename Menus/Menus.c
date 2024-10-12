@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "Menus.h"
 
-void menuPrincipal(void) {
+char menuPrincipal(void) {
     char op;
     printf("\n");
     printf("---------------------------------------------------------------------\n");
@@ -20,6 +20,7 @@ void menuPrincipal(void) {
     printf("---------------------------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
     scanf("%c", op);
+    return op;
 }
 
 void menuSobre(void) {

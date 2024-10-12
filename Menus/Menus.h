@@ -1,7 +1,7 @@
 #ifndef MENUS_C
 #define MENUS_C
 
-void menuPrincipal(void);
+char menuPrincipal(void);
 void menuSobre(void);
 
 #endif
