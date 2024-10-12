@@ -15,6 +15,7 @@ char menuPrincipal(void) {
     printf("|                           [3] Agenda                              |\n");
     printf("|                           [4] Tarefas                             |\n");
     printf("|                           [5] Compromissos                        |\n");
+    printf("|                           [6] Sobre                               |\n");
     printf("|                           [0] Sair                                |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
