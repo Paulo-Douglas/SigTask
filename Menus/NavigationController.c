@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "Menus.h" 
 #include "../Usuarios/UsuariosView.h"
 #include "../Tarefas/TarefasView.h"
@@ -26,12 +27,13 @@ void navegacao_modulos(void) {
             case '6':
                 menuSobre();
                 break;
+            case '0':
+                printf("Saindo...\n");
+                break;
             default:
-                printf("Opção inválida, por favor, digite outro valor ");
+                printf("Opção inválida, por favor, digite outro valor\n");
                 break;
         }
       
     } while (op != '0');
 }
-
-

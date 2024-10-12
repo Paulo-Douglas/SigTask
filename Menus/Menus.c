@@ -21,6 +21,7 @@ char menuPrincipal(void) {
     printf("---------------------------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
     scanf("%c", &op);
+    getchar();
     return op;
 }
 
