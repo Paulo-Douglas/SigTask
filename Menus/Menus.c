@@ -19,7 +19,7 @@ char menuPrincipal(void) {
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
-    scanf("%c", op);
+    scanf("%c", &op);
     return op;
 }
 
