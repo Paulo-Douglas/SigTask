@@ -40,3 +40,10 @@ void exibir_equipe(void) {
     printf("|                  Exibir equipe                 |\n");
     printf("--------------------------------------------------\n");
 }
+
+void editar_equipe(void) { 
+    printf("\n");
+    printf("--------------------------------------------------\n");
+    printf("|                  Editar equipe                 |\n");
+    printf("--------------------------------------------------\n");
+}
