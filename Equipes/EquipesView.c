@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "EquipesView.h"
+
 void menu_equipes(void) {
     printf("\n");
     printf("----------------------------------------------------\n");
