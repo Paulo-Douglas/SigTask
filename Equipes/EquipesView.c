@@ -47,3 +47,10 @@ void editar_equipe(void) {
     printf("|                  Editar equipe                 |\n");
     printf("--------------------------------------------------\n");
 }
+
+void excluir_equipe(void) { 
+    printf("\n");
+    printf("--------------------------------------------------\n");
+    printf("|                  Excluir equipe                |\n");
+    printf("--------------------------------------------------\n");
+}
