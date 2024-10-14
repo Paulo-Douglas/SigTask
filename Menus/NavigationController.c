@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Menus.h"
 #include "../Equipes/EquipesView.h"
+#include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Compromissos/NavigationComp.h"
 #include "../Tarefas/TarefasView.h"
@@ -8,9 +9,9 @@
 
 void navegacao_modulos(void) {
     char op;    
-    do{
+    do {
         op = menuPrincipal();
-        switch (op){
+        switch (op) {
             case '1':
                 navegacao_usuarios();
                 limpa_buffer();
