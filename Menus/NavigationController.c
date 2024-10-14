@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "Menus.h"
-#include "../Equipes/EquipesView.h"
+#include "../Equipes/EquipesView.h" // Mantendo a inclusão do módulo de equipes
 #include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Compromissos/NavigationComp.h"
