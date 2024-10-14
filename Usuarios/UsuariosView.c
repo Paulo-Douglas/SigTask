@@ -51,7 +51,7 @@ void exibir_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("Informe seu CPF: ");
     scanf("%[0-9.-]", cpf);
-    menu_alterar_usuario();
+    dados_usuario();
 }
 
 void alterar_dados_usuario(void) {
@@ -61,7 +61,7 @@ void alterar_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("Informe seu CPF: ");
     scanf("%[0-9.-]", cpf);
-    dados_usuario();
+    menu_alterar_usuario();
 }
 
 void excluir_usuario(void) {
