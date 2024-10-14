@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void limpa_buffer(void) {
     int b;
@@ -12,4 +13,8 @@ void exibir_menssagem(char *menssagem) {
     printf("Tecle <ENTER> para continuar...");
     getchar();
     limpa_buffer();
+}
+
+void limpar_tela(void) {
+    system("clear || cls");
 }
