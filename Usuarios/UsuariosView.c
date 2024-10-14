@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "UsuariosView.h"
+#include "../libs/utils.h"
 
 char nome[50];
 char cpf[17];
@@ -30,6 +31,17 @@ void cadastrar_usuarios(void) {
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
+    printf("Digite seu nome: ");
+    scanf("%[A-Za-z ]", nome);
+    limpa_buffer();
+    printf("\n");
+    printf("Digite seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    limpa_buffer();
+    printf("\n");
+    printf("Digite seu telefone: ");
+    scanf("%[0-9 ()-]", telefone);
+    limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {
@@ -63,7 +75,7 @@ void dados_usuario(void) { // será implementado as variveis de cada dado
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
 
-void alterar_dados_usuario(void) { // será implementado as variveis de cada dado
+void menu_alterar_usuario(void) { // será implementado as variveis de cada dado
     printf("\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                       Alterar Dados do Usuário                                        |\n");
