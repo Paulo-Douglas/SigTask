@@ -80,6 +80,9 @@ void excluir_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_compromissos();
 }
 
 void dados_compromissos(void) { // será implementado as variveis de cada dado
