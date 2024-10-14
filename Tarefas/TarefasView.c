@@ -54,23 +54,35 @@ void cadastrar_tarefas(void) {
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
     limpar_tela();
+    char cpf[17];
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_tarefas();
 }
 
 void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     limpar_tela();
+    char cpf[17];
     printf("--------------------------------------------------\n");
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    alterar_dados_tarefas();
 }
 
 void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
     limpar_tela();
+    char cpf[17];
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_tarefas();
 }
 
 void dados_tarefas(void) { // será implementado as variveis de cada dado
