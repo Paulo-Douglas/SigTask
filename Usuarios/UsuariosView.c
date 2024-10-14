@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "UsuariosView.h"
 
-void menu_usuarios(void) {
+char menu_usuarios(void) {
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
