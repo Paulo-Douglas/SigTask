@@ -7,6 +7,6 @@ void exibir_dados_usuario(void);
 void alterar_dados_usuario(void);
 void excluir_usuario(void);
 void dados_usuario(void);
-void alterar_dados_usuario(void);
+void menu_alterar_usuario(void);
 
 #endif
