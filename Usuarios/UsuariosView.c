@@ -69,6 +69,9 @@ void excluir_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_usuario();
 }
 
 void dados_usuario(void) { // será implementado as variveis de cada dado
