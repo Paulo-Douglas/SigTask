@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Menus.h"
+#include "../Equipes/EquipesView.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Compromissos/NavigationComp.h"
 #include "../Tarefas/TarefasView.h"
@@ -15,7 +16,7 @@ void navegacao_modulos(void) {
                 limpa_buffer();
                 break;
             case '2':
-                navegação_compromissos(); // colocar o de equipes aqui
+                menu_equipes(); // colocar o de equipes aqui
                 limpa_buffer();
                 break;
             case '3':
@@ -27,7 +28,7 @@ void navegacao_modulos(void) {
                 limpa_buffer();
                 break;
             case '5':
-                menu_compromissos();
+                navegação_compromissos();
                 limpa_buffer();
                 break;
             case '6':
