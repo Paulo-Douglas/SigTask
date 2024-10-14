@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "CompromissosView.h"
 
-void menu_compromissos(void) {
+char menu_compromissos(void) {
+    char op;
     printf("\n");
     printf("----------------------------------------------------\n");
     printf("|                     Compromissos                 |\n");
@@ -12,7 +13,9 @@ void menu_compromissos(void) {
     printf("|               [4] Excluir Compromisso            |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
-
+    printf("Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
 }
 
 void cadastrar_compromissos(void) {
@@ -27,7 +30,7 @@ void cadastrar_compromissos(void) {
 void exibir_compromissos(void) { 
     printf("\n");
     printf("--------------------------------------------------\n");
-    printf("|                 Exibir Compromissos           | \n");
+    printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
 
 }    
@@ -35,7 +38,7 @@ void exibir_compromissos(void) {
 void editar_compromissos(void) { 
     printf("\n");
     printf("--------------------------------------------------\n");
-    printf("|                 Editar Compromissos             |\n");
+    printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
 }
 
