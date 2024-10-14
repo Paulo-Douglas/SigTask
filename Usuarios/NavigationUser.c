@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "NavigationUser.h"
 #include "UsuariosView.h"
 #include "../libs/utils.h"
 
@@ -23,14 +24,10 @@ void navegacao_usuarios(void){
                 excluir_usuario();
                 limpa_buffer();
                 break;
-            case '0':
-                printf("Saindo...\n");
-                break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
         }
             
-
     } while (op != '0');
 }   
