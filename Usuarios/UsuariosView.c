@@ -2,6 +2,7 @@
 #include "UsuariosView.h"
 
 char menu_usuarios(void) {
+    char op;
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
@@ -12,6 +13,10 @@ char menu_usuarios(void) {
     printf("|                [4] Excluir Conta               |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
+    printf("Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
+    return op;
 }
 
 void cadastrar_usuarios(void) {
