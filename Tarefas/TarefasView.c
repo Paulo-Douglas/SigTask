@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "TarefasView.h"
+#include "../libs/utils.h"
 
 char titulo[25];
 char descricao[40];
@@ -26,7 +27,7 @@ char menu_tarefas(void) {
 }
 
 void cadastrar_tarefas(void) {
-    printf("\n");
+    limpar_tela();
     printf("-----------------------------------------------------------------------\n");
     printf("|                            Cadastro Tarefas                         |\n");
     printf("-----------------------------------------------------------------------\n");
@@ -52,42 +53,46 @@ void cadastrar_tarefas(void) {
 }
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
 
 void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
 }
 
 void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
 }
 
 void dados_tarefas(void) { // será implementado as variveis de cada dado
-    printf("\n");
+    limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Dados da Tarefa                                                                    |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|   ID   |          Título          |                   Descrição                   |    Data   |    Turno   |     Prioridade    |    Status    |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
 
 void alterar_dados_tarefas(void) {
-    printf("\n");
+    limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                        Alterar Dados da Tarefa                                                                |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|   ID   |    1   ->   Título       |             2   ->   Descrição                | 3 -> Data | 4 -> Turno |  5 -> Prioridade  | 6 -> Status  |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
