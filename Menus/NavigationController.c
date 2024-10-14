@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Menus.h"
+#include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Tarefas/TarefasView.h"
 #include "../Compromissos/CompromissosView.h"
