@@ -73,6 +73,9 @@ void editar_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    editar_compromissos();
 }
 
 void excluir_compromissos(void) { 
