@@ -2,6 +2,13 @@
 #include "../libs/utils.h"
 #include "CompromissosView.h"
 
+char titulo[25];
+char descricao[45];
+char data_inicio[11];
+char data_fim[11];
+char horario[6];
+char prioridade[15];
+
 char menu_compromissos(void) {
     char op;
     limpar_tela();
@@ -26,6 +33,28 @@ void cadastrar_compromissos(void) {
     printf("-------------------------------------------------------------------------------------\n");
     printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
     printf("-------------------------------------------------------------------------------------\n");
+    printf("Informe o Título do compromisso: ");
+    scanf("%[A-Za-z ]", titulo);
+    limpa_buffer();
+    printf("\n");
+    printf("Informe a descrição desse compromisso: ");
+    scanf("%[A-Za-z ]", descricao);
+    limpa_buffer();
+    printf("\n");
+    printf("Informe a data de início (xx/xx/xxxx): ");
+    scanf("%10s", data_inicio);
+    limpa_buffer();
+    printf("\n");
+    printf("Informe a data de fim (xx/xx/xxxx): ");
+    scanf("%10s", data_fim);
+    limpa_buffer();
+    printf("\n");
+    printf("Informe o Horário do evento (xx:xx): ");
+    scanf("%5s", horario);
+    limpa_buffer();
+    printf("\n");
+    printf("Informe a prioridade desse compromisso: ");
+    scanf("%5s", prioridade);
 }
 
 void exibir_compromissos(void) { 
