@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "UsuariosView.h"
 
+char nome[50];
+char cpf[17];
+char telefone[17];
+
 char menu_usuarios(void) {
     char op;
     printf("\n");
