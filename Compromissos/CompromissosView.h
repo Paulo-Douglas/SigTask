@@ -1,7 +1,7 @@
 #ifndef COMPROMISSOSVIEW
 #define COMPROMISSOSVIEW
 
-void menu_compromissos(void);
+char menu_compromissos(void);
 void cadastrar_compromissos(void);
 void exibir_compromissos(void);
 void editar_compromissos(void);
