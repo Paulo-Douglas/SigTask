@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include "UsuariosView.h"
+#include "../libs/utils.h"
 
-void menu_usuarios(void) {
-    printf("\n");
+char nome[50];
+char cpf[17];
+char telefone[17];
+
+char menu_usuarios(void) {
+    char op;
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
     printf("--------------------------------------------------\n");
@@ -12,34 +18,81 @@ void menu_usuarios(void) {
     printf("|                [4] Excluir Conta               |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
+    printf("Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
+    return op;
 }
 
 void cadastrar_usuarios(void) {
-    printf("\n");
+    limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
+    printf("Digite seu nome: ");
+    scanf("%[A-Za-z ]", nome);
+    limpa_buffer();
+    printf("\n");
+    printf("Digite seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    limpa_buffer();
+    printf("\n");
+    printf("Digite seu telefone: ");
+    scanf("%[0-9 ()-]", telefone);
 }
 
-void exibir_dados(void) {
-    printf("\n");
+void exibir_dados_usuario(void) {
+    limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_usuario();
 }
 
-void alterar_dados(void) {
-    printf("\n");
+void alterar_dados_usuario(void) {
+    limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    menu_alterar_usuario();
 }
 
 void excluir_usuario(void) {
-    printf("\n");
+    limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_usuario();
+}
+
+void dados_usuario(void) { // será implementado as variveis de cada dado
+    limpar_tela();
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                            Dados do Usuário                                           |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|   ID   |                         Nome                         |     CPF     |         Telefone        |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
+}
+
+void menu_alterar_usuario(void) { // será implementado as variveis de cada dado
+    limpar_tela();
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                       Alterar Dados do Usuário                                        |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|   ID   |           1      ->     Nome                         |  2 -> CPF   |  3   ->  Telefone       |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
