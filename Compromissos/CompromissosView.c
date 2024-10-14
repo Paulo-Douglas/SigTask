@@ -96,6 +96,8 @@ void dados_compromissos(void) { // será implementado as variveis de cada dado
     printf("|  ID  |        Título        |                Descrição                |    Data de início  |    Data de fim  |    Horário   |    Prioridade   |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
 
 void alterar_dados_compromissos(void) {
@@ -106,4 +108,6 @@ void alterar_dados_compromissos(void) {
     printf("|   ID   |  1   ->   Título     |        2   ->   Descrição           | 3 -> Data de início | 4 -> Data de fim|  5 -> Horário | 6 -> Prioridade |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
