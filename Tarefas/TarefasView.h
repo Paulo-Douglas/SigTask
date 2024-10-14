@@ -1,7 +1,7 @@
 #ifndef TAREFASVIEW
 #define TAREFASVIEW
 
-void menu_tarefas(void);
+char menu_tarefas(void);
 void cadastrar_tarefas(void);
 void exibir_tarefas(void);
 void editar_tarefas(void);
