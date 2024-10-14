@@ -41,7 +41,6 @@ void cadastrar_usuarios(void) {
     printf("\n");
     printf("Digite seu telefone: ");
     scanf("%[0-9 ()-]", telefone);
-    limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {
