@@ -25,6 +25,7 @@ char menu_compromissos(void) {
     printf("Escolha a opção desejada: ");
     scanf("%c", &op);
     getchar();
+    return op;
 }
 
 void cadastrar_compromissos(void) {
@@ -75,7 +76,7 @@ void editar_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("Informe seu CPF: ");
     scanf("%[0-9.-]", cpf);
-    editar_compromissos();
+    alterar_dados_compromissos();
 }
 
 void excluir_compromissos(void) { 
