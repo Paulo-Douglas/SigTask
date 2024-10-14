@@ -2,13 +2,6 @@
 #include "TarefasView.h"
 #include "../libs/utils.h"
 
-char titulo[25];
-char descricao[40];
-char data[10];
-char turno[10];
-char prioridade[18];
-char status[10];
-
 char menu_tarefas(void) {
     char op;
     printf("\n");
@@ -27,6 +20,12 @@ char menu_tarefas(void) {
 }
 
 void cadastrar_tarefas(void) {
+    char titulo[25];
+    char descricao[40];
+    char data[10];
+    char turno[10];
+    char prioridade[18];
+    char status[10];
     limpar_tela();
     printf("-----------------------------------------------------------------------\n");
     printf("|                            Cadastro Tarefas                         |\n");
