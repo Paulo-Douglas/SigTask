@@ -2,6 +2,7 @@
 #include "../libs/utils.h"
 #include "CompromissosView.h"
 
+char cpf[17];
 char titulo[25];
 char descricao[45];
 char data_inicio[11];
@@ -62,7 +63,9 @@ void exibir_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
-
+    printf("Informe seu CPF: ");
+    scanf("%[0-9.-]", cpf);
+    dados_compromissos();
 }    
 
 void editar_compromissos(void) { 
