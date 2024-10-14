@@ -4,7 +4,7 @@
 #include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Compromissos/NavigationComp.h"
-#include "../Tarefas/TarefasView.h"
+#include "../Tarefas/NavigationTasks.h"
 #include "../Compromissos/CompromissosView.h"
 
 void navegacao_modulos(void) {
@@ -21,11 +21,11 @@ void navegacao_modulos(void) {
                 limpa_buffer();
                 break;
             case '3':
-                exibir_tarefas(); // colocar o de agenda aqui
+                editar_equipe(); // colocar o de agenda aqui
                 limpa_buffer();
                 break;
             case '4':
-                menu_tarefas();
+                navegacao_tarefas();
                 limpa_buffer();
                 break;
             case '5':
