@@ -4,7 +4,7 @@
 
 char menu_tarefas(void) {
     char op;
-    printf("\n");
+    limpar_tela();
     printf("---------------------------------------------------\n");
     printf("|                      Tarefas                    |\n");
     printf("---------------------------------------------------\n");
