@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include "../libs/utils.h"
 #include "CompromissosView.h"
 
 char menu_compromissos(void) {
     char op;
-    printf("\n");
+    limpar_tela();
     printf("----------------------------------------------------\n");
     printf("|                     Compromissos                 |\n");
     printf("----------------------------------------------------\n");
@@ -19,7 +20,7 @@ char menu_compromissos(void) {
 }
 
 void cadastrar_compromissos(void) {
-    printf("\n");
+    limpar_tela();
     printf("-------------------------------------------------------------------------------------\n");
     printf("|                                  Cadastro Tarefas                                 |\n");
     printf("-------------------------------------------------------------------------------------\n");
@@ -28,7 +29,7 @@ void cadastrar_compromissos(void) {
 }
 
 void exibir_compromissos(void) { 
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
@@ -36,21 +37,21 @@ void exibir_compromissos(void) {
 }    
 
 void editar_compromissos(void) { 
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
 }
 
 void excluir_compromissos(void) { 
-    printf("\n");
+    limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
 }
 
 void dados_compromissos(void) { // será implementado as variveis de cada dado
-    printf("\n");
+    limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Dados do Compromisso                                                               |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -60,7 +61,7 @@ void dados_compromissos(void) { // será implementado as variveis de cada dado
 }
 
 void alterar_dados_compromissos(void) {
-    printf("\n");
+    limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                          Alterar Dados do Compromisso                                                         |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
