@@ -1,32 +1,35 @@
 #include <stdio.h>
 #include "Menus.h"
+#include "../Equipes/EquipesView.h" // Mantendo a inclusão do módulo de equipes
+#include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
-#include "../Tarefas/TarefasView.h"
+#include "../Compromissos/NavigationComp.h"
+#include "../Tarefas/NavigationTasks.h"
 #include "../Compromissos/CompromissosView.h"
 
 void navegacao_modulos(void) {
     char op;    
-    do{
+    do {
         op = menuPrincipal();
-        switch (op){
+        switch (op) {
             case '1':
                 navegacao_usuarios();
                 limpa_buffer();
                 break;
             case '2':
-                alterar_dados_compromissos(); // colocar o de equipes aqui
+                menu_equipes(); // colocar o de equipes aqui
                 limpa_buffer();
                 break;
             case '3':
-                exibir_compromissos(); // colocar o de agenda aqui
+                editar_equipe(); // colocar o de agenda aqui
                 limpa_buffer();
                 break;
             case '4':
-                menu_tarefas();
+                navegacao_tarefas();
                 limpa_buffer();
                 break;
             case '5':
-                menu_compromissos();
+                navegação_compromissos();
                 limpa_buffer();
                 break;
             case '6':

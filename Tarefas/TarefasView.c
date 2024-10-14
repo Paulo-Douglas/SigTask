@@ -9,7 +9,7 @@ char menu_tarefas(void) {
     printf("|                      Tarefas                    |\n");
     printf("---------------------------------------------------\n");
     printf("|               [1] Cadastrar Tarefas             |\n");
-    printf("|               [2] Exibir Trefas                 |\n");
+    printf("|               [2] Exibir Tarefas                |\n");
     printf("|               [3] Editar Tarefas                |\n");
     printf("|               [4] Excluir Tarefas               |\n");
     printf("|               [0] Sair                          |\n");
@@ -20,12 +20,14 @@ char menu_tarefas(void) {
 }
 
 void cadastrar_tarefas(void) {
+    // Variáveis agora estão no escopo da função
     char titulo[25];
     char descricao[40];
     char data[10];
     char turno[10];
     char prioridade[18];
     char status[10];
+    
     limpar_tela();
     printf("-----------------------------------------------------------------------\n");
     printf("|                            Cadastro Tarefas                         |\n");
@@ -33,22 +35,22 @@ void cadastrar_tarefas(void) {
     printf("|  Título  |  Descrição  |  Data  |  Turno  |  Prioridade  |  Status  |\n");
     printf("-----------------------------------------------------------------------\n");
     printf("Informe o titulo dessa tarefa: ");
-    scanf("%25", titulo);
+    scanf("%24s", titulo); // Corrigido para %24s para evitar overflow
     printf("\n");
     printf("Informe a descrição dessa tarefa: ");
-    scanf("%40", descricao);
+    scanf("%39s", descricao); // Corrigido para %39s para evitar overflow
     printf("\n");
     printf("Informe a data para realizar essa tarefa (xx/xx/xxxx): ");
-    scanf("%10", data);
+    scanf("%9s", data); // Corrigido para %9s para evitar overflow
     printf("\n");
     printf("Informe o turno de realização dessa tarefa: ");
-    scanf("%10", turno);
+    scanf("%9s", turno); // Corrigido para %9s para evitar overflow
     printf("\n");
     printf("Informe a prioridade dessa tarefa: ");
-    scanf("%18", prioridade);
+    scanf("%17s", prioridade); // Corrigido para %17s para evitar overflow
     printf("\n");
     printf("Informe o status dessa tarefa: ");
-    scanf("%10", status);
+    scanf("%9s", status); // Corrigido para %9s para evitar overflow
 }
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
