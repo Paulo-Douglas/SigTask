@@ -33,9 +33,6 @@ void navegacao_modulos(void) {
                 menuSobre();
                 limpa_buffer();
                 break;
-            case '0':
-                printf("Saindo...\n");
-                break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
