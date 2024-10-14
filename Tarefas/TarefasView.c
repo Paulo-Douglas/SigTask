@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "TarefasView.h"
 
-void menu_tarefas(void) {
+char menu_tarefas(void) {
+    char op;
     printf("\n");
     printf("---------------------------------------------------\n");
     printf("|                      Tarefas                    |\n");
@@ -12,6 +13,9 @@ void menu_tarefas(void) {
     printf("|               [4] Excluir Tarefas               |\n");
     printf("|               [0] Sair                          |\n");
     printf("--------------------------------------------------\n");
+    printf("Informe a opção desejada: ");
+    scanf(" %c", &op);
+    return op;
 }
 
 void cadastrar_tarefas(void) {
