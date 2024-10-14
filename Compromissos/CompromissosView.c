@@ -25,6 +25,7 @@ char menu_compromissos(void) {
     printf("Escolha a opção desejada: ");
     scanf("%c", &op);
     getchar();
+    return op;
 }
 
 void cadastrar_compromissos(void) {
