@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "../libs/utils.h"
+#include "../Usuarios/UsuariosView.h"
 #include "CompromissosView.h"
 
-char cpf[17];
 char titulo[25];
 char descricao[45];
 char data_inicio[11];
@@ -60,6 +60,7 @@ void cadastrar_compromissos(void) {
 }
 
 void exibir_compromissos(void) { 
+    char cpf[17];
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                 Exibir Compromissos            | \n");
@@ -70,6 +71,7 @@ void exibir_compromissos(void) {
 }    
 
 void editar_compromissos(void) { 
+    char cpf[17];
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                 Editar Compromissos            |\n");
@@ -80,6 +82,7 @@ void editar_compromissos(void) {
 }
 
 void excluir_compromissos(void) { 
+    char cpf[17];
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                Excluir Compromissos            |\n");
