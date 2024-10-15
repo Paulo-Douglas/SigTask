@@ -6,6 +6,8 @@
 #include "../Compromissos/NavigationComp.h"
 #include "../Tarefas/NavigationTasks.h"
 #include "../Compromissos/CompromissosView.h"
+#include "../Equipes/EquipesView.h"
+#include "../Equipes/NavigationTeams.h"
 
 void navegacao_modulos(void) {
     char op;    
@@ -17,7 +19,7 @@ void navegacao_modulos(void) {
                 limpa_buffer();
                 break;
             case '2':
-                menu_equipes(); // colocar o de equipes aqui
+                navegacao_times(); // ou use menu_equipes(), dependendo da função que quer chamar
                 limpa_buffer();
                 break;
             case '3':
