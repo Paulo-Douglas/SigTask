@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include "EquipesView.h"
+#include "../libs/utils.h"
 
-void menu_equipes(void) {
+char menu_equipes(void) {
+    char op;
+    limpar_tela();
     printf("\n");
     printf("----------------------------------------------------\n");
     printf("|                       Equipes                    |\n");
@@ -12,10 +15,41 @@ void menu_equipes(void) {
     printf("|               [4] Excluir Equipe                 |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
+    printf("Escolha a opção desejada: ");
+    scanf(" %c", &op);
+    getchar();  
+    return op;
+}
 
+void cadastro_tipo_de_equipe(void) { 
+    char op;
+    limpar_tela();
+    printf("\n");
+    printf("-------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------\n");
+    printf("|                 [1] Cadastro de equipe acadêmica                |\n");
+    printf("|                 [2] Cadastro de equipe empresarial              |\n");
+    printf("-------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------\n");
+    printf("Escolha a opção desejada: ");
+    scanf(" %c", &op); 
+    getchar(); // para evitar problemas com o enter no buffer
+
+    switch(op) {
+        case '1':
+            cadastrar_equipe_academica();
+            break;
+        case '2':
+            cadastrar_equipe_empresarial();
+            break;
+        default:
+            printf("Opção inválida. Voltando ao menu principal...\n");
+            break;
+    }
 }
 
 void cadastrar_equipe_academica(void){
+    limpar_tela();
    printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Cadastro de equipe acadêmica                                                       |\n");
@@ -27,6 +61,7 @@ void cadastrar_equipe_academica(void){
 }
 
 void cadastrar_equipe_empresarial(void){
+    limpar_tela();
    printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Cadastro de equipe empresarial                                                     |\n");
@@ -38,6 +73,7 @@ void cadastrar_equipe_empresarial(void){
 }
 
 void exibir_equipe(void) { 
+    limpar_tela();
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Exibir equipe                 |\n");
@@ -45,6 +81,7 @@ void exibir_equipe(void) {
 }
 
 void editar_equipe(void) { 
+    limpar_tela();
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Editar equipe                 |\n");
@@ -52,6 +89,7 @@ void editar_equipe(void) {
 }
 
 void excluir_equipe(void) { 
+    limpar_tela();
     printf("\n");
     printf("--------------------------------------------------\n");
     printf("|                  Excluir equipe                |\n");
@@ -60,6 +98,7 @@ void excluir_equipe(void) {
 
 
 void alterar_equipe_academica(void){
+    limpar_tela();
    printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                           Alterar dados do acadêmico                                                          |\n");
@@ -71,6 +110,7 @@ void alterar_equipe_academica(void){
 }
 
 void alterar_equipe_empresarial(void){
+    limpar_tela();
    printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                          Alterar dados do empresarial                                                         |\n");
