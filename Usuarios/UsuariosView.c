@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "UsuariosView.h"
 #include "../libs/utils.h"
+#include "../libs/inputs.h"
+
 
 char nome[50];
 char cpf[17];
@@ -39,8 +41,10 @@ void cadastrar_usuarios(void) {
     scanf("%[0-9.-]", cpf);
     limpa_buffer();
     printf("\n");
-    printf("Digite seu telefone: ");
-    scanf("%[0-9 ()-]", telefone);
+    validateTelephone();
+    printf("-------------------------------------------------------\n");
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
 
 void exibir_dados_usuario(void) {
