@@ -68,5 +68,6 @@ dkms.conf
 *.tax2010
 *.vcf
 *.xml
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/c,data
