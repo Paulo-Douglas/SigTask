@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,data
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,data
 
+main
+
 ### C ###
 # Prerequisites
 *.d
