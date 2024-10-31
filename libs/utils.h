@@ -1,5 +1,5 @@
-#ifndef UTILS
-#define UTILS
+#ifndef UTILS_H
+#define UTILS_H
 
 void limpa_buffer(void);
 void exibir_menssagem(char *);

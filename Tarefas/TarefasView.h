@@ -1,5 +1,5 @@
-#ifndef TAREFASVIEW
-#define TAREFASVIEW
+#ifndef TAREFASVIEW_H
+#define TAREFASVIEW_H
 
 char menu_tarefas(void);
 void cadastrar_tarefas(void);

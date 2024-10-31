@@ -1,5 +1,5 @@
-#ifndef EQUIPESVIEW
-#define EQUIPESVIEW
+#ifndef EQUIPESVIEW_H
+#define EQUIPESVIEW_H
 
 char menu_equipes(void);
 void cadastro_tipo_de_equipe(void);

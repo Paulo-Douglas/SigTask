@@ -1,5 +1,5 @@
-#ifndef COMPROMISSOSVIEW
-#define COMPROMISSOSVIEW
+#ifndef COMPROMISSOSVIEW_H
+#define COMPROMISSOSVIEW_H
 
 char menu_compromissos(void);
 void cadastrar_compromissos(void);

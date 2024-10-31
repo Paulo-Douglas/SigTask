@@ -1,5 +1,5 @@
-#ifndef USUARIOVIEW
-#define USUARIOVIEW
+#ifndef USUARIOVIEW_H
+#define USUARIOVIEW_H
 
 char menu_usuarios(void);
 void cadastrar_usuarios(void);
