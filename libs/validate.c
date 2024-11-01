@@ -2,6 +2,7 @@
 #include <string.h>
 #include <regex.h>
 #include "utils.h"
+#include "validate.h"
 
 int length_prompt(char *prompt, int maxLength, int minLength) {
     if (strlen(prompt) > maxLength || strlen(prompt) < minLength) {
@@ -46,6 +47,30 @@ int valid_name(char *name) {
 
     reti = regexec(&nameRegex, name, 0, NULL, 0);
     regfree(&nameRegex);
+    
+
+    return reti == 0 ? TRUE : FALSE;
+}
+
+int validDescription(char *description) {
+    int outOfLimit = FALSE;
+
+    outOfLimit = length_prompt(description, MAX_NAME_LENGTH, 10);
+    if (outOfLimit) {
+        return FALSE;
+    }
+
+    regex_t descriptionRegex;
+    const char *standardDescription =  "^[A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+( [A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+)*$";
+    int reti;
+
+    reti = regcomp(&descriptionRegex, standardDescription, REG_EXTENDED);
+    if(reti){
+        return FALSE;
+    }
+
+    reti = regexec(&descriptionRegex, description, 0, NULL, 0);
+    regfree(&descriptionRegex);
     
 
     return reti == 0 ? TRUE : FALSE;
