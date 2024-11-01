@@ -1,18 +1,24 @@
-#include <ctype.h>
+#include <stdio.h>
 #include <string.h>
+#include <regex.h>
+#include "utils.h"
 
 
-int validTelephone(char *telephone) {
-    if (strlen(telephone) != 13) {
-        return 0;
+int validPhone(char *telephone) {
+    // Cria um objeto Regex
+    regex_t phoneRegex;
+    // Expressão regular para validar o telefone
+    const char *standardPhone = "^[0-9]{2} [0-9]{1} [0-9]{8}$";
+    int reti;
+
+    // Compila a expressão regular
+    reti = regcomp(&phoneRegex, standardPhone, REG_EXTENDED);
+    if (reti) {
+        return FALSE;
     }
 
-    // Verifica cada caractere com base no padrão XX X XXXXXXXX
-    return isdigit(telephone[0]) && isdigit(telephone[1]) &&
-        telephone[2] == ' ' &&
-        isdigit(telephone[3]) && telephone[4] == ' ' &&
-        isdigit(telephone[5]) && isdigit(telephone[6]) &&
-        isdigit(telephone[7]) && isdigit(telephone[8]) &&
-        isdigit(telephone[9]) && isdigit(telephone[10]) &&
-        isdigit(telephone[11]);
+    reti = regexec(&phoneRegex, telephone, 0, NULL, 0);
+    regfree(&phoneRegex);  // Libera a memória após uso
+
+    return reti == 0 ? TRUE : FALSE;
 }

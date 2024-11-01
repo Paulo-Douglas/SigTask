@@ -41,7 +41,7 @@ void cadastrar_usuarios(void) {
     scanf("%[0-9.-]", cpf);
     limpa_buffer();
     printf("\n");
-    validateTelephone();
+    readPhone();
     printf("-------------------------------------------------------\n");
     printf("Tecle <ENTER> para continuar...");
     getchar();

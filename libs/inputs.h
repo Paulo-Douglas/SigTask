@@ -1,6 +1,6 @@
 #ifndef INPUTS_H
 #define INPUTS_H
 
-void validateTelephone(void);
+void readPhone(void);
 
 #endif

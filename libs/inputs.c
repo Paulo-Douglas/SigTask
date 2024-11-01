@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "validate.h"
+#include "utils.h"
 
 
-void validateTelephone(void) {
-    char telephone[14];
+void readPhone() {
+    char telephone[15];
     int isValid = 0;
 
     do {
@@ -12,12 +13,10 @@ void validateTelephone(void) {
         fgets(telephone, sizeof(telephone), stdin);
         telephone[strcspn(telephone, "\n")] = 0;
 
-        isValid = validTelephone(telephone);
-        if (isValid) {
-            return;
-        } else {
-            printf("%s não é um número de telefone válido. Digite novamente!\n", telephone);
+        isValid = validPhone(telephone);
+        if (isValid == FALSE) {
+            printf("\033[1;31m[ALERTA] O número informado não é válido!\033[0m\n\n");        
         }
 
-    } while (!isValid);
+    } while (isValid == FALSE);
 }
