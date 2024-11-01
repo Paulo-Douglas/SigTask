@@ -4,7 +4,7 @@
 #include "utils.h"
 
 
-void readPhone() {
+void read_phone(void) {
     char telephone[15];
     int isValid = 0;
 

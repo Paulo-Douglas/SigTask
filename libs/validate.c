@@ -4,7 +4,7 @@
 #include "utils.h"
 
 
-int validPhone(char *telephone) {
+int valid_phone(char *telephone) {
     // Cria um objeto Regex
     regex_t phoneRegex;
     // Expressão regular para validar o telefone

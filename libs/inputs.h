@@ -1,6 +1,6 @@
 #ifndef INPUTS_H
 #define INPUTS_H
 
-void readPhone(void);
+void read_phone(void);
 
 #endif

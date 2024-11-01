@@ -1,6 +1,6 @@
 #ifndef VALIDATE_H
 #define VALIDATE_H
 
-int validPhone(char *telephone);
+int valid_phone(char *telephone);
 
 #endif
