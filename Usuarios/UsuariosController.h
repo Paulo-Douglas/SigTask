@@ -9,6 +9,7 @@ typedef struct
 }User;
 
 void processar_cadastro(void);
+void read_phone(void);
 
 
 #endif // USUARIOSCONTROLLER_H

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "UsuariosView.h"
+#include "UsuariosController.h"
 #include "../libs/utils.h"
 
 
@@ -26,7 +27,7 @@ char menu_usuarios(void) {
     return op;
 }
 
-void cadastrar_usuarios(char *name, char *phone, char *cpf) {
+void cadastrar_usuarios(char *name, char *cpf) {
     limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
@@ -45,17 +46,17 @@ void cadastrar_usuarios(char *name, char *phone, char *cpf) {
     printf("\n");
 
     printf("Telefone: ");
-    fgets(phone, MAX_TEL_LENGTH, stdin);
-    phone[strcspn(phone, "\n")] = 0;
-    printf("\n");
+    read_phone();
 }
 
 void show_error(const char *message) {
     printf("\033[1;31m[ERRO] %s\033[0m\n", message);
+    getchar();
 }
 
 void show_sucess(const char *message) {
     printf("\033[1;32m[SUCESSO] %s\033[0m\n", message);
+    getchar();
 }
 
 void exibir_dados_usuario(void) {
