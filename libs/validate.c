@@ -30,7 +30,7 @@ int valid_phone(char *telephone) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int validName(char *name) {
+int valid_name(char *name) {
     if (strlen(name) > MAX_NAME_LENGTH) {
         return FALSE;
     }
