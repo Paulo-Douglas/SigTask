@@ -3,7 +3,7 @@
 #include <regex.h>
 #include "utils.h"
 
-int lengthPrompt(char *prompt, int maxLength, int minLength) {
+int length_prompt(char *prompt, int maxLength, int minLength) {
     if (strlen(prompt) > maxLength || strlen(prompt) < minLength) {
         return TRUE;
     } else {
@@ -26,6 +26,27 @@ int valid_phone(char *telephone) {
 
     reti = regexec(&phoneRegex, telephone, 0, NULL, 0);
     regfree(&phoneRegex);  // Libera a memória após uso
+
+    return reti == 0 ? TRUE : FALSE;
+}
+
+int validName(char *name) {
+    if (strlen(name) > MAX_NAME_LENGTH) {
+        return FALSE;
+    }
+
+    regex_t nameRegex;
+    const char *standardName = "^[A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú]+( [A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú]+)*$";
+    int reti;
+
+    reti = regcomp(&nameRegex, standardName, REG_EXTENDED);
+    if(reti){
+        return FALSE;
+    }
+
+    reti = regexec(&nameRegex, name, 0, NULL, 0);
+    regfree(&nameRegex);
+    
 
     return reti == 0 ? TRUE : FALSE;
 }
