@@ -8,8 +8,7 @@ typedef struct
     char telefone[15];
 }User;
 
-void processar_cadastro(void);
 void read_phone(void);
-
+void read_name(void);
 
 #endif // USUARIOSCONTROLLER_H
