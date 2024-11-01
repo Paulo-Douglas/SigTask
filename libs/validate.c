@@ -52,16 +52,13 @@ int valid_name(char *name) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int validDescription(char *description) {
-    int outOfLimit = FALSE;
-
-    outOfLimit = length_prompt(description, MAX_NAME_LENGTH, 10);
-    if (outOfLimit) {
+int valid_description(char *description) {
+    if(length_prompt(description, MAX_DESCRIPTION_LENGTH, MIN_DESCRIPTION_LENGTH) == TRUE) {
         return FALSE;
     }
 
     regex_t descriptionRegex;
-    const char *standardDescription =  "^[A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+( [A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+)*$";
+    const char *standardDescription = "^[A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+( [A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+)*$";    
     int reti;
 
     reti = regcomp(&descriptionRegex, standardDescription, REG_EXTENDED);
@@ -71,7 +68,6 @@ int validDescription(char *description) {
 
     reti = regexec(&descriptionRegex, description, 0, NULL, 0);
     regfree(&descriptionRegex);
-    
 
     return reti == 0 ? TRUE : FALSE;
 }
