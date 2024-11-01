@@ -3,6 +3,13 @@
 #include <regex.h>
 #include "utils.h"
 
+int lengthPrompt(char *prompt, int maxLength, int minLength) {
+    if (strlen(prompt) > maxLength || strlen(prompt) < minLength) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
 
 int valid_phone(char *telephone) {
     // Cria um objeto Regex
