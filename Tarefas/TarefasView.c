@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "TarefasView.h"
 #include "../libs/utils.h"
+#include "TarefasController.h"
 
 char menu_tarefas(void) {
     char op;
@@ -21,8 +22,6 @@ char menu_tarefas(void) {
 
 void cadastrar_tarefas(void) {
     // Variáveis agora estão no escopo da função
-    char titulo[25];
-    char descricao[40];
     char data[10];
     char turno[10];
     char prioridade[18];
@@ -34,21 +33,25 @@ void cadastrar_tarefas(void) {
     printf("-----------------------------------------------------------------------\n");
     printf("|  Título  |  Descrição  |  Data  |  Turno  |  Prioridade  |  Status  |\n");
     printf("-----------------------------------------------------------------------\n");
+    
     printf("Informe o titulo dessa tarefa: ");
-    scanf("%24s", titulo); // Corrigido para %24s para evitar overflow
-    printf("\n");
+    read_title();
+    
     printf("Informe a descrição dessa tarefa: ");
-    scanf("%39s", descricao); // Corrigido para %39s para evitar overflow
-    printf("\n");
+    read_description();
+    
     printf("Informe a data para realizar essa tarefa (xx/xx/xxxx): ");
     scanf("%9s", data); // Corrigido para %9s para evitar overflow
     printf("\n");
+    
     printf("Informe o turno de realização dessa tarefa: ");
     scanf("%9s", turno); // Corrigido para %9s para evitar overflow
     printf("\n");
+    
     printf("Informe a prioridade dessa tarefa: ");
     scanf("%17s", prioridade); // Corrigido para %17s para evitar overflow
     printf("\n");
+    
     printf("Informe o status dessa tarefa: ");
     scanf("%9s", status); // Corrigido para %9s para evitar overflow
 }
