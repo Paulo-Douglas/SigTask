@@ -26,22 +26,32 @@ char menu_usuarios(void) {
     return op;
 }
 
-void cadastrar_usuarios(void) {
+void cadastrar_usuarios(char *name, char *phone, char *cpf) {
     limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
-    printf("Digite seu nome: ");
-    scanf("%[A-Za-z ]", nome);
+    
+    printf("Nome: ");
+    fgets(name, MAX_NAME, stdin);
+    name[strcspn(name, "\n")] = 0;
     limpa_buffer();
     printf("\n");
-    printf("Digite seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+
+    printf("CPF: ");
+    fgets(cpf, MAX_CPF, stdin);
+    cpf[strcspn(cpf, "\n")] = 0;
     limpa_buffer();
     printf("\n");
-    readPhone();
+
+    printf("Telefone: ");
+    fgets(phone, MAX_TEL, stdin);
+    phone[strcspn(phone, "\n")] = 0;
+    limpa_buffer();
+    printf("\n");
+
     printf("-------------------------------------------------------\n");
     printf("Tecle <ENTER> para continuar...");
     getchar();
