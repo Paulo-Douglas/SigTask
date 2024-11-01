@@ -38,3 +38,32 @@ void read_description(void) {
         }
     } while(valid_description(description) == FALSE);
 }
+
+void read_date(void) {
+    char date[11];
+    
+    scanf("%10s", date);
+    printf("\n");
+
+}
+
+void read_turn(void) {
+    char turn;
+    
+    scanf("%c", &turn);
+    printf("\n");
+}
+
+void read_priority(void) {
+    char priority;
+    
+    scanf("%c", &priority);
+    printf("\n");
+}    
+
+void read_status(void) {
+    char status;
+    
+    scanf("%c", &status);
+    printf("\n");
+}

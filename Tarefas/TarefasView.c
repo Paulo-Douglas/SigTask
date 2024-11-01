@@ -20,13 +20,7 @@ char menu_tarefas(void) {
     return op;
 }
 
-void cadastrar_tarefas(void) {
-    // Variáveis agora estão no escopo da função
-    char data[10];
-    char turno[10];
-    char prioridade[18];
-    char status[10];
-    
+void cadastrar_tarefas(void) {    
     limpar_tela();
     printf("-----------------------------------------------------------------------\n");
     printf("|                            Cadastro Tarefas                         |\n");
@@ -41,19 +35,16 @@ void cadastrar_tarefas(void) {
     read_description();
     
     printf("Informe a data para realizar essa tarefa (xx/xx/xxxx): ");
-    scanf("%9s", data); // Corrigido para %9s para evitar overflow
-    printf("\n");
+    read_date();
     
     printf("Informe o turno de realização dessa tarefa: ");
-    scanf("%9s", turno); // Corrigido para %9s para evitar overflow
-    printf("\n");
+    read_date();
     
     printf("Informe a prioridade dessa tarefa: ");
-    scanf("%17s", prioridade); // Corrigido para %17s para evitar overflow
-    printf("\n");
+    read_priority();
     
     printf("Informe o status dessa tarefa: ");
-    scanf("%9s", status); // Corrigido para %9s para evitar overflow
+    read_status();
 }
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
