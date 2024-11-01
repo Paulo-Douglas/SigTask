@@ -27,7 +27,7 @@ char menu_usuarios(void) {
     return op;
 }
 
-void cadastrar_usuarios(char *name, char *cpf) {
+void cadastrar_usuarios() {
     limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
@@ -36,9 +36,7 @@ void cadastrar_usuarios(char *name, char *cpf) {
     printf("-------------------------------------------------------\n");
     
     printf("Nome: ");
-    fgets(name, MAX_NAME_LENGTH, stdin);
-    name[strcspn(name, "\n")] = 0;
-    printf("\n");
+    read_name();
 
     printf("CPF: ");
     fgets(cpf, MAX_CPF_LENGTH, stdin);
@@ -51,12 +49,10 @@ void cadastrar_usuarios(char *name, char *cpf) {
 
 void show_error(const char *message) {
     printf("\033[1;31m[ERRO] %s\033[0m\n", message);
-    getchar();
 }
 
 void show_sucess(const char *message) {
     printf("\033[1;32m[SUCESSO] %s\033[0m\n", message);
-    getchar();
 }
 
 void exibir_dados_usuario(void) {

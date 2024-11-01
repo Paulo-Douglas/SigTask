@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "NavigationUser.h"
-#include "UsuariosController.h"
 #include "UsuariosView.h"
 #include "../libs/utils.h"
 
@@ -10,7 +9,7 @@ void navegacao_usuarios(void){
         op = menu_usuarios();
         switch(op){
             case '1':  
-                processar_cadastro();
+                cadastrar_usuarios();
                 limpa_buffer();
                 break;
             case '2':
