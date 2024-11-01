@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include "UsuariosView.h"
 #include "../libs/utils.h"
-#include "../libs/inputs.h"
 
 
 char nome[50];
@@ -37,24 +37,17 @@ void cadastrar_usuarios(char *name, char *phone, char *cpf) {
     printf("Nome: ");
     fgets(name, MAX_NAME, stdin);
     name[strcspn(name, "\n")] = 0;
-    limpa_buffer();
     printf("\n");
 
     printf("CPF: ");
     fgets(cpf, MAX_CPF, stdin);
     cpf[strcspn(cpf, "\n")] = 0;
-    limpa_buffer();
     printf("\n");
 
     printf("Telefone: ");
     fgets(phone, MAX_TEL, stdin);
     phone[strcspn(phone, "\n")] = 0;
-    limpa_buffer();
     printf("\n");
-
-    printf("-------------------------------------------------------\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
 }
 
 void show_error(const char *message) {
