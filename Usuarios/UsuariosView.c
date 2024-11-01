@@ -35,17 +35,17 @@ void cadastrar_usuarios(char *name, char *phone, char *cpf) {
     printf("-------------------------------------------------------\n");
     
     printf("Nome: ");
-    fgets(name, MAX_NAME, stdin);
+    fgets(name, MAX_NAME_LENGTH, stdin);
     name[strcspn(name, "\n")] = 0;
     printf("\n");
 
     printf("CPF: ");
-    fgets(cpf, MAX_CPF, stdin);
+    fgets(cpf, MAX_CPF_LENGTH, stdin);
     cpf[strcspn(cpf, "\n")] = 0;
     printf("\n");
 
     printf("Telefone: ");
-    fgets(phone, MAX_TEL, stdin);
+    fgets(phone, MAX_TEL_LENGTH, stdin);
     phone[strcspn(phone, "\n")] = 0;
     printf("\n");
 }

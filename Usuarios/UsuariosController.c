@@ -4,9 +4,9 @@
 #include "stdio.h"
 
 void processar_cadastro(void){
-    char name[MAX_NAME];
-    char phone[MAX_TEL];
-    char cpf[MAX_CPF];
+    char name[MAX_NAME_LENGTH];
+    char phone[MAX_TEL_LENGTH];
+    char cpf[MAX_CPF_LENGTH];
 
     do {
         cadastrar_usuarios(name, phone, cpf);
