@@ -1,9 +1,6 @@
 #ifndef USUARIOVIEW_H
 #define USUARIOVIEW_H
 
-#define MAX_NAME 50
-#define MAX_CPF 12
-#define MAX_TEL 12
 
 char menu_usuarios(void);
 void cadastrar_usuarios(char *name, char *phone, char *cpf);
