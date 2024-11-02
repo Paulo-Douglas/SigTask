@@ -6,23 +6,6 @@
 #include "UsuariosController.h"
 
 
-void read_phone(void){
-    char phone[MAX_TEL_LENGTH];
-    
-    do{
-        fgets(phone, MAX_TEL_LENGTH, stdin);
-        phone[strcspn(phone, "\n")] = 0;
-        printf("\n");
-
-        if(!valid_phone(phone)){
-            show_error("Número de telefone inválido: (XX X XXXXXXXX)");
-            limpa_buffer();
-            printf("Tente novamente: ");
-        }
-
-    } while(valid_phone(phone) == FALSE);
-}
-
 void read_name(void){
     char name[MAX_NAME_LENGTH];
 

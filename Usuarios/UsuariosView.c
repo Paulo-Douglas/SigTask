@@ -3,6 +3,7 @@
 #include "UsuariosView.h"
 #include "UsuariosController.h"
 #include "../libs/utils.h"
+#include "../libs/reads.h"
 
 
 char nome[50];
