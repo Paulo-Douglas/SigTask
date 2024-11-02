@@ -7,5 +7,6 @@ void read_name(void);
 void read_cpf(void);
 void read_description(void);
 void read_date(void);
+void read_time(void);
 
 #endif // READS_H
