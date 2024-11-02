@@ -41,3 +41,20 @@ void read_phone(void){
 
     } while(valid_phone(phone) == FALSE);
 }
+
+void read_name(void){
+    char name[MAX_NAME_LENGTH];
+
+    do{
+        fgets(name, MAX_NAME_LENGTH, stdin);
+        name[strcspn(name, "\n")] = 0;
+        printf("\n");
+
+        if(!valid_name(name)){
+            show_error("Nome inválido ou muito longo (maior que 50 caracteres)");
+            limpa_buffer();
+            printf("Tente novamente: ");
+        }
+
+    } while(valid_name(name) == FALSE);
+}
