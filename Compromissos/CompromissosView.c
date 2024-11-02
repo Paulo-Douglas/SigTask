@@ -51,7 +51,10 @@ void cadastrar_compromissos(void) {
     read_time();
     
     printf("Informe a prioridade desse compromisso: ");
-    read_priority();
+    read_generic_123();
+
+    show_sucess("Compromisso cadastrado com sucesso! <ENTER> para continuar\n");
+    limpa_buffer();
 }
 
 void exibir_compromissos(void) { 

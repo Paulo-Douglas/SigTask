@@ -5,6 +5,8 @@
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
+#include "../libs/styles.h"
+
 
 char menu_tarefas(void) {
     char op;
@@ -41,13 +43,19 @@ void cadastrar_tarefas(void) {
     read_date();
     
     printf("Informe o turno de realização dessa tarefa: ");
-    read_date();
+    printf("\n[1] Manha\n[2] Tarde\n[3] Noite\n");
+    read_generic_123();
     
     printf("Informe a prioridade dessa tarefa: ");
-    read_priority();
+    printf("\n[1] Alta\n[2] Media\n[3] Baixa\n");
+    read_generic_123();
     
     printf("Informe o status dessa tarefa: ");
-    read_status();
+    printf("\n[1] Pendente\n[2] Concluída\n[3] Cancelada\n");
+    read_generic_123();
+
+    show_sucess("Tarefa cadastrada com sucesso! <ENTER> para continuar\n");
+    limpa_buffer();
 }
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
