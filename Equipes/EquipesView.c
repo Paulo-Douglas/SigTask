@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "EquipesView.h"
 #include "../libs/utils.h"
+#include "../libs/reads.h"
 
 char menu_equipes(void) {
     char op;
@@ -58,6 +59,11 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
+    printf("Nome da equipe acadêmica: \n");
+    read_string();
+
+    printf("Descrição da equipe acadêmica: \n");
+    read_description();
 }
 
 void cadastrar_equipe_empresarial(void){
@@ -70,6 +76,11 @@ void cadastrar_equipe_empresarial(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
+    printf("Nome da equipe empresarial: \n");
+    read_string();
+
+    printf("Descrição da equipe empresarial: \n");
+    read_description();
 }
 
 void exibir_equipe(void) { 
