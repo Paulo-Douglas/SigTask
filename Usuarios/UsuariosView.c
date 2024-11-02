@@ -1,14 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "UsuariosView.h"
 #include "UsuariosController.h"
+
 #include "../libs/utils.h"
 #include "../libs/reads.h"
 
-
-char nome[50];
-char cpf[17];
-char telefone[17];
 
 char menu_usuarios(void) {
     char op;
@@ -51,8 +49,10 @@ void exibir_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
+    
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+    
     dados_usuario();
 }
 
@@ -61,8 +61,10 @@ void alterar_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
+    
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();    
+
     menu_alterar_usuario();
 }
 
@@ -71,8 +73,10 @@ void excluir_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
+
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+
     dados_usuario();
 }
 
