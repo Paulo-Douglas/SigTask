@@ -75,7 +75,7 @@ int valid_description(char *description) {
 int validation_cpf(char cpf[]) {                    // peguei o cálculo de https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
         int calcule_one_dig = 0;  
         int calcule_second_dig = 0;
-        int x = 11;
+        int x = 14;
         
         calcule_one_dig  = (cpf[0] - '0') * 10 + (cpf[1] - '0') * 9 + 
                 (cpf[2] - '0') * 8 + (cpf[4] - '0') * 7 +                               // aqui faço pulo de indices para dar espaço 
