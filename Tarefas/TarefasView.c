@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "TarefasView.h"
 #include "../libs/utils.h"
+#include "../libs/reads.h"
 #include "TarefasController.h"
 
 char menu_tarefas(void) {
