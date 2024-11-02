@@ -39,9 +39,7 @@ void cadastrar_usuarios() {
     read_name();
 
     printf("CPF: ");
-    fgets(cpf, MAX_CPF_LENGTH, stdin);
-    cpf[strcspn(cpf, "\n")] = 0;
-    printf("\n");
+    read_cpf();
 
     printf("Telefone: ");
     read_phone();

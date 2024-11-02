@@ -10,5 +10,5 @@ typedef struct
 
 void read_phone(void);
 void read_name(void);
-
+void read_cpf(void);
 #endif // USUARIOSCONTROLLER_H
