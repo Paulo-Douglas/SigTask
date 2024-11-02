@@ -139,3 +139,17 @@ void read_priority(void) {
     scanf("%c", &priority);
     printf("\n");
 }
+
+void read_turn(void) {
+    char turn;
+    
+    scanf("%c", &turn);
+    printf("\n");
+}
+
+void read_status(void) {
+    char status;
+    
+    scanf("%c", &status);
+    printf("\n");
+}
