@@ -132,3 +132,10 @@ void read_time(void){
         }
     } while(validar_tempo(tempo) == FALSE);
 }
+
+void read_priority(void) {
+    char priority;
+    
+    scanf("%c", &priority);
+    printf("\n");
+}

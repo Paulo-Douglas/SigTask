@@ -13,13 +13,6 @@ void read_turn(void) {
     printf("\n");
 }
 
-void read_priority(void) {
-    char priority;
-    
-    scanf("%c", &priority);
-    printf("\n");
-}    
-
 void read_status(void) {
     char status;
     

@@ -6,10 +6,3 @@
 #include "CompromissosController.h"
 #include "CompromissosView.h"
 
-
-void read_priority(void) {
-    char priority;
-    
-    scanf("%c", &priority);
-    printf("\n");
-}
