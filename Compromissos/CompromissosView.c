@@ -1,16 +1,13 @@
 #include <stdio.h>
-#include "../libs/utils.h"
-#include "../libs/reads.h"
-#include "../Usuarios/UsuariosView.h"
+
 #include "CompromissosController.h"
 #include "CompromissosView.h"
 
-char titulo[25];
-char descricao[45];
-char data_inicio[11];
-char data_fim[11];
-char horario[6];
-char prioridade[15];
+#include "../libs/utils.h"
+#include "../libs/reads.h"
+
+#include "../Usuarios/UsuariosView.h"
+
 
 char menu_compromissos(void) {
     char op;
@@ -37,16 +34,22 @@ void cadastrar_compromissos(void) {
     printf("-------------------------------------------------------------------------------------\n");
     printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
     printf("-------------------------------------------------------------------------------------\n");
+    
     printf("Informe o Título do compromisso: ");
     read_title();
+    
     printf("Informe a descrição desse compromisso: ");
     read_description();
+    
     printf("Informe a data de início (xx/xx/xxxx): ");
     read_date();
+    
     printf("Informe a data de fim (xx/xx/xxxx): ");
     read_date();
+    
     printf("Informe o Horário do evento (xx:xx): ");
     read_time();
+    
     printf("Informe a prioridade desse compromisso: ");
     read_priority();
 }
@@ -56,8 +59,10 @@ void exibir_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
+    
     printf("Informe o CPF: ");
     read_cpf();
+    
     dados_compromissos();
 }    
 
@@ -66,8 +71,10 @@ void editar_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
+    
     printf("Informe o CPF: ");
     read_cpf();
+    
     alterar_dados_compromissos();
 }
 
@@ -76,8 +83,10 @@ void excluir_compromissos(void) {
     printf("--------------------------------------------------\n");
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
+    
     printf("Informe o CPF: ");
     read_cpf();
+
     dados_compromissos();
 }
 
