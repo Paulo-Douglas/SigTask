@@ -87,3 +87,19 @@ void read_cpf(void){
         }
     } while(validation_cpf(cpf) == FALSE);
 }
+
+void read_time(void){
+    char tempo[MAX_TIME_LENGHT];
+    
+    do{
+        fgets(tempo, MAX_TIME_LENGHT, stdin);
+        tempo[strcspn(tempo, "\n")] = 0;
+        prinft("\n");
+
+        if (!validar_tempo(tempo)){
+            show_error("Horário inválido (Formato correto: HH:MM)");
+            limpa_buffer();
+            printf("Tente novamente: ");
+        }
+    } while(validar_tempo(tempo) == FALSE);
+}

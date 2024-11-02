@@ -44,9 +44,7 @@ void cadastrar_compromissos(void) {
     printf("Informe a data de fim (xx/xx/xxxx): ");
     read_date();
     printf("Informe o Horário do evento (xx:xx): ");
-    scanf("%5s", horario);
-    limpa_buffer();
-    printf("\n");
+    read_time();
     printf("Informe a prioridade desse compromisso: ");
     read_priority();
 }

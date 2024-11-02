@@ -9,5 +9,6 @@ int validation_cpf(char cpf[]);
 int bissexto(char year[]);
 int dia_mes(int mês);
 int validar_data(char day[], char month[], char year[]);
+int validar_tempo(char tempo[]);
 
 #endif

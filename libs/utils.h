@@ -11,6 +11,8 @@
 #define MAX_DAY_LENGHT 4
 #define MAX_MONTH_LENGHT 4
 #define MAX_YEAR_LENGHT 5
+#define MAX_TIME_LENGHT 6
+
 
 void limpa_buffer(void);
 void exibir_menssagem(char *);

@@ -130,3 +130,13 @@ int validar_data(char day[], char month[], char year[]){
     }
     return dia <= maior_dia;
 }
+  
+int validar_tempo(char tempo[]) {
+    if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
+        tempo[2] != ':' || (tempo[3] - '0') > 6 ) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
