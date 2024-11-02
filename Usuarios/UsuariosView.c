@@ -35,7 +35,7 @@ void cadastrar_usuarios() {
     printf("-------------------------------------------------------\n");
     
     printf("Nome: ");
-    read_name();
+    read_string();
 
     printf("CPF: ");
     read_cpf();

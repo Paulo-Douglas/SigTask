@@ -36,7 +36,7 @@ void cadastrar_compromissos(void) {
     printf("-------------------------------------------------------------------------------------\n");
     
     printf("Informe o Título do compromisso: ");
-    read_title();
+    read_string();
     
     printf("Informe a descrição desse compromisso: ");
     read_description();
