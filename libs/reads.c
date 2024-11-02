@@ -142,10 +142,10 @@ void read_status(void) {
     printf("\n");
 }
 
-void read_generic_123(char *input, const char *message) {
+void read_generic_123(void) {
+    char input = ' ';
     do {
-        printf("%s", message);
-        scanf(" %c", input);
-        printf("\n");
-    } while (*input < '1' || *input > '3');
+        scanf(" %c", &input);
+        show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
+    } while (input < '1' || input > '3');
 }
