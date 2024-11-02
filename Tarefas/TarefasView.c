@@ -1,8 +1,10 @@
 #include <stdio.h>
+
 #include "TarefasView.h"
+#include "TarefasController.h"
+
 #include "../libs/utils.h"
 #include "../libs/reads.h"
-#include "TarefasController.h"
 
 char menu_tarefas(void) {
     char op;
@@ -54,8 +56,10 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
+
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+
     dados_tarefas();
 }
 
@@ -65,8 +69,10 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     printf("--------------------------------------------------\n");
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
+
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+
     alterar_dados_tarefas();
 }
 
@@ -76,8 +82,10 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
+
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+
     dados_tarefas();
 }
 
