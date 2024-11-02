@@ -5,5 +5,6 @@ void read_title(void);
 void read_phone(void);
 void read_name(void);
 void read_cpf(void);
+void read_description(void);
 
 #endif // READS_H
