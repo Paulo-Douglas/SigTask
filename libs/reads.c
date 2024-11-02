@@ -119,6 +119,7 @@ void read_time(void){
 }
 
 void read_priority(void) {
+    // 1 alta 2 media 3 alta
     char priority;
     
     scanf("%c", &priority);
@@ -126,6 +127,7 @@ void read_priority(void) {
 }
 
 void read_turn(void) {
+    // 1 manhã 2 tarde
     char turn;
     
     scanf("%c", &turn);
@@ -133,8 +135,17 @@ void read_turn(void) {
 }
 
 void read_status(void) {
+    // 1 concluído 2 pendente
     char status;
     
     scanf("%c", &status);
     printf("\n");
+}
+
+void read_generic_123(char *input, const char *message) {
+    do {
+        printf("%s", message);
+        scanf(" %c", input);
+        printf("\n");
+    } while (*input < '1' || *input > '3');
 }

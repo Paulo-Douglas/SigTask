@@ -10,5 +10,6 @@ void read_time(void);
 void read_priority(void);
 void read_turn(void);
 void read_status(void);
+void read_generic_123(char *input, const char *message);
 
 #endif // READS_H
