@@ -42,6 +42,9 @@ void cadastrar_usuarios() {
 
     printf("Telefone: ");
     read_phone();
+
+    show_sucess("Usuário cadastrado com sucesso! <ENTER> para continuar\n");
+    limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {

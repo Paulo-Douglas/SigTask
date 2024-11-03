@@ -9,7 +9,6 @@
 
 
 void read_string(void) {
-    limpa_buffer();
     char title[MAX_NAME_LENGTH];
 
     do {
@@ -19,10 +18,10 @@ void read_string(void) {
 
         if (!valid_name(title)) {
             show_error("Inválido ou muito longo (maior que 50 caracteres)");            
-            limpa_buffer();
             printf("Tente novamente: ");
         }
     } while(valid_name(title) == FALSE);
+    limpa_buffer();
 }
 
 
@@ -36,11 +35,11 @@ void read_phone(void){
 
         if(!valid_phone(phone)){
             show_error("Número de telefone inválido: (XX X XXXXXXXX)");
-            limpa_buffer();
             printf("Tente novamente: ");
         }
 
     } while(valid_phone(phone) == FALSE);
+    limpa_buffer();
 }
 
 
@@ -54,10 +53,10 @@ void read_cpf(void){
 
         if (!validation_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
-            limpa_buffer();
             printf("Tente novamente: ");
         }
     } while(validation_cpf(cpf) == FALSE);
+    limpa_buffer();
 }
 
 void read_description(void) {
@@ -70,10 +69,10 @@ void read_description(void) {
 
         if (valid_description(description) == FALSE) {
             show_error("Descricão inválida! A descrição estar entre 10 e 50 caracteres!");
-            limpa_buffer();
             printf("Tente novamente: ");
         }
     } while(valid_description(description) == FALSE);
+    limpa_buffer();
 }
 
 void read_date(void){
@@ -94,12 +93,12 @@ void read_date(void){
 
         if (!validar_data(day, month, year)){
             show_error ("Data inválida ");
-            limpa_buffer();
             printf("Tente novamente: ");
     
         }
 
     } while(validar_data(day, month, year) == FALSE);
+    limpa_buffer();
 }
 
 void read_time(void){
@@ -112,10 +111,10 @@ void read_time(void){
 
         if (!validar_tempo(tempo)){
             show_error("Horário inválido (Formato correto: HH:MM)");
-            limpa_buffer();
             printf("Tente novamente: ");
         }
     } while(validar_tempo(tempo) == FALSE);
+    limpa_buffer();
 }
 
 void read_generic_123(void) {
@@ -127,6 +126,6 @@ void read_generic_123(void) {
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
             printf("Tente novamente: ");
         }
-        limpa_buffer();
     } while (input < '1' || input > '3');
+    limpa_buffer();
 }
