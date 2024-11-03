@@ -4,11 +4,8 @@
 #include <sys/stat.h>
 
 #include "../libs/utils.h"
-#include "../libs/validate.h"
-#include "../libs/styles.h"
-#include "../libs/reads.h"
 
-#include "UsuariosController.h"
+#include "UsuariosModel.h"
 
 void save_user(char *name, char *cpf, char *phone){
 

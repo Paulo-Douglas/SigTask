@@ -1,5 +1,5 @@
-#ifndef USUARIOSCONTROLLER_H
-#define USUARIOSCONTROLLER_H
+#ifndef USUARIOSMODEL_H
+#define USUARIOSMODEL_H
 
 typedef struct
 {
@@ -10,4 +10,4 @@ typedef struct
 
 void save_user(char *name, char *cpf, char *phone);
 
-#endif // USUARIOSCONTROLLER_H
+#endif // USUARIOSMODEL_H
