@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,data
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,data
 
+main
+
 ### C ###
 # Prerequisites
 *.d
@@ -68,5 +70,6 @@ dkms.conf
 *.tax2010
 *.vcf
 *.xml
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/c,data

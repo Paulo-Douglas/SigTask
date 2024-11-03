@@ -1,10 +1,12 @@
 #include <stdio.h>
-#include "UsuariosView.h"
-#include "../libs/utils.h"
+#include <string.h>
 
-char nome[50];
-char cpf[17];
-char telefone[17];
+#include "UsuariosView.h"
+#include "UsuariosController.h"
+
+#include "../libs/utils.h"
+#include "../libs/reads.h"
+
 
 char menu_usuarios(void) {
     char op;
@@ -24,23 +26,25 @@ char menu_usuarios(void) {
     return op;
 }
 
-void cadastrar_usuarios(void) {
+void cadastrar_usuarios() {
     limpar_tela();
     printf("-------------------------------------------------------\n");
     printf("|                      Cadastre - se                  |\n");
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
-    printf("Digite seu nome: ");
-    scanf("%[A-Za-z ]", nome);
+    
+    printf("Nome: ");
+    read_string();
+
+    printf("CPF: ");
+    read_cpf();
+
+    printf("Telefone: ");
+    read_phone();
+
+    show_sucess("Usuário cadastrado com sucesso! <ENTER> para continuar\n");
     limpa_buffer();
-    printf("\n");
-    printf("Digite seu CPF: ");
-    scanf("%[0-9.-]", cpf);
-    limpa_buffer();
-    printf("\n");
-    printf("Digite seu telefone: ");
-    scanf("%[0-9 ()-]", telefone);
 }
 
 void exibir_dados_usuario(void) {
@@ -48,8 +52,10 @@ void exibir_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
+    
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+    
     dados_usuario();
 }
 
@@ -58,8 +64,10 @@ void alterar_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
+    
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();    
+
     menu_alterar_usuario();
 }
 
@@ -68,8 +76,10 @@ void excluir_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
+
     printf("Informe seu CPF: ");
-    scanf("%[0-9.-]", cpf);
+    read_cpf();
+
     dados_usuario();
 }
 

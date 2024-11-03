@@ -1,7 +1,8 @@
-#ifndef EQUIPESVIEW
-#define EQUIPESVIEW
+#ifndef EQUIPESVIEW_H
+#define EQUIPESVIEW_H
 
-void menu_equipes(void);
+char menu_equipes(void);
+void cadastro_tipo_de_equipe(void);
 void cadastrar_equipe_academica(void);
 void cadastrar_equipe_empresarial(void);
 void exibir_equipe(void);
