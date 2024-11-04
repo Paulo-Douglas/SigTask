@@ -8,8 +8,7 @@
 
 
 
-void read_string(void) {
-    char title[MAX_NAME_LENGTH];
+void read_string(char *title) {
 
     do {
         fgets(title, MAX_NAME_LENGTH, stdin);
@@ -25,9 +24,8 @@ void read_string(void) {
 }
 
 
-void read_phone(void){
-    char phone[MAX_TEL_LENGTH];
-    
+void read_phone(char *phone){
+
     do{
         fgets(phone, MAX_TEL_LENGTH, stdin);
         phone[strcspn(phone, "\n")] = 0;
@@ -43,8 +41,7 @@ void read_phone(void){
 }
 
 
-void read_cpf(void){
-    char cpf[MAX_CPF_LENGTH];
+void read_cpf(char *cpf){
 
     do{
         fgets(cpf, MAX_CPF_LENGTH, stdin);
@@ -59,8 +56,7 @@ void read_cpf(void){
     limpa_buffer();
 }
 
-void read_description(void) {
-    char description[MAX_DESCRIPTION_LENGTH];
+void read_description(char *description) {
 
     do {
         fgets(description, MAX_DESCRIPTION_LENGTH, stdin);
@@ -75,10 +71,7 @@ void read_description(void) {
     limpa_buffer();
 }
 
-void read_date(void){
-    char day[MAX_DAY_LENGHT];
-    char month[MAX_MONTH_LENGHT];
-    char year[MAX_YEAR_LENGHT];
+void read_date(char *day, char *month, char *year) {
 
     do{
         fgets(day, MAX_DAY_LENGHT, stdin);
@@ -101,31 +94,30 @@ void read_date(void){
     limpa_buffer();
 }
 
-void read_time(void){
-    char tempo[MAX_TIME_LENGHT];
+void read_time(char *time){
     
     do{
-        fgets(tempo, MAX_TIME_LENGHT, stdin);
-        tempo[strcspn(tempo, "\n")] = 0;
+        fgets(time, MAX_TIME_LENGHT, stdin);
+        time[strcspn(time, "\n")] = 0;
         printf("\n");
 
-        if (!validar_tempo(tempo)){
+        if (!validar_tempo(time)){
             show_error("Horário inválido (Formato correto: HH:MM)");
             printf("Tente novamente: ");
         }
-    } while(validar_tempo(tempo) == FALSE);
+    } while(validar_tempo(time) == FALSE);
     limpa_buffer();
 }
 
-void read_generic_123(void) {
-    char input = ' ';
-    do {
-        scanf(" %c", &input);
+void read_generic_123(char *input) {
 
-        if (input < '1' || input > '3'){
+    do {
+        scanf(" %c", input);
+
+        if (*input < '1' || *input > '3'){
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
             printf("Tente novamente: ");
         }
-    } while (input < '1' || input > '3');
+    } while (*input < '1' || *input > '3');
     limpa_buffer();
 }

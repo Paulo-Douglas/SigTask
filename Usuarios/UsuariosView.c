@@ -32,15 +32,18 @@ void cadastrar_usuarios() {
     printf("-------------------------------------------------------\n");
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
-    
+
+    char name[MAX_NAME_LENGTH];
     printf("Nome: ");
-    read_string();
+    read_string(name);
 
+    char cpf[MAX_CPF_LENGTH];
     printf("CPF: ");
-    read_cpf();
+    read_cpf(cpf);
 
+    char phone[MAX_TEL_LENGTH];
     printf("Telefone: ");
-    read_phone();
+    read_phone(phone);
 
     show_sucess("Usuário cadastrado com sucesso! <ENTER> para continuar\n");
     limpa_buffer();
@@ -51,9 +54,10 @@ void exibir_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
-    
+
+    char cpf[MAX_CPF_LENGTH];
     printf("Informe seu CPF: ");
-    read_cpf();
+    read_cpf(cpf);
     
     dados_usuario();
 }
@@ -63,9 +67,10 @@ void alterar_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
-    
+
+    char cpf[MAX_CPF_LENGTH];
     printf("Informe seu CPF: ");
-    read_cpf();    
+    read_cpf(cpf);    
 
     menu_alterar_usuario();
 }
@@ -76,8 +81,9 @@ void excluir_usuario(void) {
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 
+    char cpf[MAX_CPF_LENGTH];
     printf("Informe seu CPF: ");
-    read_cpf();
+    read_cpf(cpf);
 
     dados_usuario();
 }
