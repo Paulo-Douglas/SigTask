@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "UsuariosView.h"
+#include "UsuariosController.h"
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -33,20 +34,9 @@ void cadastrar_usuarios() {
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
 
-    char name[MAX_NAME_LENGTH];
-    printf("Nome: ");
-    read_string(name);
-
-    char cpf[MAX_CPF_LENGTH];
-    printf("CPF: ");
-    read_cpf(cpf);
-
-    char phone[MAX_TEL_LENGTH];
-    printf("Telefone: ");
-    read_phone(phone);
+    registro_de_usuario();
 
     show_sucess("Usuário cadastrado com sucesso! <ENTER> para continuar\n");
-    limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {

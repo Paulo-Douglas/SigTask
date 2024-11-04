@@ -15,6 +15,11 @@ void save_user(char *name, char *cpf, char *phone){
     }
 
     User usario;
+
+    strcpy(usario.name, name);
+    strcpy(usario.cpf, cpf);
+    strcpy(usario.phone, phone);
+
     FILE *fp;
     fp = fopen("data/users.txt", "a");
     fprintf(fp, "%s,%s,%s\n", usario.name, usario.cpf, usario.phone);
