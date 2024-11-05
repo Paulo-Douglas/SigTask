@@ -100,6 +100,31 @@ int validation_cpf(char cpf[]) {                    // peguei o cálculo de http
     }   
     }
 
+int cpf_unique_user(const char *cpf, const char *file){
+    FILE *fp = fopen(file, "r");
+    if(fp == NULL){
+        return 0;
+    }
+
+    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_TEL_LENGTH + 3];
+    char cpf_user[MAX_CPF_LENGTH];
+
+    while (fgets(line, sizeof(line), fp)) {
+        sscanf(line, "%14[^,]", cpf_user);
+
+        // Comparação de vetores
+        if (strcmp(cpf, cpf_user) == 0) {
+            fclose(fp);
+            return TRUE;
+        }
+
+    }
+
+    fclose(fp);
+    return FALSE;
+
+}
+
 int bissexto(char year[]) {
     int ano = atoi(year); // para lidar com ela como se fosse um inteiro 
     if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)) {
@@ -130,7 +155,7 @@ int validar_data(char day[], char month[], char year[]){
     }
     return dia <= maior_dia;
 }
-  
+
 int validar_tempo(char tempo[]) {
     if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
         tempo[2] != ':' || (tempo[3] - '0') > 6 ) {

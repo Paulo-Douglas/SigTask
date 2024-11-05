@@ -59,11 +59,13 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
+    char name_equipe[MAX_NAME_LENGTH];
     printf("Nome da equipe acadêmica: \n");
-    read_string();
+    read_string(name_equipe);
 
+    char description[MAX_DESCRIPTION_LENGTH];
     printf("Descrição da equipe acadêmica: \n");
-    read_description();
+    read_description(description);
 }
 
 void cadastrar_equipe_empresarial(void){
@@ -76,11 +78,13 @@ void cadastrar_equipe_empresarial(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
+    char name_equipe[MAX_NAME_LENGTH];
     printf("Nome da equipe empresarial: \n");
-    read_string();
+    read_string(name_equipe);
 
+    char description[MAX_DESCRIPTION_LENGTH];
     printf("Descrição da equipe empresarial: \n");
-    read_description();
+    read_description(description);
 }
 
 void exibir_equipe(void) { 
