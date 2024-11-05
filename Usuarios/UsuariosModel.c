@@ -35,8 +35,6 @@ int save_user(char *name, char *cpf, char *phone){
 int load_user(const char *cpf){
     User usuario;
 
-    if(cpf_unique_user(cpf, "data/users.txt")) return FALSE;
-
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
@@ -55,7 +53,7 @@ int load_user(const char *cpf){
             phone_line[strcspn(phone_line, "\n")] = 0;
 
             strcpy(usuario.cpf, cpf_line);
-            printf("+-------------------+-------------------------+\n");
+            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
             printf("| CPF: %s\n", usuario.cpf);
 
             strcpy(usuario.name, name_line);
@@ -63,7 +61,7 @@ int load_user(const char *cpf){
 
             strcpy(usuario.phone, phone_line);
             printf("| Telefone: %s\n", usuario.phone);
-            printf("+-------------------+-------------------------+\n");
+            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
             found = TRUE;
         }

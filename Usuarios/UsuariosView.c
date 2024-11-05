@@ -48,10 +48,20 @@ void exibir_dados_usuario(void) {
     printf("-------------------------------------------------------\n");
 
     char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
+
+    printf("Informe o CPF: ");
     read_cpf(cpf);
-    
-    dados_usuario();
+
+    if(!search_user(cpf)){
+        show_error("CPF não encontrado!\n");
+    } else {
+        dados_usuario();
+        if(!upload_data_user(cpf)){
+            show_error("Erro ao carregar os dados do usuário!\n");
+        }
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
 }
 
 void alterar_dados_usuario(void) {
@@ -60,11 +70,21 @@ void alterar_dados_usuario(void) {
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 
-    if(!search_user()){
-        show_error("CPF não encontrado <ENTER> para continuar\n");
+    char cpf[MAX_CPF_LENGTH];
+
+    printf("Informe o CPF: ");
+    read_cpf(cpf);
+
+if(!search_user(cpf)){
+        show_error("CPF não encontrado!\n");
     } else {
         menu_alterar_usuario();
-    }
+        if(!upload_data_user(cpf)){
+            show_error("Erro ao carregar os dados do usuário!\n");
+        }
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
 
 }
 
@@ -75,32 +95,35 @@ void excluir_usuario(void) {
     printf("-------------------------------------------------------\n");
 
     char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
+
+    printf("Informe o CPF: ");
     read_cpf(cpf);
 
-    dados_usuario();
+    if(!search_user(cpf)){
+        show_error("CPF não encontrado!\n");
+    } else {
+        dados_usuario();
+        if(!upload_data_user(cpf)){
+            show_error("Erro ao carregar os dados do usuário!\n");
+        }
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
 }
 
-void dados_usuario(void) { // será implementado as variveis de cada dado
+void dados_usuario(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                            Dados do Usuário                                           |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|   ID   |                         Nome                         |     CPF     |         Telefone        |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
+
 }
 
-void menu_alterar_usuario(void) { // será implementado as variveis de cada dado
+void menu_alterar_usuario(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                       Alterar Dados do Usuário                                        |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|   ID   |           1      ->     Nome                         |  2 -> CPF   |  3   ->  Telefone       |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
 }
