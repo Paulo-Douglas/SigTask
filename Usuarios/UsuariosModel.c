@@ -34,3 +34,37 @@ int save_user(char *name, char *cpf, char *phone){
     return TRUE;
 
 }
+
+int load_user(const char *cpf){
+    User usuario;
+
+    if(cpf_unique_user(cpf, "data/users.txt")) return FALSE;
+
+    FILE *fp = fopen("data/users.txt", "r");
+    if(fp == NULL) return FALSE;
+
+    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_TEL_LENGTH + 3];
+    int found = FALSE;
+
+    while (fgets(line, sizeof(line), fp) && !found){
+
+        char *cpf_line = strtok(line, ",");
+
+        if(strcmp(cpf_line, cpf) == 0){
+            char *name_line = strtok(NULL, ",");
+            name_line[strcspn(name_line, "\n")] = 0;
+
+            char *phone_line = strtok(NULL, ",");
+            phone_line[strcspn(phone_line, "\n")] = 0;
+
+            strcpy(usuario.name, name_line);
+            strcpy(usuario.cpf, cpf_line);
+            strcpy(usuario.phone, phone_line);
+
+            found = TRUE;
+        }
+    }
+
+    return TRUE ? found : FALSE;
+
+}

@@ -9,5 +9,6 @@ typedef struct
 } User;
 
 int save_user(char *name, char *cpf, char *phone);
+int load_user(const char *cpf);
 
 #endif // USUARIOSMODEL_H
