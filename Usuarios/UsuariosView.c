@@ -60,11 +60,12 @@ void alterar_dados_usuario(void) {
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);    
+    if(!search_user()){
+        show_error("CPF não encontrado <ENTER> para continuar\n");
+    } else {
+        menu_alterar_usuario();
+    }
 
-    menu_alterar_usuario();
 }
 
 void excluir_usuario(void) {

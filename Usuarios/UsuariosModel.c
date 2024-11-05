@@ -54,9 +54,16 @@ int load_user(const char *cpf){
             char *phone_line = strtok(NULL, ",");
             phone_line[strcspn(phone_line, "\n")] = 0;
 
-            strcpy(usuario.name, name_line);
             strcpy(usuario.cpf, cpf_line);
+            printf("+-------------------+-------------------------+\n");
+            printf("| CPF: %s\n", usuario.cpf);
+
+            strcpy(usuario.name, name_line);
+            printf("| Nome: %s\n", usuario.name);
+
             strcpy(usuario.phone, phone_line);
+            printf("| Telefone: %s\n", usuario.phone);
+            printf("+-------------------+-------------------------+\n");
 
             found = TRUE;
         }

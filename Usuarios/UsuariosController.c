@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../libs/reads.h"
 #include "../libs/utils.h"
+#include "../libs/validate.h"
 
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
@@ -26,4 +27,17 @@ int registro_de_usuario(void){
         return FALSE;
     }
 
+}
+
+int search_user(void){
+    char cpf[MAX_CPF_LENGTH];
+
+    printf("Informe o CPF: ");
+    read_cpf(cpf);
+
+    if(cpf_unique_user(cpf, "data/users.txt")){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
