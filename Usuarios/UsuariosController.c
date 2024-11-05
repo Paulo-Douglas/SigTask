@@ -6,7 +6,7 @@
 #include "UsuariosModel.h"
 
 
-void registro_de_usuario(void){
+int registro_de_usuario(void){
     char name[MAX_NAME_LENGTH];
     char cpf[MAX_CPF_LENGTH];
     char phone[MAX_TEL_LENGTH];
@@ -20,6 +20,10 @@ void registro_de_usuario(void){
     printf("Informe o telefone: ");
     read_phone(phone);
 
-    save_user(name, cpf, phone);
+    if(save_user(name, cpf, phone)){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 
 }
