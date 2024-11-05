@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+
 
 void limpa_buffer(void) {
     int b;
@@ -17,4 +19,11 @@ void exibir_menssagem(char *menssagem) {
 
 void limpar_tela(void) {
     system("clear || cls");
+}
+
+void create_path(const char *name_path) {
+    struct stat path = {0};
+    if(stat(name_path, &path) == -1){
+        mkdir("data", 0700);
+    }
 }

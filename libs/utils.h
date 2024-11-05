@@ -17,5 +17,6 @@
 void limpa_buffer(void);
 void exibir_menssagem(char *);
 void limpar_tela(void);
+void create_path(const char *name_path);
 
 #endif
