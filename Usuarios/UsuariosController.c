@@ -29,13 +29,17 @@ int registro_de_usuario(void){
 
 }
 
-int search_user(void){
-    char cpf[MAX_CPF_LENGTH];
-
-    printf("Informe o CPF: ");
-    read_cpf(cpf);
-
+int search_user(const char* cpf){
     if(cpf_unique_user(cpf, "data/users.txt")){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+int upload_data_user(const char* cpf){
+
+    if(load_user(cpf)){
         return TRUE;
     } else {
         return FALSE;
