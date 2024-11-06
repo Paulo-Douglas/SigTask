@@ -34,7 +34,7 @@ void cadastrar_usuarios() {
     printf("|      Nome      |      CPF      |      Telefone      |\n");
     printf("-------------------------------------------------------\n");
 
-    if(registro_de_usuario()){
+    if(register_user()){
         show_sucess("Cadastrado com sucesso! <ENTER> para continuar\n");
     } else {
         show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar \n<ENTER> para continuar\n");
