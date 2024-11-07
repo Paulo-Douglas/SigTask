@@ -42,7 +42,7 @@ void read_phone(char *phone){
 
 
 void read_cpf(char *cpf){
-
+    limpa_buffer();
     do{
         fgets(cpf, MAX_CPF_LENGTH, stdin);
         cpf[strcspn(cpf, "\n")] = 0;
@@ -72,22 +72,11 @@ void read_description(char *description) {
 }
 
 void read_date(char *day, char *month, char *year) {
-
-    do{
-        fgets(day, MAX_DAY_LENGHT, stdin);
-        day[strcspn(day, "\n")] = 0;
-        printf("\n");
-        fgets(month, MAX_MONTH_LENGHT, stdin);
-        month[strcspn(month, "\n")] = 0;
-        printf("\n");
-        fgets(year, MAX_YEAR_LENGHT, stdin);
-        year[strcspn(year, "\n")] = 0;
-        printf("\n");
+    do {
 
         if (!validar_data(day, month, year)){
             show_error ("Data inválida ");
             printf("Tente novamente: ");
-    
         }
 
     } while(validar_data(day, month, year) == FALSE);
