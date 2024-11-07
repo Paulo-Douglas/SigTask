@@ -13,10 +13,14 @@ typedef struct
     char priority[MAX_PRIORITY_LENGHT]; // tenho que achar uma solução para isso
     char status[MAX_STATUS_LENGHT];
     char data[MAX_CALENDAR_LENGHT];  
-} User;
+} Tasks;
 
 int save_task(char *cpf, char *title, char *description, char *day, char *month, 
+<<<<<<< HEAD
               char *year, char *turn, char *priority);
+=======
+              char *year, char *turn, char *priority, char *status);
+>>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
 int load_task(const char *cpf);
 
 #endif

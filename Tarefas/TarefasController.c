@@ -34,6 +34,7 @@ int register_task(void){
     scanf(" %s", year);
     read_date(day, month, year);
 
+<<<<<<< HEAD
     printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
     read_generic_123(turn);
 
@@ -45,6 +46,14 @@ int register_task(void){
     };
     return TRUE;
 
+=======
+    printf("Digite o turno: (Matutino = 1, Vespertino = 2, Noturno = N e Integral= 3)");
+    read_generic_123(priority);
+
+    printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
+    read_generic_123(priority);
+    return save_task(cpf, title, description, day, month, year, turn, priority, status);
+>>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
 }
 
 int search_task_to_user(const char* cpf){
