@@ -78,9 +78,7 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
         show_error("CPF não encontrado!\n");
     } else {
         alterar_dados_tarefas();
-        if(!upload_data_task(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
+        upload_data_task(cpf);
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 

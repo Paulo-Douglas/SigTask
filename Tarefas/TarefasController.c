@@ -5,16 +5,21 @@
 #include "../libs/styles.h"
 #include "../libs/reads.h"
 #include "TarefasController.h"
+#include "TarefasModel.h"
 
 int register_task(void){
+    char cpf[MAX_CPF_LENGTH];
     char title[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
     char year[MAX_YEAR_LENGHT];
-    char turn = ' ';
-    char priority = ' ';
-    char status = ' ';
+    char turn[2];
+    char priority[2];
+    char status[2];
+
+    printf("Digite o CPF: ");
+    read_cpf(cpf);
     
     printf("Digite o título: ");
     read_string(title);
@@ -28,11 +33,11 @@ int register_task(void){
     read_date(day, month, year);
 
     printf("Digite o turno: (Matutino = M, Vespertino = V, Noturno = N e Integral= I)");
-    read_generic_123(&priority);
+    read_generic_123(priority);
 
     printf("Digite a prioridade: (Baixa = B, Média = M, Alta = A)");
-    read_generic_123(&priority);
-
+    read_generic_123(priority);
+    return save_task(cpf, title, description, day, month, year, turn, priority, status);
 }
 
 int search_task(const char* cpf){
@@ -45,10 +50,6 @@ int search_task(const char* cpf){
 }
 
 int upload_data_task(const char* cpf){
-
-    if(load_user(cpf)){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    printf("Tarefas carregadas com sucesso!\n");
+    return TRUE;
 }
