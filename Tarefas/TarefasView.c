@@ -38,6 +38,7 @@ void cadastrar_tarefas(void) {
     } else {
         show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
     }
+    limpa_buffer();
 }
 
 

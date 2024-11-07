@@ -10,9 +10,9 @@
 
 
 int save_task(char *cpf, char *title, char *description, char *day, char *month, 
-              char *year, char *turn, char *priority, char *status){
+              char *year, char *turn, char *priority){
 
-    if(cpf_unique_user(cpf, "data/users.txt")){
+    if(!cpf_unique_user(cpf, "data/users.txt")){
         return FALSE;
     }
 
@@ -28,13 +28,18 @@ int save_task(char *cpf, char *title, char *description, char *day, char *month,
     strcpy(information.year, year);
     strcpy(information.turn, turn);
     strcpy(information.priority, priority);
-    strcpy(information.status, status);
     
 
     FILE *fp;
-    fp = fopen("data/users.txt", "a");
-    fprintf(fp, "%s,%s,%s,%s,%s,%s,%s,%s,%s\n", information.cpf, information.title, information.description, information.day, information.month,
-                                information.year, information.turn, information.priority, information.status);
+    fp = fopen("data/tasks.txt", "a");
+    fprintf(fp, "%s,%s,%s,%s/%s/%s,%s,%s,3\n", information.cpf, 
+                                            information.title, 
+                                            information.description, 
+                                            information.day, 
+                                            information.month,
+                                            information.year, 
+                                            information.turn, 
+                                            information.priority);
     fclose(fp);
 
     return TRUE;

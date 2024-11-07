@@ -16,7 +16,6 @@ int register_task(void){
     char year[MAX_YEAR_LENGHT];
     char turn[2];
     char priority[2];
-    char status[2];
 
     printf("Digite o CPF: ");
     read_cpf(cpf);
@@ -27,17 +26,25 @@ int register_task(void){
     printf("Digite a descrição: ");
     read_description(description);
 
-    printf("Digite a data: ");
+    printf("Digite o dia: ");
+    scanf(" %s", day);
     printf("Digite o mês: ");
+    scanf(" %s", month);
     printf("Digite o ano: ");
+    scanf(" %s", year);
     read_date(day, month, year);
 
-    printf("Digite o turno: (Matutino = M, Vespertino = V, Noturno = N e Integral= I)");
+    printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
+    read_generic_123(turn);
+
+    printf("Digite a prioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
     read_generic_123(priority);
 
-    printf("Digite a prioridade: (Baixa = B, Média = M, Alta = A)");
-    read_generic_123(priority);
-    return save_task(cpf, title, description, day, month, year, turn, priority, status);
+    if(!save_task(cpf, title, description, day, month, year, turn, priority)){
+        return FALSE;
+    };
+    return TRUE;
+
 }
 
 int search_task(const char* cpf){
