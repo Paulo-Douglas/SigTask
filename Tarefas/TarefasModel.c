@@ -48,7 +48,7 @@ int load_user(const char *cpf, char *day, char *month, char *year){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT + 3];  // tem que adicionar turn, priority, status
+    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 3];  // tem que adicionar turn, priority, status
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){

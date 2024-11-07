@@ -9,10 +9,10 @@ typedef struct
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
     char year[MAX_YEAR_LENGHT];
-    char turn;
-    char priority;  // tenho que achar uma solução para isso
-    char status; 
-    char data[11];  
+    char turn[MAX_TURN_LENGHT];
+    char priority[MAX_PRIORITY_LENGHT]; // tenho que achar uma solução para isso
+    char status[MAX_STATUS_LENGHT];
+    char data[MAX_CALENDAR_LENGHT];  
 } User;
 
 int save_task(char *cpf, char *title, char *description, char *day, char *month, 
