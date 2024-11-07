@@ -32,10 +32,10 @@ int register_task(void){
     printf("Digite o ano: ");
     read_date(day, month, year);
 
-    printf("Digite o turno: (Matutino = M, Vespertino = V, Noturno = N e Integral= I)");
+    printf("Digite o turno: (Matutino = 1, Vespertino = 2, Noturno = N e Integral= 3)");
     read_generic_123(priority);
 
-    printf("Digite a prioridade: (Baixa = B, Média = M, Alta = A)");
+    printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
     read_generic_123(priority);
     return save_task(cpf, title, description, day, month, year, turn, priority, status);
 }
