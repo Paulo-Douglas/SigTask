@@ -7,7 +7,7 @@
 #include "UsuariosModel.h"
 
 
-int registro_de_usuario(void){
+int register_user(void){
     char name[MAX_NAME_LENGTH];
     char cpf[MAX_CPF_LENGTH];
     char phone[MAX_TEL_LENGTH];

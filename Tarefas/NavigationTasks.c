@@ -20,6 +20,8 @@ void navegacao_tarefas(void){
             case '4':
                 excluir_tarefas();
                 break;
+            case '0':
+                break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
