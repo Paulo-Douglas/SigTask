@@ -32,7 +32,7 @@ int save_task(char *cpf, char *title, char *description, char *day, char *month,
 
     FILE *fp;
 
-    fp = fopen("data/users.txt", "a");
+    fp = fopen("data/tasks.txt", "a");
     fprintf(fp, "%s,%s,%s,%s/%s/%s,%s,%s,%s\n", information.cpf, information.title, information.description, information.day, information.month,
                                 information.year, information.turn, information.priority, information.status);
     fclose(fp);
@@ -63,7 +63,7 @@ int load_task(const char *cpf){
             char *status_line = strtok(NULL, ",");
 
             strcpy(information.cpf, cpf_line);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
+            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
             strcpy(information.title, title_line);
             printf("| Título: %s\n", information.title);
             printf("| CPF: %s\n", information.cpf);
@@ -77,7 +77,7 @@ int load_task(const char *cpf){
             printf("| Prioridade: %s\n", information.priority);            
             strcpy(information.status, status_line);
             printf("| Status: %s\n", information.status);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
+            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
             found = TRUE;
         }
