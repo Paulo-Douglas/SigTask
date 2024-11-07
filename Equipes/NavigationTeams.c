@@ -20,10 +20,14 @@ void navegacao_times(void){
             case '4':
                 excluir_equipe();
                 break;
+            case '0':
+                break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
         }
             
     } while (op != '0');
+    limpa_buffer();
+    limpar_tela();
 }   

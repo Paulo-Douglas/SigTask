@@ -76,6 +76,7 @@ int load_task(const char *cpf){
             strcpy(information.priority, priority_line);
             printf("| Prioridade: %s\n", information.priority);            
             strcpy(information.status, status_line);
+            information.status[strcspn(information.status, "\n")] = 0;
             printf("| Status: %s\n", information.status);
             printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 

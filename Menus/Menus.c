@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Menus.h"
+#include "../libs/utils.h"
 
 char menuPrincipal(void) {
     char op;
@@ -12,10 +13,9 @@ char menuPrincipal(void) {
     printf("|                                                                   |\n");
     printf("|                           [1] Usuários                            |\n");
     printf("|                           [2] Gerir Equipes                       |\n");
-    printf("|                           [3] Agenda                              |\n");
-    printf("|                           [4] Tarefas                             |\n");
-    printf("|                           [5] Compromissos                        |\n");
-    printf("|                           [6] Sobre                               |\n");
+    printf("|                           [3] Tarefas                             |\n");
+    printf("|                           [4] Compromissos                        |\n");
+    printf("|                           [5] Sobre                               |\n");
     printf("|                           [0] Sair                                |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
@@ -53,4 +53,6 @@ void menuSobre(void) {
     printf("|               GitHub: https://github.com/Paulo-Douglas            |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
+    limpa_buffer();
+    limpar_tela();
 }

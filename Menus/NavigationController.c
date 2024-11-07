@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Menus.h"
 #include "../Equipes/EquipesView.h" // Mantendo a inclusão do módulo de equipes
 #include "../libs/utils.h"
@@ -16,27 +17,18 @@ void navegacao_modulos(void) {
         switch (op) {
             case '1':
                 navegacao_usuarios();
-                limpa_buffer();
                 break;
             case '2':
-                navegacao_times(); // ou use menu_equipes(), dependendo da função que quer chamar
-                limpa_buffer();
+                navegacao_times();
                 break;
             case '3':
-                editar_equipe(); // colocar o de agenda aqui
-                limpa_buffer();
+                navegacao_tarefas();
                 break;
             case '4':
-                navegacao_tarefas();
-                limpa_buffer();
+                navegação_compromissos();
                 break;
             case '5':
-                navegação_compromissos();
-                limpa_buffer();
-                break;
-            case '6':
                 menuSobre();
-                limpa_buffer();
                 break;
             case '0':
                 printf("Saindo...\n");
@@ -45,6 +37,6 @@ void navegacao_modulos(void) {
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
         }
-      
+
     } while (op != '0');
 }

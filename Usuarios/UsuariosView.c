@@ -22,7 +22,7 @@ char menu_usuarios(void) {
     printf("--------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
     scanf("%c", &op);
-    getchar();
+    limpar_tela();
     return op;
 }
 

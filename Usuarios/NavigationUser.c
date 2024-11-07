@@ -10,19 +10,17 @@ void navegacao_usuarios(void){
         switch(op){
             case '1':  
                 cadastrar_usuarios();
-                limpa_buffer();
                 break;
             case '2':
                 exibir_dados_usuario();
-                limpa_buffer();
                 break;
             case '3':
                 alterar_dados_usuario();
-                limpa_buffer();
                 break;
             case '4':
                 excluir_usuario();
-                limpa_buffer();
+                break;
+            case '0':
                 break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
@@ -30,4 +28,6 @@ void navegacao_usuarios(void){
         }
             
     } while (op != '0');
+    limpa_buffer();
+    limpar_tela();
 }   

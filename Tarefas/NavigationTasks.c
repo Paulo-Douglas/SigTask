@@ -28,4 +28,6 @@ void navegacao_tarefas(void){
         }
             
     } while (op != '0');
+    limpa_buffer();
+    limpar_tela();
 }   
