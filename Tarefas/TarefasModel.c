@@ -46,13 +46,13 @@ int save_task(char *cpf, char *title, char *description, char *day, char *month,
 
 }
 
-int load_task(const char *cpf, char *day, char *month, char *year){
+int load_task(const char *cpf){
     User information;
     
-    FILE *fp = fopen("data/users.txt", "r");
+    FILE *fp = fopen("data/tasks.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 3];  // tem que adicionar turn, priority, status
+    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 5];  // tem que adicionar turn, priority, status
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){
@@ -61,22 +61,11 @@ int load_task(const char *cpf, char *day, char *month, char *year){
 
         if(strcmp(cpf_line, cpf) == 0){
             char *title_line = strtok(NULL, ",");
-            title_line[strcspn(title_line, "\n")] = 0;
-
             char *description_line = strtok(NULL, ",");
-            description_line[strcspn(description_line, "\n")] = 0;
-
             char *data_line = strtok(NULL, ",");
-            data_line[strcspn(data_line, "\n")] = 0;
-
             char *turn_line = strtok(NULL, ",");
-            turn_line[strcspn(turn_line, "\n")] = 0;
-
             char *priority_line = strtok(NULL, ",");
-            priority_line[strcspn(priority_line, "\n")] = 0;
-
             char *status_line = strtok(NULL, ",");
-            status_line[strcspn(status_line, "\n")] = 0;
 
             strcpy(information.cpf, cpf_line);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
@@ -85,8 +74,12 @@ int load_task(const char *cpf, char *day, char *month, char *year){
             strcpy(information.title, title_line);
             printf("| Título: %s\n", information.title);
 
+            strcpy(information.description, description_line);
+            printf("| Descrição: %s\n", information.description);
+            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
+
             strcpy(information.data, data_line);
-            printf("| Data: %s/%s/%s\n", day, month, year);
+            printf("| Data: %s\n", information.data);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
             strcpy(information.turn, turn_line);

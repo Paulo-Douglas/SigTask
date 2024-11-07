@@ -17,6 +17,6 @@ typedef struct
 
 int save_task(char *cpf, char *title, char *description, char *day, char *month, 
               char *year, char *turn, char *priority);
-int load_task(const char *cpf, char *day, char *month, char *year);
+int load_task(const char *cpf);
 
 #endif

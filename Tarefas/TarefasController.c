@@ -47,7 +47,7 @@ int register_task(void){
 
 }
 
-int search_task(const char* cpf){
+int search_task_to_user(const char* cpf){
     if(cpf_unique_user(cpf, "data/users.txt")){
         return TRUE;
     } else {
@@ -57,6 +57,11 @@ int search_task(const char* cpf){
 }
 
 int upload_data_task(const char* cpf){
-    printf("Tarefas carregadas com sucesso!\n");
+
+    if(load_task(cpf)){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
     return TRUE;
 }

@@ -52,7 +52,7 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
-    if(!search_task(cpf)){
+    if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
     } else {
         dados_tarefas();
@@ -75,7 +75,7 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
-    if(!search_task(cpf)){
+    if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
     } else {
         alterar_dados_tarefas();
@@ -97,7 +97,7 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
-    if(!search_task(cpf)){
+    if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
     } else {
         dados_tarefas();
