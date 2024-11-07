@@ -31,21 +31,10 @@ int save_task(char *cpf, char *title, char *description, char *day, char *month,
     
 
     FILE *fp;
-<<<<<<< HEAD
-    fp = fopen("data/tasks.txt", "a");
-    fprintf(fp, "%s,%s,%s,%s/%s/%s,%s,%s,3\n", information.cpf, 
-                                            information.title, 
-                                            information.description, 
-                                            information.day, 
-                                            information.month,
-                                            information.year, 
-                                            information.turn, 
-                                            information.priority);
-=======
+
     fp = fopen("data/users.txt", "a");
     fprintf(fp, "%s,%s,%s,%s/%s/%s,%s,%s,%s\n", information.cpf, information.title, information.description, information.day, information.month,
                                 information.year, information.turn, information.priority, information.status);
->>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
     fclose(fp);
 
     return TRUE;
@@ -53,20 +42,12 @@ int save_task(char *cpf, char *title, char *description, char *day, char *month,
 }
 
 int load_task(const char *cpf){
-<<<<<<< HEAD
-    User information;
-=======
-    Tasks information1;
->>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
+    Tasks information;
     
     FILE *fp = fopen("data/tasks.txt", "r");
     if(fp == NULL) return FALSE;
 
-<<<<<<< HEAD
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 5];  // tem que adicionar turn, priority, status
-=======
     char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 7];  // tem que adicionar turn, priority, status
->>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){
@@ -81,36 +62,31 @@ int load_task(const char *cpf){
             char *priority_line = strtok(NULL, ",");
             char *status_line = strtok(NULL, ",");
 
-            strcpy(information1.cpf, cpf_line);
+            strcpy(information.cpf, cpf_line);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-            printf("| CPF: %s\n", information1.cpf);
+            printf("| CPF: %s\n", information.cpf);
 
-            strcpy(information1.title, title_line);
-            printf("| Título: %s\n", information1.title);
+            strcpy(information.title, title_line);
+            printf("| Título: %s\n", information.title);
 
-<<<<<<< HEAD
             strcpy(information.description, description_line);
             printf("| Descrição: %s\n", information.description);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
             strcpy(information.data, data_line);
             printf("| Data: %s\n", information.data);
-=======
-            strcpy(information1.data, data_line);
-            printf("| Data: %s/%s/%s\n", information1.day, information1.month, information1.year);
->>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
-            strcpy(information1.turn, turn_line);
-            printf("| Turno: %s\n", information1.turn);
+            strcpy(information.turn, turn_line);
+            printf("| Turno: %s\n", information.turn);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
-            strcpy(information1.priority, priority_line);
-            printf("| Prioridade: %s\n", information1.priority);
+            strcpy(information.priority, priority_line);
+            printf("| Prioridade: %s\n", information.priority);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
             
-            strcpy(information1.status, status_line);
-            printf("| Status: %s\n", information1.status);
+            strcpy(information.status, status_line);
+            printf("| Status: %s\n", information.status);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
 

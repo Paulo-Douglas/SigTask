@@ -16,11 +16,8 @@ typedef struct
 } Tasks;
 
 int save_task(char *cpf, char *title, char *description, char *day, char *month, 
-<<<<<<< HEAD
-              char *year, char *turn, char *priority);
-=======
-              char *year, char *turn, char *priority, char *status);
->>>>>>> 79912318ecc00b6c6fa310a6bf7d657ee4a7776d
+                                        char *year, char *turn, char *priority);
+
 int load_task(const char *cpf);
 
 #endif
