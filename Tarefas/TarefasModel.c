@@ -64,31 +64,20 @@ int load_task(const char *cpf){
 
             strcpy(information.cpf, cpf_line);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-            printf("| CPF: %s\n", information.cpf);
-
             strcpy(information.title, title_line);
             printf("| Título: %s\n", information.title);
-
+            printf("| CPF: %s\n", information.cpf);
             strcpy(information.description, description_line);
             printf("| Descrição: %s\n", information.description);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-
             strcpy(information.data, data_line);
             printf("| Data: %s\n", information.data);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-
             strcpy(information.turn, turn_line);
             printf("| Turno: %s\n", information.turn);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-
             strcpy(information.priority, priority_line);
-            printf("| Prioridade: %s\n", information.priority);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-            
+            printf("| Prioridade: %s\n", information.priority);            
             strcpy(information.status, status_line);
             printf("| Status: %s\n", information.status);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-
 
             found = TRUE;
         }
