@@ -5,4 +5,74 @@
 #include "../libs/styles.h"
 #include "CompromissosController.h"
 #include "CompromissosView.h"
+#include "../libs/reads.h"
+#include "CompromissosModel.h"
 
+int register_compromise(void){
+    char cpf[MAX_CPF_LENGTH];
+    char title[MAX_NAME_LENGTH];
+    char description[MAX_DESCRIPTION_LENGTH];
+    char day_start[MAX_DAY_LENGHT];
+    char month_start[MAX_MONTH_LENGHT];
+    char day_end[MAX_DAY_LENGHT];
+    char month_end[MAX_MONTH_LENGHT];
+    char time[MAX_TIME_LENGHT];
+    char priority[MAX_PRIORITY_LENGHT];
+    char year_start[MAX_YEAR_LENGHT];
+    char year_end[MAX_YEAR_LENGHT];
+
+    printf("Digite o CPF: ");
+    read_cpf(cpf);
+    
+    printf("Digite o título: ");
+    read_string(title);
+
+    printf("Digite a descrição: ");
+    read_description(description);
+
+    printf("Digite o dia inicial: ");
+    scanf(" %s", day_start);
+    printf("Digite o mês inicial: ");
+    scanf(" %s", month_start);
+    if (validar_data_february(month_end)){
+        printf("Qual o ano do compromisso? ");
+        scanf("%s", year_start);
+        read_date(day_start, month_start, year_start);
+    }
+    printf("Digite o dia final: ");
+    scanf(" %s", day_end);
+    printf("Digite o mês final: ");
+    scanf(" %s", month_end);
+    if (validar_data_february(month_end)){
+        printf("Qual o ano do compromisso? ");
+        scanf("%s", year_end);
+        read_date(day_end, month_end, year_end);
+    }
+    
+
+    printf("Digie o horário: ");
+    read_time(time);
+
+    printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
+    read_generic_123(priority);
+    return TRUE;
+}
+
+int search_compromiser_to_user(const char* cpf){
+    if(cpf_unique_user(cpf, "data/users.txt")){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+        
+}
+
+int upload_data_compromiser(const char* cpf){
+
+    if(load_compromiser(cpf)){
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+    return TRUE;
+}

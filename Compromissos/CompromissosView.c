@@ -37,37 +37,14 @@ void cadastrar_compromissos(void) {
     printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
     printf("-------------------------------------------------------------------------------------\n");
 
-    char title[MAX_NAME_LENGTH];
-    printf("Informe o Título do compromisso: ");
-    read_string(title);
-
-    char description[MAX_DESCRIPTION_LENGTH];
-    printf("Informe a descrição desse compromisso: ");
-    read_description(description);
-
-    char day_start[MAX_DAY_LENGHT];
-    char month_start[MAX_MONTH_LENGHT];
-    char year_start[MAX_YEAR_LENGHT];
-    printf("Informe a data de início (xx/xx/xxxx): ");
-    read_date(day_start, month_start, year_start);
-    
-    char day_end[MAX_DAY_LENGHT];
-    char month_end[MAX_MONTH_LENGHT];
-    char year_end[MAX_YEAR_LENGHT];
-    printf("Informe a data de fim (xx/xx/xxxx): ");
-    read_date(day_end, month_end, year_end);
-
-    char time[MAX_TIME_LENGHT];
-    printf("Informe o Horário do evento (xx:xx): ");
-    read_time(time);
-
-    char priority = ' ';
-    printf("Informe a prioridade desse compromisso: ");
-    read_generic_123(&priority);
-
-    show_sucess("Compromisso cadastrado com sucesso! <ENTER> para continuar\n");
+    if (register_compromise()){
+        show_sucess("Compromisso cadastrada com sucesso! <ENTER> para continuar\n");
+    } else {
+        show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
+    }
     limpa_buffer();
-}
+    }
+
 
 void exibir_compromissos(void) { 
     limpar_tela();
@@ -76,10 +53,19 @@ void exibir_compromissos(void) {
     printf("--------------------------------------------------\n");
 
     char cpf[MAX_CPF_LENGTH];
-    printf("Informe o CPF: ");
+    printf("Informe seu CPF: ");
     read_cpf(cpf);
-    
-    dados_compromissos();
+
+    if(!search_compromiser_to_user(cpf)){
+        show_error("CPF não encontrado!\n");
+    } else {
+        dados_compromissos();
+        if(!upload_data_compromiser(cpf)){
+            show_error("Erro ao carregar as tarefas do usuário!\n");
+        }
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
 }    
 
 void editar_compromissos(void) { 
@@ -89,10 +75,18 @@ void editar_compromissos(void) {
     printf("--------------------------------------------------\n");
     
     char cpf[MAX_CPF_LENGTH];
-    printf("Informe o CPF: ");
+    printf("Informe seu CPF: ");
     read_cpf(cpf);
-    
-    alterar_dados_compromissos();
+
+    if(!search_compromiser_to_user(cpf)){
+        show_error("CPF não encontrado!\n");
+    } else {
+        alterar_dados_compromissos();
+        upload_data_compromiser(cpf);
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
+
 }
 
 void excluir_compromissos(void) { 
@@ -102,10 +96,19 @@ void excluir_compromissos(void) {
     printf("--------------------------------------------------\n");
     
     char cpf[MAX_CPF_LENGTH];
-    printf("Informe o CPF: ");
+    printf("Informe seu CPF: ");
     read_cpf(cpf);
 
-    dados_compromissos();
+    if(!search_compromiser_to_user(cpf)){
+        show_error("CPF não encontrado!\n");
+    } else {
+        dados_compromissos();
+        if(!upload_data_compromiser(cpf)){
+            show_error("Erro ao carregar as tarefas do usuário!\n");
+        }
+    }   
+    printf("Tecle <ENTER> para continuar...");
+    getchar(); 
 }
 
 void dados_compromissos(void) { // será implementado as variveis de cada dado
@@ -115,9 +118,7 @@ void dados_compromissos(void) { // será implementado as variveis de cada dado
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|  ID  |        Título        |                Descrição                |    Data de início  |    Data de fim  |    Horário   |    Prioridade   |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");  
 }
 
 void alterar_dados_compromissos(void) {
