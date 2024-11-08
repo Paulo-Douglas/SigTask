@@ -42,10 +42,8 @@ void read_phone(char *phone){
 
 
 void read_cpf(char *cpf){
-    limpa_buffer();
     do{
         fgets(cpf, MAX_CPF_LENGTH, stdin);
-        cpf[strcspn(cpf, "\n")] = 0;
         printf("\n");
 
         if (!validation_cpf(cpf)){
@@ -129,6 +127,6 @@ void read_data_compromiser(char *day, char *month, char *year){
         
         } while(validar_data(day, month, year) == FALSE || validar_data_se_fevereiro(day, month, year) == FALSE);
         limpa_buffer(); 
-         
+        
     }
 

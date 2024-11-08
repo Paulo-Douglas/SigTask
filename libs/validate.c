@@ -73,7 +73,7 @@ int valid_description(char *description) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int validation_cpf(char cpf[]) {                    // peguei o cálculo de https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
+int validation_cpf(char cpf[]) {  
         int calcule_one_dig = 0;  
         int calcule_second_dig = 0;
         int x = 14;

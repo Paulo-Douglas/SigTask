@@ -55,7 +55,8 @@ int register_compromise(void){
 
     printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
     read_generic_123(priority);
-    return TRUE;
+
+    return save_compromiser(cpf, title, description, day_start, month_start, year_start, day_end, month_end, year_end, time, priority);
 }
 
 int search_compromiser_to_user(const char* cpf){
