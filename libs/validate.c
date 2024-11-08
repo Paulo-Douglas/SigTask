@@ -165,33 +165,10 @@ int validar_tempo(char tempo[]) {
     }
 }
 
-int validar_data_se_fevereiro(char month[], char year[], char day[]){
-    int mês = atoi(month);
-    int dia = atoi(day);
-    if (mês == 2){
-        if ((bissexto(year) && dia > 29) || (!bissexto(year) && dia > 28)){
-            return 0;
-        } 
-    }
-    return 1;
-}
-int validar_data_alternativo(char day[], char month[]){
-    int dia = atoi(day);
-    int mês = atoi(month);
-    if (mês < 1 || mês > 12) {
-        return 0; // limitação de meses
-    }
-    int maior_dia = dia_mes(mês);
-    return dia <= maior_dia;
-
-}
-
-int validar_data_february(char month[]){
-    int mês = atoi(month);
-    if (mês == 2){
+int valide_month_for_february(char month[]) {
+    int month_int = atoi(month);
+    if(month_int == 02) {
         return TRUE;
-    }else {
-        return FALSE;
-    }
-
+    } 
+    return FALSE;
 }

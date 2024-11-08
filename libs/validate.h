@@ -11,8 +11,6 @@ int bissexto(char year[]);
 int dia_mes(int mês);
 int validar_data(char day[], char month[], char year[]);
 int validar_tempo(char tempo[]);
-int validar_data_se_fevereiro(char month[], char year[], char day[]);
-int validar_data_alternativo(char day[], char month[]);
-int validar_data_february(char month[]);
+int valide_month_for_february(char month[]);
 
 #endif

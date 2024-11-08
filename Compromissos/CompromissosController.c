@@ -34,23 +34,23 @@ int register_compromise(void){
     scanf(" %s", day_start);
     printf("Digite o mês inicial: ");
     scanf(" %s", month_start);
-    if (validar_data_february(month_end)){
-        printf("Qual o ano do compromisso? ");
-        scanf("%s", year_start);
-        read_date(day_start, month_start, year_start);
+    if(valide_month_for_february(month_start)){
+        printf("Digite o ano: ");
+        scanf(" %s", year_start);
+        read_data_compromiser(day_start, month_start, year_start);
     }
+
     printf("Digite o dia final: ");
     scanf(" %s", day_end);
     printf("Digite o mês final: ");
     scanf(" %s", month_end);
-    if (validar_data_february(month_end)){
-        printf("Qual o ano do compromisso? ");
-        scanf("%s", year_end);
-        read_date(day_end, month_end, year_end);
+    if(valide_month_for_february(month_end)){
+        printf("Digite o ano: ");
+        scanf(" %s", year_end);
+        read_data_compromiser(day_start, month_start, year_start);
     }
-    
 
-    printf("Digie o horário: ");
+    printf("Digite o horário: ");
     read_time(time);
 
     printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");

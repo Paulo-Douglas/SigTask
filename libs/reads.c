@@ -82,11 +82,10 @@ void read_date(char *day, char *month, char *year) {
 }
 
 void read_time(char *time){
-    
+    limpa_buffer();
     do{
         fgets(time, MAX_TIME_LENGHT, stdin);
         time[strcspn(time, "\n")] = 0;
-        printf("\n");
 
         if (!validar_tempo(time)){
             show_error("Horário inválido (Formato correto: HH:MM)");
@@ -109,24 +108,13 @@ void read_generic_123(char *input) {
     limpa_buffer();
 }
 
-void read_data_compromiser(char *day, char *month, char *year){ 
+void read_data_compromiser(char *day, char *month, char *year) {
     do {
-        if (!validar_data_alternativo(day, month)){
-            show_error ("Data inválida ");
+        if (!validar_data(day, month, year)){
+            show_error("Data inválida ");
             printf("Tente novamente: ");
         }
-        if (validar_data_se_fevereiro(day, month, year))  {
-            printf("Qual é o ano do compromisso? ");
-            scanf("%s", year);
-        }
-        else if (!validar_data_se_fevereiro(day, month, year)){
-            show_error("Dia fora do contexto de bissexto ");
-            printf("Tente novamente: ");
-        }
-
-        
-        } while(validar_data(day, month, year) == FALSE || validar_data_se_fevereiro(day, month, year) == FALSE);
-        limpa_buffer(); 
-        
-    }
+    } while(validar_data(day, month, year) == FALSE);
+    limpa_buffer();
+}
 
