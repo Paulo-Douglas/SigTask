@@ -110,3 +110,25 @@ void read_generic_123(char *input) {
     } while (*input < '1' || *input > '3');
     limpa_buffer();
 }
+
+void read_data_compromiser(char *day, char *month, char *year){ 
+    do {
+        if (!validar_data_alternativo(day, month)){
+            show_error ("Data inválida ");
+            printf("Tente novamente: ");
+        }
+        if (validar_data_se_fevereiro(day, month, year))  {
+            printf("Qual é o ano do compromisso? ");
+            scanf("%s", year);
+        }
+        else if (!validar_data_se_fevereiro(day, month, year)){
+            show_error("Dia fora do contexto de bissexto ");
+            printf("Tente novamente: ");
+        }
+
+        
+        } while(validar_data(day, month, year) == FALSE || validar_data_se_fevereiro(day, month, year) == FALSE);
+        limpa_buffer(); 
+         
+    }
+
