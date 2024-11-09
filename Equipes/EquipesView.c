@@ -95,6 +95,12 @@ void exibir_equipe(void) {
     printf("--------------------------------------------------\n");
     printf("|                  Exibir equipe                 |\n");
     printf("--------------------------------------------------\n");
+    if(!search_team()){
+        show_error("Equipe inexistente; <ENTER> para continuar\n");
+    } else {
+        printf("Tecle <ENTER> para continuar...");
+    }
+    getchar();
 }
 
 void editar_equipe(void) { 

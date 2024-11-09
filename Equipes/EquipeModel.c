@@ -21,9 +21,9 @@ int register_team(char *name, char *description, char *file){
   return TRUE;
 }
 
-int view_team(char *name){
+int view_team(char *name, char *file){
   Team teams;
-  FILE *fp = fopen("data/teams.txt", "r");
+  FILE *fp = fopen(file, "r");
   if (fp == NULL) return FALSE;
 
   char line[MAX_DESCRIPTION_LENGTH + MAX_NAME_LENGTH + 5];

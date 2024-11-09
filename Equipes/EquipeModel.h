@@ -10,6 +10,6 @@ typedef struct
 } Team;
 
 int register_team(char *name, char *description, char *file);
-int view_team(char *name);
+int view_team(char *name, char *file);
 
 #endif
