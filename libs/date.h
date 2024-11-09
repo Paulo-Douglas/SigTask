@@ -3,5 +3,6 @@
 #define DATE_H
 
 void ler_mes(char *month);
+void ler_dia(char *day, int max_day);
 
 #endif
