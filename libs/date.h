@@ -2,5 +2,6 @@
 #ifndef DATE_H
 #define DATE_H
 
+void ler_mes(char *month);
 
 #endif
