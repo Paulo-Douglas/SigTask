@@ -64,20 +64,62 @@ void read_description(char *description) {
         if (valid_description(description) == FALSE) {
             show_error("Descricão inválida! A descrição estar entre 10 e 50 caracteres!");
             printf("Tente novamente: ");
+            limpa_buffer();
         }
     } while(valid_description(description) == FALSE);
-    limpa_buffer();
 }
 
-void read_date(char *day, char *month, char *year) {
+void read_date_with_year(char *day, char *month, char *year) {
     do {
 
         if (!validar_data(day, month, year)){
             show_error ("Data inválida ");
             printf("Tente novamente: ");
+            limpa_buffer();
         }
 
     } while(validar_data(day, month, year) == FALSE);
+}
+
+void read_date_without_year(char *day, char *month) {
+    do {
+        fgets(day, MAX_DAY_LENGHT, stdin);
+        day[strcspn(day, "\n")] = 0;
+        printf("\n");
+
+        if (!valited_day_moth(day, month)){
+            show_error ("Data inválida ");
+            printf("Tente novamente: ");
+            limpa_buffer();
+        }
+
+    } while(valited_day_moth(day, month) == FALSE);
+}
+
+void read_month(char *month){
+    do{
+        fgets(month, MAX_MONTH_LENGHT, stdin);
+        month[strcspn(month, "\n")] = 0;
+
+        if (!validate_month(month)){
+            show_error("Mês inválido ");
+            printf("Tente novamente: ");
+            limpa_buffer();
+        }
+    } while(validate_month(month) == FALSE);
+    limpa_buffer();
+}
+
+void read_day(char *day, char *month){
+    do{
+        fgets(day, MAX_DAY_LENGHT, stdin);
+        day[strcspn(day, "\n")] = 0;
+
+        if (!valited_day_moth(day, month)){
+            show_error("Dia inválido ");
+            printf("Tente novamente: ");
+        }
+    } while(valited_day_moth(day, month) == FALSE);
     limpa_buffer();
 }
 
@@ -107,14 +149,3 @@ void read_generic_123(char *input) {
     } while (*input < '1' || *input > '3');
     limpa_buffer();
 }
-
-void read_data_compromiser(char *day, char *month, char *year) {
-    do {
-        if (!validar_data(day, month, year)){
-            show_error("Data inválida ");
-            printf("Tente novamente: ");
-        }
-    } while(validar_data(day, month, year) == FALSE);
-    limpa_buffer();
-}
-

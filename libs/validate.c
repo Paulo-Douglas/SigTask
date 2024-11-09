@@ -125,6 +125,14 @@ int cpf_unique_user(const char *cpf, const char *file){
 
 }
 
+int validate_month(char month[]) {
+    int month_int = atoi(month);
+    if (month_int < 1 || month_int > 12) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 int bissexto(char year[]) {
     int ano = atoi(year); // para lidar com ela como se fosse um inteiro 
     if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)) {
@@ -154,6 +162,15 @@ int validar_data(char day[], char month[], char year[]){
         }
     }
     return dia <= maior_dia;
+}
+
+int valited_day_moth(char day[], char month[]) {
+    int day_int = atoi(day);
+    int month_int = atoi(month);
+    if (day_int > dia_mes(month_int)) {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 int validar_tempo(char tempo[]) {
