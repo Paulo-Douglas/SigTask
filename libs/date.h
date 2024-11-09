@@ -2,9 +2,9 @@
 #ifndef DATE_H
 #define DATE_H
 
-void ler_mes(char *month);
-void ler_dia(char *day, int max_day);
-int ano_bissexto(int year);
-void ler_data(char *day, char *month) ;
+void read_month(char *month);
+void read_day(char *day, int max_day);
+int year_bissexto(int year);
+void read_date(char *day, char *month) ;
 
 #endif

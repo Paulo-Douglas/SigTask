@@ -67,59 +67,6 @@ void read_description(char *description) {
             limpa_buffer();
         }
     } while(validate_description(description) == FALSE);
-}
-
-void read_date_with_year(char *day, char *month, char *year) {
-    do {
-
-        if (!validate_date(day, month, year)){
-            show_error ("Data inválida ");
-            printf("Tente novamente: ");
-            limpa_buffer();
-        }
-
-    } while(validate_date(day, month, year) == FALSE);
-}
-
-void read_date_without_year(char *day, char *month) {
-    do {
-        fgets(day, MAX_DAY_LENGHT, stdin);
-        day[strcspn(day, "\n")] = 0;
-        printf("\n");
-
-        if (!valited_day_moth(day, month)){
-            show_error ("Data inválida ");
-            printf("Tente novamente: ");
-            limpa_buffer();
-        }
-
-    } while(valited_day_moth(day, month) == FALSE);
-}
-
-void read_month(char *month){
-    do{
-        fgets(month, MAX_MONTH_LENGHT, stdin);
-        month[strcspn(month, "\n")] = 0;
-
-        if (!validate_month(month)){
-            show_error("Mês inválido ");
-            printf("Tente novamente: ");
-            limpa_buffer();
-        }
-    } while(validate_month(month) == FALSE);
-    limpa_buffer();
-}
-
-void read_day(char *day, char *month){
-    do{
-        fgets(day, MAX_DAY_LENGHT, stdin);
-        day[strcspn(day, "\n")] = 0;
-
-        if (!valited_day_moth(day, month)){
-            show_error("Dia inválido ");
-            printf("Tente novamente: ");
-        }
-    } while(valited_day_moth(day, month) == FALSE);
     limpa_buffer();
 }
 

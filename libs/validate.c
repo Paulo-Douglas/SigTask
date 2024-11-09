@@ -125,54 +125,6 @@ int cpf_unique_user(const char *cpf, const char *file){
 
 }
 
-int validate_month(char month[]) {
-    int month_int = atoi(month);
-    if (month_int < 1 || month_int > 12) {
-        return FALSE;
-    }
-    return TRUE;
-}
-
-int bissexto(char year[]) {
-    int ano = atoi(year); // para lidar com ela como se fosse um inteiro 
-    if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)) {
-        return 1;
-    }
-    return 0;
-}
-
-int day_month(int mês) {
-    int dias_por_mes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    return dias_por_mes[mês];
-}
-
-int validate_date(char day[], char month[], char year[]){
-    int dia = atoi(day);
-    int mês = atoi(month);
-    if (mês < 1 || mês > 12) {
-        return 0; // limitação de meses
-    }
-    int maior_dia = day_month(mês);
-
-    if (mês == 2) { // quando for fevereiro
-        if (bissexto(year)) {
-            maior_dia = 29;
-        } else {
-            maior_dia = 28;
-        }
-    }
-    return dia <= maior_dia;
-}
-
-int valited_day_moth(char day[], char month[]) {
-    int day_int = atoi(day);
-    int month_int = atoi(month);
-    if (day_int > day_month(month_int)) {
-        return FALSE;
-    }
-    return TRUE;
-}
-
 int validate_time(char tempo[]) {
     if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
         tempo[2] != ':' || (tempo[3] - '0') > 6 ) {
@@ -180,12 +132,4 @@ int validate_time(char tempo[]) {
     } else {
         return 1;
     }
-}
-
-int valide_month_for_february(char month[]) {
-    int month_int = atoi(month);
-    if(month_int == 02) {
-        return TRUE;
-    } 
-    return FALSE;
 }
