@@ -2,6 +2,7 @@
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
+#include "../libs/validate.h"
 
 #include "EquipesController.h"
 #include "EquipeModel.h"
@@ -48,6 +49,32 @@ int search_team(void) {
         return view_team(name_team, "data/business_teams.txt");
     } else if (file == '2') {
         return view_team(name_team, "data/academic_teams.txt");
+    }
+    return FALSE;
+}
+
+int add_user_to_file(void) {
+    char cpf[MAX_CPF_LENGTH];
+    printf("Digite o CPF do membro a ser adicionado:\n");
+    read_cpf(cpf);
+
+    if(cpf_unique_user(cpf, "data/users.txt")) return FALSE;
+
+    char name_team[MAX_NAME_LENGTH];
+    printf("Nome da equipe a ser adicionado:\n");
+    read_string(name_team);
+
+    char file;
+    printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
+    scanf(" %c", &file);
+    getchar();
+    limpar_tela();
+
+
+    if (file == '1') {
+        return TRUE;
+    } else if (file == '2') {
+        return TRUE;
     }
     return FALSE;
 }

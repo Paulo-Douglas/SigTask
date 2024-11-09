@@ -93,9 +93,9 @@ void cadastrar_equipe_empresarial(void){
 void exibir_equipe(void) { 
     limpar_tela();
     printf("\n");
-    printf("--------------------------------------------------\n");
-    printf("|                  Exibir equipe                 |\n");
-    printf("--------------------------------------------------\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Exibir equipe                                                                   |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     if(!search_team()){
         show_error("Equipe inexistente; <ENTER> para continuar\n");
     } else {
@@ -110,6 +110,12 @@ void add_user_to_team(void) {
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                                Adicionar membro                                                               |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    if(!add_user_to_file()){
+        show_error("[ERROR] Usuário não encontrado!\n");
+    } else {
+        show_sucess("[SUCESSO] Usuário adicionado com sucesso!\n");
+    }
+    getchar();
 }
 
 void remove_user_from_team(void) { 
