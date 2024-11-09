@@ -23,7 +23,7 @@ int register_team(char *name, char *description){
 
 int view_team(char *name){
   Team teams;
-  FILE *fp = fopen("data/temas.txt", "a");
+  FILE *fp = fopen("data/teams.txt", "r");
   if (fp == NULL) return FALSE;
 
   char line[MAX_DESCRIPTION_LENGTH + MAX_NAME_LENGTH + 5];
@@ -46,7 +46,6 @@ int view_team(char *name){
     found = TRUE;
     }
   }
-
-  return TRUE ? found : FALSE;
-
+  fclose(fp);
+  return found;
 }
