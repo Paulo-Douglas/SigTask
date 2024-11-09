@@ -5,5 +5,6 @@
 void ler_mes(char *month);
 void ler_dia(char *day, int max_day);
 int ano_bissexto(int year);
+void ler_data(char *day, char *month) ;
 
 #endif
