@@ -2,6 +2,7 @@
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
+#include "../libs/styles.h"
 
 #include "EquipesView.h"
 #include "EquipesController.h"
@@ -62,7 +63,12 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    register_academic_team();
+    if (register_academic_team()){
+        show_sucess("Sucesso ao registrar a equipe!");
+    } else {
+        show_error("[ERROR] Falha ao cadastrar a equipe!");
+    }
+    limpa_buffer();
 }
 
 void cadastrar_equipe_empresarial(void){
@@ -75,7 +81,12 @@ void cadastrar_equipe_empresarial(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    register_business_team();
+    if(register_business_team()){
+        show_sucess("Sucesso ao registrar a equipe!");
+    } else {
+        show_error("[ERROR] Falha ao cadastrar a equipe!");
+    }
+    limpa_buffer();
 }
 
 void exibir_equipe(void) { 

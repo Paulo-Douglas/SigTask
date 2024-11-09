@@ -7,7 +7,7 @@
 #include "EquipeModel.h"
 
 
-void register_academic_team(void){
+int register_academic_team(void){
   char name_team[MAX_NAME_LENGTH];
   printf("Nome da equipe acadêmica: \n");
   read_string(name_team);
@@ -16,16 +16,19 @@ void register_academic_team(void){
   printf("Descrição da equipe acadêmica: \n");
   read_description(description);
 
-  register_team(name_team, description);
+  return register_team(name_team, description, "data/academic_teams.txt");
 
 }
 
-void register_business_team(void){
-    char name_equipe[MAX_NAME_LENGTH];
+int register_business_team(void){
+    char name_team[MAX_NAME_LENGTH];
     printf("Nome da equipe empresarial: \n");
-    read_string(name_equipe);
+    read_string(name_team);
 
     char description[MAX_DESCRIPTION_LENGTH];
     printf("Descrição da equipe empresarial: \n");
     read_description(description);
+
+  return register_team(name_team, description, "data/business_teams.txt");
+
 }

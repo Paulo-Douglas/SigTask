@@ -6,11 +6,11 @@
 
 #include "EquipeModel.h"
 
-int register_team(char *name, char *description){
+int register_team(char *name, char *description, char *file){
   Team teams;
   create_path("data");
 
-  FILE *fp = fopen("data/teams.txt", "a");
+  FILE *fp = fopen(file, "a");
   if (fp == NULL) return FALSE;
 
   strcpy(teams.team_name, name);
