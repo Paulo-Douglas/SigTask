@@ -55,16 +55,13 @@ void read_cpf(char *cpf){
 }
 
 void read_description(char *description) {
-
     do {
         fgets(description, MAX_DESCRIPTION_LENGTH, stdin);
         description[strcspn(description, "\n")] = 0;
-        printf("\n");
 
         if (validate_description(description) == FALSE) {
             show_error("Descricão inválida! A descrição estar entre 10 e 50 caracteres!");
             printf("Tente novamente: ");
-            limpa_buffer();
         }
     } while(validate_description(description) == FALSE);
     limpa_buffer();
