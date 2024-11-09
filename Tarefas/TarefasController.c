@@ -32,7 +32,7 @@ int register_task(void){
     scanf(" %s", month);
     printf("Digite o ano: ");
     scanf(" %s", year);
-    read_date(day, month, year);
+    read_date_with_year(day, month, year);
 
     printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
     read_generic_123(turn);

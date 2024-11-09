@@ -30,24 +30,40 @@ int register_compromise(void){
     printf("Digite a descrição: ");
     read_description(description);
 
-    printf("Digite o dia inicial: ");
-    scanf(" %s", day_start);
     printf("Digite o mês inicial: ");
-    scanf(" %s", month_start);
+    read_month(month_start);
+
     if(valide_month_for_february(month_start)){
+        printf("Digite o dia inicial: ");
+        read_day(day_start, month_start);
+
         printf("Digite o ano: ");
         scanf(" %s", year_start);
-        read_data_compromiser(day_start, month_start, year_start);
+
+        read_date_with_year(day_start, month_start, year_start);
+    } else {
+        printf("Digite o dia inicial: ");
+        read_day(day_start, month_start);
+
+        read_date_without_year(day_start, month_start);
     }
 
-    printf("Digite o dia final: ");
-    scanf(" %s", day_end);
     printf("Digite o mês final: ");
-    scanf(" %s", month_end);
+    read_month(month_end);
+
     if(valide_month_for_february(month_end)){
+        printf("Digite o dia final: ");
+        read_day(day_end, month_end);
+
         printf("Digite o ano: ");
         scanf(" %s", year_end);
-        read_data_compromiser(day_start, month_start, year_start);
+
+        read_date_with_year(day_start, month_start, year_start);
+    } else {
+        printf("Digite o dia final: ");
+        read_day(day_end, month_end);
+
+        read_date_without_year(day_end, month_end);
     }
 
     printf("Digite o horário: ");
@@ -60,20 +76,18 @@ int register_compromise(void){
 }
 
 int search_compromiser_to_user(const char* cpf){
+
     if(cpf_unique_user(cpf, "data/users.txt")){
         return TRUE;
     } else {
         return FALSE;
     }
-        
+
 }
 
 int upload_data_compromiser(const char* cpf){
 
-    if(load_compromiser(cpf)){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-    return TRUE;
+    if(load_compromiser(cpf)) return TRUE;
+    else return FALSE;
+
 }
