@@ -17,11 +17,10 @@
 #define MAX_TURN_LENGHT 2
 #define MAX_CALENDAR_LENGHT 11
 
-
-
 void limpa_buffer(void);
 void exibir_menssagem(char *);
 void limpar_tela(void);
 void create_path(const char *name_path);
+int year_now(void);
 
 #endif

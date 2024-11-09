@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <time.h>
 
 
 void limpa_buffer(void) {
@@ -26,4 +27,13 @@ void create_path(const char *name_path) {
     if(stat(name_path, &path) == -1){
         mkdir("data", 0700);
     }
+}
+
+int year_now(void) {
+    // OpenAI. (2023). ChatGPT (modelo GPT-4)
+
+    time_t t = time(NULL); // Tempo em segundos
+    struct tm tm = *localtime(&t); // Tempo local
+    int year = tm.tm_year + 1900; // Soma 1900 para obter o ano completo
+    return year;
 }
