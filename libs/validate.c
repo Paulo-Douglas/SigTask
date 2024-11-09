@@ -32,7 +32,7 @@ int valid_phone(char *telephone) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int valid_name(char *name) {
+int validate_name(char *name) {
     if (strlen(name) > MAX_NAME_LENGTH) {
         return FALSE;
     }
@@ -53,7 +53,7 @@ int valid_name(char *name) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int valid_description(char *description) {
+int validate_description(char *description) {
     if(length_prompt(description, MAX_DESCRIPTION_LENGTH, MIN_DESCRIPTION_LENGTH) == TRUE) {
         return FALSE;
     }
@@ -73,7 +73,7 @@ int valid_description(char *description) {
     return reti == 0 ? TRUE : FALSE;
 }
 
-int validation_cpf(char cpf[]) {                    // peguei o cálculo de https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
+int validate_cpf(char cpf[]) {  
         int calcule_one_dig = 0;  
         int calcule_second_dig = 0;
         int x = 14;
@@ -125,6 +125,14 @@ int cpf_unique_user(const char *cpf, const char *file){
 
 }
 
+int validate_month(char month[]) {
+    int month_int = atoi(month);
+    if (month_int < 1 || month_int > 12) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 int bissexto(char year[]) {
     int ano = atoi(year); // para lidar com ela como se fosse um inteiro 
     if ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)) {
@@ -133,18 +141,18 @@ int bissexto(char year[]) {
     return 0;
 }
 
-int dia_mes(int mês) {
+int day_month(int mês) {
     int dias_por_mes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     return dias_por_mes[mês];
 }
 
-int validar_data(char day[], char month[], char year[]){
+int validate_date(char day[], char month[], char year[]){
     int dia = atoi(day);
     int mês = atoi(month);
     if (mês < 1 || mês > 12) {
         return 0; // limitação de meses
     }
-    int maior_dia = dia_mes(mês);
+    int maior_dia = day_month(mês);
 
     if (mês == 2) { // quando for fevereiro
         if (bissexto(year)) {
@@ -156,7 +164,16 @@ int validar_data(char day[], char month[], char year[]){
     return dia <= maior_dia;
 }
 
-int validar_tempo(char tempo[]) {
+int valited_day_moth(char day[], char month[]) {
+    int day_int = atoi(day);
+    int month_int = atoi(month);
+    if (day_int > day_month(month_int)) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+int validate_time(char tempo[]) {
     if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
         tempo[2] != ':' || (tempo[3] - '0') > 6 ) {
         return 0;
@@ -165,3 +182,10 @@ int validar_tempo(char tempo[]) {
     }
 }
 
+int valide_month_for_february(char month[]) {
+    int month_int = atoi(month);
+    if(month_int == 02) {
+        return TRUE;
+    } 
+    return FALSE;
+}
