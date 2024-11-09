@@ -8,10 +8,10 @@ typedef struct
     char description[MAX_DESCRIPTION_LENGTH];
     char day_start[MAX_DAY_LENGHT];
     char month_start[MAX_MONTH_LENGHT];
-    char year_start[MAX_YEAR_LENGHT];
+    int year_start;
     char day_end[MAX_DAY_LENGHT];
     char month_end[MAX_MONTH_LENGHT];
-    char year_end[MAX_YEAR_LENGHT];
+    int year_end;
     char time[MAX_TIME_LENGHT];
     char priority[MAX_PRIORITY_LENGHT]; // tenho que achar uma solução para isso
     char data_start[MAX_CALENDAR_LENGHT];
@@ -19,7 +19,7 @@ typedef struct
 } Compromisers;
 
 int save_compromiser(char *cpf, char *title, char *description, char *day_start, char *month_start,
-                     char *year_start, char *day_end, char *month_end, char *year_end, char *time, char *priority);
+                     int year_start, char *day_end, char *month_end, int year_end, char *time, char *priority);
 
 int load_compromiser(const char *cpf);
 

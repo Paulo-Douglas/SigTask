@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "../libs/utils.h"
 #include "../libs/validate.h"
 #include "../libs/styles.h"
 #include "../libs/reads.h"
+#include "../libs/date.h"
+
 #include "TarefasController.h"
 #include "TarefasModel.h"
 
@@ -13,9 +16,9 @@ int register_task(void){
     char description[MAX_DESCRIPTION_LENGTH];
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
-    char year[MAX_YEAR_LENGHT];
     char turn[2];
     char priority[2];
+    int year = year_now();
 
     printf("Digite o CPF: ");
     read_cpf(cpf);
@@ -26,13 +29,8 @@ int register_task(void){
     printf("Digite a descrição: ");
     read_description(description);
 
-    printf("Digite o dia: ");
-    scanf(" %s", day);
-    printf("Digite o mês: ");
-    scanf(" %s", month);
-    printf("Digite o ano: ");
-    scanf(" %s", year);
-    read_date_with_year(day, month, year);
+    printf("\t DATA\n");
+    read_date(day, month);
 
     printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
     read_generic_123(turn);
