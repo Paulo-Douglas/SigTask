@@ -15,11 +15,11 @@ void read_string(char *title) {
         title[strcspn(title, "\n")] = 0;
         printf("\n");
 
-        if (!valid_name(title)) {
+        if (!validate_name(title)) {
             show_error("Inválido ou muito longo (maior que 50 caracteres)");            
             printf("Tente novamente: ");
         }
-    } while(valid_name(title) == FALSE);
+    } while(validate_name(title) == FALSE);
     limpa_buffer();
 }
 
@@ -46,11 +46,11 @@ void read_cpf(char *cpf){
         fgets(cpf, MAX_CPF_LENGTH, stdin);
         printf("\n");
 
-        if (!validation_cpf(cpf)){
+        if (!validate_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
             printf("Tente novamente: ");
         }
-    } while(validation_cpf(cpf) == FALSE);
+    } while(validate_cpf(cpf) == FALSE);
     limpa_buffer();
 }
 
@@ -61,24 +61,24 @@ void read_description(char *description) {
         description[strcspn(description, "\n")] = 0;
         printf("\n");
 
-        if (valid_description(description) == FALSE) {
+        if (validate_description(description) == FALSE) {
             show_error("Descricão inválida! A descrição estar entre 10 e 50 caracteres!");
             printf("Tente novamente: ");
             limpa_buffer();
         }
-    } while(valid_description(description) == FALSE);
+    } while(validate_description(description) == FALSE);
 }
 
 void read_date_with_year(char *day, char *month, char *year) {
     do {
 
-        if (!validar_data(day, month, year)){
+        if (!validate_date(day, month, year)){
             show_error ("Data inválida ");
             printf("Tente novamente: ");
             limpa_buffer();
         }
 
-    } while(validar_data(day, month, year) == FALSE);
+    } while(validate_date(day, month, year) == FALSE);
 }
 
 void read_date_without_year(char *day, char *month) {
@@ -129,11 +129,11 @@ void read_time(char *time){
         fgets(time, MAX_TIME_LENGHT, stdin);
         time[strcspn(time, "\n")] = 0;
 
-        if (!validar_tempo(time)){
+        if (!validate_time(time)){
             show_error("Horário inválido (Formato correto: HH:MM)");
             printf("Tente novamente: ");
         }
-    } while(validar_tempo(time) == FALSE);
+    } while(validate_time(time) == FALSE);
     limpa_buffer();
 }
 
