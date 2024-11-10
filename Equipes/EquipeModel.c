@@ -7,16 +7,16 @@
 #include "EquipeModel.h"
 
 int register_team(char *name, char *description, char *file){
-  Team teams;
   create_path("data");
 
   FILE *fp = fopen(file, "a");
   if (fp == NULL) return FALSE;
 
-  strcpy(teams.team_name, name);
-  strcpy(teams.description, description);
+  fputs(name, fp);
+  fputc(',', fp);
+  fputs(description, fp);
+  fputc('\n', fp);
 
-  fprintf(fp, "%s,%s", teams.team_name, teams.description);
   fclose(fp);
   return TRUE;
 }
