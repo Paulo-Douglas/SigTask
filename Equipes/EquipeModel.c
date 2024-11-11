@@ -6,20 +6,6 @@
 
 #include "EquipeModel.h"
 
-int register_team(char *name, char *description, char *file){
-  create_path("data");
-
-  FILE *fp = fopen(file, "a");
-  if (fp == NULL) return FALSE;
-
-  fputs(name, fp);
-  fputc(',', fp);
-  fputs(description, fp);
-  fputc('\n', fp);
-
-  fclose(fp);
-  return TRUE;
-}
 
 int view_team(char *name, char *file){
   Team teams;

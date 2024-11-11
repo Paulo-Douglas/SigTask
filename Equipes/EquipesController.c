@@ -9,15 +9,20 @@
 
 
 int register_academic_team(void){
-  char name_team[MAX_NAME_LENGTH];
-  printf("Nome da equipe acadêmica: \n");
-  read_string(name_team);
+    char name_team[MAX_NAME_LENGTH];
+    printf("Nome da equipe acadêmica: \n");
+    read_string(name_team);
 
-  char description[MAX_DESCRIPTION_LENGTH];
-  printf("Descrição da equipe acadêmica: \n");
-  read_description(description);
+    char description[MAX_DESCRIPTION_LENGTH];
+    printf("Descrição da equipe acadêmica: \n");
+    read_description(description);
 
-  return register_team(name_team, description, "data/academic_teams.txt");
+    const char *data[3];
+    data[0] = name_team;
+    data[1] = description;
+    data[2] = NULL;
+
+    return save_file(data, "data/academic_teams.txt");
 
 }
 
@@ -30,7 +35,12 @@ int register_business_team(void){
     printf("Descrição da equipe empresarial: \n");
     read_description(description);
 
-  return register_team(name_team, description, "data/business_teams.txt");
+    const char *data[3];
+    data[0] = name_team;
+    data[1] = description;
+    data[2] = NULL;
+
+    return save_file(data, "data/business_teams.txt");
 
 }
 
