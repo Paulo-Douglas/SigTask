@@ -50,13 +50,13 @@ int view_team(char *name, char *file){
   return found;
 }
 
-int move_to_struct(File *read_file, char *equipe, char *cpf) {
+int move_to_struct(File *read_file, char *equipe, char *cpf, char *name_team) {
     read_file->file = NULL;
     read_file->line_count = 0;
 
     char line[MAX_LINE_LENGTH];
 
-    FILE * fp = fopen("teams.txt", "r");    
+    FILE * fp = fopen(name_team, "r");    
     if (fp == NULL) return FALSE;
 
     while(fgets(line, MAX_LINE_LENGTH, fp) !=NULL) {
