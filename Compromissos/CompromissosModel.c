@@ -85,6 +85,6 @@ int load_compromiser(const char *cpf){
         }
     }
 
-    return TRUE ? found : FALSE;
+    return found;
 
 }
