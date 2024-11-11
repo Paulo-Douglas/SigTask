@@ -37,3 +37,21 @@ int year_now(void) {
     int year = tm.tm_year + 1900; // Soma 1900 para obter o ano completo
     return year;
 }
+
+int save_file(const char *data[], char *file_name){
+	FILE *fp = fopen(file_name, "a");
+	if (fp == NULL) return 0;
+
+	for (int i = 0; data[i] != NULL ; i++){
+
+		if (data[i + 1] == NULL){
+			fprintf(fp, "%s\n", data[i]);
+		} else {
+			fprintf(fp, "%s,", data[i]);			
+		}
+
+	}
+
+	fclose(fp);
+	return 1;
+}

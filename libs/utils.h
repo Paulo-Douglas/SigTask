@@ -23,5 +23,6 @@ void exibir_menssagem(char *);
 void limpar_tela(void);
 void create_path(const char *name_path);
 int year_now(void);
+int save_file(const char *data[], char *file_name);
 
 #endif
