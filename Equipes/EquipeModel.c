@@ -79,14 +79,14 @@ int move_to_struct(File *read_file, char *equipe, char *cpf, char *name_team) {
 
     }
 
-    add_user_to_file(read_file, equipe, cpf);
+    add_user_to_register(read_file, equipe, cpf);
     fclose(fp);
     free(read_file->file);
     return TRUE;
 
 }
 
-int add_user_to_file(File *read_file, char *equipe, char *cpf) {
+int add_user_to_register(File *read_file, char *equipe, char *cpf) {
 
     for (int i = 0; i < read_file->line_count; i++){
         if(strstr(read_file->file[i], equipe) == NULL) continue;
