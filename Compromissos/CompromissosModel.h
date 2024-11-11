@@ -18,9 +18,6 @@ typedef struct
     char data_end[MAX_CALENDAR_LENGHT];
 } Compromisers;
 
-int save_compromiser(char *cpf, char *title, char *description, char *day_start, char *month_start,
-                     int year_start, char *day_end, char *month_end, int year_end, char *time, char *priority);
-
 int load_compromiser(const char *cpf);
 
 #endif

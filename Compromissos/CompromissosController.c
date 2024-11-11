@@ -63,18 +63,9 @@ int register_compromise(void){
 }
 
 int search_compromiser_to_user(const char* cpf){
-
-    if(cpf_unique_user(cpf, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-
+    return cpf_unique_user(cpf, "data/users.txt");
 }
 
 int upload_data_compromiser(const char* cpf){
-
-    if(load_compromiser(cpf)) return TRUE;
-    else return FALSE;
-
+    return load_compromiser(cpf);
 }

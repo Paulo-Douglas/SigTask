@@ -8,40 +8,6 @@
 
 #include "CompromissosModel.h"
 
-int save_compromiser(char *cpf, char *title, char *description, char *day_start, char *month_start,
-                     int year_start, char *day_end, char *month_end, int year_end, char *time, char *priority){
-
-
-    if(!cpf_unique_user(cpf, "data/users.txt")){
-        return FALSE;
-    }
-
-    create_path("data");
-
-    Compromisers information;
-
-    strcpy(information.cpf, cpf);
-    strcpy(information.title, title);   
-    strcpy(information.description, description);
-    strcpy(information.day_start, day_start);
-    strcpy(information.month_start, month_start);
-    information.year_start = year_start;    
-    strcpy(information.day_end, day_end);
-    strcpy(information.month_end, month_end);
-    information.year_end = year_end;
-    strcpy(information.time, time);
-    strcpy(information.priority, priority);
-    
-
-    FILE *fp;   
-    fp = fopen("data/compromisers.txt", "a");
-    fprintf(fp, "%s,%s,%s,%s/%s/%d,%s/%s/%d,%s,%s\n", information.cpf, information.title, information.description, information.day_start, information.month_start,
-                                information.year_start, information.day_end, information.month_end, information.year_end ,information.time, information.priority);
-    fclose(fp);
-
-    return TRUE;
-
-}
 
 int load_compromiser(const char *cpf){
     Compromisers information;
