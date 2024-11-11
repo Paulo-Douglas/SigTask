@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <time.h>
 
@@ -58,7 +59,7 @@ int save_file(const char *data[], char *file_name){
 	return TRUE;
 }
 
-int move_to_struct(File *read_file, char *anything, char *cpf, char *name_anything) {     // função para se usar em n contextos
+int move_to_struct(File_Read *read_file, char *anything, char *cpf, char *name_anything) {
     read_file->file = NULL;
     read_file->line_count = 0;
 
@@ -94,7 +95,7 @@ int move_to_struct(File *read_file, char *anything, char *cpf, char *name_anythi
 
 }
 
-int add_user_to_register(File *read_file, char *anything, char *cpf) {
+int add_user_to_register(File_Read *read_file, char *anything, char *cpf) {
 
     for (int i = 0; i < read_file->line_count; i++){
         if(strstr(read_file->file[i], anything) == NULL) continue;
