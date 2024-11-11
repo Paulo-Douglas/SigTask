@@ -9,29 +9,6 @@
 #include "UsuariosModel.h"
 
 
-int save_user(char *name, char *cpf, char *phone){
-
-    if(cpf_unique_user(cpf, "data/users.txt")){
-        return FALSE;
-    }
-
-    create_path("data");
-
-    User usario;
-
-    strcpy(usario.name, name);
-    strcpy(usario.cpf, cpf);
-    strcpy(usario.phone, phone);
-
-    FILE *fp;
-    fp = fopen("data/users.txt", "a");
-    fprintf(fp, "%s,%s,%s\n", usario.cpf, usario.name, usario.phone);
-    fclose(fp);
-
-    return TRUE;
-
-}
-
 int load_user(const char *cpf){
     User usuario;
 

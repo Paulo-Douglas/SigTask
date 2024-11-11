@@ -3,6 +3,8 @@
 #include <sys/stat.h>
 #include <time.h>
 
+#include "utils.h"
+
 
 void limpa_buffer(void) {
     int b;
@@ -40,7 +42,7 @@ int year_now(void) {
 
 int save_file(const char *data[], char *file_name){
 	FILE *fp = fopen(file_name, "a");
-	if (fp == NULL) return 0;
+	if (fp == NULL) return FALSE;
 
 	for (int i = 0; data[i] != NULL ; i++){
 
@@ -53,5 +55,5 @@ int save_file(const char *data[], char *file_name){
 	}
 
 	fclose(fp);
-	return 1;
+	return TRUE;
 }

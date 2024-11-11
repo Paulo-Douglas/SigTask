@@ -8,7 +8,6 @@ typedef struct
     char phone[MAX_TEL_LENGTH];
 } User;
 
-int save_user(char *name, char *cpf, char *phone);
 int load_user(const char *cpf);
 
 #endif // USUARIOSMODEL_H
