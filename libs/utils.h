@@ -16,6 +16,7 @@
 #define MAX_PRIORITY_LENGHT 2
 #define MAX_TURN_LENGHT 2
 #define MAX_CALENDAR_LENGHT 11
+#define MAX_LINE_LENGTH 256
 
 void limpa_buffer(void);
 void exibir_menssagem(char *);

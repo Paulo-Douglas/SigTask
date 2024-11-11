@@ -9,6 +9,11 @@ typedef struct
   char description[MAX_DESCRIPTION_LENGTH];
 } Team;
 
+typedef struct {
+  char **file;
+  int line_count;
+} File;
+
 int register_team(char *name, char *description, char *file);
 int view_team(char *name, char *file);
 

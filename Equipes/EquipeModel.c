@@ -49,3 +49,39 @@ int view_team(char *name, char *file){
   fclose(fp);
   return found;
 }
+
+int move_to_struct(File *read_file, char *equipe, char *cpf) {
+    read_file->file = NULL;
+    read_file->line_count = 0;
+
+    char line[MAX_LINE_LENGTH];
+
+    FILE * fp = fopen("teams.txt", "r");    
+    if (fp == NULL) return FALSE;
+
+    while(fgets(line, MAX_LINE_LENGTH, fp) !=NULL) {
+        read_file->line_count++;
+        read_file->file = realloc(read_file->file, read_file->line_count * sizeof(char *));
+
+        if (read_file->file == NULL){
+            fclose(fp);
+            return FALSE;
+        }
+
+        read_file->file[read_file->line_count - 1] = malloc(strlen(line) + 1);
+
+        if (read_file->file[read_file->line_count - 1] == NULL){
+            fclose(fp);
+            return FALSE;
+        }
+
+        strcpy(read_file->file[read_file->line_count - 1], line);
+
+    }
+
+    add_user_to_file(read_file, equipe, cpf);
+    fclose(fp);
+    free(read_file->file);
+    return TRUE;
+
+}
