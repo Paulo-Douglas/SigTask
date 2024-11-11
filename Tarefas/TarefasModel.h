@@ -15,9 +15,6 @@ typedef struct
     char data[MAX_CALENDAR_LENGHT];  
 } Tasks;
 
-int save_task(char *cpf, char *title, char *description, char *day, char *month, 
-                                        int year, char *turn, char *priority);
-
 int load_task(const char *cpf);
 
 #endif

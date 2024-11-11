@@ -25,7 +25,6 @@ void read_string(char *title) {
 
 
 void read_phone(char *phone){
-
     do{
         fgets(phone, MAX_TEL_LENGTH, stdin);
         phone[strcspn(phone, "\n")] = 0;
