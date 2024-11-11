@@ -18,6 +18,14 @@
 #define MAX_CALENDAR_LENGHT 11
 #define MAX_LINE_LENGTH 256
 
+typedef struct {
+  char **file;
+  int line_count;
+} File;
+
+
+int add_user_to_register(File *read_file, char *anything, char *cpf);
+int move_to_struct(File *read_file, char *anything, char *cpf, char *name_anything);
 void limpa_buffer(void);
 void exibir_menssagem(char *);
 void limpar_tela(void);

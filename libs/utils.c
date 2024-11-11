@@ -57,3 +57,65 @@ int save_file(const char *data[], char *file_name){
 	fclose(fp);
 	return TRUE;
 }
+
+int move_to_struct(File *read_file, char *anything, char *cpf, char *name_anything) {     // função para se usar em n contextos
+    read_file->file = NULL;
+    read_file->line_count = 0;
+
+    char line[MAX_LINE_LENGTH];
+
+    FILE * fp = fopen(name_anything, "r");    
+    if (fp == NULL) return FALSE;                                                     
+
+    while(fgets(line, MAX_LINE_LENGTH, fp) !=NULL) {
+        read_file->line_count++;
+        read_file->file = realloc(read_file->file, read_file->line_count * sizeof(char *));
+
+        if (read_file->file == NULL){
+            fclose(fp);
+            return FALSE;
+        }
+
+        read_file->file[read_file->line_count - 1] = malloc(strlen(line) + 1);
+
+        if (read_file->file[read_file->line_count - 1] == NULL){
+            fclose(fp);
+            return FALSE;
+        }
+
+        strcpy(read_file->file[read_file->line_count - 1], line);
+
+    }
+
+    add_user_to_register(read_file, anything, cpf);
+    fclose(fp);
+    free(read_file->file);
+    return TRUE;
+
+}
+
+int add_user_to_register(File *read_file, char *anything, char *cpf) {
+
+    for (int i = 0; i < read_file->line_count; i++){
+        if(strstr(read_file->file[i], anything) == NULL) continue;
+        else {
+            read_file->file[i] = realloc(read_file->file[i], strlen(read_file->file[i]) + strlen(cpf) + 2);
+            read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
+            strcat(read_file->file[i], cpf);
+
+            FILE *fp = fopen("anything.txt", "w");      // mudável
+            if (fp == NULL) return FALSE;
+            for (int i = 0; i < read_file->line_count; i++){
+                read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
+                fprintf(fp, "%s\n", read_file->file[i]);
+            }
+            fclose(fp);
+
+            break;
+        }
+
+        free(read_file->file[i]);
+    }
+
+    return TRUE;
+}
