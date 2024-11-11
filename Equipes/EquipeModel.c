@@ -85,3 +85,29 @@ int move_to_struct(File *read_file, char *equipe, char *cpf) {
     return TRUE;
 
 }
+
+int add_user_to_file(File *read_file, char *equipe, char *cpf) {
+
+    for (int i = 0; i < read_file->line_count; i++){
+        if(strstr(read_file->file[i], equipe) == NULL) continue;
+        else {
+            read_file->file[i] = realloc(read_file->file[i], strlen(read_file->file[i]) + strlen(cpf) + 2);
+            read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
+            strcat(read_file->file[i], cpf);
+
+            FILE *fp = fopen("teams.txt", "w");
+            if (fp == NULL) return FALSE;
+            for (int i = 0; i < read_file->line_count; i++){
+                read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
+                fprintf(fp, "%s\n", read_file->file[i]);
+            }
+            fclose(fp);
+
+            break;
+        }
+
+        free(read_file->file[i]);
+    }
+
+    return TRUE;
+}

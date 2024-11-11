@@ -16,5 +16,7 @@ typedef struct {
 
 int register_team(char *name, char *description, char *file);
 int view_team(char *name, char *file);
+int move_to_struct(File *read_file, char *equipe, char *cpf);
+int add_user_to_file(File *read_file, char *equipe, char *cpf);
 
 #endif
