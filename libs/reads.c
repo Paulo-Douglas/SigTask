@@ -1,12 +1,24 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "reads.h"
 #include "validate.h"
 #include "styles.h"
 #include "utils.h"
 
+void input(char **prompt){
 
+	char line[256];
+	scanf("%255[^\n]", line);
+	int tam = strlen(line);
+	*prompt = (char*) malloc(tam + 1);
+
+	if (*prompt != NULL){
+		strcpy(*prompt, line);
+	}
+
+}
 
 void read_string(char *title) {
 

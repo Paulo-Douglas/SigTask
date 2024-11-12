@@ -14,19 +14,6 @@ void limpa_buffer(void) {
     }
 }
 
-void input(char **prompt){
-
-	char line[256];
-	scanf("%255[^\n]", line);
-	int tam = strlen(line);
-	*prompt = (char*) malloc(tam + 1);
-
-	if (*prompt != NULL){
-		strcpy(*prompt, line);
-	}
-
-}
-
 void exibir_menssagem(char *menssagem) {
     printf("%s\n\n", menssagem);
     printf("Tecle <ENTER> para continuar...");

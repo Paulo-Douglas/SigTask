@@ -27,7 +27,6 @@ typedef struct {
 void limpa_buffer(void);
 void exibir_menssagem(char *);
 void limpar_tela(void);
-void input(char **prompt);
 void create_path(const char *name_path);
 
 int save_file(const char *data[], char *file_name);

@@ -7,5 +7,6 @@ void read_cpf(char *cpf);
 void read_description(char *description);
 void read_time(char *time);
 void read_generic_123(char *input);
+void input(char **prompt);
 
 #endif // READS_H
