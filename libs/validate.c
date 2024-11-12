@@ -92,8 +92,8 @@ int cpf_unique_user(const char *cpf, const char *file){
         return 0;
     }
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_TEL_LENGTH + 3];
-    char cpf_user[MAX_CPF_LENGTH];
+    char *line = (char*) malloc(256);
+    char *cpf_user = (char*) malloc(14 + 1);
 
     while (fgets(line, sizeof(line), fp)) {
         sscanf(line, "%14[^,]", cpf_user);
@@ -106,6 +106,8 @@ int cpf_unique_user(const char *cpf, const char *file){
 
     }
 
+    free(line);
+    free(cpf_user);
     fclose(fp);
     return FALSE;
 
