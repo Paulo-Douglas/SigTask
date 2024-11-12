@@ -59,7 +59,10 @@ int save_file(const char *data[], char *file_name){
 	return TRUE;
 }
 
-int move_to_struct(File_Read *read_file, char *anything, char *cpf, char *name_anything) {
+int move_to_struct(char *anything, char *cpf, char *name_anything) {
+    File *read_file = malloc(sizeof(File));
+    if (read_file == NULL) return FALSE;
+
     read_file->file = NULL;
     read_file->line_count = 0;
 
@@ -91,11 +94,12 @@ int move_to_struct(File_Read *read_file, char *anything, char *cpf, char *name_a
     add_user_to_register(read_file, anything, cpf);
     fclose(fp);
     free(read_file->file);
+    free(read_file);
     return TRUE;
 
 }
 
-int add_user_to_register(File_Read *read_file, char *anything, char *cpf) {
+int add_user_to_register(File *read_file, char *anything, char *cpf) {
 
     for (int i = 0; i < read_file->line_count; i++){
         if(strstr(read_file->file[i], anything) == NULL) continue;
