@@ -11,17 +11,23 @@ int register_user(void){
     char name[MAX_NAME_LENGTH];
     char cpf[MAX_CPF_LENGTH];
     char phone[MAX_TEL_LENGTH];
+    const char *data[4];
 
     printf("Informe o nome: ");
     read_string(name);
+    data[0] = name;
 
     printf("Informe o CPF: ");
     read_cpf(cpf);
+    data[1] = cpf;
 
     printf("Informe o telefone: ");
     read_phone(phone);
+    data[2] = phone;
+    data[3] = NULL;
 
-    if(save_user(name, cpf, phone)){
+
+    if(save_file(data, "data/users.txt")){
         return TRUE;
     } else {
         return FALSE;

@@ -5,9 +5,7 @@
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
-
-#include "../Usuarios/UsuariosView.h"
-
+#include "../libs/styles.h"
 
 
 /*************  ✨ Codeium Command ⭐  *************/

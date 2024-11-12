@@ -15,9 +15,12 @@ void navegacao_times(void){
                 exibir_equipe();
                 break;
             case '3':
-                editar_equipe();
+                add_user_to_team();
                 break;
             case '4':
+                remove_user_from_team();
+                break;
+            case '5':
                 excluir_equipe();
                 break;
             case '0':

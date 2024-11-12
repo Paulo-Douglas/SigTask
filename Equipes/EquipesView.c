@@ -1,7 +1,11 @@
 #include <stdio.h>
-#include "EquipesView.h"
+
 #include "../libs/utils.h"
 #include "../libs/reads.h"
+#include "../libs/styles.h"
+
+#include "EquipesView.h"
+#include "EquipesController.h"
 
 char menu_equipes(void) {
     char op;
@@ -12,8 +16,9 @@ char menu_equipes(void) {
     printf("----------------------------------------------------\n");
     printf("|               [1] Cadastrar Equipe               |\n");
     printf("|               [2] Exibir Equipe                  |\n");
-    printf("|               [3] Editar Equipe                  |\n");
-    printf("|               [4] Excluir Equipe                 |\n");
+    printf("|               [3] Adicionar membro a Equipe      |\n");
+    printf("|               [4] Remover membro da Equipe       |\n");
+    printf("|               [5] Excluir Equipe                 |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -59,13 +64,12 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    char name_equipe[MAX_NAME_LENGTH];
-    printf("Nome da equipe acadêmica: \n");
-    read_string(name_equipe);
-
-    char description[MAX_DESCRIPTION_LENGTH];
-    printf("Descrição da equipe acadêmica: \n");
-    read_description(description);
+    if (register_academic_team()){
+        show_sucess("Sucesso ao registrar a equipe!");
+    } else {
+        show_error("[ERROR] Falha ao cadastrar a equipe!");
+    }
+    limpa_buffer();
 }
 
 void cadastrar_equipe_empresarial(void){
@@ -78,37 +82,56 @@ void cadastrar_equipe_empresarial(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    char name_equipe[MAX_NAME_LENGTH];
-    printf("Nome da equipe empresarial: \n");
-    read_string(name_equipe);
-
-    char description[MAX_DESCRIPTION_LENGTH];
-    printf("Descrição da equipe empresarial: \n");
-    read_description(description);
+    if(register_business_team()){
+        show_sucess("Sucesso ao registrar a equipe!");
+    } else {
+        show_error("[ERROR] Falha ao cadastrar a equipe!");
+    }
+    limpa_buffer();
 }
 
 void exibir_equipe(void) { 
     limpar_tela();
     printf("\n");
-    printf("--------------------------------------------------\n");
-    printf("|                  Exibir equipe                 |\n");
-    printf("--------------------------------------------------\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Exibir equipe                                                                   |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    if(!search_team()){
+        show_error("Equipe inexistente; <ENTER> para continuar\n");
+    } else {
+        printf("Tecle <ENTER> para continuar...");
+    }
+    getchar();
 }
 
-void editar_equipe(void) { 
+void add_user_to_team(void) { 
     limpar_tela();
     printf("\n");
-    printf("--------------------------------------------------\n");
-    printf("|                  Editar equipe                 |\n");
-    printf("--------------------------------------------------\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                                Adicionar membro                                                               |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    if(!add_user_to_file()){
+        show_error("[ERROR] Usuário não encontrado!\n");
+    } else {
+        show_sucess("[SUCESSO] Usuário adicionado com sucesso!\n");
+    }
+    getchar();
+}
+
+void remove_user_from_team(void) { 
+    limpar_tela();
+    printf("\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                                Remover membro                                                               |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 }
 
 void excluir_equipe(void) { 
     limpar_tela();
     printf("\n");
-    printf("--------------------------------------------------\n");
-    printf("|                  Excluir equipe                |\n");
-    printf("--------------------------------------------------\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Excluir equipe                                                                  |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 }
 
 

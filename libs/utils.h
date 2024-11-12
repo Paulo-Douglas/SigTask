@@ -16,12 +16,21 @@
 #define MAX_PRIORITY_LENGHT 2
 #define MAX_TURN_LENGHT 2
 #define MAX_CALENDAR_LENGHT 11
+#define MAX_LINE_LENGTH 256
+
+typedef struct {
+  char **file;
+  int line_count;
+} File;
 
 
-
+int add_user_to_register(File *read_file, char *anything, char *cpf);
+int move_to_struct(char *anything, char *cpf, char *name_anything);
 void limpa_buffer(void);
 void exibir_menssagem(char *);
 void limpar_tela(void);
 void create_path(const char *name_path);
+int year_now(void);
+int save_file(const char *data[], char *file_name);
 
 #endif

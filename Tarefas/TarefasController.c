@@ -1,57 +1,58 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "../libs/utils.h"
 #include "../libs/validate.h"
 #include "../libs/styles.h"
 #include "../libs/reads.h"
+#include "../libs/date.h"
+
 #include "TarefasController.h"
 #include "TarefasModel.h"
 
 int register_task(void){
+    limpa_buffer();
     char cpf[MAX_CPF_LENGTH];
     char title[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
-    char year[MAX_YEAR_LENGHT];
-    char turn[2];
-    char priority[2];
+    char turn[2] = "";
+    char priority[2] = "";
+    int year = year_now();
+    char date_complete[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
+    const char *data[7];
 
     printf("Digite o CPF: ");
     read_cpf(cpf);
+    data[0] = cpf;
     
     printf("Digite o título: ");
     read_string(title);
+    data[1] = title;
 
     printf("Digite a descrição: ");
     read_description(description);
+    data[2] = description;
 
-    printf("Digite o dia: ");
-    scanf(" %s", day);
-    printf("Digite o mês: ");
-    scanf(" %s", month);
-    printf("Digite o ano: ");
-    scanf(" %s", year);
-    read_date_with_year(day, month, year);
+    printf("\t DATA\n");
+    read_date(day, month);
+    snprintf(date_complete, sizeof(date_complete), "%s/%s/%d", day, month, year);
+    data[3] = date_complete;
 
     printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
     read_generic_123(turn);
+    turn[1] = '\0';
+    data[4] = turn;
 
     printf("Digite a prioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
     read_generic_123(priority);
+    priority[1] = '\0';
+    data[5] = priority;
 
-    if(!save_task(cpf, title, description, day, month, year, turn, priority)){
-        return FALSE;
-    };
-    return TRUE;
+    data[6] = NULL;
 
-    printf("Digite o turno: (Matutino = 1, Vespertino = 2, Noturno = N e Integral= 3)");
-    read_generic_123(priority);
-
-    printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
-    read_generic_123(priority);
-
-    return save_task(cpf, title, description, day, month, year, turn, priority);
+    return save_file(data, "data/tasks.txt");
 }
 
 int search_task_to_user(const char* cpf){
