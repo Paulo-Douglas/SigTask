@@ -10,17 +10,16 @@
 
 
 int register_user(void){
-    limpa_buffer();
     const char *data[4];
     data[3] = NULL;
 
-    printf("Informe o nome: ");
-    char *name = read_string();
-    data[0] = name;
-
     printf("Informe o CPF: ");
     char *cpf = read_cpf();
-    data[1] = cpf;
+    data[0] = cpf;
+
+    printf("Informe o nome: ");
+    char *name = read_string();
+    data[1] = name;
 
     printf("Informe o telefone: ");
     char *phone = read_phone();

@@ -24,6 +24,7 @@ char menu_usuarios(void) {
     printf("Escolha a opção desejada: ");
     scanf("%c", &op);
     limpar_tela();
+    limpa_buffer();
     return op;
 }
 
@@ -40,6 +41,7 @@ void cadastrar_usuarios() {
     } else {
         show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar \n<ENTER> para continuar\n");
     }
+    limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {
@@ -60,12 +62,13 @@ void exibir_dados_usuario(void) {
         }
     }   
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer();
     free(cpf);
 }
 
 void alterar_dados_usuario(void) {
     limpar_tela();
+    limpa_buffer();
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
@@ -82,7 +85,7 @@ void alterar_dados_usuario(void) {
         }
     }   
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer();
     free(cpf);
 
 }
@@ -105,12 +108,11 @@ void excluir_usuario(void) {
         }
     }   
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer();
     free(cpf);
 }
 
 void dados_usuario(void) {
-    limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                            Dados do Usuário                                           |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -118,7 +120,6 @@ void dados_usuario(void) {
 }
 
 void menu_alterar_usuario(void) {
-    limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                       Alterar Dados do Usuário                                        |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
