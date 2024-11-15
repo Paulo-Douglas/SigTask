@@ -19,9 +19,8 @@ int register_compromise(void){
     data[7] = NULL;
     int year = year_now();
 
-    char cpf[MAX_CPF_LENGTH];
     printf("Digite o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
     data[0] = cpf;
 
     printf("Digite o título: ");
@@ -62,6 +61,7 @@ int register_compromise(void){
     free(title);
     free(description);
     free(priority);
+    free(cpf);
 
     return result;
 }

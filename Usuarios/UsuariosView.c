@@ -48,10 +48,8 @@ void exibir_dados_usuario(void) {
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
 
-    char *cpf = malloc(MAX_CPF_LENGTH);
-
     printf("Informe o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
 
     if(!search_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -72,12 +70,10 @@ void alterar_dados_usuario(void) {
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 
-    char *cpf = malloc(MAX_CPF_LENGTH);
-
     printf("Informe o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
 
-if(!search_user(cpf)){
+    if(!search_user(cpf)){
         show_error("CPF não encontrado!\n");
     } else {
         menu_alterar_usuario();
@@ -97,10 +93,8 @@ void excluir_usuario(void) {
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 
-    char *cpf = malloc(MAX_CPF_LENGTH);
-
     printf("Informe o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
 
     if(!search_user(cpf)){
         show_error("CPF não encontrado!\n");

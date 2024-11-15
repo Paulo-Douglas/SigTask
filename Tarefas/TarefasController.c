@@ -19,9 +19,8 @@ int register_task(void){
     data[6] = NULL;
     int year = year_now();
 
-    char cpf[MAX_CPF_LENGTH];
     printf("Digite o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
     data[0] = cpf;
 
     printf("Digite o título: ");
@@ -53,6 +52,7 @@ int register_task(void){
     free(description);
     free(turn);
     free(priority);
+    free(cpf);
 
     return result;
     

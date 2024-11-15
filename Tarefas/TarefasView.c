@@ -49,9 +49,8 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -60,7 +59,8 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
         if(!upload_data_task(cpf)){
             show_error("Erro ao carregar as tarefas do usuário!\n");
         }
-    }   
+    }
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
 }
@@ -72,9 +72,8 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -82,6 +81,7 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
         alterar_dados_tarefas();
         upload_data_task(cpf);
     }   
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
 
@@ -94,9 +94,8 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -106,6 +105,7 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
             show_error("Erro ao carregar as tarefas do usuário!\n");
         }
     }   
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
 }

@@ -51,9 +51,8 @@ void exibir_compromissos(void) {
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
 
-    char *cpf = malloc(MAX_CPF_LENGTH);
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -74,9 +73,8 @@ void editar_compromissos(void) {
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char *cpf = malloc(MAX_CPF_LENGTH);
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -96,9 +94,8 @@ void excluir_compromissos(void) {
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char *cpf = malloc(MAX_CPF_LENGTH);
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");

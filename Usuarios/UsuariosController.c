@@ -10,23 +10,22 @@
 
 
 int register_user(void){
+    limpa_buffer();
+    const char *data[4];
+    data[3] = NULL;
+
     printf("Informe o nome: ");
     char *name = read_string();
-    char *cpf = malloc(MAX_CPF_LENGTH);
-    char *phone = malloc(MAX_TEL_LENGTH);
-    const char *data[4];
-
-
     data[0] = name;
 
     printf("Informe o CPF: ");
-    read_cpf(cpf);
+    char *cpf = read_cpf();
     data[1] = cpf;
 
+    char *phone = malloc(MAX_TEL_LENGTH);
     printf("Informe o telefone: ");
     read_phone(phone);
     data[2] = phone;
-    data[3] = NULL;
 
     int result = save_file(data, "data/users.txt");
 
