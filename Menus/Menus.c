@@ -52,6 +52,9 @@ void menuSobre(void) {
     printf("|               Email: paulo.martins.132@ufrn.edu.br                |\n");
     printf("|               GitHub: https://github.com/Paulo-Douglas            |\n");
     printf("|                                                                   |\n");
+    printf("|               Nome: Anderson Gabriel Pereira Cruz                 |\n");
+    printf("|               Email: gabriel.cruz.133@ufrn.edu.br                 |\n");
+    printf("|               GitHub: https://github.com/anderson-cruz13          |\n");
     printf("---------------------------------------------------------------------\n");
     limpa_buffer();
     limpar_tela();

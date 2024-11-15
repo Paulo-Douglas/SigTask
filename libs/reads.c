@@ -95,7 +95,7 @@ void read_time(char *time){
         time[strcspn(time, "\n")] = 0;
 
         if (!validate_time(time)){
-            show_error("Horário inválido (Formato correto: HH:MM)");
+            show_error("Horário inválido (Formato correto: HH:MM)");    
             printf("Tente novamente: ");
         }
     } while(validate_time(time) == FALSE);
