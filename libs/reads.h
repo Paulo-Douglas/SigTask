@@ -6,7 +6,7 @@ void read_phone(char *phone);
 void read_cpf(char *cpf);
 char* read_description(void);
 void read_time(char *time);
-void read_generic_123(char *input);
+char* read_generic_123(void);
 void input(char **prompt);
 
 #endif // READS_H

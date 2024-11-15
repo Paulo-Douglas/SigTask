@@ -84,8 +84,8 @@ char* read_description(void) {
         
         }
     } while(!is_valid);
-      limpa_buffer();
-      return description;
+    limpa_buffer();
+    return description;
 }
 
 void read_time(char *time){
@@ -102,16 +102,18 @@ void read_time(char *time){
     limpa_buffer();
 }
 
-void read_generic_123(char *input) {
-
+char* read_generic_123(void) {
+    char *prompt = NULL;
     do {
-        scanf(" %c", input);
+        input(&prompt);
 
-        if (*input < '1' || *input > '3'){
+        if (*prompt < '1' || *prompt > '3'){
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
             printf("Tente novamente: ");
+            free(prompt);
         }
-    } while (*input < '1' || *input > '3');
+    } while (*prompt < '1' || *prompt > '3');
     limpa_buffer();
+    return prompt;
 }
 
