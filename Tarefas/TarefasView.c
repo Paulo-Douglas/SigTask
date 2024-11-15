@@ -44,6 +44,7 @@ void cadastrar_tarefas(void) {
 
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
+    limpa_buffer();
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");

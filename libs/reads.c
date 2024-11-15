@@ -8,7 +8,7 @@
 #include "utils.h"
 
 void input(char **prompt){
-
+    limpa_buffer();
 	char line[MAX_LINE_LENGTH];
 	scanf("%255[^\n]", line);
 	int tam = strlen(line);
@@ -49,6 +49,7 @@ char* read_phone(void){
         if(!valid_phone(phone)){
             show_error("Número de telefone inválido: (XX X XXXXXXXX)");
             printf("Tente novamente: ");
+            free(phone);
         }
 
     } while(valid_phone(phone) == FALSE);
@@ -58,7 +59,7 @@ char* read_phone(void){
 
 
 char* read_cpf(void){
-    char *cpf;
+    char *cpf = NULL;
 
     do{
         input(&cpf);
@@ -66,8 +67,10 @@ char* read_cpf(void){
         if (!validate_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
             printf("Tente novamente: ");
+            free(cpf);
         }
-    } while(validate_cpf(cpf) == FALSE);
+
+    } while(!validate_cpf(cpf));
     limpa_buffer();
     return cpf;
 }

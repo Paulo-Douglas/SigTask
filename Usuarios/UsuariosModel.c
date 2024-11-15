@@ -15,7 +15,7 @@ int load_user(const char *cpf){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_TEL_LENGTH + 3];
+    char line[MAX_LINE_LENGTH];
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){
