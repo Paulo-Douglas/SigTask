@@ -9,7 +9,7 @@
 
 void input(char **prompt){
 
-	char line[256];
+	char line[MAX_LINE_LENGTH];
 	scanf("%255[^\n]", line);
 	int tam = strlen(line);
 	*prompt = (char*) malloc(tam + 1);
