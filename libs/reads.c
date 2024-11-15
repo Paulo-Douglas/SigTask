@@ -8,7 +8,6 @@
 #include "utils.h"
 
 void input(char **prompt){
-    limpa_buffer();
 	char line[MAX_LINE_LENGTH];
 	scanf("%255[^\n]", line);
 	int tam = strlen(line);
@@ -18,6 +17,7 @@ void input(char **prompt){
 		strcpy(*prompt, line);
 	}
 
+    limpa_buffer();
 }
 
 char* read_string(void) {

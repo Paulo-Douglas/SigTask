@@ -92,12 +92,12 @@ int cpf_unique_user(const char *cpf, const char *file){
         return 0;
     }
 
-    char *line = (char*) malloc(256);
-    char *cpf_user = (char*) malloc(14 + 1);
+    char line[MAX_LINE_LENGTH];
+    char *cpf_user;
 
     while (fgets(line, sizeof(line), fp)) {
-        sscanf(line, "%14[^,]", cpf_user);
 
+        cpf_user = strtok(line, ",");
         // Comparação de vetores
         if (strcmp(cpf, cpf_user) == 0) {
             fclose(fp);
@@ -106,7 +106,6 @@ int cpf_unique_user(const char *cpf, const char *file){
 
     }
 
-    free(line);
     free(cpf_user);
     fclose(fp);
     return FALSE;
