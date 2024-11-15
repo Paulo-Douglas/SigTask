@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "CompromissosController.h"
 #include "CompromissosView.h"
@@ -50,7 +51,7 @@ void exibir_compromissos(void) {
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
@@ -64,6 +65,7 @@ void exibir_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }    
 
 void editar_compromissos(void) { 
@@ -72,7 +74,7 @@ void editar_compromissos(void) {
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
@@ -84,6 +86,7 @@ void editar_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 
 }
 
@@ -93,7 +96,7 @@ void excluir_compromissos(void) {
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
     printf("Informe seu CPF: ");
     read_cpf(cpf);
 
@@ -107,6 +110,7 @@ void excluir_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }
 
 void dados_compromissos(void) { // será implementado as variveis de cada dado

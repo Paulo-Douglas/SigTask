@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -9,9 +10,9 @@
 
 
 int register_academic_team(void){
-    char name_team[MAX_NAME_LENGTH];
+    char *name_team = read_string();
     printf("Nome da equipe acadêmica: \n");
-    read_string(name_team);
+    
 
     char description[MAX_DESCRIPTION_LENGTH];
     printf("Descrição da equipe acadêmica: \n");
@@ -23,14 +24,14 @@ int register_academic_team(void){
     data[2] = NULL;
 
     return save_file(data, "data/academic_teams.txt");
+ 
 
 }
 
 int register_business_team(void){
-    char name_team[MAX_NAME_LENGTH];
+    char *name_team = read_string();
     printf("Nome da equipe empresarial: \n");
-    read_string(name_team);
-
+ 
     char description[MAX_DESCRIPTION_LENGTH];
     printf("Descrição da equipe empresarial: \n");
     read_description(description);
@@ -41,13 +42,14 @@ int register_business_team(void){
     data[2] = NULL;
 
     return save_file(data, "data/business_teams.txt");
+  
 
 }
 
 int search_team(void) {
-    char name_team[MAX_NAME_LENGTH];
+    char *name_team = read_string();
     printf("Nome da equipe a ser buscada:\n");
-    read_string(name_team);
+   
 
     char file;
     printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
@@ -61,30 +63,5 @@ int search_team(void) {
         return view_team(name_team, "data/academic_teams.txt");
     }
     return FALSE;
-}
-
-int add_user_to_file(void) {
-    char cpf[MAX_CPF_LENGTH];
-    printf("Digite o CPF do membro a ser adicionado:\n");
-    read_cpf(cpf);
-
-    if(cpf_unique_user(cpf, "data/users.txt")) return FALSE;
-
-    char name_team[MAX_NAME_LENGTH];
-    printf("Nome da equipe a ser adicionado:\n");
-    read_string(name_team);
-
-    char file;
-    printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
-    scanf(" %c", &file);
-    getchar();
-    limpar_tela();
-
-
-    if (file == '1') {
-        return TRUE;
-    } else if (file == '2') {
-        return TRUE;
-    }
-    return FALSE;
+ 
 }

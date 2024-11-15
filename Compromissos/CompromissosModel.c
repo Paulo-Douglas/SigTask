@@ -15,7 +15,7 @@ int load_compromiser(const char *cpf){
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_CALENDAR_LENGHT + MAX_TIME_LENGHT + MAX_PRIORITY_LENGHT + 7];  
+    char *line = malloc(MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_CALENDAR_LENGHT + MAX_TIME_LENGHT + MAX_PRIORITY_LENGHT + 7);  
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){

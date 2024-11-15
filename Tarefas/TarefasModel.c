@@ -15,7 +15,7 @@ int load_task(const char *cpf){
     FILE *fp = fopen("data/tasks.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 7];  // tem que adicionar turn, priority, status
+    char *line = malloc(MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_DESCRIPTION_LENGTH + MAX_CALENDAR_LENGHT + MAX_TURN_LENGHT + MAX_PRIORITY_LENGHT + MAX_STATUS_LENGHT + 7);  // tem que adicionar turn, priority, status
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){
@@ -49,6 +49,7 @@ int load_task(const char *cpf){
             printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
             found = TRUE;
+            free(line);
         }
     }
 

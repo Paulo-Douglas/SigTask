@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -13,12 +14,13 @@
 int register_task(void){
     limpa_buffer();
     char cpf[MAX_CPF_LENGTH];
-    char title[MAX_NAME_LENGTH];
+    printf("Digite o título: ");
+    char *title = read_string();
     char description[MAX_DESCRIPTION_LENGTH];
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
-    char turn[2] = "";
-    char priority[2] = "";
+    char turn[MAX_TURN_LENGHT];
+    char priority[MAX_PRIORITY_LENGHT];
     int year = year_now();
     char date_complete[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
     const char *data[7];
@@ -27,8 +29,6 @@ int register_task(void){
     read_cpf(cpf);
     data[0] = cpf;
     
-    printf("Digite o título: ");
-    read_string(title);
     data[1] = title;
 
     printf("Digite a descrição: ");
@@ -53,6 +53,7 @@ int register_task(void){
     data[6] = NULL;
 
     return save_file(data, "data/tasks.txt");
+    
 }
 
 int search_task_to_user(const char* cpf){
