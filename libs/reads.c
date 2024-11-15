@@ -56,10 +56,11 @@ void read_phone(char *phone){
 }
 
 
-void read_cpf(char *cpf){
+char* read_cpf(void){
+    char *cpf;
+
     do{
-        fgets(cpf, MAX_CPF_LENGTH, stdin);
-        printf("\n");
+        input(&cpf);
 
         if (!validate_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
@@ -67,6 +68,7 @@ void read_cpf(char *cpf){
         }
     } while(validate_cpf(cpf) == FALSE);
     limpa_buffer();
+    return cpf;
 }
 
 char* read_description(void) {
