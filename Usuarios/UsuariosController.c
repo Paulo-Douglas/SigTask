@@ -22,9 +22,8 @@ int register_user(void){
     char *cpf = read_cpf();
     data[1] = cpf;
 
-    char *phone = malloc(MAX_TEL_LENGTH);
     printf("Informe o telefone: ");
-    read_phone(phone);
+    char *phone = read_phone();
     data[2] = phone;
 
     int result = save_file(data, "data/users.txt");

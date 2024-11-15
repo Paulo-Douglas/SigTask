@@ -20,7 +20,7 @@ void input(char **prompt){
 
 }
 
-char *read_string(void) {
+char* read_string(void) {
     char *string;
     int is_valid;
 
@@ -40,11 +40,11 @@ char *read_string(void) {
 }
 
 
-void read_phone(char *phone){
+char* read_phone(void){
+    char *phone;
+
     do{
-        fgets(phone, MAX_TEL_LENGTH, stdin);
-        phone[strcspn(phone, "\n")] = 0;
-        printf("\n");
+        input(&phone);
 
         if(!valid_phone(phone)){
             show_error("Número de telefone inválido: (XX X XXXXXXXX)");
@@ -53,6 +53,7 @@ void read_phone(char *phone){
 
     } while(valid_phone(phone) == FALSE);
     limpa_buffer();
+    return phone;
 }
 
 
