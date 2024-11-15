@@ -13,43 +13,48 @@
 
 int register_task(void){
     limpa_buffer();
-    char cpf[MAX_CPF_LENGTH];
-    printf("Digite o título: ");
-    char *title = read_string();
-    printf("Digite a descrição: ");
-    char *description = read_description();
-    char day[MAX_DAY_LENGHT];
-    char month[MAX_MONTH_LENGHT];
-    char turn[MAX_TURN_LENGHT];
-    char priority[MAX_PRIORITY_LENGHT];
-    int year = year_now();
+
     char date_complete[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
     const char *data[7];
+    data[6] = NULL;
+    int year = year_now();
 
+    char cpf[MAX_CPF_LENGTH];
     printf("Digite o CPF: ");
     read_cpf(cpf);
     data[0] = cpf;
+
+    printf("Digite o título: ");
+    char *title = read_string();
     data[1] = title;
+
+    printf("Digite a descrição: ");
+    char *description = read_description();
     data[2] = description;
 
+    char day[MAX_DAY_LENGHT];
+    char month[MAX_MONTH_LENGHT];
     printf("\t DATA\n");
     read_date(day, month);
     snprintf(date_complete, sizeof(date_complete), "%s/%s/%d", day, month, year);
     data[3] = date_complete;
 
     printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
-    read_generic_123(turn);
-    turn[1] = '\0';
+    char *turn = read_generic_123();
     data[4] = turn;
 
     printf("Digite a prioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
-    read_generic_123(priority);
-    priority[1] = '\0';
+    char *priority = read_generic_123();
     data[5] = priority;
 
-    data[6] = NULL;
+    int result = save_file(data, "data/tasks.txt");
 
-    return save_file(data, "data/tasks.txt");
+    free(title);
+    free(description);
+    free(turn);
+    free(priority);
+
+    return result;
     
 }
 

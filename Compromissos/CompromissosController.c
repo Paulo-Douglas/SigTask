@@ -14,49 +14,56 @@
 
 
 int register_compromise(void){
-    char cpf[MAX_CPF_LENGTH];
-    printf("Digite o título: ");
-    char *title = read_string();
-    printf("Digite a descrição: ");
-    char *description = read_description();
-    char day_start[MAX_DAY_LENGHT];
-    char month_start[MAX_MONTH_LENGHT];
-    char day_end[MAX_DAY_LENGHT];
-    char month_end[MAX_MONTH_LENGHT];
-    char time[MAX_TIME_LENGHT];
-    char priority [MAX_PRIORITY_LENGHT];
-    int year = year_now();
-    char date_complete_start[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
-    char date_complete_end[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
+    limpa_buffer();
     const char *data[8];
+    data[7] = NULL;
+    int year = year_now();
 
+    char cpf[MAX_CPF_LENGTH];
     printf("Digite o CPF: ");
     read_cpf(cpf);
     data[0] = cpf;
+
+    printf("Digite o título: ");
+    char *title = read_string();
     data[1] = title;
+
+    printf("Digite a descrição: ");
+    char *description = read_description();
     data[2] = description;
 
+    char day_start[MAX_DAY_LENGHT];
+    char month_start[MAX_MONTH_LENGHT];
+    char date_complete_start[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
     printf("\t DATA INICIAL\n");
     read_date(day_start, month_start);
     snprintf(date_complete_start, sizeof(date_complete_start), "%s/%s/%d", day_start, month_start, year);
     data[3] = date_complete_start;
 
+    char day_end[MAX_DAY_LENGHT];
+    char month_end[MAX_MONTH_LENGHT];
+    char date_complete_end[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
     printf("\t DATA FINAL\n");
     read_date(day_end, month_end);
     snprintf(date_complete_end, sizeof(date_complete_end), "%s/%s/%d", day_end, month_end, year);
     data[4] = date_complete_end;
 
+    char time[MAX_TIME_LENGHT];
     printf("Digite o horário: ");
     read_time(time);
     data[5] = time;
 
     printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
-    read_generic_123(priority);
-    priority[1] = '\0';
+    char *priority = read_generic_123();
     data[6] = priority;
-    data[7] = NULL;
 
-    return save_file(data, "data/compromisers.txt");
+    int result = save_file(data, "data/compromisers.txt");
+
+    free(title);
+    free(description);
+    free(priority);
+
+    return result;
 }
 
 int search_compromiser_to_user(const char* cpf){
