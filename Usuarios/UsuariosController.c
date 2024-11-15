@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -27,15 +28,13 @@ int register_user(void){
     data[2] = phone;
     data[3] = NULL;
 
+    int result = save_file(data, "data/users.txt");
 
-    if(save_file(data, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
     free(name);
     free(cpf);
     free(phone);
+
+    return result;
 }
 
 int search_user(const char* cpf){
