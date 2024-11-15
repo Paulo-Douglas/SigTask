@@ -16,7 +16,8 @@ int register_task(void){
     char cpf[MAX_CPF_LENGTH];
     printf("Digite o título: ");
     char *title = read_string();
-    char description[MAX_DESCRIPTION_LENGTH];
+    printf("Digite a descrição: ");
+    char *description = read_description();
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
     char turn[MAX_TURN_LENGHT];
@@ -28,11 +29,7 @@ int register_task(void){
     printf("Digite o CPF: ");
     read_cpf(cpf);
     data[0] = cpf;
-    
     data[1] = title;
-
-    printf("Digite a descrição: ");
-    read_description(description);
     data[2] = description;
 
     printf("\t DATA\n");

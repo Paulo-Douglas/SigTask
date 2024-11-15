@@ -69,17 +69,23 @@ void read_cpf(char *cpf){
     limpa_buffer();
 }
 
-void read_description(char *description) {
+char* read_description(void) {
+    char *description;
+    int is_valid;
+    
     do {
-        fgets(description, MAX_DESCRIPTION_LENGTH, stdin);
-        description[strcspn(description, "\n")] = 0;
+        input(&description);
+        is_valid = validate_description(description);
 
-        if (validate_description(description) == FALSE) {
-            show_error("Descricão inválida! A descrição estar entre 10 e 50 caracteres!");
-            printf("Tente novamente: ");
+        if (!is_valid){
+            show_error("[ERROR] Entrada inválida!");  
+            printf("Tente novamente ");
+            free(description);
+        
         }
-    } while(validate_description(description) == FALSE);
-    limpa_buffer();
+    } while(!is_valid);
+      limpa_buffer();
+      return description;
 }
 
 void read_time(char *time){
@@ -108,3 +114,4 @@ void read_generic_123(char *input) {
     } while (*input < '1' || *input > '3');
     limpa_buffer();
 }
+

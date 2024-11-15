@@ -4,7 +4,7 @@
 char *read_string(void);
 void read_phone(char *phone);
 void read_cpf(char *cpf);
-void read_description(char *description);
+char* read_description(void);
 void read_time(char *time);
 void read_generic_123(char *input);
 void input(char **prompt);

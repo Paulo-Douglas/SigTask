@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "UsuariosView.h"
 #include "UsuariosController.h"
@@ -47,7 +48,7 @@ void exibir_dados_usuario(void) {
     printf("|                      Exibir Dados                   |\n");
     printf("-------------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
 
     printf("Informe o CPF: ");
     read_cpf(cpf);
@@ -62,6 +63,7 @@ void exibir_dados_usuario(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }
 
 void alterar_dados_usuario(void) {
@@ -70,7 +72,7 @@ void alterar_dados_usuario(void) {
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
 
     printf("Informe o CPF: ");
     read_cpf(cpf);
@@ -85,6 +87,7 @@ if(!search_user(cpf)){
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 
 }
 
@@ -94,7 +97,7 @@ void excluir_usuario(void) {
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
+    char *cpf = malloc(MAX_CPF_LENGTH);
 
     printf("Informe o CPF: ");
     read_cpf(cpf);
@@ -109,6 +112,7 @@ void excluir_usuario(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }
 
 void dados_usuario(void) {

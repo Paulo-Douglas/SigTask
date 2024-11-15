@@ -14,9 +14,9 @@ int register_academic_team(void){
     printf("Nome da equipe acadêmica: \n");
     
 
-    char description[MAX_DESCRIPTION_LENGTH];
+    char *description = read_description();
     printf("Descrição da equipe acadêmica: \n");
-    read_description(description);
+
 
     const char *data[3];
     data[0] = name_team;
@@ -32,9 +32,9 @@ int register_business_team(void){
     char *name_team = read_string();
     printf("Nome da equipe empresarial: \n");
  
-    char description[MAX_DESCRIPTION_LENGTH];
+    char *description = read_description();
     printf("Descrição da equipe empresarial: \n");
-    read_description(description);
+
 
     const char *data[3];
     data[0] = name_team;

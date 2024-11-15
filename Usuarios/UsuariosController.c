@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -8,13 +9,13 @@
 
 
 int register_user(void){
-    char name[MAX_NAME_LENGTH];
-    char cpf[MAX_CPF_LENGTH];
-    char phone[MAX_TEL_LENGTH];
+    printf("Informe o nome: ");
+    char *name = read_string();
+    char *cpf = malloc(MAX_CPF_LENGTH);
+    char *phone = malloc(MAX_TEL_LENGTH);
     const char *data[4];
 
-    printf("Informe o nome: ");
-    read_string(name);
+
     data[0] = name;
 
     printf("Informe o CPF: ");
@@ -32,7 +33,9 @@ int register_user(void){
     } else {
         return FALSE;
     }
-
+    free(name);
+    free(cpf);
+    free(phone);
 }
 
 int search_user(const char* cpf){
