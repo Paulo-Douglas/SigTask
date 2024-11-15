@@ -20,19 +20,23 @@ void input(char **prompt){
 
 }
 
-void read_string(char *title) {
+char *read_string(void) {
+    char *string;
+    int is_valid;
 
     do {
-        fgets(title, MAX_NAME_LENGTH, stdin);
-        title[strcspn(title, "\n")] = 0;
-        printf("\n");
+        input(&string);
+        is_valid = validate_name(string);
 
-        if (!validate_name(title)) {
-            show_error("Inválido ou muito longo (maior que 50 caracteres)");            
+        if (!is_valid) {
+            show_error("[ERROR] Entrada inválida!");            
             printf("Tente novamente: ");
+            free(string);
         }
-    } while(validate_name(title) == FALSE);
+    } while(!is_valid);
+
     limpa_buffer();
+    return string;
 }
 
 
