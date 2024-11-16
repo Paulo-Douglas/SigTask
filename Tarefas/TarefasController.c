@@ -15,8 +15,8 @@ int register_task(void){
     limpa_buffer();
 
     char date_complete[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
-    const char *data[7];
-    data[6] = NULL;
+    const char *data[8];
+    data[7] = NULL;
     int year = year_now();
 
     printf("Digite o CPF: ");
@@ -46,6 +46,8 @@ int register_task(void){
     char *priority = read_generic_123();
     data[5] = priority;
 
+    data[6] = "Aberto";
+
     int result = save_file(data, "data/tasks.txt");
 
     free(title);
@@ -59,20 +61,9 @@ int register_task(void){
 }
 
 int search_task_to_user(const char* cpf){
-    if(cpf_unique_user(cpf, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-        
+    return cpf_unique_user(cpf, "data/users.txt");
 }
 
 int upload_data_task(const char* cpf){
-
-    if(load_task(cpf)){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
-    return TRUE;
+    return load_task(cpf);
 }

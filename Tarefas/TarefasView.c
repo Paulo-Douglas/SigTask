@@ -44,7 +44,6 @@ void cadastrar_tarefas(void) {
 
 
 void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
-    limpa_buffer();
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Exibir tarefas                |\n");
@@ -63,7 +62,7 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     }
     free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 }
 
 
@@ -84,7 +83,7 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     }   
     free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 
 }
 
@@ -108,7 +107,7 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
     }   
     free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 }
 
 void dados_tarefas(void) { // será implementado as variveis de cada dado
@@ -127,7 +126,4 @@ void alterar_dados_tarefas(void) {
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|   CPF   |    1   ->   Título       |             2   ->   Descrição                | 3 -> Data | 4 -> Turno |  5 -> Prioridade  | 6 -> Status |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
 }
