@@ -50,6 +50,8 @@ int load_user(const char *cpf){
         }
     }
 
+    fclose(fp);
+
     return found;
 
 }
