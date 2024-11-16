@@ -23,8 +23,7 @@
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
-    scanf("%c", &op);
-    getchar();
+    scanf(" %c", &op);
     return op;
 }
 

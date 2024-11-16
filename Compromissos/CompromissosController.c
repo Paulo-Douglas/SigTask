@@ -15,6 +15,8 @@
 
 int register_compromise(void){
     limpa_buffer();
+    printf("|-----------------------------------------------------------------------------------|\n");
+    printf("|                              REGISTRO DE COMPROMISSOS                             |\n");
     const char *data[8];
     data[7] = NULL;
     int year = year_now();
@@ -33,7 +35,7 @@ int register_compromise(void){
 
     char day_start[MAX_DAY_LENGHT];
     char month_start[MAX_MONTH_LENGHT];
-    char date_complete_start[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
+    char date_complete_start[MAX_CALENDAR_LENGHT];
     printf("\t DATA INICIAL\n");
     read_date(day_start, month_start);
     snprintf(date_complete_start, sizeof(date_complete_start), "%s/%s/%d", day_start, month_start, year);
@@ -41,7 +43,7 @@ int register_compromise(void){
 
     char day_end[MAX_DAY_LENGHT];
     char month_end[MAX_MONTH_LENGHT];
-    char date_complete_end[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
+    char date_complete_end[MAX_CALENDAR_LENGHT];
     printf("\t DATA FINAL\n");
     read_date(day_end, month_end);
     snprintf(date_complete_end, sizeof(date_complete_end), "%s/%s/%d", day_end, month_end, year);
@@ -55,6 +57,8 @@ int register_compromise(void){
     printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
     char *priority = read_generic_123();
     data[6] = priority;
+    printf("|-----------------------------------------------------------------------------------|\n");
+
 
     int result = save_file(data, "data/compromisers.txt");
 
