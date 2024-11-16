@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include "NavigationUser.h"
 #include "UsuariosView.h"
+
 #include "../libs/utils.h"
 
 void navegacao_usuarios(void){

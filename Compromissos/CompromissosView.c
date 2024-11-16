@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "CompromissosController.h"
 #include "CompromissosView.h"
@@ -22,8 +23,7 @@
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
-    scanf("%c", &op);
-    getchar();
+    scanf(" %c", &op);
     return op;
 }
 
@@ -50,9 +50,8 @@ void exibir_compromissos(void) {
     printf("|                 Exibir Compromissos            | \n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -64,6 +63,7 @@ void exibir_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }    
 
 void editar_compromissos(void) { 
@@ -72,9 +72,8 @@ void editar_compromissos(void) {
     printf("|                 Editar Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -84,6 +83,7 @@ void editar_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 
 }
 
@@ -93,9 +93,8 @@ void excluir_compromissos(void) {
     printf("|                Excluir Compromissos            |\n");
     printf("--------------------------------------------------\n");
     
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_compromiser_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -107,6 +106,7 @@ void excluir_compromissos(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     getchar(); 
+    free(cpf);
 }
 
 void dados_compromissos(void) { // será implementado as variveis de cada dado

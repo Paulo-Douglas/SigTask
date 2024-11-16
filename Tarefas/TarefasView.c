@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "TarefasView.h"
 #include "TarefasController.h"
@@ -48,9 +49,8 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     printf("|                  Exibir tarefas                |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -59,9 +59,10 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
         if(!upload_data_task(cpf)){
             show_error("Erro ao carregar as tarefas do usuário!\n");
         }
-    }   
+    }
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 }
 
 
@@ -71,9 +72,8 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     printf("|                  Editar Tarefas                |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -81,8 +81,9 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
         alterar_dados_tarefas();
         upload_data_task(cpf);
     }   
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 
 }
 
@@ -93,9 +94,8 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
     printf("|                  Excluir Tarefas               |\n");
     printf("--------------------------------------------------\n");
 
-    char cpf[MAX_CPF_LENGTH];
-    printf("Informe seu CPF: ");
-    read_cpf(cpf);
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
 
     if(!search_task_to_user(cpf)){
         show_error("CPF não encontrado!\n");
@@ -105,8 +105,9 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
             show_error("Erro ao carregar as tarefas do usuário!\n");
         }
     }   
+    free(cpf);
     printf("Tecle <ENTER> para continuar...");
-    getchar(); 
+    limpa_buffer(); 
 }
 
 void dados_tarefas(void) { // será implementado as variveis de cada dado
@@ -125,7 +126,4 @@ void alterar_dados_tarefas(void) {
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|   CPF   |    1   ->   Título       |             2   ->   Descrição                | 3 -> Data | 4 -> Turno |  5 -> Prioridade  | 6 -> Status |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
 }

@@ -8,6 +8,13 @@
 
 #include "UsuariosModel.h"
 
+typedef struct
+{
+    char *name;
+    char *cpf;
+    char *phone;
+} User;
+
 
 int load_user(const char *cpf){
     User usuario;
@@ -15,7 +22,7 @@ int load_user(const char *cpf){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_CPF_LENGTH + MAX_NAME_LENGTH + MAX_TEL_LENGTH + 3];
+    char line[MAX_LINE_LENGTH];
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) && !found){
@@ -23,20 +30,19 @@ int load_user(const char *cpf){
         char *cpf_line = strtok(line, ",");
 
         if(strcmp(cpf_line, cpf) == 0){
+            usuario.cpf = cpf_line;
+
             char *name_line = strtok(NULL, ",");
             name_line[strcspn(name_line, "\n")] = 0;
+            usuario.name = name_line;
 
             char *phone_line = strtok(NULL, ",");
             phone_line[strcspn(phone_line, "\n")] = 0;
+            usuario.phone = phone_line;
 
-            strcpy(usuario.cpf, cpf_line);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
             printf("| CPF: %s\n", usuario.cpf);
-
-            strcpy(usuario.name, name_line);
             printf("| Nome: %s\n", usuario.name);
-
-            strcpy(usuario.phone, phone_line);
             printf("| Telefone: %s\n", usuario.phone);
             printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
 
@@ -44,6 +50,8 @@ int load_user(const char *cpf){
         }
     }
 
-    return TRUE ? found : FALSE;
+    fclose(fp);
+
+    return found;
 
 }

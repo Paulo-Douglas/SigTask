@@ -2,7 +2,7 @@
 #define VALIDATE_H
 
 int valid_phone(char *telephone);
-int length_prompt(char *prompt, int maxLength, int minLength);
+int length_prompt(char *prompt, int minLength);
 int validate_name(char *name);
 int validate_description(char *description);
 int validate_cpf(char cpf[]);

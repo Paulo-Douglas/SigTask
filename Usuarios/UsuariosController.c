@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -8,31 +10,28 @@
 
 
 int register_user(void){
-    char name[MAX_NAME_LENGTH];
-    char cpf[MAX_CPF_LENGTH];
-    char phone[MAX_TEL_LENGTH];
     const char *data[4];
-
-    printf("Informe o nome: ");
-    read_string(name);
-    data[0] = name;
-
-    printf("Informe o CPF: ");
-    read_cpf(cpf);
-    data[1] = cpf;
-
-    printf("Informe o telefone: ");
-    read_phone(phone);
-    data[2] = phone;
     data[3] = NULL;
 
+    printf("Informe o CPF: ");
+    char *cpf = read_cpf();
+    data[0] = cpf;
 
-    if(save_file(data, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    printf("Informe o nome: ");
+    char *name = read_string();
+    data[1] = name;
 
+    printf("Informe o telefone: ");
+    char *phone = read_phone();
+    data[2] = phone;
+
+    int result = save_file(data, "data/users.txt");
+
+    free(name);
+    free(cpf);
+    free(phone);
+
+    return result;
 }
 
 int search_user(const char* cpf){

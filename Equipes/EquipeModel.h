@@ -3,12 +3,6 @@
 
 #include "../libs/utils.h"
 
-typedef struct
-{
-  char team_name[MAX_NAME_LENGTH];
-  char description[MAX_DESCRIPTION_LENGTH];
-} Team;
-
 
 int view_team(char *name, char *file);
 
