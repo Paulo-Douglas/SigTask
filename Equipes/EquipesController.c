@@ -10,12 +10,12 @@
 
 
 int register_academic_team(void){
-    char *name_team = read_string();
     printf("Nome da equipe acadêmica: \n");
+    char *name_team = read_string();
     
 
-    char *description = read_description();
     printf("Descrição da equipe acadêmica: \n");
+    char *description = read_description();
 
 
     const char *data[3];
@@ -33,11 +33,11 @@ int register_academic_team(void){
 }
 
 int register_business_team(void){
-    char *name_team = read_string();
     printf("Nome da equipe empresarial: \n");
+    char *name_team = read_string();
 
-    char *description = read_description();
     printf("Descrição da equipe empresarial: \n");
+    char *description = read_description();
 
     const char *data[3];
     data[0] = name_team;
@@ -55,8 +55,8 @@ int register_business_team(void){
 
 int search_team(void) {
     int result = FALSE;
-    char *name_team = read_string();
     printf("Nome da equipe a ser buscada:\n");
+    char *name_team = read_string();
 
     char file;
     printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
