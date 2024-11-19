@@ -4,9 +4,10 @@
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
-#include "../libs/utils.h"
+#include "../libs/reads.h"
 
 #include "UsuariosModel.h"
+
 
 typedef struct
 {
@@ -17,41 +18,85 @@ typedef struct
 
 
 int load_user(const char *cpf){
-    User usuario;
 
-    FILE *fp = fopen("data/users.txt", "r");
-    if(fp == NULL) return FALSE;
+               // aqui faz uma tela
 
-    char line[MAX_LINE_LENGTH];
-    int found = FALSE;
-
-    while (fgets(line, sizeof(line), fp) && !found){
-
-        char *cpf_line = strtok(line, ",");
-
-        if(strcmp(cpf_line, cpf) == 0){
-            usuario.cpf = cpf_line;
-
-            char *name_line = strtok(NULL, ",");
-            name_line[strcspn(name_line, "\n")] = 0;
-            usuario.name = name_line;
-
-            char *phone_line = strtok(NULL, ",");
-            phone_line[strcspn(phone_line, "\n")] = 0;
-            usuario.phone = phone_line;
-
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-            printf("| CPF: %s\n", usuario.cpf);
-            printf("| Nome: %s\n", usuario.name);
-            printf("| Telefone: %s\n", usuario.phone);
-            printf("|+------------------------+-------------------------+-------------------------+------------------------+|\n");
-
-            found = TRUE;
-        }
+    FILE *arquivo_usuarios = fopen("usuarios.txt", "rb+");
+    if (arquivo_usuarios == NULL){
+        printf("Não há usuários cadastrados para editar ");
+        printf("Pressione ENTER para continuar ");
+        getchar();
     }
 
-    fclose(fp);
 
-    return found;
+    if (!cpf_unique_user(cpf, "usuarios.txt")){
+        printf("CPF não encontrado! ");
+        return FALSE;
+    }
+    else{
+        User user;
 
+        FILE *fp = fopen("data/users.txt", "r");
+        if(fp == NULL) return FALSE;
+        const char *data[4];
+        data[3] = NULL;
+        int found = FALSE;
+        while(fread(&user, sizeof(User), 1, arquivo_usuarios)){
+            if(strcmp(user.cpf, cpf) == 0){
+                int op;
+                printf("\n");
+                printf("----------------------------------------------------\n");
+                printf("|                    Alterar dados                 |\n");
+                printf("----------------------------------------------------\n");
+                printf("|               [1] Nome                           |\n");
+                printf("|               [2] Telefone                       |\n");
+                printf("|               [3] Todos os dados                 |\n");
+                printf("|               [0] Sair                           |\n");
+                printf("----------------------------------------------------\n");
+                printf("Escolha a opção desejada: ");
+                scanf(" %d", &op);
+
+                switch (op)
+                {
+                case 1:
+                    printf("Informe o nome: ");
+                    char *name = read_string();
+                    data[1] = name;   
+                    break;
+                case 2:
+                    printf("Informe o telefone: ");
+                    char *phone = read_phone();
+                    data[2] = phone;  
+                    break;
+                case 3:
+                    printf("Informe o nome: ");
+                    char *name1 = read_string();
+                    data[1] = name1; 
+                    printf("Informe o telefone: ");
+                    char *phone2 = read_phone();
+                    data[2] = phone2;    
+
+                default:{
+                    printf("Opção inválida");
+                }
+                
+                fseek(arquivo_usuarios, -sizeof(User), SEEK_CUR);
+                fwrite(&user , sizeof(User), 1, arquivo_usuarios);
+                int result = save_file(data, "data/users.txt");
+
+                free(name);
+                free(phone);
+                return result;
+
+                fclose(fp);
+
+                return found;
+                
+            }
+        }
+    }
+    }
+    return TRUE;
 }
+
+
