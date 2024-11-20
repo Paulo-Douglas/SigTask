@@ -15,12 +15,15 @@ int register_user(void){
     printf("|\tCPF: ");
     users.cpf = read_cpf();
 
+    if(cpf_unique_user(users.cpf, "data/users.txt")){
+        return FALSE;
+    }
+
     printf("|\tNome: ");
     users.name = read_string();
 
     printf("|\tTelefone: ");
     users.phone = read_phone();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
 
     int result = insert_to_user(&users, "data/users.txt");
 

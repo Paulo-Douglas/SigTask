@@ -97,7 +97,7 @@ int cpf_unique_user(const char *cpf, const char *file){
 
     while (fgets(line, sizeof(line), fp)) {
 
-        cpf_user = strtok(line, ",");
+        cpf_user = strtok(line, ":");
         // Comparação de vetores
         if (strcmp(cpf, cpf_user) == 0) {
             fclose(fp);
@@ -106,7 +106,6 @@ int cpf_unique_user(const char *cpf, const char *file){
 
     }
 
-    free(cpf_user);
     fclose(fp);
     return FALSE;
 
