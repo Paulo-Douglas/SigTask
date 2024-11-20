@@ -18,6 +18,6 @@ int insert_to_user(User *users, const char* file_name);
 int update_name_in_file(User *users, const char* file_name);
 int update_phone_in_file(User *users, const char *file_name);
 int select_all_user(const char *file_name);
-int load_user(const char *cpf);
+int load_user(const char* cpf, User **users);
 
 #endif // USUARIOSMODEL_H

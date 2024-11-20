@@ -56,22 +56,25 @@ void exibir_dados_usuario(void) {
 
 void alterar_dados_usuario(void) {
     limpar_tela();
-    limpa_buffer();
     printf("-------------------------------------------------------\n");
     printf("|                      Alterar Dados                  |\n");
     printf("-------------------------------------------------------\n");
 
+    User users = {NULL, NULL, NULL};
+
     printf("Informe o CPF: ");
     char *cpf = read_cpf();
 
-    if(!search_user(cpf)){
-        show_error("CPF não encontrado!\n");
+    if(!upload_data_user(cpf, &users)){
+        show_error("Erro ao carregar os dados do usuário!\n");
     } else {
-        menu_alterar_usuario();
-        if(!upload_data_user(cpf)){
-            show_error("Erro ao carregar os dados do usuário!\n");
-        }
-    }   
+        printf("-------------------------------------------------------\n");
+        printf("|CPF: %s\n", users.cpf);
+        printf("|Nome: %s\n", users.name);
+        printf("|Telefone: %s\n", users.phone);
+        printf("-------------------------------------------------------\n");   
+    }
+
     printf("Tecle <ENTER> para continuar...");
     limpa_buffer();
 }
@@ -82,6 +85,9 @@ void excluir_usuario(void) {
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 
+    User users = {NULL, NULL, NULL};
+
+
     printf("Informe o CPF: ");
     char *cpf = read_cpf();
 
@@ -89,7 +95,7 @@ void excluir_usuario(void) {
         show_error("CPF não encontrado!\n");
     } else {
         dados_usuario();
-        if(!upload_data_user(cpf)){
+        if(!upload_data_user(cpf, &users)){
             show_error("Erro ao carregar os dados do usuário!\n");
         }
     }   
