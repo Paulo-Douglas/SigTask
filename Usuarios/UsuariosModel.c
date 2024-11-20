@@ -14,7 +14,7 @@ int insert_to_user(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%s:%-229s;%s\n", users->cpf, users->name, users->phone);
+    fprintf(fp, "%s:%-229s;%s;1\n", users->cpf, users->name, users->phone);
     fclose(fp);
     return TRUE;
 }
@@ -115,7 +115,8 @@ int select_all_user(const char *file_name){
     while(fgets(line, sizeof(line), fp)){
         char *cpf = strtok(line, ":");
         char *name = strtok(NULL, ";");
-        char *phone = strtok(NULL, "\n");
+        char *phone = strtok(NULL, ";");
+        char *status = strtok(NULL, "\n");
 
         if (name != NULL) {
             while(isspace((unsigned char)*name)) name++;
@@ -124,7 +125,7 @@ int select_all_user(const char *file_name){
             *(end + 1) = '\0';
         }
 
-        if(cpf && name && phone) {
+        if(cpf && name && phone && *status == '1') {
             printf("| CPF: %s:\tNOME: %s\tTELEFONE: %s\n", cpf, name, phone);
             printf("|------------------------------------------------+-----+------------------------------------------------|\n");
         }
