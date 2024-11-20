@@ -19,33 +19,92 @@ int insert_to_user(User *users, const char* file_name){
     return TRUE;
 }
 
-int udpate_user(User *users, const char* file_name){
-    const char *file_temp = "/data/temp.txt";
+// int udpate_user(User *users, const char* file_name){
+//     const char *file_temp = "/data/temp.txt";
 
+//     FILE *fp = fopen(file_name, "r");
+//     if (fp == NULL) return FALSE;
+
+//     FILE *fp_temp = fopen(file_temp, "w");
+//     if (fp_temp == NULL) return FALSE;
+
+//     char line[MAX_LINE_LENGTH];
+//     while(fgets(line, sizeof(line), fp)){
+//         if (strstr(line, users->cpf) == NULL){
+//             fprintf(fp_temp, "%s", line);
+//         }
+//         else{
+//             fprintf(fp_temp, "%s:%-229s;%s", users->cpf, users->name, users->phone);
+//         }
+//     }
+
+//     fclose(fp);
+//     fclose(fp_temp);
+
+//     remove(file_name);
+//     rename(file_temp, file_name);
+
+//     return TRUE;
+
+// }
+
+int update_name_in_file(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "r");
     if (fp == NULL) return FALSE;
 
-    FILE *fp_temp = fopen(file_temp, "w");
-    if (fp_temp == NULL) return FALSE;
+    char line[LINE_SIZE];
+    long pos; // Cursor
+    int found = FALSE;
 
-    char line[MAX_LINE_LENGTH];
-    while(fgets(line, sizeof(line), fp)){
-        if (strstr(line, users->cpf) == NULL){
-            fprintf(fp_temp, "%s", line);
-        }
-        else{
-            fprintf(fp_temp, "%s:%-229s;%s", users->cpf, users->name, users->phone);
+    while (fgets(line, LINE_SIZE, fp) != NULL){
+        if (strstr(line, users->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *delimiter_pos = strchr(line, ':');
+            if (delimiter_pos != NULL){
+                long name_pos = pos + (delimiter_pos - line) + 1;
+
+                // Posiciona cursor
+                fseek(fp, name_pos, SEEK_SET);
+                fprintf(fp, "%-229s", users->name);
+                fflush(fp);
+                found = TRUE;
+            }
+
+            break;
+
         }
     }
+    return found;
+}
 
-    fclose(fp);
-    fclose(fp_temp);
+int update_phone_in_file(User *users, const char *file_name){
+    FILE *fp = fopen(file_name, "r");
+    if (fp == NULL) return FALSE;
 
-    remove(file_name);
-    rename(file_temp, file_name);
+    char line[LINE_SIZE];
+    long pos; // Cursor
+    int found = FALSE;
 
-    return TRUE;
+    while (fgets(line, LINE_SIZE, fp) != NULL){
+        if (strstr(line, users->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
 
+            char *delimiter_pos = strchr(line, ';');
+            if (delimiter_pos != NULL){
+                long phone_pos = pos + (delimiter_pos - line) + 1;
+
+                // Posiciona cursor
+                fseek(fp, phone_pos, SEEK_SET);
+                fprintf(fp, "%s", users->phone);
+                fflush(fp);
+                found = TRUE;
+            }
+
+            break;            
+        }
+    }
+    return found;
 }
 
 int select_all_user(const char *file_name){

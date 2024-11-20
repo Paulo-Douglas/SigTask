@@ -10,7 +10,7 @@
 
 
 int register_user(void){
-    User users;
+    User users = {NULL, NULL, NULL};
 
     printf("Informe o CPF: ");
     input(&users.cpf);
