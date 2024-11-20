@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -13,7 +14,7 @@ int insert_to_user(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%s:%-229s;%s\n", users->cpf, users->name, users->phone);
+    fprintf(fp, "%s:%-232s;%s\n", users->cpf, users->name, users->phone);
     fclose(fp);
     return TRUE;
 }
@@ -47,6 +48,32 @@ int udpate_user(User *users, const char* file_name){
 
 }
 
+int select_all_user(const char *file_name){
+    FILE *fp = fopen(file_name, "r");
+    if(fp == NULL) return FALSE;
+
+    char line[259];
+    while(fgets(line, sizeof(line), fp)){
+        char *cpf = strtok(line, ":");
+        char *name = strtok(NULL, ";");
+        char *phone = strtok(NULL, "\n");
+
+        if (name != NULL) {
+            while(isspace((unsigned char)*name)) name++;
+            char *end = name + strlen(name) - 1;
+            while(end > name && isspace((unsigned char)*end)) end--;
+            *(end + 1) = '\0';
+        }
+
+        if(cpf && name && phone) {
+            printf("| CPF: %s:\tNOME: %s\tTELEFONE: %s\n", cpf, name, phone);
+            printf("|------------------------------------------------+-----+------------------------------------------------|\n");
+        }
+    }
+
+    fclose(fp);
+    return TRUE;
+}
 
 int load_user(const char *cpf){
 

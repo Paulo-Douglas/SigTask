@@ -4,6 +4,7 @@
 
 #include "UsuariosView.h"
 #include "UsuariosController.h"
+#include "UsuariosModel.h"
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -39,31 +40,20 @@ void cadastrar_usuarios() {
     if(register_user()){
         show_sucess("Cadastrado com sucesso! <ENTER> para continuar\n");
     } else {
-        show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar \n<ENTER> para continuar\n");
+        show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar <ENTER> para continuar\n");
     }
     limpa_buffer();
 }
 
 void exibir_dados_usuario(void) {
     limpar_tela();
-    printf("-------------------------------------------------------\n");
-    printf("|                      Exibir Dados                   |\n");
-    printf("-------------------------------------------------------\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                               Exibir Dados                                            |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
 
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_usuario();
-        if(!upload_data_user(cpf)){
-            show_error("Erro ao carregar os dados do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
+    select_all_user("data/users.txt");
+    printf("| Tecle <ENTER> para continuar...");
     limpa_buffer();
-    free(cpf);
 }
 
 void alterar_dados_usuario(void) {
@@ -86,8 +76,6 @@ void alterar_dados_usuario(void) {
     }   
     printf("Tecle <ENTER> para continuar...");
     limpa_buffer();
-    free(cpf);
-
 }
 
 void excluir_usuario(void) {
