@@ -10,43 +10,30 @@
 
 
 int register_user(void){
-    const char *data[4];
-    data[3] = NULL;
+    User users;
 
     printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-    data[0] = cpf;
+    input(&users.cpf);
 
     printf("Informe o nome: ");
-    char *name = read_string();
-    data[1] = name;
+    input(&users.name);
 
     printf("Informe o telefone: ");
-    char *phone = read_phone();
-    data[2] = phone;
+    input(&users.phone);
 
-    int result = save_file(data, "data/users.txt");
+    int result = insert_to_user(&users, "data/users.txt");
 
-    free(name);
-    free(cpf);
-    free(phone);
+    free(users.name);
+    free(users.cpf);
+    free(users.phone);
 
     return result;
 }
 
 int search_user(const char* cpf){
-    if(cpf_unique_user(cpf, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    return cpf_unique_user(cpf, "data/users.txt");
 }
 
 int upload_data_user(const char* cpf){
-
-    if(load_user(cpf)){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    return load_user(cpf);
 }

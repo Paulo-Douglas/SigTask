@@ -9,12 +9,14 @@
 #include "UsuariosModel.h"
 
 
-typedef struct
-{
-    char *name;
-    char *cpf;
-    char *phone;
-} User;
+int insert_to_user(User *users, const char* file_name){
+    FILE *fp = fopen(file_name, "a");
+    if(fp == NULL) return FALSE;
+
+    fprintf(fp, "%s:%-229s;%s\n", users->cpf, users->name, users->phone);
+    fclose(fp);
+    return TRUE;
+}
 
 
 int load_user(const char *cpf){
