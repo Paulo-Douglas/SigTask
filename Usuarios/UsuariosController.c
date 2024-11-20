@@ -10,26 +10,22 @@
 
 
 int register_user(void){
-    const char *data[4];
-    data[3] = NULL;
+    User users;
 
     printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-    data[0] = cpf;
+    input(&users.cpf);
 
     printf("Informe o nome: ");
-    char *name = read_string();
-    data[1] = name;
+    input(&users.name);
 
     printf("Informe o telefone: ");
-    char *phone = read_phone();
-    data[2] = phone;
+    input(&users.phone);
 
-    int result = save_file(data, "data/users.txt");
+    int result = insert_to_user(&users, "data/users.txt");
 
-    free(name);
-    free(cpf);
-    free(phone);
+    free(users.name);
+    free(users.cpf);
+    free(users.phone);
 
     return result;
 }
