@@ -12,14 +12,15 @@
 int register_user(void){
     User users = {NULL, NULL, NULL};
 
-    printf("Informe o CPF: ");
-    input(&users.cpf);
+    printf("|\tCPF: ");
+    users.cpf = read_cpf();
 
-    printf("Informe o nome: ");
-    input(&users.name);
+    printf("|\tNome: ");
+    users.name = read_string();
 
-    printf("Informe o telefone: ");
-    input(&users.phone);
+    printf("|\tTelefone: ");
+    users.phone = read_phone();
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
 
     int result = insert_to_user(&users, "data/users.txt");
 
