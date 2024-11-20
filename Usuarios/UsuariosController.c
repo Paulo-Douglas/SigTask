@@ -31,18 +31,9 @@ int register_user(void){
 }
 
 int search_user(const char* cpf){
-    if(cpf_unique_user(cpf, "data/users.txt")){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    return cpf_unique_user(cpf, "data/users.txt");
 }
 
 int upload_data_user(const char* cpf){
-
-    if(load_user(cpf)){
-        return TRUE;
-    } else {
-        return FALSE;
-    }
+    return load_user(cpf);
 }
