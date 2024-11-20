@@ -38,3 +38,34 @@ int search_user(const char* cpf){
 int upload_data_user(const char* cpf, User *users){
     return load_user(cpf, &users);
 }
+
+int update_data_user(User *users) {
+    char opc = '\0';
+    int update = FALSE;
+
+    do {
+        printf("| Escolha uma opção para alterar: (1) Nome, (2) Telefone, (0) Sair: \n");
+        opc = getchar();
+        getchar();
+        switch (opc) {
+            case '1':
+                printf("|\tNome: ");
+                users->name = read_string();
+                update = update_name_in_file(users, "data/users.txt");
+                break;
+            case '2':
+                printf("|\tTelefone: ");
+                users->phone = read_phone();
+                update = update_phone_in_file(users, "data/users.txt");
+                break;
+            case '0':
+                update = TRUE;
+                break;
+            default:
+                printf("| Opção inválida! Tente novamente.\n");
+                break;
+        }
+    } while (opc != '0');
+
+    return update;
+}

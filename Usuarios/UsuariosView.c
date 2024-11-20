@@ -8,6 +8,7 @@
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
+#include "../libs/styles.h"
 
 
 char menu_usuarios(void) {
@@ -56,26 +57,29 @@ void exibir_dados_usuario(void) {
 
 void alterar_dados_usuario(void) {
     limpar_tela();
-    printf("-------------------------------------------------------\n");
-    printf("|                      Alterar Dados                  |\n");
-    printf("-------------------------------------------------------\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                               Alterar Dados                                           |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
 
     User users = {NULL, NULL, NULL};
 
     printf("Informe o CPF: ");
     char *cpf = read_cpf();
+    int result = FALSE;
 
     if(!upload_data_user(cpf, &users)){
         show_error("Erro ao carregar os dados do usuário!\n");
     } else {
-        printf("-------------------------------------------------------\n");
-        printf("|CPF: %s\n", users.cpf);
-        printf("|Nome: %s\n", users.name);
-        printf("|Telefone: %s\n", users.phone);
-        printf("-------------------------------------------------------\n");   
+        dados_usuario(&users);
+        result = update_data_user(&users);   
     }
 
-    printf("Tecle <ENTER> para continuar...");
+    if (result){
+        show_sucess("Dados alterados com sucesso! <ENTER> para continuar\n");
+    } else {
+        show_error("[ERRO]: Erro ao alterar <ENTER> para continuar\n");
+    }
+
     limpa_buffer();
 }
 
@@ -85,36 +89,15 @@ void excluir_usuario(void) {
     printf("|                     Excluir Usuário                 |\n");
     printf("-------------------------------------------------------\n");
 
-    User users = {NULL, NULL, NULL};
-
-
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_usuario();
-        if(!upload_data_user(cpf, &users)){
-            show_error("Erro ao carregar os dados do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    limpa_buffer();
-    free(cpf);
 }
 
-void dados_usuario(void) {
+void dados_usuario(User *users) {
+    limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                            Dados do Usuário                                           |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-
-}
-
-void menu_alterar_usuario(void) {
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                       Alterar Dados do Usuário                                        |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|   ID   |           1      ->     Nome                         |  2 -> CPF   |  3   ->  Telefone       |\n");
+    printf("|CPF: %s\n", users->cpf);
+    printf("|Nome: %s\n", users->name);
+    printf("|Telefone: %s\n", users->phone);
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }

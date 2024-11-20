@@ -6,5 +6,6 @@
 int register_user(void);
 int search_user(const char* cpf);
 int upload_data_user(const char* cpf, User *users);
+int update_data_user(User *users);
 
 #endif // USUARIOSCONTROLLER_H

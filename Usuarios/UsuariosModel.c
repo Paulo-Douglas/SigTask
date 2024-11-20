@@ -49,7 +49,7 @@ int insert_to_user(User *users, const char* file_name){
 // }
 
 int update_name_in_file(User *users, const char* file_name){
-    FILE *fp = fopen(file_name, "r");
+    FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
     char line[LINE_SIZE];
@@ -79,7 +79,7 @@ int update_name_in_file(User *users, const char* file_name){
 }
 
 int update_phone_in_file(User *users, const char *file_name){
-    FILE *fp = fopen(file_name, "r");
+    FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
     char line[LINE_SIZE];
