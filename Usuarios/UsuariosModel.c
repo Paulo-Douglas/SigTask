@@ -18,6 +18,35 @@ int insert_to_user(User *users, const char* file_name){
     return TRUE;
 }
 
+int udpate_user(User *users, const char* file_name){
+    const char *file_temp = "/data/temp.txt";
+
+    FILE *fp = fopen(file_name, "r");
+    if (fp == NULL) return FALSE;
+
+    FILE *fp_temp = fopen(file_temp, "w");
+    if (fp_temp == NULL) return FALSE;
+
+    char line[MAX_LINE_LENGTH];
+    while(fgets(line, sizeof(line), fp)){
+        if (strstr(line, users->cpf) == NULL){
+            fprintf(fp_temp, "%s", line);
+        }
+        else{
+            fprintf(fp_temp, "%s:%-229s;%s", users->cpf, users->name, users->phone);
+        }
+    }
+
+    fclose(fp);
+    fclose(fp_temp);
+
+    remove(file_name);
+    rename(file_temp, file_name);
+
+    return TRUE;
+
+}
+
 
 int load_user(const char *cpf){
 
