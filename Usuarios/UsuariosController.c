@@ -34,10 +34,6 @@ int register_user(void){
     return result;
 }
 
-int search_user(const char* cpf){
-    return cpf_unique_user(cpf, "data/users.txt");
-}
-
 int upload_data_user(const char* cpf, User *users){
     return load_user(cpf, &users);
 }

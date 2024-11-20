@@ -65,21 +65,21 @@ void alterar_dados_usuario(void) {
 
     User users = {NULL, NULL, NULL};
 
-    printf("Informe o CPF: ");
+    printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
 
     if(!upload_data_user(cpf, &users)){
-        show_error("Erro ao carregar os dados do usuário!\n");
+        show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
         dados_usuario(&users);
         result = update_data_user(&users);   
     }
 
     if (result){
-        show_sucess("Dados alterados com sucesso! <ENTER> para continuar\n");
+        show_sucess("| Dados alterados com sucesso! <ENTER> para continuar\n");
     } else {
-        show_error("[ERRO]: Erro ao alterar <ENTER> para continuar\n");
+        show_error("| [ERRO]: Erro ao alterar <ENTER> para continuar\n");
     }
 
     limpa_buffer();
@@ -87,10 +87,22 @@ void alterar_dados_usuario(void) {
 
 void excluir_usuario(void) {
     limpar_tela();
-    printf("-------------------------------------------------------\n");
-    printf("|                     Excluir Usuário                 |\n");
-    printf("-------------------------------------------------------\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                             Excluir Usuário                                           |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
 
+    User users = {NULL, NULL, NULL};
+    printf("| Informe o CPF: ");
+    char *cpf = read_cpf();
+    int result = FALSE;
+
+    if(!upload_data_user(cpf, &users)){
+        show_error("| Erro ao carregar os dados do usuário!\n");
+    } else {
+        dados_usuario(&users);
+    }
+
+    limpa_buffer();
 }
 
 void dados_usuario(User *users) {
