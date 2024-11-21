@@ -11,54 +11,66 @@
 #include "TarefasController.h"
 #include "TarefasModel.h"
 
-int register_task(void){
+int register_task(void) {
     limpa_buffer();
+    Tasks task = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
-    char date_complete[MAX_DAY_LENGHT + MAX_MONTH_LENGHT + MAX_YEAR_LENGHT];
-    const char *data[8];
-    data[7] = NULL;
-    int year = year_now();
+    printf("|\tCPF: ");
+    task.cpf = read_cpf();
 
-    printf("Digite o CPF: ");
-    char *cpf = read_cpf();
-    data[0] = cpf;
+    printf("|\tTítulo: ");
+    task.title = read_string();
 
-    printf("Digite o título: ");
-    char *title = read_string();
-    data[1] = title;
-
-    printf("Digite a descrição: ");
-    char *description = read_description();
-    data[2] = description;
+    printf("|\tDescrição: ");
+    task.description = read_description();
 
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
+    int year = year_now();
     printf("\t DATA\n");
     read_date(day, month);
-    snprintf(date_complete, sizeof(date_complete), "%s/%s/%d", day, month, year);
-    data[3] = date_complete;
 
-    printf("Digite o turno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
-    char *turn = read_generic_123();
-    data[4] = turn;
+    task.data = malloc(sizeof(char) * 12);
+    snprintf(task.data, 12, "%s/%s/%d", day, month, year);
 
-    printf("Digite a prioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
-    char *priority = read_generic_123();
-    data[5] = priority;
+    limpa_buffer();
+    printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
+    char *turn_choice = read_generic_123();
+    if (strcmp(turn_choice, "1") == 0) {
+        task.turn = strdup("Matutino");
+    } else if (strcmp(turn_choice, "2") == 0) {
+        task.turn = strdup("Vespertino");
+    } else {
+        task.turn = strdup("Noturno");
+    }
+    free(turn_choice);
 
-    data[6] = "Aberto";
+    printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
+    char *priority_choice = read_generic_123();
+    if (strcmp(priority_choice, "1") == 0) {
+        task.priority = strdup("Alta");
+    } else if (strcmp(priority_choice, "2") == 0) {
+        task.priority = strdup("Média");
+    } else {
+        task.priority = strdup("Baixa");
+    }
+    free(priority_choice);
 
-    int result = save_file(data, "data/tasks.txt");
+    task.status = strdup("Aberto");
 
-    free(title);
-    free(description);
-    free(turn);
-    free(priority);
-    free(cpf);
+    int result = insert_into_tasks("data/tasks.txt", &task);
+
+    free(task.cpf);
+    free(task.title);
+    free(task.description);
+    free(task.turn);
+    free(task.priority);
+    free(task.status);
+    free(task.data);
 
     return result;
-    
 }
+
 
 int search_task_to_user(const char* cpf){
     return cpf_unique_user(cpf, "data/users.txt");

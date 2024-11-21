@@ -40,6 +40,8 @@ void cadastrar_tarefas(void) {
         show_error("[ERRO]: Erro ao cadastrar!\n");
     }
     limpa_buffer();
+    printf("Tecle <ENTER> para continuar...");
+    getchar();
 }
 
 

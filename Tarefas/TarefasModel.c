@@ -8,19 +8,23 @@
 
 #include "TarefasModel.h"
 
-typedef struct
-{
-    char *cpf;
-    char *title;
-    char *description;
-    char *day;
-    char month;
-    int year;
-    char *turn;
-    char *priority;
-    char *status;
-    char *data;  
-} Tasks;
+int insert_into_tasks(const char *file_name, Tasks *task) {
+    FILE *fp = fopen(file_name, "a");
+    if (fp == NULL) return FALSE;
+
+    fprintf(fp, "%-11s:%-50s,%-100s,%-10s,%-10s,%-10s,%-10s\n",
+            task->cpf,
+            task->title,
+            task->description,
+            task->data,
+            task->turn,
+            task->priority,
+            task->status);
+    
+    fclose(fp);
+    return TRUE;
+}
+
 
 int load_task(const char *cpf){
     Tasks information;
