@@ -35,9 +35,9 @@ void cadastrar_tarefas(void) {
     printf("-----------------------------------------------------------------------\n");
 
     if(register_task()){
-        show_sucess("Tarefa cadastrada com sucesso! <ENTER> para continuar\n");
+        show_sucess("Tarefa cadastrada com sucesso!\n");
     } else {
-        show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
+        show_error("[ERRO]: Erro ao cadastrar!\n");
     }
     limpa_buffer();
 }
@@ -61,7 +61,6 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
         }
     }
     free(cpf);
-    printf("Tecle <ENTER> para continuar...");
     limpa_buffer(); 
 }
 
@@ -82,13 +81,12 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
         upload_data_task(cpf);
     }   
     free(cpf);
-    printf("Tecle <ENTER> para continuar...");
     limpa_buffer(); 
 
 }
 
 
-void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
+void excluir_tarefas(void) {
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                  Excluir Tarefas               |\n");
@@ -106,11 +104,10 @@ void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados da
         }
     }   
     free(cpf);
-    printf("Tecle <ENTER> para continuar...");
     limpa_buffer(); 
 }
 
-void dados_tarefas(void) { // será implementado as variveis de cada dado
+void dados_tarefas(void) {
     limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Dados da Tarefa                                                                    |\n");
