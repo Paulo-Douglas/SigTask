@@ -38,10 +38,10 @@ void cadastrar_usuarios() {
 
     if(register_user()){
         printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_sucess("Cadastrado com sucesso! <ENTER> para continuar\n");
+        show_sucess("Cadastrado com sucesso!\n");
     } else {
         printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar <ENTER> para continuar\n");
+        show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
     }
     limpa_buffer();
 }
@@ -77,9 +77,9 @@ void alterar_dados_usuario(void) {
     }
 
     if (result){
-        show_sucess("| Dados alterados com sucesso! <ENTER> para continuar\n");
+        show_sucess("| Dados alterados com sucesso!\n");
     } else {
-        show_error("| [ERRO]: Erro ao alterar <ENTER> para continuar\n");
+        show_error("| [ERRO]: Erro ao alterar!\n");
     }
 
     limpa_buffer();
