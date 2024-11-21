@@ -43,6 +43,8 @@ void cadastrar_usuarios() {
         printf("|-------------------------------------------------------------------------------------------------------|\n");
         show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
     }
+    printf("| Tecle <ENTER> para continuar...");
+    getchar();
     limpa_buffer();
 }
 
@@ -81,7 +83,8 @@ void alterar_dados_usuario(void) {
     } else {
         show_error("| [ERRO]: Erro ao alterar!\n");
     }
-
+    printf("| Tecle <ENTER> para continuar...");
+    getchar();
     limpa_buffer();
 }
 
