@@ -6,11 +6,7 @@
 
 #include "EquipeModel.h"
 
-typedef struct
-{
-  char *team_name;
-  char *description;
-} Team;
+
 
 /*
   %s:%-100s#%c\n
@@ -20,11 +16,13 @@ typedef struct
 */
 
 int insert_to_teams(Team *teams, const char* file_teams){
+  int id = lenght_line(file_teams);
   create_path("data/");
-  FILE *fp = fopen(file_teams, "a");
-  if(fp = NULL) return FALSE;
+  FILE *fp = fopen(file_teams, "a");    
   
-    fprintf(fp, "%c:%-50s;%-30s#1\n", teams->team_name, teams->description);
+  if(fp == NULL) return FALSE;
+  
+    fprintf(fp, "%d:%-50s;%-100s#1\n", id, teams->team_name, teams->description);
     fclose(fp);
     return TRUE;
 }
@@ -59,3 +57,89 @@ int view_team(char *name, char *file){
     return found;
 }
 
+int update_name_in_teams(Team *teams, const char* file_teams){
+  FILE *fp = fopen(file_teams, "r+");
+  if (fp == NULL) return FALSE;
+
+  char line[LINE_SIZE];
+  long pos; 
+  int found = FALSE;
+
+  while (fgets(line, LINE_SIZE, fp) != NULL){
+    if (strstr(line, teams -> team_name) != NULL){
+      pos = ftell(fp) - strlen(line);
+
+      char *delimiter_pos = strchr(line, ':');
+      if (delimiter_pos != NULL){
+        long name_pos = pos + (delimiter_pos - line) + 1;
+
+        fseek(fp, name_pos, SEEK_SET);
+        fprintf(fp, "%-50s", teams->team_name);
+        fflush(fp);
+        found = TRUE;
+      }
+
+        break;
+      }
+
+    }
+    return found;
+}
+
+int update_description_in_teams(Team *teams, const char* file_teams){
+  FILE *fp = fopen(file_teams, "+r");
+  if (fp == NULL) return FALSE;
+
+  char line[LINE_SIZE];
+  long pos;
+  int found = FALSE;
+
+  while(fgets(line, LINE_SIZE, fp) != NULL){
+    if(strstr(line, teams -> description) != NULL){
+      pos = ftell(fp) - strlen(line);
+
+      char *delimiter_pos = strchr (line, ':');
+      if (delimiter_pos != NULL){
+        long name_pos = pos + (delimiter_pos - line) + 1;
+
+        fseek(fp, name_pos, SEEK_SET);
+        fprintf(fp, "%-30s", teams -> description);
+        fflush(fp);
+        found = TRUE;
+      }
+      break;
+        }
+  }
+  return found;
+
+}
+
+int update_status_in_teams(Team *teams, const char* file_teams){
+    FILE *fp = fopen(file_teams, "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_SIZE];
+    long pos;
+    int found = FALSE;
+
+    while (fgets(line, LINE_SIZE, fp) != NULL){
+        if (strstr(line, teams->team_name) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *delimiter_pos = strchr(line, '#');
+
+            long status_pos = pos + (delimiter_pos - line) + 1;
+
+            char status_actual = *(delimiter_pos + 1);
+            char new_status = (status_actual == '1') ? '0' : '1';
+
+            fseek(fp, status_pos, SEEK_SET);
+            fprintf(fp, "%c", new_status);
+            fflush(fp);
+            found = TRUE;
+            break;
+        }
+    }
+    fclose(fp);
+    return found;
+}
