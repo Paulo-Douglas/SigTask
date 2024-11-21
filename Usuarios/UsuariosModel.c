@@ -11,6 +11,9 @@
 
 
 int insert_to_user(User *users, const char* file_name){
+
+    create_path("data/");
+
     FILE *fp = fopen(file_name, "a");
     if(fp == NULL) return FALSE;
 

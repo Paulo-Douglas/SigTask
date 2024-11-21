@@ -12,6 +12,22 @@ typedef struct
   char *description;
 } Team;
 
+/*
+  %s:%-100s#%c\n
+  1-> Tamanho do arquivo + 1
+  2-> Tamaho da descrição
+  3-> 1 para ativo / 0 para inativo
+*/
+
+int insert_to_teams(Team *teams, const char* file_teams){
+  create_path("data/");
+  FILE *fp = fopen(file_teams, "a");
+  if(fp = NULL) return FALSE;
+  
+    fprintf(fp, "%c:%-50s;%-30s#1\n", teams->team_name, teams->description);
+    fclose(fp);
+    return TRUE;
+}
 
 
 int view_team(char *name, char *file){
@@ -42,3 +58,4 @@ int view_team(char *name, char *file){
     fclose(fp);
     return found;
 }
+
