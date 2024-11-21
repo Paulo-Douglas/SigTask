@@ -50,12 +50,12 @@ int update_data_user(User *users) {
             case '1':
                 printf("|\tNome: ");
                 users->name = read_string();
-                update = update_name_in_file(users, "data/users.txt");
+                update = update_name_in_users(users, "data/users.txt");
                 break;
             case '2':
                 printf("|\tTelefone: ");
                 users->phone = read_phone();
-                update = update_phone_in_file(users, "data/users.txt");
+                update = update_phone_in_users(users, "data/users.txt");
                 break;
             case '0':
                 update = TRUE;

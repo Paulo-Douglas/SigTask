@@ -100,8 +100,16 @@ void excluir_usuario(void) {
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
         dados_usuario(&users);
+        result = update_status_in_users(&users, "data/users.txt");
     }
 
+    if(result){
+        show_sucess("| Conta excluida com sucesso!\n");
+    } else {
+        show_error("| [ERRO]: Erro ao excluir!\n");
+    }
+    printf("| Tecle <ENTER> para continuar...");
+    getchar();
     limpa_buffer();
 }
 

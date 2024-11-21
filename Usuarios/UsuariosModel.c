@@ -14,7 +14,7 @@ int insert_to_user(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%s:%-229s;%s;1\n", users->cpf, users->name, users->phone);
+    fprintf(fp, "%s:%-229s;%s#1\n", users->cpf, users->name, users->phone);
     fclose(fp);
     return TRUE;
 }
@@ -48,7 +48,7 @@ int insert_to_user(User *users, const char* file_name){
 
 // }
 
-int update_name_in_file(User *users, const char* file_name){
+int update_name_in_users(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -78,7 +78,7 @@ int update_name_in_file(User *users, const char* file_name){
     return found;
 }
 
-int update_phone_in_file(User *users, const char *file_name){
+int update_phone_in_users(User *users, const char *file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -90,7 +90,7 @@ int update_phone_in_file(User *users, const char *file_name){
         if (strstr(line, users->cpf) != NULL){
             pos = ftell(fp) - strlen(line);
 
-            char *delimiter_pos = strchr(line, ';');
+            char *delimiter_pos = strchr(line, '#');
             if (delimiter_pos != NULL){
                 long phone_pos = pos + (delimiter_pos - line) + 1;
 
@@ -107,6 +107,36 @@ int update_phone_in_file(User *users, const char *file_name){
     return found;
 }
 
+int update_status_in_users(User *users, const char *file_name){
+    FILE *fp = fopen(file_name, "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_SIZE];
+    long pos;
+    int found = FALSE;
+
+    while (fgets(line, LINE_SIZE, fp) != NULL){
+        if (strstr(line, users->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *delimiter_pos = strchr(line, '#');
+
+            long status_pos = pos + (delimiter_pos - line) + 1;
+
+            char status_actual = *(delimiter_pos + 1);
+            char new_status = (status_actual == '1') ? '0' : '1';
+
+            fseek(fp, status_pos, SEEK_SET);
+            fprintf(fp, "%c", new_status);
+            fflush(fp);
+            found = TRUE;
+            break;
+        }
+    }
+    fclose(fp);
+    return found;
+}
+
 int select_all_user(const char *file_name){
     FILE *fp = fopen(file_name, "r");
     if(fp == NULL) return FALSE;
@@ -115,7 +145,7 @@ int select_all_user(const char *file_name){
     while(fgets(line, sizeof(line), fp)){
         char *cpf = strtok(line, ":");
         char *name = strtok(NULL, ";");
-        char *phone = strtok(NULL, ";");
+        char *phone = strtok(NULL, "#");
         char *status = strtok(NULL, "\n");
 
         if (name != NULL) {
@@ -148,7 +178,7 @@ int load_user(const char* cpf, User **users){
             // Tokeniza a linha
             char *user_cpf = strtok(line, ":");
             char *name = strtok(NULL, ";");
-            char *phone = strtok(NULL, "\n");
+            char *phone = strtok(NULL, "#");
 
             // Remove espaços extras no nome
             if (name != NULL) {
@@ -177,5 +207,3 @@ int load_user(const char* cpf, User **users){
     fclose(fp);
     return FALSE;
 }
-
-
