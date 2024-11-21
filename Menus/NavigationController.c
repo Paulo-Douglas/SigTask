@@ -35,6 +35,7 @@ void navegacao_modulos(void) {
                 break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
+                limpa_buffer();
                 break;
         }
 
