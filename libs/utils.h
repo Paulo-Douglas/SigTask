@@ -27,6 +27,7 @@ typedef struct {
 void limpa_buffer(void);
 void limpar_tela(void);
 void create_path(const char *name_path);
+void show_message(const char *message);
 
 int save_file(const char *data[], char *file_name);
 int add_user_to_register(File *read_file, char *anything, char *cpf);

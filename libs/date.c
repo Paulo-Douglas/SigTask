@@ -5,22 +5,22 @@
 
 void read_month(char *month) {
   do {
-    printf("Mês: ");
+    printf("| Mês: ");
     scanf(" %s", month);
     if(atoi(month) < 1 || atoi(month) > 12) {
-      printf("Mês inválido!\n");
-      printf("Tente novamente: ");
+      printf("| Mês inválido!\n");
+      printf("| Tente novamente: ");
     }
   } while (atoi(month) < 1 || atoi(month) > 12);
 }
 
 void read_day(char *day, int max_day) {
   do {
-    printf("Dia: ");
+    printf("| Dia: ");
     scanf(" %s", day);
     if(atoi(day) < 1 || atoi(day) > max_day) {
-      printf("Dia inválido!\n");
-      printf("Tente novamente: ");
+      printf("| Dia inválido!\n");
+      printf("| Tente novamente: ");
     }
   } while (atoi(day) < 1 || atoi(day) > max_day);
 }

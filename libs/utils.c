@@ -8,9 +8,13 @@
 
 
 void limpa_buffer(void) {
-    printf("Tecle <ENTER> para continuar...");
     int b;
     while((b = getchar()) != '\n' && b != EOF);
+}
+
+void show_message(const char *message) {
+    printf("%s\n", message);
+    getchar();
 }
 
 

@@ -7,18 +7,22 @@
 #include "styles.h"
 #include "utils.h"
 
-void input(char **prompt){
-	char line[MAX_LINE_LENGTH];
-	scanf("%255[^\n]", line);
-	int tam = strlen(line);
-	*prompt = (char*) malloc(tam + 1);
+void input(char **prompt) {
+    char line[MAX_LINE_LENGTH];
 
-	if (*prompt != NULL){
-		strcpy(*prompt, line);
-	}
+    // Lê a entrada do usuário
+    fgets(line, MAX_LINE_LENGTH, stdin);
+    line[strcspn(line, "\n")] = '\0';
 
-    limpa_buffer();
+    // Aloca memória para a string e copia o conteúdo
+    *prompt = (char *)malloc(strlen(line) + 1);
+    if (*prompt == NULL) {
+        perror("Erro ao alocar memória");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(*prompt, line);
 }
+
 
 char* read_string(void) {
     char *string;
@@ -62,15 +66,19 @@ char* read_cpf(void){
     char *cpf = NULL;
 
     do{
+        if (cpf != NULL){
+            free(cpf);
+        }
+
         input(&cpf);
 
         if (!validate_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
             printf("Tente novamente: ");
-            free(cpf);
         }
 
     } while(!validate_cpf(cpf));
+
     limpa_buffer();
     return cpf;
 }
@@ -119,7 +127,6 @@ char* read_generic_123(void) {
             free(prompt);
         }
     } while (*prompt < '1' || *prompt > '3');
-    limpa_buffer();
     return prompt;
 }
 
