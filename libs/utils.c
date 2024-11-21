@@ -121,3 +121,22 @@ int add_user_to_register(File *read_file, char *anything, char *cpf) {
 
     return TRUE;
 }
+
+int lenght_line(const char *name_of_file){
+    FILE *arquivo = fopen(name_of_file, "r");
+    if (arquivo == NULL) {
+        return FALSE;
+    }
+
+    int linhas = 0;
+    char caractere;
+
+    while ((caractere = fgetc(arquivo)) != EOF) { /// E0F == END OF FILE 
+        if (caractere == '\n') {
+            linhas++;
+        }
+    }
+
+    fclose(arquivo);
+    return linhas + 1;
+}
