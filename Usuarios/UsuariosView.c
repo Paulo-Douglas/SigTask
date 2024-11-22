@@ -48,10 +48,7 @@ char user_menu(void) {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  */
 void register_user() {
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                   Cadastre - se                                       |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Cadastrar Usuário");
 
     if(insert_user()){
         printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -75,10 +72,7 @@ void register_user() {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  */
 void display_user_data(void) {
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                               Exibir Dados                                            |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Exibir Dados");
 
     select_all_users("data/users.txt");
     printf("| Tecle <ENTER> para continuar...");
@@ -95,10 +89,7 @@ void display_user_data(void) {
  * 
  **/
 void modify_user_data(void) {
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                               Alterar Dados                                           |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Editar Dados");
 
     User users = {NULL, NULL, NULL};
 
@@ -134,10 +125,7 @@ void modify_user_data(void) {
  * 
  */
 void delete_user(void) {
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                             Excluir Usuário                                           |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Excluir Conta");
 
     User users = {NULL, NULL, NULL};
     printf("| Informe o CPF: ");
@@ -174,10 +162,7 @@ void delete_user(void) {
  * 
  */
 void reactivate_user(void){
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                             Reativar Usuário                                          |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Reativar Conta");
 
     User users = {NULL, NULL, NULL};
     printf("| Informe o CPF: ");
@@ -214,10 +199,7 @@ void reactivate_user(void){
  *              do usuário a serem exibidos.
  */
 void user_data(User *users) {
-    limpar_tela();
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                            Dados do Usuário                                           |\n");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    show_header("Dados do usuário");
     printf("|CPF: %s\n", users->cpf);
     printf("|Nome: %s\n", users->name);
     printf("|Telefone: %s\n", users->phone);

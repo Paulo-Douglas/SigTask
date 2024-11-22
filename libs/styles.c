@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "styles.h"
+#include "utils.h"
 
 
 void show_error(const char *message) {
@@ -13,6 +16,6 @@ void show_sucess(const char *message) {
 void show_header(const char *title) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-    printf("|%*s%*s|\n", (int)(50 + strlen(title) / 2), title, (int)(49 - strlen(title) / 2), "");
+    printf("|%*s%*s     |\n", (int)(50 + strlen(title) / 2), title, (int)(49 - strlen(title) / 2), "");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
