@@ -3,8 +3,8 @@
 
 #include "UsuariosModel.h"
 
-int register_user(void);
-int upload_data_user(const char* cpf, User *users, const char **dir);
-int update_data_user(User *users);
+int insert_user(void);
+int upload_user_data(const char* cpf, User *users, const char **dir);
+int update_user_data(User *users);
 
 #endif // USUARIOSCONTROLLER_H

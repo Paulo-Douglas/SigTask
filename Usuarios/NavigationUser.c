@@ -5,25 +5,25 @@
 
 #include "../libs/utils.h"
 
-void navegacao_usuarios(void){
+void navigation_users(void){
     char op;
     do{
-        op = menu_usuarios();
+        op = user_menu();
         switch(op){
             case '1':  
-                cadastrar_usuarios();
+                register_user();
                 break;
             case '2':
-                exibir_dados_usuario();
+                display_user_data();
                 break;
             case '3':
-                alterar_dados_usuario();
+                modify_user_data();
                 break;
             case '4':
-                excluir_usuario();
+                delete_user();
                 break;
             case '5':
-                reativar_usuario();
+                reactivate_user();
                 break;
             case '0':
                 break;

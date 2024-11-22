@@ -16,7 +16,7 @@ void navegacao_modulos(void) {
         op = menuPrincipal();
         switch (op) {
             case '1':
-                navegacao_usuarios();
+                navigation_users();
                 break;
             case '2':
                 navegacao_times();

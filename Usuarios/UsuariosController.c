@@ -16,7 +16,7 @@
  * 
  * @return TRUE se o usuario for cadastrado com sucesso, FALSE caso contrario.
  */
-int register_user(void){
+int insert_user(void){
     User users = {NULL, NULL, NULL};
 
     printf("|\tCPF: ");
@@ -32,7 +32,7 @@ int register_user(void){
     printf("|\tTelefone: ");
     users.phone = read_phone();
 
-    int result = insert_to_user(&users, "data/users.txt");
+    int result = insert_user_to_file(&users, "data/users.txt");
 
     free(users.name);
     free(users.cpf);
@@ -56,8 +56,8 @@ int register_user(void){
  * 
  * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int upload_data_user(const char* cpf, User *users, const char **dir) {
-    return load_user(cpf, &users, dir);
+int upload_user_data(const char* cpf, User *users, const char **dir) {
+    return load_user_from_users(cpf, &users, dir);
 }
 
 
@@ -75,7 +75,7 @@ int upload_data_user(const char* cpf, User *users, const char **dir) {
  * @return TRUE se os dados forem alterados com sucesso, FALSE caso
  *         contrário.
  */
-int update_data_user(User *users) {
+int update_user_data(User *users) {
     char opc = '\0';
     int update = FALSE;
 
@@ -87,12 +87,12 @@ int update_data_user(User *users) {
             case '1':
                 printf("|\tNome: ");
                 users->name = read_string();
-                update = update_name_in_users(users, "data/users.txt");
+                update = update_user_name(users, "data/users.txt");
                 break;
             case '2':
                 printf("|\tTelefone: ");
                 users->phone = read_phone();
-                update = update_phone_in_users(users, "data/users.txt");
+                update = update_user_phone(users, "data/users.txt");
                 break;
             case '0':
                 update = TRUE;

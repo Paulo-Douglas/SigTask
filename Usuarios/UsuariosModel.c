@@ -22,7 +22,7 @@
  * @param file_name O nome do arquivo onde as informações do usuário serão armazenadas.
  * @return TRUE se as informações do usuário foram escritas com sucesso no arquivo, FALSE caso contrário.
  */
-int insert_to_user(User *users, const char* file_name){
+int insert_user_to_file(User *users, const char* file_name){
 
     create_path("data/");
 
@@ -74,7 +74,7 @@ int insert_to_user(User *users, const char* file_name){
  *
  * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
  */
-int update_name_in_users(User *users, const char* file_name){
+int update_user_name(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -113,7 +113,7 @@ int update_name_in_users(User *users, const char* file_name){
  *
  * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
  */
-int update_phone_in_users(User *users, const char *file_name){
+int update_user_phone(User *users, const char *file_name) {
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -121,26 +121,27 @@ int update_phone_in_users(User *users, const char *file_name){
     long pos; // Cursor
     int found = FALSE;
 
-    while (fgets(line, LINE_SIZE, fp) != NULL){
-        if (strstr(line, users->cpf) != NULL){
-            pos = ftell(fp) - strlen(line);
+    while (fgets(line, LINE_SIZE, fp) != NULL) {
+        pos = ftell(fp) - strlen(line);
 
+        if (strstr(line, users->cpf) != NULL) {
             char *delimiter_pos = strchr(line, '#');
-            if (delimiter_pos != NULL){
-                long phone_pos = pos + (delimiter_pos - line) + 1;
+            if (delimiter_pos != NULL) {
+                long phone_pos = pos + strchr(line, ';') - line + 1;
 
-                // Posiciona cursor
                 fseek(fp, phone_pos, SEEK_SET);
-                fprintf(fp, "%s", users->phone);
+                fprintf(fp, "%-12s", users->phone);
                 fflush(fp);
                 found = TRUE;
             }
-
-            break;            
+            break;
         }
     }
+
+    fclose(fp);
     return found;
 }
+
 
 
 /**
@@ -159,7 +160,7 @@ int update_phone_in_users(User *users, const char *file_name){
  *
  * @return TRUE se o status foi atualizado com sucesso, FALSE caso contrário.
  */
-int update_status_in_users(User *users, const char *file_name, const char *dir){
+int update_user_status(User *users, const char *file_name, const char *dir){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -212,7 +213,7 @@ int update_status_in_users(User *users, const char *file_name, const char *dir){
  *
  * @return FALSE se não houver arquivo com o caminho especificado, TRUE caso contrário.
  */
-int select_all_user(const char *file_name){
+int select_all_users(const char *file_name){
     FILE *fp = fopen(file_name, "r");
     if(fp == NULL) return FALSE;
 
@@ -255,7 +256,7 @@ int select_all_user(const char *file_name){
  *
  * @return TRUE se o usuário foi encontrado e os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int load_user(const char* cpf, User **users, const char **dir){
+int load_user_from_users(const char* cpf, User **users, const char **dir){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 

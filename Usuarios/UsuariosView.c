@@ -17,7 +17,7 @@
  * 
  * @return O caractere que representa a opção de menu escolhida.
  */
-char menu_usuarios(void) {
+char user_menu(void) {
     char op;
     limpar_tela();
     printf("--------------------------------------------------\n");
@@ -47,13 +47,13 @@ char menu_usuarios(void) {
  * 
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  */
-void cadastrar_usuarios() {
+void register_user() {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                   Cadastre - se                                       |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 
-    if(register_user()){
+    if(insert_user()){
         printf("|-------------------------------------------------------------------------------------------------------|\n");
         show_sucess("| Cadastrado com sucesso!\n");
     } else {
@@ -74,13 +74,13 @@ void cadastrar_usuarios() {
  * 
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  */
-void exibir_dados_usuario(void) {
+void display_user_data(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                               Exibir Dados                                            |\n");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 
-    select_all_user("data/users.txt");
+    select_all_users("data/users.txt");
     printf("| Tecle <ENTER> para continuar...");
     limpa_buffer();
 }
@@ -94,7 +94,7 @@ void exibir_dados_usuario(void) {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  * 
  **/
-void alterar_dados_usuario(void) {
+void modify_user_data(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                               Alterar Dados                                           |\n");
@@ -107,11 +107,11 @@ void alterar_dados_usuario(void) {
     int result = FALSE;
     const char *mod = "2"; // MOD: 2-> Alterar
 
-    if(!upload_data_user(cpf, &users, &mod)){
+    if(!upload_user_data(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
-        dados_usuario(&users);
-        result = update_data_user(&users);   
+        user_data(&users);
+        result = update_user_data(&users);   
     }
 
     if (result){
@@ -133,7 +133,7 @@ void alterar_dados_usuario(void) {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  * 
  */
-void excluir_usuario(void) {
+void delete_user(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                             Excluir Usuário                                           |\n");
@@ -146,11 +146,11 @@ void excluir_usuario(void) {
     const char *mod = "1"; // MOD: 1-> Excluir
 
 
-    if(!upload_data_user(cpf, &users, &mod)){
+    if(!upload_user_data(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
-        dados_usuario(&users);
-        result = update_status_in_users(&users, "data/users.txt", "0");
+        user_data(&users);
+        result = update_user_status(&users, "data/users.txt", "0");
     }
 
     if(result){
@@ -173,7 +173,7 @@ void excluir_usuario(void) {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  * 
  */
-void reativar_usuario(void){
+void reactivate_user(void){
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                             Reativar Usuário                                          |\n");
@@ -185,11 +185,11 @@ void reativar_usuario(void){
     int result = FALSE;
     const char *mod = "0"; // MOD: 0-> Reativar
 
-    if(!upload_data_user(cpf, &users, &mod)){
+    if(!upload_user_data(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
-        dados_usuario(&users);
-        result = update_status_in_users(&users, "data/users.txt", "1");
+        user_data(&users);
+        result = update_user_status(&users, "data/users.txt", "1");
     }
 
     if(result){
@@ -213,7 +213,7 @@ void reativar_usuario(void){
  * @param users Ponteiro para a estrutura User que contém os dados 
  *              do usuário a serem exibidos.
  */
-void dados_usuario(User *users) {
+void user_data(User *users) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     printf("|                                            Dados do Usuário                                           |\n");

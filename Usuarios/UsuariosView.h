@@ -3,13 +3,13 @@
 
 #include "UsuariosModel.h"
 
-char menu_usuarios(void);
-void cadastrar_usuarios(void);
-void exibir_dados_usuario(void);
-void alterar_dados_usuario(void);
-void excluir_usuario(void);
-void dados_usuario(User *users);
-void reativar_usuario(void);
+char user_menu(void);
+void register_user(void);
+void display_user_data(void);
+void modify_user_data(void);
+void delete_user(void);
+void user_data(User *users);
+void reactivate_user(void);
 
 
 #endif
