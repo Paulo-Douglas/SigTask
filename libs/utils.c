@@ -12,9 +12,9 @@ void limpa_buffer(void) {
     while((b = getchar()) != '\n' && b != EOF);
 }
 
-void show_message(const char *message) {
-    printf("%s\n", message);
-    getchar();
+void enter(void) {
+    printf("| Tecle <ENTER> para continuar...");
+    limpa_buffer();
 }
 
 
