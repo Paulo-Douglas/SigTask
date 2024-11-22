@@ -34,8 +34,8 @@ int register_user(void){
     return result;
 }
 
-int upload_data_user(const char* cpf, User *users){
-    return load_user(cpf, &users);
+int upload_data_user(const char* cpf, User *users, const char **dir) {
+    return load_user(cpf, &users, dir);
 }
 
 int update_data_user(User *users) {

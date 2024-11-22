@@ -21,6 +21,7 @@ char menu_usuarios(void) {
     printf("|                [2] Exibir Dados                |\n");
     printf("|                [3] Editar Dados                |\n");
     printf("|                [4] Excluir Conta               |\n");
+    printf("|                [5] Reativar Conta              |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -38,10 +39,11 @@ void cadastrar_usuarios() {
 
     if(register_user()){
         printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_sucess("Cadastrado com sucesso!\n");
+        show_sucess("| Cadastrado com sucesso!\n");
     } else {
         printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_error("[ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
+        show_error("| [ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
+        show_error("| Se deseja reativar a conta, escolha a opcao [5] Reativar conta\n");
     }
     printf("| Tecle <ENTER> para continuar...");
     getchar();
@@ -70,8 +72,9 @@ void alterar_dados_usuario(void) {
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
+    const char *mod = "2";
 
-    if(!upload_data_user(cpf, &users)){
+    if(!upload_data_user(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
         dados_usuario(&users);
@@ -98,8 +101,10 @@ void excluir_usuario(void) {
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
+    const char *mod = "1";
 
-    if(!upload_data_user(cpf, &users)){
+
+    if(!upload_data_user(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
         dados_usuario(&users);
@@ -111,6 +116,36 @@ void excluir_usuario(void) {
     } else {
         show_error("| [ERRO]: Erro ao excluir!\n");
     }
+    printf("| Tecle <ENTER> para continuar...");
+    getchar();
+    limpa_buffer();
+}
+
+void reativar_usuario(void){
+    limpar_tela();
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                             Reativar Usuário                                          |\n");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+
+    User users = {NULL, NULL, NULL};
+    printf("| Informe o CPF: ");
+    char *cpf = read_cpf();
+    int result = FALSE;
+    const char *mod = "0";
+
+    if(!upload_data_user(cpf, &users, &mod)){
+        show_error("| Erro ao carregar os dados do usuário!\n");
+    } else {
+        dados_usuario(&users);
+        result = update_status_in_users(&users, "data/users.txt", "1");
+    }
+
+    if(result){
+        show_sucess("| Conta reativada com sucesso!\n");
+    } else {
+        show_error("| [ERRO]: Erro ao reativar!\n");
+    }
+
     printf("| Tecle <ENTER> para continuar...");
     getchar();
     limpa_buffer();

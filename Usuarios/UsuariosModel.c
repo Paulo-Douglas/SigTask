@@ -177,7 +177,7 @@ int select_all_user(const char *file_name){
     return TRUE;
 }
 
-int load_user(const char* cpf, User **users){
+int load_user(const char* cpf, User **users, const char **dir){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
@@ -191,9 +191,15 @@ int load_user(const char* cpf, User **users){
             char *user_cpf = strtok(line, ":");
             char *name = strtok(NULL, ";");
             char *phone = strtok(NULL, "#");
-            char *status = strtok(NULL, "\n");
+            const char *status = strtok(NULL, "\n");
 
-            if(strcmp(status, "0") == 0){
+            if(strcmp(*dir, "2") == 0 && strcmp(status, "0") == 0){ // alterar
+                fclose(fp);
+                return FALSE;
+            } else if (strcmp(*dir, "1") == 0 && strcmp(status, "0") == 0){ // excluir
+                fclose(fp);
+                return FALSE;
+            } else if (strcmp(*dir, "0") == 0 && strcmp(status, "1") == 0){ // reativar
                 fclose(fp);
                 return FALSE;
             }

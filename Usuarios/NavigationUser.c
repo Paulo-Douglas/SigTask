@@ -22,6 +22,9 @@ void navegacao_usuarios(void){
             case '4':
                 excluir_usuario();
                 break;
+            case '5':
+                reativar_usuario();
+                break;
             case '0':
                 break;
             default:
