@@ -22,6 +22,21 @@ User get_user_by_cpf(const char *mod) {
 }
 
 
+void process_action(const char *mod){
+    User users = get_user_by_cpf(mod);
+
+    if (users.cpf != NULL) {
+        user_data(&users);
+        int result = update_user_data(&users);   
+        if (result) {
+            show_sucess("| Dados alterados com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao alterar!\n");
+        }
+    }
+}
+
+
 /**
  * Exibe o menu de usuários com opções para cadastrar, exibir dados,
  * editar dados, excluir conta, reativar conta ou sair.
@@ -69,9 +84,7 @@ void register_user() {
         show_error("| [ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
         show_error("| Se deseja reativar a conta, escolha a opcao [5] Reativar conta\n");
     }
-    printf("| Tecle <ENTER> para continuar...");
-    getchar();
-    limpa_buffer();
+    enter();
 }
 
 
@@ -84,10 +97,8 @@ void register_user() {
  */
 void display_user_data(void) {
     show_header("Exibir Dados");
-
     select_all_users("data/users.txt");
-    printf("| Tecle <ENTER> para continuar...");
-    limpa_buffer();
+    enter();
 }
 
 
@@ -115,9 +126,7 @@ void modify_user_data(void) {
         }
     }
 
-    printf("| Tecle <ENTER> para continuar...");
-    getchar();
-    limpa_buffer();
+    enter();
 }
 
 
@@ -131,26 +140,9 @@ void modify_user_data(void) {
  */
 void delete_user(void) {
     show_header("Excluir Conta");
-
-    const char *mod = "1";
-    User users = get_user_by_cpf(mod);
-
-    if (users.cpf != NULL) {
-        user_data(&users);
-        int result = update_user_status(&users, "data/users.txt", "0");
-        if (result) {
-            show_sucess("| Conta excluída com sucesso!\n");
-        } else {
-            show_error("| [ERRO]: Erro ao excluir!\n");
-        }
-    }
-
-    printf("| Tecle <ENTER> para continuar...");
-    getchar();
-    limpa_buffer();
+    process_action("1");
+    enter();
 }
-
-
 
 
 /**
@@ -163,36 +155,12 @@ void delete_user(void) {
  */
 void reactivate_user(void) {
     show_header("Reativar Conta");
-
-    const char *mod = "0";
-    User users = get_user_by_cpf(mod);
-
-    if (users.cpf != NULL) {
-        user_data(&users);
-        int result = update_user_status(&users, "data/users.txt", "1");
-        if (result) {
-            show_sucess("| Conta reativada com sucesso!\n");
-        } else {
-            show_error("| [ERRO]: Erro ao reativar!\n");
-        }
-    }
-
-    printf("| Tecle <ENTER> para continuar...");
-    getchar();
-    limpa_buffer();
+    process_action("0");
+    enter();
 }
 
 
-/**
- * Exibe os dados do usuário na tela.
- * 
- * Esta função recebe um ponteiro para uma estrutura User e exibe 
- * o CPF, nome e telefone do usuário formatados em uma tabela.
- * 
- * @param users Ponteiro para a estrutura User que contém os dados 
- *              do usuário a serem exibidos.
- */
-void user_data(User *users) {
+void user_data(const User *users) {
     show_header("Dados do usuário");
     printf("|CPF: %s\n", users->cpf);
     printf("|Nome: %s\n", users->name);
