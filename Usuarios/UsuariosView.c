@@ -11,6 +11,12 @@
 #include "../libs/styles.h"
 
 
+/**
+ * Exibe o menu de usuários com opções para cadastrar, exibir dados,
+ * editar dados, excluir conta, reativar conta ou sair.
+ * 
+ * @return O caractere que representa a opção de menu escolhida.
+ */
 char menu_usuarios(void) {
     char op;
     limpar_tela();
@@ -31,6 +37,16 @@ char menu_usuarios(void) {
     return op;
 }
 
+
+/**
+ * Exibe a tela de cadastro de usuários.
+ * 
+ * Se o cadastro for efetuado com sucesso, exibe mensagem de sucesso.
+ * Caso contrário, exibe mensagem de erro e informa que o CPF ja esta cadastrado ou
+ * que houve um erro ao cadastrar.
+ * 
+ * A tela aguarda que o usuário tecle <ENTER> para continuar.
+ */
 void cadastrar_usuarios() {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -50,6 +66,14 @@ void cadastrar_usuarios() {
     limpa_buffer();
 }
 
+
+/**
+ * Exibe a tela de exibir dados dos usuários.
+ * 
+ * Esta tela apenas exibe os dados dos usuários sem realizar nenhuma ação.
+ * 
+ * A tela aguarda que o usuário tecle <ENTER> para continuar.
+ */
 void exibir_dados_usuario(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -61,6 +85,15 @@ void exibir_dados_usuario(void) {
     limpa_buffer();
 }
 
+
+/**
+ * Exibe a tela de alterar dados dos usuários.
+ * 
+ * Esta tela pede o CPF do usuário e, se encontrado, permite alterar os dados do usuário.
+ * 
+ * A tela aguarda que o usuário tecle <ENTER> para continuar.
+ * 
+ **/
 void alterar_dados_usuario(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -72,7 +105,7 @@ void alterar_dados_usuario(void) {
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
-    const char *mod = "2";
+    const char *mod = "2"; // MOD: 2-> Alterar
 
     if(!upload_data_user(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
@@ -91,6 +124,15 @@ void alterar_dados_usuario(void) {
     limpa_buffer();
 }
 
+
+/**
+ * Exibe a tela de excluir usuários.
+ * 
+ * Esta tela pede o CPF do usuário e, se encontrado, exclui a conta do usuário.
+ * 
+ * A tela aguarda que o usuário tecle <ENTER> para continuar.
+ * 
+ */
 void excluir_usuario(void) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -101,7 +143,7 @@ void excluir_usuario(void) {
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
-    const char *mod = "1";
+    const char *mod = "1"; // MOD: 1-> Excluir
 
 
     if(!upload_data_user(cpf, &users, &mod)){
@@ -121,6 +163,16 @@ void excluir_usuario(void) {
     limpa_buffer();
 }
 
+
+
+/**
+ * Exibe a tela de reativar usuários.
+ * 
+ * Esta tela pede o CPF do usuário e, se encontrado, reativa a conta do usuário.
+ * 
+ * A tela aguarda que o usuário tecle <ENTER> para continuar.
+ * 
+ */
 void reativar_usuario(void){
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");
@@ -131,7 +183,7 @@ void reativar_usuario(void){
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
     int result = FALSE;
-    const char *mod = "0";
+    const char *mod = "0"; // MOD: 0-> Reativar
 
     if(!upload_data_user(cpf, &users, &mod)){
         show_error("| Erro ao carregar os dados do usuário!\n");
@@ -151,6 +203,16 @@ void reativar_usuario(void){
     limpa_buffer();
 }
 
+
+/**
+ * Exibe os dados do usuário na tela.
+ * 
+ * Esta função recebe um ponteiro para uma estrutura User e exibe 
+ * o CPF, nome e telefone do usuário formatados em uma tabela.
+ * 
+ * @param users Ponteiro para a estrutura User que contém os dados 
+ *              do usuário a serem exibidos.
+ */
 void dados_usuario(User *users) {
     limpar_tela();
     printf("|-------------------------------------------------------------------------------------------------------|\n");

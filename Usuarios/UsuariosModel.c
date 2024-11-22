@@ -10,6 +10,18 @@
 #include "UsuariosModel.h"
 
 
+/**
+ * Insere as informações de um usuário no arquivo especificado.
+ *
+ * Esta função adiciona os dados de um novo usuário, incluindo CPF, nome e número de telefone,
+ * ao arquivo fornecido. O arquivo é aberto no modo de adição, e uma nova linha contendo
+ * os detalhes do usuário é escrita em um formato específico. A função garante que
+ * o diretório de dados seja criado antes de tentar abrir o arquivo.
+ *
+ * @param users Ponteiro para uma struct User contendo o CPF, nome e número de telefone do usuário.
+ * @param file_name O nome do arquivo onde as informações do usuário serão armazenadas.
+ * @return TRUE se as informações do usuário foram escritas com sucesso no arquivo, FALSE caso contrário.
+ */
 int insert_to_user(User *users, const char* file_name){
 
     create_path("data/");
@@ -22,6 +34,7 @@ int insert_to_user(User *users, const char* file_name){
     return TRUE;
 }
 
+// FUNÇÃO ANTIGA DE ATUALIZAR USUÁRIO
 // int udpate_user(User *users, const char* file_name){
 //     const char *file_temp = "/data/temp.txt";
 
@@ -51,6 +64,16 @@ int insert_to_user(User *users, const char* file_name){
 
 // }
 
+
+
+/**
+ * @brief Atualiza o nome de um usuário no arquivo.
+ *
+ * @param users estrutura com os dados do usuário.
+ * @param file_name caminho para o arquivo com os dados dos usuários.
+ *
+ * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
+ */
 int update_name_in_users(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
@@ -81,6 +104,15 @@ int update_name_in_users(User *users, const char* file_name){
     return found;
 }
 
+
+/**
+ * @brief Atualiza o telefone de um usuário no arquivo.
+ *
+ * @param users estrutura com os dados do usuário.
+ * @param file_name caminho para o arquivo com os dados dos usuários.
+ *
+ * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
+ */
 int update_phone_in_users(User *users, const char *file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
@@ -110,6 +142,23 @@ int update_phone_in_users(User *users, const char *file_name){
     return found;
 }
 
+
+/**
+ * @brief Atualiza o status de um usuário no arquivo.
+ *
+ * Esta função altera o status de um usuário identificado pelo CPF no arquivo
+ * especificado. O status é alternado entre ativo ('1') e inativo ('0') com base 
+ * na diretiva fornecida. Se a diretiva for "0", a função tentará reativar o usuário
+ * se ele estiver inativo. Se for "1", a função tentará desativar o usuário se ele
+ * estiver ativo. A função retorna FALSE se a operação não for necessária ou se o 
+ * arquivo não puder ser aberto.
+ *
+ * @param users Estrutura contendo os dados do usuário.
+ * @param file_name Caminho para o arquivo com os dados dos usuários.
+ * @param dir Diretiva para a operação: "0" para reativar, "1" para desativar.
+ *
+ * @return TRUE se o status foi atualizado com sucesso, FALSE caso contrário.
+ */
 int update_status_in_users(User *users, const char *file_name, const char *dir){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
@@ -149,6 +198,20 @@ int update_status_in_users(User *users, const char *file_name, const char *dir){
     return found;
 }
 
+
+
+/**
+ * @brief Exibe todos os usuários registrados.
+ *
+ * Abre o arquivo especificado e exibe todos os usuários registrados nele.
+ * O formato de impressão é o seguinte:
+ * | CPF: <CPF>:\tNOME: <NOME>\tTELEFONE: <TELEFONE>
+ * |------------------------------------------------+-----+------------------------------------------------|
+ *
+ * @param file_name caminho para o arquivo com os dados dos usuários.
+ *
+ * @return FALSE se não houver arquivo com o caminho especificado, TRUE caso contrário.
+ */
 int select_all_user(const char *file_name){
     FILE *fp = fopen(file_name, "r");
     if(fp == NULL) return FALSE;
@@ -177,6 +240,21 @@ int select_all_user(const char *file_name){
     return TRUE;
 }
 
+
+
+/**
+ * @brief Carrega os dados de um usuário do arquivo.
+ *
+ * Esta função lê  o arquivo de usuários e busca um usuário com o CPF especificado.
+ * Se o usuário for encontrado, a função retorna TRUE e aloca as strings para o
+ * ponteiro Users passado como par metro. Caso contrário, a função retorna FALSE.
+ *
+ * @param cpf CPF do usuário a ser carregado.
+ * @param users Ponteiro para a estrutura Users que irá armazenar os dados do usuário.
+ * @param dir Diretiva para a opera o: "0" para reativar, "1" para desativar ou "2" para alterar.
+ *
+ * @return TRUE se o usuário foi encontrado e os dados foram carregados com sucesso, FALSE caso contrário.
+ */
 int load_user(const char* cpf, User **users, const char **dir){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
