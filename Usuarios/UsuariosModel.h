@@ -17,7 +17,7 @@ int insert_to_user(User *users, const char* file_name);
 // int udpate_user(User *users, const char* file_name);
 int update_name_in_users(User *users, const char* file_name);
 int update_phone_in_users(User *users, const char *file_name);
-int update_status_in_users(User *users, const char *file_name);
+int update_status_in_users(User *users, const char *file_name, const char *dir);
 int select_all_user(const char *file_name);
 int load_user(const char* cpf, User **users);
 

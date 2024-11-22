@@ -103,7 +103,7 @@ void excluir_usuario(void) {
         show_error("| Erro ao carregar os dados do usuário!\n");
     } else {
         dados_usuario(&users);
-        result = update_status_in_users(&users, "data/users.txt");
+        result = update_status_in_users(&users, "data/users.txt", "0");
     }
 
     if(result){

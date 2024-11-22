@@ -110,7 +110,7 @@ int update_phone_in_users(User *users, const char *file_name){
     return found;
 }
 
-int update_status_in_users(User *users, const char *file_name){
+int update_status_in_users(User *users, const char *file_name, const char *dir){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
@@ -127,6 +127,15 @@ int update_status_in_users(User *users, const char *file_name){
             long status_pos = pos + (delimiter_pos - line) + 1;
 
             char status_actual = *(delimiter_pos + 1);
+
+            if(strcmp(dir, "0") == 0 && status_actual == '0'){
+                fclose(fp);
+                return FALSE;
+            } else if (strcmp(dir, "1") == 0 && status_actual == '1'){
+                fclose(fp); 
+                return FALSE;
+            }
+
             char new_status = (status_actual == '1') ? '0' : '1';
 
             fseek(fp, status_pos, SEEK_SET);
@@ -182,6 +191,12 @@ int load_user(const char* cpf, User **users){
             char *user_cpf = strtok(line, ":");
             char *name = strtok(NULL, ";");
             char *phone = strtok(NULL, "#");
+            char *status = strtok(NULL, "\n");
+
+            if(strcmp(status, "0") == 0){
+                fclose(fp);
+                return FALSE;
+            }
 
             // Remove espaços extras no nome
             if (name != NULL) {
