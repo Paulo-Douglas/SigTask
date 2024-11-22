@@ -11,6 +11,17 @@
 #include "../libs/styles.h"
 
 
+User get_user_by_cpf(const char *mod) {
+    User users = {NULL, NULL, NULL};
+    printf("| Informe o CPF: ");
+    char *cpf = read_cpf();
+    if (!upload_user_data(cpf, &users, &mod)) {
+        show_error("| Erro ao carregar os dados do usuário!\n");
+    }
+    return users;
+}
+
+
 /**
  * Exibe o menu de usuários com opções para cadastrar, exibir dados,
  * editar dados, excluir conta, reativar conta ou sair.
@@ -91,25 +102,19 @@ void display_user_data(void) {
 void modify_user_data(void) {
     show_header("Editar Dados");
 
-    User users = {NULL, NULL, NULL};
+    const char *mod = "2";
+    User users = get_user_by_cpf(mod);
 
-    printf("| Informe o CPF: ");
-    char *cpf = read_cpf();
-    int result = FALSE;
-    const char *mod = "2"; // MOD: 2-> Alterar
-
-    if(!upload_user_data(cpf, &users, &mod)){
-        show_error("| Erro ao carregar os dados do usuário!\n");
-    } else {
+    if (users.cpf != NULL) {
         user_data(&users);
-        result = update_user_data(&users);   
+        int result = update_user_data(&users);   
+        if (result) {
+            show_sucess("| Dados alterados com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao alterar!\n");
+        }
     }
 
-    if (result){
-        show_sucess("| Dados alterados com sucesso!\n");
-    } else {
-        show_error("| [ERRO]: Erro ao alterar!\n");
-    }
     printf("| Tecle <ENTER> para continuar...");
     getchar();
     limpa_buffer();
@@ -127,29 +132,24 @@ void modify_user_data(void) {
 void delete_user(void) {
     show_header("Excluir Conta");
 
-    User users = {NULL, NULL, NULL};
-    printf("| Informe o CPF: ");
-    char *cpf = read_cpf();
-    int result = FALSE;
-    const char *mod = "1"; // MOD: 1-> Excluir
+    const char *mod = "1";
+    User users = get_user_by_cpf(mod);
 
-
-    if(!upload_user_data(cpf, &users, &mod)){
-        show_error("| Erro ao carregar os dados do usuário!\n");
-    } else {
+    if (users.cpf != NULL) {
         user_data(&users);
-        result = update_user_status(&users, "data/users.txt", "0");
+        int result = update_user_status(&users, "data/users.txt", "0");
+        if (result) {
+            show_sucess("| Conta excluída com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao excluir!\n");
+        }
     }
 
-    if(result){
-        show_sucess("| Conta excluida com sucesso!\n");
-    } else {
-        show_error("| [ERRO]: Erro ao excluir!\n");
-    }
     printf("| Tecle <ENTER> para continuar...");
     getchar();
     limpa_buffer();
 }
+
 
 
 
@@ -161,26 +161,20 @@ void delete_user(void) {
  * A tela aguarda que o usuário tecle <ENTER> para continuar.
  * 
  */
-void reactivate_user(void){
+void reactivate_user(void) {
     show_header("Reativar Conta");
 
-    User users = {NULL, NULL, NULL};
-    printf("| Informe o CPF: ");
-    char *cpf = read_cpf();
-    int result = FALSE;
-    const char *mod = "0"; // MOD: 0-> Reativar
+    const char *mod = "0";
+    User users = get_user_by_cpf(mod);
 
-    if(!upload_user_data(cpf, &users, &mod)){
-        show_error("| Erro ao carregar os dados do usuário!\n");
-    } else {
+    if (users.cpf != NULL) {
         user_data(&users);
-        result = update_user_status(&users, "data/users.txt", "1");
-    }
-
-    if(result){
-        show_sucess("| Conta reativada com sucesso!\n");
-    } else {
-        show_error("| [ERRO]: Erro ao reativar!\n");
+        int result = update_user_status(&users, "data/users.txt", "1");
+        if (result) {
+            show_sucess("| Conta reativada com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao reativar!\n");
+        }
     }
 
     printf("| Tecle <ENTER> para continuar...");
