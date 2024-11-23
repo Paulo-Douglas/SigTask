@@ -11,6 +11,34 @@
 #include "../libs/styles.h"
 
 
+void free_task(Tasks *task) {
+    if (task->cpf) free(task->cpf);
+    if (task->title) free(task->title);
+    if (task->description) free(task->description);
+    if (task->data) free(task->data);
+    if (task->turn) free(task->turn);
+    if (task->priority) free(task->priority);
+    if (task->status) free(task->status);
+}
+
+
+Tasks initialize_task(const char *title){
+    show_header(title);
+    Tasks task = {0};
+
+    limpa_buffer();
+    printf("| Informe o CPF: ");
+    char *cpf = read_cpf();
+
+    if(load_task(cpf, &task)){
+        display_data_task(&task);
+    } else {
+        show_error("| Erro ao carregar as tarefas do usuário!\n");
+    }
+    free(cpf);
+    return task;
+}
+
 char tasks_menu(void) {
     char op;
     limpar_tela();
@@ -41,44 +69,26 @@ void register_new_task(void) {
 }
 
 
-void view_task(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
-    show_header("Exibir Tarefas");
-    Tasks *task = malloc(sizeof(Tasks));
-    memset(task, 0, sizeof(Tasks));
-
-    limpa_buffer();
-    printf("| Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(load_task(cpf, task)){
-        display_data_task(task);
-    } else {
-        show_error("| Erro ao carregar as tarefas do usuário!\n");
-    }
-
-    free(cpf);
-    free(task);
-    enter(); 
+void view_task(void) {
+    Tasks task = initialize_task("Visualizar Tarefas");
+    enter();
+    free_task(&task);
 }
 
 
-void edit_task(void) { // Esta tela antecede a tela -> alterar dados
-    show_header("Editar Tarefas");
-    Tasks task = {
-        .cpf = "111.111.111-11",
-        .title = "NOVO TITULO",
-        .description = NULL,
-        .data = NULL,
-        .turn = NULL,
-        .priority = NULL,
-        .status = NULL
-    };
-    if(update_title_task(&task)) {
-        show_sucess("| Tarefa alterada com sucesso!\n");
-    } else {
-        show_error("| [ERRO]: Erro ao alterar!\n");
+void edit_task(void) {
+    Tasks task = initialize_task("Editar Tarefas");
+
+    if(task.cpf != NULL){
+        if(update_title_task(&task)) {
+            show_sucess("| Tarefa alterada com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao alterar!\n");
+        }
     }
+
     enter();
+    free_task(&task);
 }
 
 
