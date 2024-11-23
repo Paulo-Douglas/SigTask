@@ -11,7 +11,7 @@
 #include "../libs/styles.h"
 
 
-char menu_tarefas(void) {
+char tasks_menu(void) {
     char op;
     limpar_tela();
     printf("---------------------------------------------------\n");
@@ -28,7 +28,7 @@ char menu_tarefas(void) {
     return op;
 }
 
-void cadastrar_tarefas(void) {    
+void register_new_task(void) {    
     show_header("Cadastrar Tarefa");
 
     if(register_task()){
@@ -41,7 +41,7 @@ void cadastrar_tarefas(void) {
 }
 
 
-void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
+void view_task(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
     show_header("Exibir Tarefas");
     Tasks *task = malloc(sizeof(Tasks));
     memset(task, 0, sizeof(Tasks));
@@ -51,7 +51,7 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
     char *cpf = read_cpf();
 
     if(load_task(cpf, task)){
-        dados_tarefas(task);
+        display_data_task(task);
     } else {
         show_error("| Erro ao carregar as tarefas do usuário!\n");
     }
@@ -62,7 +62,7 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
 }
 
 
-void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
+void edit_task(void) { // Esta tela antecede a tela -> alterar dados
     show_header("Editar Tarefas");
     Tasks task = {
         .cpf = "111.111.111-11",
@@ -82,12 +82,12 @@ void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
 }
 
 
-void excluir_tarefas(void) {
+void delete_task(void) {
     show_header("Excluir Tarefas");
     enter();
 }
 
-void dados_tarefas(Tasks *task){
+void display_data_task(Tasks *task){
     show_header("Dados Tarefas");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);

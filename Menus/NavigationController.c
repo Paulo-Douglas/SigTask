@@ -22,7 +22,7 @@ void navegacao_modulos(void) {
                 navegacao_times();
                 break;
             case '3':
-                navegacao_tarefas();
+                navigation_tasks();
                 break;
             case '4':
                 navegação_compromissos();
