@@ -11,18 +11,20 @@
 #include "TarefasController.h"
 #include "TarefasModel.h"
 
+
+int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)()) {
+    read_and_assign(field, prompt, read_function);
+    return update_data_task(task, delimiter, *field, max_length);
+}
+
+
 int register_task(void) {
     limpa_buffer();
     Tasks task = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
-    printf("|\tCPF: ");
-    task.cpf = read_cpf();
-
-    printf("|\tTítulo: ");
-    task.title = read_string();
-
-    printf("|\tDescrição: ");
-    task.description = read_description();
+    read_and_assign(&task.cpf, "|\tCPF: ", read_cpf);
+    read_and_assign(&task.title, "|\tTarefa: ", read_string);
+    read_and_assign(&task.description, "|\tDescrição: ", read_description);
 
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
@@ -34,12 +36,8 @@ int register_task(void) {
     snprintf(task.data, 12, "%s/%s/%d", day, month, year);
 
     limpa_buffer();
-    printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
-    task.turn = read_generic_123("turn");
-
-    printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
-    task.priority = read_generic_123("priority");
-
+    read_and_assign(&task.turn, "|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n", read_generic_123);
+    read_and_assign(&task.priority, "|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n", read_generic_123);
     task.status = strdup("1");
 
     int result = insert_into_tasks("data/tasks.txt", &task);
@@ -108,16 +106,12 @@ int update_task(Tasks *task){
                 if(result) show_sucess("| Data alterada com sucesso!\n");
                 break;
             case '4':
-                printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
-                task->turn = read_generic_123("turn");
-                result = update_data_task(task, ';', task->turn, 1);
-                if(result) show_sucess("| Turno alterado com sucesso!\n");
+                result = update_field(task, ';', &task->turn, "|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n", 1, read_generic_123);
+                if (result) show_sucess("| Turno alterado com sucesso!\n");
                 break;
             case '5':
-                printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
-                task->priority = read_generic_123("priority");
-                result = update_data_task(task, '(', task->priority, 1);
-                if(result) show_sucess("| Prioridade alterada com sucesso!\n");
+                result = update_field(task, '(', &task->priority, "|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n", 1, read_generic_123);
+                if (result) show_sucess("| Prioridade alterada com sucesso!\n");
                 break;
             case '6':
                 update_status(task, "0", "| [ERRO]: Tarefa já fechada!\n", "close");
@@ -139,6 +133,7 @@ int update_task(Tasks *task){
     return result;
 }
 
+
 void update_status(
     Tasks *task,
     const char *status_actual,
@@ -148,15 +143,4 @@ void update_status(
 
     int result = update_status_task(task, dir);
     result ? show_sucess("| Status alterado com sucesso!\n") : show_error(message);
-}
-
-void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
-    printf("%s", prompt);
-    free(*field);
-    *field = read_function();
-}
-
-int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)()) {
-    read_and_assign(field, prompt, read_function);
-    return update_data_task(task, delimiter, *field, max_length);
 }

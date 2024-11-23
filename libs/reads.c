@@ -7,6 +7,12 @@
 #include "styles.h"
 #include "utils.h"
 
+void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
+    printf("%s", prompt);
+    free(*field);
+    *field = read_function();
+}
+
 void input(char **prompt) {
     char line[MAX_LINE_LENGTH];
 
