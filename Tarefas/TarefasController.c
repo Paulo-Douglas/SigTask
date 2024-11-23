@@ -37,26 +37,26 @@ int register_task(void) {
     printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
     char *turn_choice = read_generic_123();
     if (strcmp(turn_choice, "1") == 0) {
-        task.turn = strdup("Matutino");
+        task.turn = strdup("M");
     } else if (strcmp(turn_choice, "2") == 0) {
-        task.turn = strdup("Vespertino");
+        task.turn = strdup("V");
     } else {
-        task.turn = strdup("Noturno");
+        task.turn = strdup("N");
     }
     free(turn_choice);
 
     printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
     char *priority_choice = read_generic_123();
     if (strcmp(priority_choice, "1") == 0) {
-        task.priority = strdup("Alta");
+        task.priority = strdup("A");
     } else if (strcmp(priority_choice, "2") == 0) {
-        task.priority = strdup("Média");
+        task.priority = strdup("M");
     } else {
-        task.priority = strdup("Baixa");
+        task.priority = strdup("B");
     }
     free(priority_choice);
 
-    task.status = strdup("Aberto");
+    task.status = strdup("1");
 
     int result = insert_into_tasks("data/tasks.txt", &task);
 
