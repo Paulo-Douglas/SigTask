@@ -111,3 +111,37 @@ int update_title_task(Tasks *task){
 
     return found;
 }
+
+int update_status_task(Tasks *task, const char *dir){
+    FILE *fp = fopen("data/tasks.txt", "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_TASKS];
+    long pos;
+    int found = FALSE;
+
+    while (fgets(line, LINE_TASKS, fp) != NULL){
+        if(strstr(line, task->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *pos_status = strchr(line, ')');
+            if (pos_status != NULL){
+                long name_pos = pos + (pos_status - line) + 1;
+
+                char *line_file= strtok(line, ")");
+                char *status_line = strtok(NULL, "\n");
+
+                if((strcmp(status_line, "1") == 0) && (strcmp(dir, "open") == 0)) return FALSE;
+                if ((strcmp(status_line, "0") == 0) && (strcmp(dir, "close") == 0)) return FALSE;
+
+                fseek(fp, name_pos, SEEK_SET);
+                fprintf(fp, "%s", task->status);
+                fflush(fp);
+                found = TRUE;
+            }
+            break;
+        }
+    } 
+
+    return found;
+}

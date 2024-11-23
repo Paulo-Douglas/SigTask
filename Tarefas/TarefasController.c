@@ -72,7 +72,8 @@ int update_task(Tasks *task){
         printf("3 - Data\n");
         printf("4 - Turno\n");
         printf("5 - Prioridade\n");
-        printf("6 - Status\n");
+        printf("6 - Fechar Tarefa\n");
+        printf("7 - Reativar Tarefa\n");
         printf("0 - Sair\n");
         opc = getchar();
         getchar();
@@ -83,6 +84,16 @@ int update_task(Tasks *task){
                 task->title = read_string();
                 result = update_title_task(task);
                 if(result) show_sucess("| Título alterado com sucesso!\n");
+                break;
+            case '6':
+                task->status = strdup("0");
+                result = update_status_task(task, "close");
+                result ? show_sucess("| Status alterado com sucesso!\n") : show_error("| [ERRO]: Tarefa já fechada!\n");
+                break;
+            case '7':
+                task->status = strdup("1");
+                result = update_status_task(task, "open");
+                result ? show_sucess("| Status alterado com sucesso!\n") : show_error("| [ERRO]: Tarefa já aberta!\n");
                 break;
             case '0':
                 break;
