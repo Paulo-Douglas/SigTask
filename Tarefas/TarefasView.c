@@ -64,6 +64,20 @@ void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados d
 
 void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
     show_header("Editar Tarefas");
+    Tasks task = {
+        .cpf = "111.111.111-11",
+        .title = "NOVO TITULO",
+        .description = NULL,
+        .data = NULL,
+        .turn = NULL,
+        .priority = NULL,
+        .status = NULL
+    };
+    if(update_title_task(&task)) {
+        show_sucess("| Tarefa alterada com sucesso!\n");
+    } else {
+        show_error("| [ERRO]: Erro ao alterar!\n");
+    }
     enter();
 }
 
@@ -84,8 +98,4 @@ void dados_tarefas(Tasks *task){
     printf("| \033[1mPrioridade:\033[0m %s\n", task->priority);            
     printf("| \033[1mStatus:\033[0m %s\n", task->status);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-}
-
-void alterar_dados_tarefas(void) {
-    show_header("Alterar Dados");
 }

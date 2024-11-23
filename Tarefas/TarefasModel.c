@@ -9,10 +9,12 @@
 #include "TarefasModel.h"
 
 int insert_into_tasks(const char *file_name, Tasks *task) {
+    create_path("data/");
+
     FILE *fp = fopen(file_name, "a");
     if (fp == NULL) return FALSE;
 
-    fprintf(fp, "%-11s:%-50s[%-100s]%-10s;%s(%s)%s\n",
+    fprintf(fp, "%-14s:%-50s[%-100s]%-10s;%s(%s)%s\n",
             task->cpf,
             task->title,
             task->description,
@@ -80,4 +82,32 @@ int load_task(const char *cpf, Tasks *task){
     fclose(fp);
     return found;
 
+}
+
+int update_title_task(Tasks *task){
+    FILE *fp = fopen("data/tasks.txt", "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_TASKS];
+    long pos;
+    int found = FALSE;
+
+    while (fgets(line, LINE_TASKS, fp) != NULL){
+        if(strstr(line, task->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *pos_title = strchr(line, ':');
+            if (pos_title != NULL){
+                long name_pos = pos + (pos_title - line) + 1;
+
+                fseek(fp, name_pos, SEEK_SET);
+                fprintf(fp, "%-50s", task->title);
+                fflush(fp);
+                found = TRUE;
+            }
+            break;
+        }
+    } 
+
+    return found;
 }

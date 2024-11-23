@@ -10,15 +10,19 @@ void navegacao_tarefas(void){
         switch(op){
             case '1':  
                 cadastrar_tarefas();
+                limpa_buffer();
                 break;
             case '2':
                 exibir_tarefas();
+                limpa_buffer();
                 break;
             case '3':
-                alterar_dados_tarefas();
+                editar_tarefas();
+                limpa_buffer();
                 break;
             case '4':
                 excluir_tarefas();
+                limpa_buffer();
                 break;
             case '0':
                 break;
@@ -26,7 +30,6 @@ void navegacao_tarefas(void){
                 printf("Opção inválida, por favor, digite outro valor\n");
                 break;
         }
-            
     } while (op != '0');
     limpa_buffer();
     limpar_tela();
