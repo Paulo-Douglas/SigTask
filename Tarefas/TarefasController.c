@@ -59,7 +59,3 @@ int register_task(void) {
 int search_task_to_user(const char* cpf){
     return cpf_unique_user(cpf, "data/users.txt");
 }
-
-int upload_data_task(const char* cpf){
-    return load_task(cpf);
-}

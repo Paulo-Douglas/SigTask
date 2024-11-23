@@ -26,8 +26,7 @@ int insert_into_tasks(const char *file_name, Tasks *task) {
 }
 
 
-int load_task(const char *cpf){
-    Tasks information;
+int load_task(const char *cpf, Tasks *task){
     
     FILE *fp = fopen("data/tasks.txt", "r");
     if(fp == NULL) return FALSE;
@@ -37,34 +36,45 @@ int load_task(const char *cpf){
 
     while (fgets(line, sizeof(line), fp) && !found){
 
-        char *cpf_line = strtok(line, ",");
+        char *cpf_line = strtok(line, ":");
         if(strcmp(cpf_line, cpf) == 0){
-            char *title_line = strtok(NULL, ",");
-            char *description_line = strtok(NULL, ",");
-            char *data_line = strtok(NULL, ",");
-            char *turn_line = strtok(NULL, ",");
-            char *priority_line = strtok(NULL, ",");
-            char *status_line = strtok(NULL, ",");
+            char *title_line = strtok(NULL, "[");
+            char *description_line = strtok(NULL, "]");
+            char *data_line = strtok(NULL, ";");
+            char *turn_line = strtok(NULL, "(");
+            char *priority_line = strtok(NULL, ")");
+            char *status_line = strtok(NULL, "\n");
 
-            information.cpf = cpf_line;
-            information.title = title_line;
-            information.description = description_line;
-            information.data = data_line;
-            information.turn = turn_line;
-            information.priority = priority_line;
-            information.status = status_line;
 
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("| Título: %s\n", information.title);
-            printf("| CPF: %s\n", information.cpf);
-            printf("| Descrição: %s\n", information.description);
-            printf("| Data: %s\n", information.data);
-            printf("| Turno: %s\n", information.turn);
-            printf("| Prioridade: %s\n", information.priority);            
-            printf("| Status: %s\n", information.status);
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+            if (strcmp(priority_line, "B") == 0){
+                task->priority = strdup("Baixa");
+            } else if (strcmp(priority_line, "M") == 0){
+                task->priority = strdup("Media");
+            } else {
+                task->priority = strdup("Alta");
+            }
+
+            if(strcmp(turn_line, "M") == 0){
+                task->turn = strdup("Manha");
+            } else if(strcmp(turn_line, "T") == 0){
+                task->turn = strdup("Tarde");
+            } else {
+                task->turn = strdup("Noite");
+            }
+
+            if (strcmp(status_line, "1") == 0){
+                task->status =  strdup("Aberta");
+            } else {
+                task->status = strdup("Fechada");
+            }
+
+            task->cpf = strdup(cpf_line);
+            task->title = strdup(title_line);
+            task->description = strdup(description_line);
+            task->data = strdup(data_line);
 
             found = TRUE;
+            enter();
         }
     }
     fclose(fp);
