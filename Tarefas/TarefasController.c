@@ -77,6 +77,13 @@ int update_task(Tasks *task){
         printf("|   0 - Sair\n");
         scanf(" %c", &opc);
         getchar();
+        /*
+            title 50 delimit -> :
+            description 100 delimit -> [
+            data 10 -> delimit -> ]
+            turn 1 -> delimit -> ;
+            priority 1 -> delimit -> (
+        */
 
         switch(opc){
             case '1':
@@ -84,6 +91,37 @@ int update_task(Tasks *task){
                 task->title = read_string();
                 result = update_data_task(task, ':', task->title, 50);
                 if(result) show_sucess("| Título alterado com sucesso!\n");
+                break;
+            case '2':
+                printf("|\tDescrição: ");
+                task->description = read_description();
+                result = update_data_task(task, '[', task->description, 100);
+                if(result) show_sucess("| Descrição alterada com sucesso!\n");
+                break;
+            case '3':
+                char day[MAX_DAY_LENGHT];
+                char month[MAX_MONTH_LENGHT];
+                int year = year_now();
+                printf("\t DATA\n");
+                read_date(day, month);
+
+                task->data = malloc(sizeof(char) * 12);
+                snprintf(task->data, 12, "%s/%s/%d", day, month, year);
+
+                result = update_data_task(task, ']', task->data, 10);
+                if(result) show_sucess("| Data alterada com sucesso!\n");
+                break;
+            case '4':
+                printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
+                task->turn = read_generic_123("turn");
+                result = update_data_task(task, ';', task->turn, 1);
+                if(result) show_sucess("| Turno alterado com sucesso!\n");
+                break;
+            case '5':
+                printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
+                task->priority = read_generic_123("priority");
+                result = update_data_task(task, '(', task->priority, 1);
+                if(result) show_sucess("| Prioridade alterada com sucesso!\n");
                 break;
             case '6':
                 update_status(task, "0", "| [ERRO]: Tarefa já fechada!\n", "close");

@@ -16,7 +16,6 @@ typedef struct
 
 int insert_into_tasks(const char* file_name, Tasks *task);
 int load_task(const char *cpf, Tasks *task);
-int update_title_task(Tasks *task);
 int update_status_task(Tasks *task, const char *dir);
 int update_data_task(Tasks *task, const char delimit, const char *new_data, const int lenght);
 

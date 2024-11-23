@@ -84,33 +84,6 @@ int load_task(const char *cpf, Tasks *task){
 
 }
 
-int update_title_task(Tasks *task){
-    FILE *fp = fopen("data/tasks.txt", "r+");
-    if (fp == NULL) return FALSE;
-
-    char line[LINE_TASKS];
-    long pos;
-    int found = FALSE;
-
-    while (fgets(line, LINE_TASKS, fp) != NULL){
-        if(strstr(line, task->cpf) != NULL){
-            pos = ftell(fp) - strlen(line);
-
-            char *pos_title = strchr(line, ':');
-            if (pos_title != NULL){
-                long name_pos = pos + (pos_title - line) + 1;
-
-                fseek(fp, name_pos, SEEK_SET);
-                fprintf(fp, "%-50s", task->title);
-                fflush(fp);
-                found = TRUE;
-            }
-            break;
-        }
-    } 
-
-    return found;
-}
 
 int update_data_task(Tasks *task, const char delimit, const char *new_data, const int lenght){
     FILE *fp = fopen("data/tasks.txt", "r+");
@@ -140,6 +113,7 @@ int update_data_task(Tasks *task, const char delimit, const char *new_data, cons
     return found;
 }
 
+
 int update_status_task(Tasks *task, const char *dir){
     FILE *fp = fopen("data/tasks.txt", "r+");
     if (fp == NULL) return FALSE;
@@ -162,14 +136,15 @@ int update_status_task(Tasks *task, const char *dir){
                 if((strcmp(status_line, "1") == 0) && (strcmp(dir, "open") == 0)) return FALSE;
                 if ((strcmp(status_line, "0") == 0) && (strcmp(dir, "close") == 0)) return FALSE;
 
+                printf("CHEGUEI AQUI%s\n", status_line);
                 fseek(fp, name_pos, SEEK_SET);
                 fprintf(fp, "%s", task->status);
                 found = TRUE;
             }
             break;
         }
-        fclose(fp);
     } 
 
+    fclose(fp);
     return found;
 }
