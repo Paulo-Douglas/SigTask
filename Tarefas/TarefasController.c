@@ -82,7 +82,7 @@ int update_task(Tasks *task){
             case '1':
                 printf("|\tTítulo: ");
                 task->title = read_string();
-                result = update_title_task(task);
+                result = update_data_task(task, ':', task->title, 50);
                 if(result) show_sucess("| Título alterado com sucesso!\n");
                 break;
             case '6':
