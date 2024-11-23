@@ -55,7 +55,7 @@ int register_compromise(void){
     data[5] = time;
 
     printf("Digite a prioridade: (Baixa = 1, Média = 2, Alta = 3)");
-    char *priority = read_generic_123();
+    char *priority = read_generic_123("priority");
     data[6] = priority;
     printf("|-----------------------------------------------------------------------------------|\n");
 

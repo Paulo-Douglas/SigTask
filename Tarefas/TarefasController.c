@@ -35,26 +35,10 @@ int register_task(void) {
 
     limpa_buffer();
     printf("|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n");
-    char *turn_choice = read_generic_123();
-    if (strcmp(turn_choice, "1") == 0) {
-        task.turn = strdup("M");
-    } else if (strcmp(turn_choice, "2") == 0) {
-        task.turn = strdup("V");
-    } else {
-        task.turn = strdup("N");
-    }
-    free(turn_choice);
+    task.turn = read_generic_123("turn");
 
     printf("|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n");
-    char *priority_choice = read_generic_123();
-    if (strcmp(priority_choice, "1") == 0) {
-        task.priority = strdup("A");
-    } else if (strcmp(priority_choice, "2") == 0) {
-        task.priority = strdup("M");
-    } else {
-        task.priority = strdup("B");
-    }
-    free(priority_choice);
+    task.priority = read_generic_123("priority");
 
     task.status = strdup("1");
 

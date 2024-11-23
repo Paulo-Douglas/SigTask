@@ -116,7 +116,7 @@ void read_time(char *time){
     limpa_buffer();
 }
 
-char* read_generic_123(void) {
+char* read_generic_123(const char *dir) {
     char *prompt = NULL;
     do {
         input(&prompt);
@@ -127,6 +127,25 @@ char* read_generic_123(void) {
             free(prompt);
         }
     } while (*prompt < '1' || *prompt > '3');
+
+    if(strcmp(dir, "turn") == 0){
+        if (strcmp(prompt, "1") == 0) {
+            prompt = strdup("M");
+        } else if (strcmp(prompt, "2") == 0) {
+            prompt = strdup("V");
+        } else {
+            prompt = strdup("N");
+        }
+    } else if (strcmp(dir, "priority") == 0){
+        if (strcmp(prompt, "1") == 0) {
+            prompt = strdup("A");
+        } else if (strcmp(prompt, "2") == 0) {
+            prompt = strdup("M");
+        } else {
+            prompt = strdup("B");
+        }
+    }
+
     return prompt;
 }
 
