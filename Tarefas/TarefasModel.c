@@ -136,11 +136,11 @@ int update_status_task(Tasks *task, const char *dir){
 
                 fseek(fp, name_pos, SEEK_SET);
                 fprintf(fp, "%s", task->status);
-                fflush(fp);
                 found = TRUE;
             }
             break;
         }
+        fclose(fp);
     } 
 
     return found;

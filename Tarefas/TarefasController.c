@@ -66,16 +66,16 @@ int update_task(Tasks *task){
     int result = FALSE;
 
     do{
-        printf("Escolha um campo para alterar:\n");
-        printf("1 - Título\n");
-        printf("2 - Descrição\n");
-        printf("3 - Data\n");
-        printf("4 - Turno\n");
-        printf("5 - Prioridade\n");
-        printf("6 - Fechar Tarefa\n");
-        printf("7 - Reativar Tarefa\n");
-        printf("0 - Sair\n");
-        opc = getchar();
+        printf("|   Escolha um campo para alterar:\n");
+        printf("|   1 - Título\n");
+        printf("|   2 - Descrição\n");
+        printf("|   3 - Data\n");
+        printf("|   4 - Turno\n");
+        printf("|   5 - Prioridade\n");
+        printf("|   6 - Fechar Tarefa\n");
+        printf("|   7 - Reativar Tarefa\n");
+        printf("|   0 - Sair\n");
+        scanf(" %c", &opc);
         getchar();
 
         switch(opc){
@@ -86,16 +86,15 @@ int update_task(Tasks *task){
                 if(result) show_sucess("| Título alterado com sucesso!\n");
                 break;
             case '6':
-                task->status = strdup("0");
-                result = update_status_task(task, "close");
-                result ? show_sucess("| Status alterado com sucesso!\n") : show_error("| [ERRO]: Tarefa já fechada!\n");
+                update_status(task, "0", "| [ERRO]: Tarefa já fechada!\n", "close");
+                limpa_buffer();
                 break;
             case '7':
-                task->status = strdup("1");
-                result = update_status_task(task, "open");
-                result ? show_sucess("| Status alterado com sucesso!\n") : show_error("| [ERRO]: Tarefa já aberta!\n");
+                update_status(task, "1", "| [ERRO]: Tarefa já aberta!\n", "open");
+                limpa_buffer();
                 break;
             case '0':
+                limpa_buffer();
                 break;
             default:
                 printf("Opção inválida!\n");
@@ -104,4 +103,15 @@ int update_task(Tasks *task){
     } while (opc != '0');
 
     return result;
+}
+
+void update_status(
+    Tasks *task,
+    const char *status_actual,
+    const char *message,
+    const char *dir){
+    task->status = strdup(status_actual);
+
+    int result = update_status_task(task, dir);
+    result ? show_sucess("| Status alterado com sucesso!\n") : show_error(message);
 }
