@@ -11,5 +11,7 @@ void update_status(
     const char *status_actual,
     const char *message,
     const char *dir);
+void read_and_assign(char **field, const char *prompt, char *(*read_function)());
+int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)());
 
 #endif

@@ -87,15 +87,11 @@ int update_task(Tasks *task){
 
         switch(opc){
             case '1':
-                printf("|\tTítulo: ");
-                task->title = read_string();
-                result = update_data_task(task, ':', task->title, 50);
+                result = update_field(task, ':', &task->title, "|\tTítulo: ", 50, read_string);                
                 if(result) show_sucess("| Título alterado com sucesso!\n");
                 break;
             case '2':
-                printf("|\tDescrição: ");
-                task->description = read_description();
-                result = update_data_task(task, '[', task->description, 100);
+                result = update_field(task, '[', &task->description, "|\tDescrição: ", 100, read_description);
                 if(result) show_sucess("| Descrição alterada com sucesso!\n");
                 break;
             case '3':
@@ -152,4 +148,15 @@ void update_status(
 
     int result = update_status_task(task, dir);
     result ? show_sucess("| Status alterado com sucesso!\n") : show_error(message);
+}
+
+void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
+    printf("%s", prompt);
+    free(*field);
+    *field = read_function();
+}
+
+int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)()) {
+    read_and_assign(field, prompt, read_function);
+    return update_data_task(task, delimiter, *field, max_length);
 }
