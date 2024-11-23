@@ -80,11 +80,7 @@ void edit_task(void) {
     Tasks task = initialize_task("Editar Tarefas");
 
     if(task.cpf != NULL){
-        if(update_title_task(&task)) {
-            show_sucess("| Tarefa alterada com sucesso!\n");
-        } else {
-            show_error("| [ERRO]: Erro ao alterar!\n");
-        }
+        update_task(&task);
     }
 
     enter();

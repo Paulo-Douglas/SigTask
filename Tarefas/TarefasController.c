@@ -59,3 +59,38 @@ int register_task(void) {
 int search_task_to_user(const char* cpf){
     return cpf_unique_user(cpf, "data/users.txt");
 }
+
+
+int update_task(Tasks *task){
+    char opc;
+    int result = FALSE;
+
+    do{
+        printf("Escolha um campo para alterar:\n");
+        printf("1 - Título\n");
+        printf("2 - Descrição\n");
+        printf("3 - Data\n");
+        printf("4 - Turno\n");
+        printf("5 - Prioridade\n");
+        printf("6 - Status\n");
+        printf("0 - Sair\n");
+        opc = getchar();
+        getchar();
+
+        switch(opc){
+            case '1':
+                printf("|\tTítulo: ");
+                task->title = read_string();
+                result = update_title_task(task);
+                if(result) show_sucess("| Título alterado com sucesso!\n");
+                break;
+            case '0':
+                break;
+            default:
+                printf("Opção inválida!\n");
+                break;
+        }
+    } while (opc != '0');
+
+    return result;
+}
