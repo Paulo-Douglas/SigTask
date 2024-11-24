@@ -75,7 +75,7 @@ int upload_user_data(const char* cpf, User *users, const char **dir) {
  * @return TRUE se os dados forem alterados com sucesso, FALSE caso
  *         contrário.
  */
-int update_user_data(User *users) {
+int update_user(User *users) {
     char opc = '\0';
     int update = FALSE;
 

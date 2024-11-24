@@ -61,11 +61,11 @@ int update_name_in_teams(Team *teams, const char* file_teams){
   FILE *fp = fopen(file_teams, "r+");
   if (fp == NULL) return FALSE;
 
-  char line[LINE_SIZE];
+  char line[LINE_TEAM];
   long pos; 
   int found = FALSE;
 
-  while (fgets(line, LINE_SIZE, fp) != NULL){
+  while (fgets(line, LINE_TEAM, fp) != NULL){
     if (strstr(line, teams -> team_name) != NULL){
       pos = ftell(fp) - strlen(line);
 
@@ -90,11 +90,11 @@ int update_description_in_teams(Team *teams, const char* file_teams){
   FILE *fp = fopen(file_teams, "+r");
   if (fp == NULL) return FALSE;
 
-  char line[LINE_SIZE];
+  char line[LINE_TEAM];
   long pos;
   int found = FALSE;
 
-  while(fgets(line, LINE_SIZE, fp) != NULL){
+  while(fgets(line, LINE_TEAM, fp) != NULL){
     if(strstr(line, teams -> description) != NULL){
       pos = ftell(fp) - strlen(line);
 
@@ -118,11 +118,11 @@ int update_status_in_teams(Team *teams, const char* file_teams){
     FILE *fp = fopen(file_teams, "r+");
     if (fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_TEAM];
     long pos;
     int found = FALSE;
 
-    while (fgets(line, LINE_SIZE, fp) != NULL){
+    while (fgets(line, LINE_TEAM, fp) != NULL){
         if (strstr(line, teams->team_name) != NULL){
             pos = ftell(fp) - strlen(line);
 

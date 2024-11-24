@@ -27,7 +27,7 @@ void process_action(const char *mod){
 
     if (users.cpf != NULL) {
         user_data(&users);
-        int result = update_user_data(&users);   
+        int result = update_user(&users);   
         if (result) {
             show_sucess("| Dados alterados com sucesso!\n");
         } else {
@@ -118,7 +118,7 @@ void modify_user_data(void) {
 
     if (users.cpf != NULL) {
         user_data(&users);
-        int result = update_user_data(&users);   
+        int result = update_user(&users);   
         if (result) {
             show_sucess("| Dados alterados com sucesso!\n");
         } else {

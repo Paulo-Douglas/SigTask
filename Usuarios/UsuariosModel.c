@@ -78,11 +78,11 @@ int update_user_name(User *users, const char* file_name){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_USER];
     long pos; // Cursor
     int found = FALSE;
 
-    while (fgets(line, LINE_SIZE, fp) != NULL){
+    while (fgets(line, LINE_USER, fp) != NULL){
         if (strstr(line, users->cpf) != NULL){
             pos = ftell(fp) - strlen(line);
 
@@ -104,6 +104,33 @@ int update_user_name(User *users, const char* file_name){
     return found;
 }
 
+int update_data_user(User *user, const char delimit, const char *new_data, const int lenght){
+    FILE *fp = fopen("data/users.txt", "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_USER];
+    long pos;
+    int found = FALSE;
+
+    while(fgets(line, LINE_USER, fp) != NULL){
+        if (strstr(line, user->cpf) != NULL){
+            pos = ftell(fp) - strlen(line);
+
+            char *pos_data = strchr(line, delimit);
+            if (pos_data != NULL){
+                long name_pos = pos + (pos_data - line) + 1;
+
+                fseek(fp, name_pos, SEEK_SET);
+                fprintf(fp, "%-*s", lenght, new_data);
+                fflush(fp);
+                found = TRUE;
+            }
+            break;
+        }
+    }
+    fclose(fp);
+    return found;
+}
 
 /**
  * @brief Atualiza o telefone de um usuário no arquivo.
@@ -117,11 +144,11 @@ int update_user_phone(User *users, const char *file_name) {
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_USER];
     long pos; // Cursor
     int found = FALSE;
 
-    while (fgets(line, LINE_SIZE, fp) != NULL) {
+    while (fgets(line, LINE_USER, fp) != NULL) {
         pos = ftell(fp) - strlen(line);
 
         if (strstr(line, users->cpf) != NULL) {
@@ -164,11 +191,11 @@ int update_user_status(User *users, const char *file_name, const char *dir){
     FILE *fp = fopen(file_name, "r+");
     if (fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_USER];
     long pos;
     int found = FALSE;
 
-    while (fgets(line, LINE_SIZE, fp) != NULL){
+    while (fgets(line, LINE_USER, fp) != NULL){
         if (strstr(line, users->cpf) != NULL){
             pos = ftell(fp) - strlen(line);
 
@@ -217,7 +244,7 @@ int select_all_users(const char *file_name){
     FILE *fp = fopen(file_name, "r");
     if(fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_USER];
     while(fgets(line, sizeof(line), fp)){
         char *cpf = strtok(line, ":");
         char *name = strtok(NULL, ";");
@@ -260,7 +287,7 @@ int load_user_from_users(const char* cpf, User **users, const char **dir){
     FILE *fp = fopen("data/users.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[LINE_SIZE];
+    char line[LINE_USER];
     while(fgets(line, sizeof(line), fp)){
 
         // Verifica se a linha começa com o CPF

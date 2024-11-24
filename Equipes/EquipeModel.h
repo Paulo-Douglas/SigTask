@@ -5,7 +5,7 @@
 
 #define NAME_SIZE 50
 #define DESCRIPTION_SIZE 100
-#define LINE_SIZE (NAME_SIZE + DESCRIPTION_SIZE + 6)
+#define LINE_TEAM (NAME_SIZE + DESCRIPTION_SIZE + 6)
 
 typedef struct {
     char *team_name;
