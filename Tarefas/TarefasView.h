@@ -9,7 +9,7 @@ void register_new_task(void);
 void view_task(void);
 void edit_task(void);
 void delete_task(void);
-void display_data_task(Tasks *task);
+void display_data_task(Tasks *task, int index);
 
 Tasks initialize_task(const char *title);
 

@@ -91,9 +91,10 @@ void delete_task(void) {
     enter();
 }
 
-void display_data_task(Tasks *task){
-    show_header("Dados Tarefas");
-    printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
+void display_data_task(Tasks *task, int index) {
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Dados da tarefa:                                                              |\n");
+    if(index == 0)printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);
     printf("| \033[1mDescrição:\033[0m %s\n", task->description);
