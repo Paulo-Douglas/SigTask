@@ -131,12 +131,12 @@ int update_status_task(Tasks *task, const char *dir){
                 long name_pos = pos + (pos_status - line) + 1;
 
                 char *line_file= strtok(line, ")");
-                char *status_line = strtok(NULL, "\n");
+                if (line_file != NULL){
+                    char *status_line = strtok(NULL, "\n");
+                    if(((strcmp(status_line, "1") == 0) && (strcmp(dir, "open") == 0)) ||
+                        ((strcmp(status_line, "0") == 0) && (strcmp(dir, "close") == 0))) return FALSE;
+                }
 
-                if((strcmp(status_line, "1") == 0) && (strcmp(dir, "open") == 0)) return FALSE;
-                if ((strcmp(status_line, "0") == 0) && (strcmp(dir, "close") == 0)) return FALSE;
-
-                printf("CHEGUEI AQUI%s\n", status_line);
                 fseek(fp, name_pos, SEEK_SET);
                 fprintf(fp, "%s", task->status);
                 found = TRUE;
