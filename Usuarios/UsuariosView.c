@@ -11,11 +11,11 @@
 #include "../libs/styles.h"
 
 
-User get_user_by_cpf(void) {
+User get_user_by_cpf(const char* mod) {
     User users = {NULL, NULL, NULL};
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
-    if (!load_user_from_users(cpf, &users)) {
+    if (!load_user_from_users(cpf, &users, mod)) {
         show_error("| Erro ao carregar os dados do usuário!\n");
     }
     return users;
@@ -23,7 +23,7 @@ User get_user_by_cpf(void) {
 
 
 void process_action(const char *dir, const char *sucess, const char *error) {
-    User users = get_user_by_cpf();
+    User users = get_user_by_cpf("NULL");
 
     if (users.cpf != NULL) {
         user_data(&users);
@@ -112,8 +112,9 @@ void display_user_data(void) {
  **/
 void modify_user_data(void) {
     show_header("Editar Dados");
+    const char *mod = "EDIT";
 
-    User users = get_user_by_cpf();
+    User users = get_user_by_cpf(mod);
 
     if (users.cpf != NULL) {
         user_data(&users);

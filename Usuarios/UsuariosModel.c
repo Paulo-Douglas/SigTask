@@ -164,7 +164,7 @@ int select_all_users(const char *file_name){
  * 
  * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int load_user_from_users(const char* cpf, User *users) {
+int load_user_from_users(const char* cpf, User *users, const char* mod) {
     FILE *fp = fopen("data/users.txt", "r");
     if (fp == NULL) {
         perror("Erro ao abrir arquivo");
@@ -190,6 +190,12 @@ int load_user_from_users(const char* cpf, User *users) {
         char *end = name + strlen(name) - 1;
         while (end > name && isspace((unsigned char)*end)) end--;
         *(end + 1) = '\0';
+
+        // Verificar se o usuário esta ativo, caso seja EDIÇÃO
+        if ((strcmp(mod, "EDIT") == 0) && (*status == '0')) {
+            fclose(fp);
+            return FALSE;
+        }
 
         users->cpf = strdup(user_cpf);
         users->name = strdup(name);

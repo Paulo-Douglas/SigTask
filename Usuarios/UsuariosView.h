@@ -13,6 +13,6 @@ void process_action(const char *mod, const char *sucess, const char *error);
 
 char user_menu(void);
 
-User get_user_by_cpf(void);
+User get_user_by_cpf(const char* mod);
 
 #endif

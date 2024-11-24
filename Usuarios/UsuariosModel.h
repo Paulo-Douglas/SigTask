@@ -17,6 +17,6 @@ int insert_user_to_file(User *users, const char* file_name);
 int update_data_user(User *user, const char delimit, const char *new_data, const int lenght);
 int update_user_status(User *users, const char *file_name, const char *dir);
 int select_all_users(const char *file_name);
-int load_user_from_users(const char* cpf, User *users);
+int load_user_from_users(const char* cpf, User *users, const char* mod);
 
 #endif // USUARIOSMODEL_H
