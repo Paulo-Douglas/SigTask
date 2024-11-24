@@ -65,45 +65,6 @@ int insert_user_to_file(User *users, const char* file_name){
 // }
 
 
-
-/**
- * @brief Atualiza o nome de um usuário no arquivo.
- *
- * @param users estrutura com os dados do usuário.
- * @param file_name caminho para o arquivo com os dados dos usuários.
- *
- * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
- */
-int update_user_name(User *users, const char* file_name){
-    FILE *fp = fopen(file_name, "r+");
-    if (fp == NULL) return FALSE;
-
-    char line[LINE_USER];
-    long pos; // Cursor
-    int found = FALSE;
-
-    while (fgets(line, LINE_USER, fp) != NULL){
-        if (strstr(line, users->cpf) != NULL){
-            pos = ftell(fp) - strlen(line);
-
-            char *delimiter_pos = strchr(line, ':');
-            if (delimiter_pos != NULL){
-                long name_pos = pos + (delimiter_pos - line) + 1;
-
-                // Posiciona cursor
-                fseek(fp, name_pos, SEEK_SET);
-                fprintf(fp, "%-229s", users->name);
-                fflush(fp);
-                found = TRUE;
-            }
-
-            break;
-
-        }
-    }
-    return found;
-}
-
 int update_data_user(User *user, const char delimit, const char *new_data, const int lenght){
     FILE *fp = fopen("data/users.txt", "r+");
     if (fp == NULL) return FALSE;
@@ -131,44 +92,6 @@ int update_data_user(User *user, const char delimit, const char *new_data, const
     fclose(fp);
     return found;
 }
-
-/**
- * @brief Atualiza o telefone de um usuário no arquivo.
- *
- * @param users estrutura com os dados do usuário.
- * @param file_name caminho para o arquivo com os dados dos usuários.
- *
- * @return FALSE se a atualização falhar, TRUE se for bem sucedida.
- */
-int update_user_phone(User *users, const char *file_name) {
-    FILE *fp = fopen(file_name, "r+");
-    if (fp == NULL) return FALSE;
-
-    char line[LINE_USER];
-    long pos; // Cursor
-    int found = FALSE;
-
-    while (fgets(line, LINE_USER, fp) != NULL) {
-        pos = ftell(fp) - strlen(line);
-
-        if (strstr(line, users->cpf) != NULL) {
-            char *delimiter_pos = strchr(line, '#');
-            if (delimiter_pos != NULL) {
-                long phone_pos = pos + strchr(line, ';') - line + 1;
-
-                fseek(fp, phone_pos, SEEK_SET);
-                fprintf(fp, "%-12s", users->phone);
-                fflush(fp);
-                found = TRUE;
-            }
-            break;
-        }
-    }
-
-    fclose(fp);
-    return found;
-}
-
 
 
 /**
@@ -283,57 +206,50 @@ int select_all_users(const char *file_name){
  *
  * @return TRUE se o usuário foi encontrado e os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int load_user_from_users(const char* cpf, User **users, const char **dir){
+int load_user_from_users(const char* cpf, User *users, const char *mode) {
     FILE *fp = fopen("data/users.txt", "r");
-    if(fp == NULL) return FALSE;
+    if (fp == NULL) {
+        perror("Erro ao abrir arquivo");
+        return FALSE;
+    }
 
     char line[LINE_USER];
-    while(fgets(line, sizeof(line), fp)){
-
-        // Verifica se a linha começa com o CPF
-        if(strncmp(line, cpf, strlen(cpf)) == 0){
-
-            // Tokeniza a linha
-            char *user_cpf = strtok(line, ":");
-            char *name = strtok(NULL, ";");
-            char *phone = strtok(NULL, "#");
-            const char *status = strtok(NULL, "\n");
-
-            if(strcmp(*dir, "2") == 0 && strcmp(status, "0") == 0){ // alterar
-                fclose(fp);
-                return FALSE;
-            } else if (strcmp(*dir, "1") == 0 && strcmp(status, "0") == 0){ // excluir
-                fclose(fp);
-                return FALSE;
-            } else if (strcmp(*dir, "0") == 0 && strcmp(status, "1") == 0){ // reativar
-                fclose(fp);
-                return FALSE;
-            }
-
-            // Remove espaços extras no nome
-            if (name != NULL) {
-                while(isspace((unsigned char)*name)) name++;
-                char *end = name + strlen(name) - 1;
-                while(end > name && isspace((unsigned char)*end)) end--;
-                *(end + 1) = '\0';
-            }
-
-            // Verifica se todas as variáveis são válidas
-            if(user_cpf && name && phone) {
-                // Verifica se o CPF corresponde
-                if(strcmp(user_cpf, cpf) == 0){
-                    // Se encontrar o usuário, aloca as strings
-                    (*users)->cpf = strdup(user_cpf);
-                    (*users)->name = strdup(name);
-                    (*users)->phone = strdup(phone);
-                    fclose(fp);
-                    return TRUE;
-                }
-            }
+    while (fgets(line, sizeof(line), fp)) {
+        if (strncmp(line, cpf, strlen(cpf)) != 0) {
+            continue;
         }
 
+        char *user_cpf = strtok(line, ":");
+        char *name = strtok(NULL, ";");
+        char *phone = strtok(NULL, "#");
+        char *status = strtok(NULL, "\n");
+
+        if (!user_cpf || !name || !phone || !status) {
+            continue;
+        }
+
+        while (isspace((unsigned char)*name)) name++;
+        char *end = name + strlen(name) - 1;
+        while (end > name && isspace((unsigned char)*end)) end--;
+        *(end + 1) = '\0';
+
+        // Verificações de status baseadas no modo
+        if ((strcmp(mode, "2") == 0 && strcmp(status, "0") == 0) ||  // alterar
+            (strcmp(mode, "1") == 0 && strcmp(status, "0") == 0) ||  // excluir
+            (strcmp(mode, "0") == 0 && strcmp(status, "1") == 0)) {  // reativar
+            fclose(fp);
+            return FALSE;
+        }
+
+        users->cpf = strdup(user_cpf);
+        users->name = strdup(name);
+        users->phone = strdup(phone);
+
+        fclose(fp);
+        return TRUE;
     }
 
     fclose(fp);
     return FALSE;
 }
+

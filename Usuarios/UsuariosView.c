@@ -15,7 +15,7 @@ User get_user_by_cpf(const char *mod) {
     User users = {NULL, NULL, NULL};
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
-    if (!upload_user_data(cpf, &users, &mod)) {
+    if (!load_user_from_users(cpf, &users, mod)) {
         show_error("| Erro ao carregar os dados do usuário!\n");
     }
     return users;

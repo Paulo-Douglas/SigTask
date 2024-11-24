@@ -4,6 +4,7 @@
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
+#include "../libs/styles.h"
 
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
@@ -19,18 +20,14 @@
 int insert_user(void){
     User users = {NULL, NULL, NULL};
 
-    printf("|\tCPF: ");
-    users.cpf = read_cpf();
+    read_and_assign(&users.cpf, "|\tCPF: ", read_cpf);
 
     if(cpf_unique_user(users.cpf, "data/users.txt")){
         return FALSE;
     }
 
-    printf("|\tNome: ");
-    users.name = read_string();
-
-    printf("|\tTelefone: ");
-    users.phone = read_phone();
+    read_and_assign(&users.name, "|\tNome: ", read_phone);
+    read_and_assign(&users.phone, "|\tTelefone: ", read_phone);
 
     int result = insert_user_to_file(&users, "data/users.txt");
 
@@ -56,9 +53,7 @@ int insert_user(void){
  * 
  * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int upload_user_data(const char* cpf, User *users, const char **dir) {
-    return load_user_from_users(cpf, &users, dir);
-}
+
 
 
 /**
@@ -87,18 +82,20 @@ int update_user(User *users) {
             case '1':
                 printf("|\tNome: ");
                 users->name = read_string();
-                update = update_user_name(users, "data/users.txt");
+                update = update_data_user(users, ':', users->name, 229);
+                update ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
                 break;
             case '2':
                 printf("|\tTelefone: ");
                 users->phone = read_phone();
-                update = update_user_phone(users, "data/users.txt");
+                update = update_data_user(users, ';', users->phone, 13);
+                update ? show_sucess("Telefone alterado com sucesso!") : show_error("Erro ao alterar telefone!");
                 break;
             case '0':
                 update = TRUE;
                 break;
             default:
-                printf("| Opção inválida! Tente novamente.\n");
+                show_error("| Opção inválida! Tente novamente.\n");
                 break;
         }
     } while (opc != '0');
