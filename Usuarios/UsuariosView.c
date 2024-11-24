@@ -11,27 +11,27 @@
 #include "../libs/styles.h"
 
 
-User get_user_by_cpf(const char *mod) {
+User get_user_by_cpf(void) {
     User users = {NULL, NULL, NULL};
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
-    if (!load_user_from_users(cpf, &users, mod)) {
+    if (!load_user_from_users(cpf, &users)) {
         show_error("| Erro ao carregar os dados do usuário!\n");
     }
     return users;
 }
 
 
-void process_action(const char *mod){
-    User users = get_user_by_cpf(mod);
+void process_action(const char *dir, const char *sucess, const char *error) {
+    User users = get_user_by_cpf();
 
     if (users.cpf != NULL) {
         user_data(&users);
-        int result = update_user(&users);   
+        int result = update_user_status(&users, "data/users.txt", dir); 
         if (result) {
-            show_sucess("| Dados alterados com sucesso!\n");
+            show_sucess(sucess);
         } else {
-            show_error("| [ERRO]: Erro ao alterar!\n");
+            show_error(error);
         }
     }
 }
@@ -113,8 +113,7 @@ void display_user_data(void) {
 void modify_user_data(void) {
     show_header("Editar Dados");
 
-    const char *mod = "2";
-    User users = get_user_by_cpf(mod);
+    User users = get_user_by_cpf();
 
     if (users.cpf != NULL) {
         user_data(&users);
@@ -140,7 +139,7 @@ void modify_user_data(void) {
  */
 void delete_user(void) {
     show_header("Excluir Conta");
-    process_action("1");
+    process_action("0", "| Conta excluida com sucesso!", "| [ERRO]: Erro ao excluir!");
     enter();
 }
 
@@ -155,7 +154,7 @@ void delete_user(void) {
  */
 void reactivate_user(void) {
     show_header("Reativar Conta");
-    process_action("0");
+    process_action("1", "| Conta reativada com sucesso!", "| [ERRO]: Erro ao reativar!");
     enter();
 }
 

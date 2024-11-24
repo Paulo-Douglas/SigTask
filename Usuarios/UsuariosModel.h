@@ -14,12 +14,9 @@ typedef struct
 #define LINE_USER (CPF_SIZE + NAME_SIZE + PHONE_SIZE + 6)
 
 int insert_user_to_file(User *users, const char* file_name);
-// int udpate_user(User *users, const char* file_name);
 int update_data_user(User *user, const char delimit, const char *new_data, const int lenght);
-int update_user_name(User *users, const char* file_name);
-int update_user_phone(User *users, const char *file_name);
 int update_user_status(User *users, const char *file_name, const char *dir);
 int select_all_users(const char *file_name);
-int load_user_from_users(const char* cpf, User *users, const char *dir);
+int load_user_from_users(const char* cpf, User *users);
 
 #endif // USUARIOSMODEL_H

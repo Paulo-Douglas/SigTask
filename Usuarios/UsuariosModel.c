@@ -119,7 +119,6 @@ int update_user_status(User *users, const char *file_name, const char *dir){
 }
 
 
-
 /**
  * @brief Seleciona todos os usuários ativos do arquivo.
  * 
@@ -165,7 +164,7 @@ int select_all_users(const char *file_name){
  * 
  * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
  */
-int load_user_from_users(const char* cpf, User *users, const char *mode) {
+int load_user_from_users(const char* cpf, User *users) {
     FILE *fp = fopen("data/users.txt", "r");
     if (fp == NULL) {
         perror("Erro ao abrir arquivo");
@@ -191,14 +190,6 @@ int load_user_from_users(const char* cpf, User *users, const char *mode) {
         char *end = name + strlen(name) - 1;
         while (end > name && isspace((unsigned char)*end)) end--;
         *(end + 1) = '\0';
-
-        // Verificações de status baseadas no modo
-        if ((strcmp(mode, "2") == 0 && strcmp(status, "0") == 0) ||  // alterar
-            (strcmp(mode, "1") == 0 && strcmp(status, "0") == 0) ||  // excluir
-            (strcmp(mode, "0") == 0 && strcmp(status, "1") == 0)) {  // reativar
-            fclose(fp);
-            return FALSE;
-        }
 
         users->cpf = strdup(user_cpf);
         users->name = strdup(name);
