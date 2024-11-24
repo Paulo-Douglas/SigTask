@@ -40,35 +40,10 @@ int insert_user(void){
 
 
 /**
- * @brief Faz o upload dos dados de um usuário.
+ * @brief Altera os dados de um usuario.
  * 
- * Esta função carrega os dados de um usuário a partir de um arquivo,
- * utilizando o CPF fornecido para a busca. Dependendo da diretiva fornecida,
- * pode alterar, excluir ou reativar os dados do usuário.
- *
- * @param cpf CPF do usuário cujos dados serão carregados.
- * @param users Ponteiro para a estrutura User onde os dados do usuário serão armazenados.
- * @param dir Diretiva que determina a operação a ser realizada: "0" para reativar, 
- *            "1" para excluir ou "2" para alterar.
- * 
- * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
- */
-
-
-
-/**
- * @brief Altera os dados de um usuário.
- *
- * Esta função permite alterar o nome ou telefone de um usuário. Ela
- * apresenta um menu para o usuário escolher qual dado deseja alterar e
- * solicita entrada para o novo valor. Em seguida, a função atualiza o
- * arquivo de usuários com o novo valor.
- *
- * @param users Ponteiro para a estrutura User que contém os dados do
- *              usuário a serem alterados.
- *
- * @return TRUE se os dados forem alterados com sucesso, FALSE caso
- *         contrário.
+ * @param users Estrutura contendo os dados do usuario.
+ * @return TRUE se os dados forem alterados com sucesso, FALSE caso contrário.
  */
 int update_user(User *users) {
     char opc = '\0';
