@@ -30,9 +30,7 @@ Tasks initialize_task(const char *title){
     printf("| Informe o CPF: ");
     char *cpf = read_cpf();
 
-    if(load_task(cpf, &task)){
-        display_data_task(&task);
-    } else {
+    if(!load_task(cpf, &task)){
         show_error("| Erro ao carregar as tarefas do usuário!\n");
     }
     free(cpf);
@@ -95,9 +93,9 @@ void delete_task(void) {
 
 void display_data_task(Tasks *task){
     show_header("Dados Tarefas");
+    printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);
-    printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
     printf("| \033[1mDescrição:\033[0m %s\n", task->description);
     printf("| \033[1mData:\033[0m %s\n", task->data);
     printf("| \033[1mTurno:\033[0m %s\n", task->turn);
