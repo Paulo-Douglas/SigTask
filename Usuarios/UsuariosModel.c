@@ -160,7 +160,7 @@ int select_all_users(const char *file_name){
  * 
  * @param cpf Cpf do usuário.
  * @param users Estrutura contendo os dados do usuário.
- * @param mode "2" para alterar, "1" para excluir ou "0" para reativar.
+ * @param mode EDIT // NULL
  * 
  * @return TRUE se os dados foram carregados com sucesso, FALSE caso contrário.
  */
