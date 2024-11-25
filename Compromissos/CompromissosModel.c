@@ -29,7 +29,7 @@ int insert_compromise(Compromisers *compromise){
 }
 
 
-int load_compromise(Compromisers *compromise, const char *team, const char *mod) {
+int load_compromise(Compromisers *compromise, const char *id, const char *mod) {
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
@@ -38,10 +38,8 @@ int load_compromise(Compromisers *compromise, const char *team, const char *mod)
     int line_number = 0;
 
     while(fgets(line, LINE_COMPROMISE, fp) != NULL) {
-        if(strstr(line, team) != NULL) {
-
-            char *id_line = strtok(line, ",");
-            if(id_line == NULL) return FALSE;
+        char *id_line = strtok(line, ",");
+        if(strcmp(id, id_line) == 0) {
 
             char *number_team = strtok(NULL, ":");
             delete_spaces(number_team);

@@ -14,16 +14,17 @@ Compromisers initialize_compromisse(const char* title){
     Compromisers compromise = {0};
 
     limpa_buffer();
-    printf("|\tTime: ");
-    char time[4];
-    scanf(" %s", time);
+    printf("|\tID: ");
+    char id[3];
+    scanf(" %s", id);
     printf("|\t(1) Aberto | (2) Fechado: ");
     char status[2];
     scanf(" %s", status);
 
-    if(!load_compromise(&compromise, time, status)){
+    if(!load_compromise(&compromise, id, status)){
         show_error("| [ERRO]: Erro ao carregar compromisso!\n");
     }
+
     return compromise;
 }
 
@@ -59,9 +60,14 @@ void show_compromises(void) {
 }    
 
 void edit_compromises(void) { 
-    show_header("Editar compromisso");
-    enter();
+    Compromisers compromise = initialize_compromisse("Editar Compromisso");
 
+    printf("|\tConfirme o ID: ");
+    char id[3];
+    scanf(" %s", id);
+
+    update_crompromise(&compromise, id) ? show_sucess("| Compromisso alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
+    enter();
 }
 
 void delete_compromises(void) { 
