@@ -7,6 +7,19 @@
 #include "validate.h"
 #include "styles.h"
 #include "utils.h"
+#include "date.h"
+
+
+char* read_and_format_date(int year) {
+    char day[MAX_DAY_LENGHT], month[MAX_MONTH_LENGHT];
+    read_date(day, month);
+
+    char *formatted_date = malloc(sizeof(char) * 12);
+    if (formatted_date != NULL) {
+        snprintf(formatted_date, 12, "%s/%s/%d", day, month, year);
+    }
+    return formatted_date;
+}
 
 
 void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
