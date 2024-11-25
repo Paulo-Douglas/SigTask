@@ -57,7 +57,7 @@ int register_task(void) {
     printf("|\t1 - Matutino\n");
     printf("|\t2 - Vespertino\n");
     printf("|\t3 - Noturno\n");
-    task.priority = read_generic_123("turn");
+    task.turn = read_generic_123("turn");
 
     printf("\t PRIORIDADE\n");
     printf("|\t1 - Alta\n");
@@ -66,6 +66,8 @@ int register_task(void) {
     task.priority = read_generic_123("priority");
 
     task.status = strdup("1");
+
+    if(task.cpf == NULL || task.title == NULL || task.description == NULL || task.data == NULL || task.turn == NULL || task.priority == NULL) return FALSE;
 
     int result = insert_into_tasks("data/tasks.txt", &task);
 
