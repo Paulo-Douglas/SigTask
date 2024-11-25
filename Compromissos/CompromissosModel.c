@@ -13,7 +13,7 @@ int insert_compromise(Compromisers *compromise){
     FILE *fp = fopen("data/compromisers.txt", "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%-3d:%-50s[%-100s]%-10s-%-10s(%s)%s\n",
+    fprintf(fp, "%-3d:%-50s[%-100s]%-10s-%-10s(%s)%s#1\n",
         compromise->team_id,
         compromise->title,
         compromise->description,

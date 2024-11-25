@@ -12,6 +12,7 @@ typedef struct
     char *end_date;
     char *time;
     char *priority;
+    char *status;
 
 } Compromisers;
 
