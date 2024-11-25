@@ -66,7 +66,7 @@ void edit_compromises(void) {
     char id[3];
     scanf(" %s", id);
 
-    update_crompromise(&compromise, id) ? show_sucess("| Compromisso alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
+    update_compromise(&compromise, id) ? show_sucess("| Compromisso alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
     enter();
 }
 
@@ -81,8 +81,16 @@ void data_compromises(void) {
 }
 
 void change_data_compromisses(void) {
-    show_header("Alterar dados do compromisso");
-    enter();
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Alterar compromisso                                                           |\n");
+    printf("\033[1m|\t (1) Título\033[0m\n");
+    printf("\033[1m|\t (2) Descrição\033[0m\n");
+    printf("\033[1m|\t (3) Data de Início\033[0m\n");
+    printf("\033[1m|\t (4) Data de Fim\033[0m\n");
+    printf("\033[1m|\t (5) Horário\033[0m\n");
+    printf("\033[1m|\t (6) Prioridade\033[0m\n");
+    printf("\033[1m|\t (7) Status [FECHAR] \033[0m\n");
+    printf("\033[1m|\t (8) Status [REABRIR] \033[0m\n");
 }
 
 void display_data_compromises(Compromisers *compromise, int line_number){
