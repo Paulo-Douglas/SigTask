@@ -16,7 +16,7 @@
 */
 
 int insert_to_teams(Team *teams, const char* file_teams){
-  int id = lenght_line(file_teams);
+  int id = get_next_id(file_teams);
   create_path("data/");
   FILE *fp = fopen(file_teams, "a");    
   

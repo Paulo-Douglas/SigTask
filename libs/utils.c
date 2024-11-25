@@ -64,21 +64,33 @@ int save_file(const char *data[], char *file_name){
 }
 
 
-int lenght_line(const char *name_of_file){
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int get_next_id(const char *name_of_file) {
     FILE *arquivo = fopen(name_of_file, "r");
     if (arquivo == NULL) {
-        return FALSE;
+        return 1;
     }
 
-    int linhas = 0;
-    char caractere;
+    char line[300];
+    char last_line[300] = "";
 
-    while ((caractere = fgetc(arquivo)) != EOF) { /// E0F == END OF FILE 
-        if (caractere == '\n') {
-            linhas++;
-        }
+    while (fgets(line, sizeof(line), arquivo) != NULL) {
+        strcpy(last_line, line);
     }
 
     fclose(arquivo);
-    return linhas + 1;
+
+    if (strlen(last_line) == 0) {
+        return 1;
+    }
+
+    char *comma_pos = strchr(last_line, ',');
+    if (comma_pos == NULL) {
+        return 1;
+    }
+
+    return atoi(comma_pos + 1) + 1;
 }

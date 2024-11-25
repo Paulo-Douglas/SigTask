@@ -22,10 +22,14 @@
 int insert_into_tasks(const char *file_name, Tasks *task) {
     create_path("data/");
 
+    int id_len = get_next_id("data/tasks.txt");
+
+
     FILE *fp = fopen(file_name, "a");
     if (fp == NULL) return FALSE;
 
-    fprintf(fp, "%-14s:%-50s[%-100s]%-10s;%s(%s)%s\n",
+    fprintf(fp, "%d,%-14s:%-50s[%-100s]%-10s;%s(%s)%s\n",
+            id_len,
             task->cpf,
             task->title,
             task->description,
@@ -47,19 +51,21 @@ int insert_into_tasks(const char *file_name, Tasks *task) {
  * 
  * @return TRUE se a tarefa foi carregada com sucesso, FALSE caso contrário.
  */
-int load_task(const char *cpf, Tasks *task){
+int load_task(const char *id, Tasks *task){
     
     FILE *fp = fopen("data/tasks.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_LINE_LENGTH];
+    char line[300];
     int found = FALSE;
-    int line_number = '\0';
+    int line_number = 0;
 
     while (fgets(line, sizeof(line), fp) != NULL){
+        char *id_line = strtok(line, ",");
+        if(id_line == NULL) continue;
 
-        char *cpf_line = strtok(line, ":");
-        if(strcmp(cpf_line, cpf) == 0){
+        if(strcmp(id_line, id) == 0){
+            char *cpf_line = strtok(NULL, ":");
             char *title_line = strtok(NULL, "[");
             char *description_line = strtok(NULL, "]");
             char *data_line = strtok(NULL, ";");
@@ -95,7 +101,7 @@ int load_task(const char *cpf, Tasks *task){
             task->description = strdup(description_line);
             task->data = strdup(data_line);
 
-            display_data_task(task, line_number);
+            display_data_task(task, line_number, id_line);
 
             line_number++;
             found = TRUE;

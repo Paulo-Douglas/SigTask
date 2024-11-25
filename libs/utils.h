@@ -31,6 +31,6 @@ void enter(void);
 void delete_spaces(char *str);
 int save_file(const char *data[], char *file_name);
 int year_now(void);
-int lenght_line(const char *name_of_file);
+int get_next_id(const char *name_of_file);
 
 #endif
