@@ -1,7 +1,18 @@
 #ifndef COMPROMISSOSMODEL_H
 #define COMPROMISSOSMODEL_H
 
+typedef struct
+{
+    char *cpf;
+    char *title;
+    char *description;
+    char *data_start;
+    char *data_end;
+    char *time;
+    char *priority;
 
-int load_compromiser(const char *cpf);
+} Compromisers;
+
+int load_compromise(const char *cpf);
 
 #endif

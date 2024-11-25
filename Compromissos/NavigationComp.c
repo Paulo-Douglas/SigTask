@@ -1,28 +1,37 @@
 #include <stdio.h>
-#include "CompromissosView.h"
-#include "../libs/utils.h"
 
-void navegação_compromissos(void) {
+#include "CompromissosView.h"
+
+#include "../libs/utils.h"
+#include "../libs/styles.h"
+
+
+void navigation_compromise(void) {
     char op;
     do {
-        op = menu_compromissos();
+        op = menu_compromise();
         switch(op) {
             case '1':
-                cadastrar_compromissos();
+                register_compromises();
+                limpa_buffer();
                 break;
             case '2':
-                exibir_compromissos();
+                show_compromises();
+                limpa_buffer();
                 break;
             case '3':
-                editar_compromissos();
+                edit_compromises();
+                limpa_buffer();
                 break;
             case '4':
-                excluir_compromissos();
+                delete_compromises();
+                limpa_buffer();
                 break;
             case '0':
                 break;
             default:
-                printf("Opção inválida, por favor, digite outro número.");
+                show_error("Opção inválida, por favor, digite outro número.");
+                limpa_buffer();
                 break;
         }
     } while (op != '0');

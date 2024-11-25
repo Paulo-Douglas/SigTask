@@ -1,12 +1,12 @@
 #ifndef COMPROMISSOSVIEW_H
 #define COMPROMISSOSVIEW_H
 
-char menu_compromissos(void);
-void cadastrar_compromissos(void);
-void exibir_compromissos(void);
-void editar_compromissos(void);
-void excluir_compromissos(void);
-void dados_compromissos(void);
-void alterar_dados_compromissos(void);
+char menu_compromise(void);
+void register_compromises(void);
+void show_compromises(void);
+void edit_compromises(void);
+void delete_compromises(void);
+void data_compromises(void);
+void change_data_compromisses(void);
 
 #endif

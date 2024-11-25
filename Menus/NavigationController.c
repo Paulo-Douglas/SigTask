@@ -25,7 +25,7 @@ void navegacao_modulos(void) {
                 navigation_tasks();
                 break;
             case '4':
-                navegação_compromissos();
+                navigation_compromise();
                 break;
             case '5':
                 menuSobre();

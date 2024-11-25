@@ -1,6 +1,6 @@
 #ifndef NAVEGATIONCOMP_H
 #define NAVEGATIONCOMP_H
 
-void navegação_compromissos(void);
+void navigation_compromise(void);
 
 #endif

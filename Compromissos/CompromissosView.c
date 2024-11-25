@@ -10,7 +10,7 @@
 
 
 /*************  ✨ Codeium Command ⭐  *************/
-/******  a003a083-17b6-4b8a-a6d9-f8508e158f7b  *******/char menu_compromissos(void) {
+/******  a003a083-17b6-4b8a-a6d9-f8508e158f7b  *******/char menu_compromise(void) {
     char op;
     limpar_tela();
     printf("----------------------------------------------------\n");
@@ -27,106 +27,34 @@
     return op;
 }
 
-void cadastrar_compromissos(void) {
-    limpar_tela();
-    printf("-------------------------------------------------------------------------------------\n");
-    printf("|                                  Cadastro Tarefas                                 |\n");
-    printf("-------------------------------------------------------------------------------------\n");
-    printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
-    printf("-------------------------------------------------------------------------------------\n");
-
-    if (register_compromise()){
-        show_sucess("Compromisso cadastrada com sucesso! <ENTER> para continuar\n");
-    } else {
-        show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
-    }
-    limpa_buffer();
-    }
+void register_compromises(void) {
+    show_header("Cadastrar compromisso");
+    enter();
+}
 
 
-void exibir_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                 Exibir Compromissos            | \n");
-    printf("--------------------------------------------------\n");
-
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_compromissos();
-        if(!upload_data_compromiser(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+void show_compromises(void) { 
+    show_header("Exibir compromissos");
+    enter();
 }    
 
-void editar_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                 Editar Compromissos            |\n");
-    printf("--------------------------------------------------\n");
-    
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        alterar_dados_compromissos();
-        upload_data_compromiser(cpf);
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+void edit_compromises(void) { 
+    show_header("Editar compromisso");
+    enter();
 
 }
 
-void excluir_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                Excluir Compromissos            |\n");
-    printf("--------------------------------------------------\n");
-    
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_compromissos();
-        if(!upload_data_compromiser(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+void delete_compromises(void) { 
+    show_header("Excluir compromisso");
+    enter();
 }
 
-void dados_compromissos(void) { // será implementado as variveis de cada dado
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                            Dados do Compromisso                                                               |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|  ID  |        Título        |                Descrição                |    Data de início  |    Data de fim  |    Horário   |    Prioridade   |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");  
+void data_compromises(void) {
+    show_header("Dados do compromisso");
+    enter();
 }
 
-void alterar_dados_compromissos(void) {
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                          Alterar Dados do Compromisso                                                         |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|   ID   |  1   ->   Título     |        2   ->   Descrição           | 3 -> Data de início | 4 -> Data de fim|  5 -> Horário | 6 -> Prioridade |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
+void change_data_compromisses(void) {
+    show_header("Alterar dados do compromisso");
+    enter();
 }
