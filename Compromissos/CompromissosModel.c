@@ -40,7 +40,10 @@ int load_compromise(Compromisers *compromise, const char *team, const char *mod)
     while(fgets(line, LINE_COMPROMISE, fp) != NULL) {
         if(strstr(line, team) != NULL) {
 
-            char *number_team = strtok(line, ":");
+            char *id_line = strtok(line, ",");
+            if(id_line == NULL) return FALSE;
+
+            char *number_team = strtok(NULL, ":");
             delete_spaces(number_team);
             char *title_compromisse = strtok(NULL, "[");
             delete_spaces(title_compromisse);
@@ -75,3 +78,33 @@ int load_compromise(Compromisers *compromise, const char *team, const char *mod)
     return found;
 }
 
+
+int update_date_compromise(const char delimit, const char *new_data, const int lenght, int id){
+    FILE *fp = fopen("data/compromisers.txt", "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_COMPROMISE];
+    long pos;
+    int found = FALSE;
+
+    while(fgets(line, LINE_COMPROMISE, fp) != NULL){
+        if (strcmp(line, strtok(line, ",")) == 0){
+            char *pos_strtok = strtok(NULL, "\n");
+            pos = ftell(fp) - strlen(pos_strtok);
+
+            char *pos_data = strchr(pos_strtok, delimit);
+            if(pos_data != NULL){
+                long data_pos = pos + (pos_data - pos_strtok);
+
+                fseek(fp, data_pos, SEEK_SET);
+                fprintf(fp, "%-*s", lenght, new_data);
+                fflush(fp);
+                found = TRUE;
+            }
+
+            break;
+        }
+    }
+    fclose(fp);
+    return found;
+}

@@ -18,5 +18,6 @@ typedef struct
 
 int load_compromise(Compromisers *compromise, const char *team, const char *mod);
 int insert_compromise(Compromisers *compromise);
+int update_date_compromise(const char delimit, const char *new_data,  const int lenght, int id);
 
 #endif
