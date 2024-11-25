@@ -16,7 +16,7 @@ typedef struct
 
 } Compromisers;
 
-int load_compromise(const char *cpf);
+int load_compromise(const char *team, const char *mod);
 int insert_compromise(Compromisers *compromise);
 
 #endif

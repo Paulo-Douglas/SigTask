@@ -59,10 +59,6 @@ int search_compromiser_to_user(const char* cpf){
 }
 
 
-int upload_data_compromiser(const char* cpf){
-    return load_compromise(cpf);
-}
-
 void free_strcut_compromise(Compromisers *compromise){
     if(compromise->title != NULL) free(compromise->title);
     if(compromise->description != NULL) free(compromise->description);

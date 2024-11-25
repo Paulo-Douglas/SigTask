@@ -59,3 +59,18 @@ void change_data_compromisses(void) {
     show_header("Alterar dados do compromisso");
     enter();
 }
+
+void display_data_compromises(Compromisers *compromise, int line_number){
+    show_header("Dados do compromisso");
+    if (line_number == 0) printf("\033[1mEQUIPE:\033[ %d\n", compromise->team_id);
+
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("\033[1mCOMPROMISSO:\033[ %s\n", compromise->title);
+    printf("\033[1mDESCRICAO:\033[ %s\n", compromise->description);
+    printf("\033[1mDATA DE INICIO:\033[ %s\n", compromise->start_date);
+    printf("\033[1mDATA DE FIM:\033[ %s\n", compromise->end_date);
+    printf("\033[1mHORARIO:\033[ %s\n", compromise->time);
+    printf("\033[1mPRIORIDADE:\033[ %s\n", compromise->priority);
+    printf("\033[1mSTATUS:\033[ %s\n", compromise->status);
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+}
