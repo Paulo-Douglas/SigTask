@@ -3,7 +3,6 @@
 
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
-
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -27,7 +26,7 @@ int insert_user(void){
         return FALSE;
     }
 
-    read_and_assign(&users.name, "|\tNome: ", read_phone);
+    read_and_assign(&users.name, "|\tNome: ", read_string);
     read_and_assign(&users.phone, "|\tTelefone: ", read_phone);
 
     int result = insert_user_to_file(&users, "data/users.txt");
