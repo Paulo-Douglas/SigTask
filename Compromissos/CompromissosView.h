@@ -12,4 +12,6 @@ void data_compromises(void);
 void change_data_compromisses(void);
 void display_data_compromises(Compromisers *compromise, int line_number);
 
+Compromisers initialize_compromisse(const char* title);
+
 #endif

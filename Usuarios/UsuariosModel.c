@@ -187,10 +187,7 @@ int load_user_from_users(const char* cpf, User *users, const char* mod) {
             continue;
         }
 
-        while (isspace((unsigned char)*name)) name++;
-        char *end = name + strlen(name) - 1;
-        while (end > name && isspace((unsigned char)*end)) end--;
-        *(end + 1) = '\0';
+        delete_spaces(name);
 
         // Verificar se o usuário esta ativo, caso seja EDIÇÃO
         if ((strcmp(mod, "EDIT") == 0) && (*status == '0')) {

@@ -3,9 +3,16 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "utils.h"
 
+void delete_spaces(char *str) {
+    while (isspace((unsigned char)*str)) str++;
+    char *end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char)*end)) end--;
+    *(end + 1) = '\0';
+}
 
 void limpa_buffer(void) {
     int b;

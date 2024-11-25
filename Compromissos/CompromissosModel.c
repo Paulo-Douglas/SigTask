@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "CompromissosModel.h"
 #include "CompromissosView.h"
@@ -28,9 +29,7 @@ int insert_compromise(Compromisers *compromise){
 }
 
 
-int load_compromise(const char *team, const char *mod){
-    Compromisers compromise;
-
+int load_compromise(Compromisers *compromise, const char *team, const char *mod) {
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
@@ -38,29 +37,32 @@ int load_compromise(const char *team, const char *mod){
     int found = FALSE;
     int line_number = 0;
 
-    while(fgets(line, LINE_COMPROMISE, fp) != NULL){
-        if(strstr(line, team) != NULL){
+    while(fgets(line, LINE_COMPROMISE, fp) != NULL) {
+        if(strstr(line, team) != NULL) {
 
-            char *team_name = strtok(line, ":");
-            char *title = strtok(NULL, "[");
-            char *description = strtok(NULL, "]");
-            char *start_date = strtok(NULL, "-");
-            char *end_date = strtok(NULL, "-");
-            char *time = strtok(NULL, "(");
-            char *priority = strtok(NULL, ")");
+            char *number_team = strtok(line, ":");
+            delete_spaces(number_team);
+            char *title_compromisse = strtok(NULL, "[");
+            delete_spaces(title_compromisse);
+            char *description_compromisse = strtok(NULL, "]");
+            delete_spaces(description_compromisse);
+            char *date_start = strtok(NULL, "-");
+            char *date_end = strtok(NULL, "(");
+            char *time = strtok(NULL, ")");
+            char *prio = strtok(NULL, "#");
             char *status = strtok(NULL, "\n");
 
-            compromise.team_id = atoi(team_name);
-            strcpy(compromise.title, title);
-            strcpy(compromise.description, description);
-            strcpy(compromise.start_date, start_date);
-            strcpy(compromise.end_date, end_date);
-            strcpy(compromise.time, time);
-            strcpy(compromise.priority, priority);
-            strcpy(compromise.status, status);
+            compromise->team_id = atoi(number_team);
+            compromise->title = strdup(title_compromisse);
+            compromise->description = strdup(description_compromisse);
+            compromise->start_date = strdup(date_start);
+            compromise->end_date = strdup(date_end);
+            compromise->time = strdup(time);
+            compromise->priority = strdup(prio);
+            compromise->status = strdup(status);
 
-            if((strcmp(status, "1") == 0 || strcmp(mod, "1") == 0)){
-                display_data_compromises(&compromise, line_number);
+            if((strcmp(status, "1") == 0 || strcmp(mod, "1") == 0)) {
+                display_data_compromises(compromise, line_number);
             }
 
             line_number++;
@@ -72,3 +74,4 @@ int load_compromise(const char *team, const char *mod){
     fclose(fp);
     return found;
 }
+
