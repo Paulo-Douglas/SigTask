@@ -2,22 +2,39 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "TarefasController.h"
+#include "TarefasModel.h"
+
 #include "../libs/utils.h"
 #include "../libs/validate.h"
 #include "../libs/styles.h"
 #include "../libs/reads.h"
 #include "../libs/date.h"
 
-#include "TarefasController.h"
-#include "TarefasModel.h"
 
-
+/**
+ * @brief Função para atualizar um campo de uma tarefa
+ * 
+ * @param task Estrutura contendo os dados da tarefa.
+ * @param delimiter Delimitador utilizado para identificar o campo a ser alterado.
+ * @param field Campo a ser alterado.
+ * @param prompt Mensagem para o usußrio.
+ * @param max_length Tamanho do campo.
+ * @param read_function Função para ler o dado do usußrio.
+ * 
+ * @return TRUE se o campo foi atualizado com sucesso, FALSE caso contrário.
+ */
 int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)()) {
     read_and_assign(field, prompt, read_function);
     return update_data_task(task, delimiter, *field, max_length);
 }
 
 
+/**
+ * @brief Função para registrar uma nova tarefa
+ * 
+ * @return TRUE se a tarefa foi registrada com sucesso, FALSE caso contrário.
+ */
 int register_task(void) {
     limpa_buffer();
     Tasks task = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
@@ -54,11 +71,23 @@ int register_task(void) {
 }
 
 
+/**
+ * @brief Função para buscar uma tarefa pelo CPF do usuário
+ * 
+ * @param cpf CPF do usuário.
+ */
 int search_task_to_user(const char* cpf){
     return cpf_unique_user(cpf, "data/users.txt");
 }
 
 
+/**
+ * @brief Função para atualizar uma tarefa
+ * 
+ * @param task Estrutura contendo os dados da tarefa.
+ * 
+ * @return TRUE se a tarefa foi atualizada com sucesso, FALSE caso contrário.
+ */
 int update_task(Tasks *task){
     char opc;
     int result = FALSE;
@@ -134,6 +163,20 @@ int update_task(Tasks *task){
 }
 
 
+/**
+ * @brief Função para atualizar o status de uma tarefa
+ * 
+ * @param task Estrutura contendo os dados da tarefa.
+ * 
+ * @param status_actual Status atual da tarefa.
+ * 
+ * @param message Mensagem de erro a ser exibida.
+ * 
+ * @param dir Diretiva que determina a operação a ser realizada: 
+ *             "0" para fechar || "1" para abrir
+ * 
+ * @return TRUE se o status foi atualizado com sucesso, FALSE caso contrário.
+ */
 void update_status(
     Tasks *task,
     const char *status_actual,

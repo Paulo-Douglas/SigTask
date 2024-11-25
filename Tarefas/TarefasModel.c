@@ -2,14 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "TarefasModel.h"
+#include "TarefasView.h"
+
 #include "../libs/utils.h"
 #include "../libs/validate.h"
 #include "../libs/utils.h"
 
-#include "TarefasModel.h"
-#include "TarefasView.h"
 
 
+/**
+ * @brief Função para inserir uma nova tarefa no arquivo de tarefas
+ * 
+ * @param file_name Nome do arquivo de tarefas.
+ * @param task Tarefa a ser inserida.
+ * 
+ * @return TRUE se a tarefa foi inserida com sucesso, FALSE caso contrário.
+ */
 int insert_into_tasks(const char *file_name, Tasks *task) {
     create_path("data/");
 
@@ -30,6 +39,14 @@ int insert_into_tasks(const char *file_name, Tasks *task) {
 }
 
 
+/**
+ * @brief Função para carregar tarefa do arquivo de tarefas associadas ao cpf.
+ * 
+ * @param cpf CPF do usuário.
+ * @param task Tarefa a ser carregada.
+ * 
+ * @return TRUE se a tarefa foi carregada com sucesso, FALSE caso contrário.
+ */
 int load_task(const char *cpf, Tasks *task){
     
     FILE *fp = fopen("data/tasks.txt", "r");
@@ -91,6 +108,19 @@ int load_task(const char *cpf, Tasks *task){
 }
 
 
+/**
+ * @brief Função para atualizar a data de uma tarefa
+ * 
+ * @param task Estrutura contendo os dados da tarefa.
+ * 
+ * @param delimit Delimitador da data.
+ * 
+ * @param new_data Nova data.
+ * 
+ * @param lenght Tamanho da nova data.
+ * 
+ * @return TRUE se a data foi atualizada com sucesso, FALSE caso contrário.
+ */
 int update_data_task(Tasks *task, const char delimit, const char *new_data, const int lenght){
     FILE *fp = fopen("data/tasks.txt", "r+");
     if (fp == NULL) return FALSE;
@@ -120,6 +150,14 @@ int update_data_task(Tasks *task, const char delimit, const char *new_data, cons
 }
 
 
+/**
+ * @brief Função para atualizar status da tarefa.
+ * 
+ * @param task Ponteiro que aponta para a estrutura task.
+ * @param dir Diretriva para a operação.
+ * 
+ * @return TRUE se o status tiver sido alterado. FALSE caso contrário.
+ */
 int update_status_task(Tasks *task, const char *dir){
     FILE *fp = fopen("data/tasks.txt", "r+");
     if (fp == NULL) return FALSE;

@@ -11,6 +11,9 @@
 #include "../libs/styles.h"
 
 
+/**
+ * @brief Função que libera os dados da estrutura caso existam.
+ */
 void free_task(Tasks *task) {
     if (task->cpf) free(task->cpf);
     if (task->title) free(task->title);
@@ -22,6 +25,13 @@ void free_task(Tasks *task) {
 }
 
 
+/**
+ * @brief Função que carrega dados na estrutura.
+ * 
+ * @param title Ponteiro que é utilizado em show_header.
+ * 
+ * @return Retorna a estrutura carregada.
+ */
 Tasks initialize_task(const char *title){
     show_header(title);
     Tasks task = {0};
@@ -36,6 +46,7 @@ Tasks initialize_task(const char *title){
     free(cpf);
     return task;
 }
+
 
 char tasks_menu(void) {
     char op;
@@ -53,6 +64,7 @@ char tasks_menu(void) {
     scanf(" %c", &op);
     return op;
 }
+
 
 void register_new_task(void) {    
     show_header("Cadastrar Tarefa");
@@ -91,9 +103,10 @@ void delete_task(void) {
     enter();
 }
 
+
 void display_data_task(Tasks *task, int index) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("|                                                                 Dados da tarefa:                                                              |\n");
+    printf("|                                                                 Dados da tarefa                                                               |\n");
     if(index == 0)printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);

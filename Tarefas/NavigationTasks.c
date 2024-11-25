@@ -1,6 +1,8 @@
 #include <stdio.h>
+
 #include "NavigationTasks.h"
 #include "TarefasView.h"
+
 #include "../libs/utils.h"
 
 void navigation_tasks(void){
