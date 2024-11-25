@@ -53,19 +53,23 @@ int register_task(void) {
     snprintf(task.data, 12, "%s/%s/%d", day, month, year);
 
     limpa_buffer();
-    read_and_assign(&task.turn, "|\tTurno: (Matutino = 1, Vespertino = 2 e Noturno = 3)\n", read_generic_123);
-    read_and_assign(&task.priority, "|\tPrioridade: (Baixa = 3, Média = 2, Alta = 1)\n", read_generic_123);
+    printf("\t TURNO\n");
+    printf("|\t1 - Matutino\n");
+    printf("|\t2 - Vespertino\n");
+    printf("|\t3 - Noturno\n");
+    task.priority = read_generic_123("turn");
+
+    printf("\t PRIORIDADE\n");
+    printf("|\t1 - Alta\n");
+    printf("|\t2 - Média\n");
+    printf("|\t3 - Baixa\n");
+    task.priority = read_generic_123("priority");
+
     task.status = strdup("1");
 
     int result = insert_into_tasks("data/tasks.txt", &task);
 
-    free(task.cpf);
-    free(task.title);
-    free(task.description);
-    free(task.turn);
-    free(task.priority);
-    free(task.status);
-    free(task.data);
+    free_struct_task(&task);
 
     return result;
 }
@@ -186,4 +190,18 @@ void update_status(
 
     int result = update_status_task(task, dir);
     result ? show_sucess("| Status alterado com sucesso!\n") : show_error(message);
+}
+
+
+/**
+ * @brief Função que libera os dados da estrutura caso existam.
+ */
+void free_struct_task(Tasks *task) {
+    if (task->cpf != NULL) free(task->cpf);
+    if (task->title != NULL) free(task->title);
+    if (task->description != NULL) free(task->description);
+    if (task->data != NULL) free(task->data);
+    if (task->turn != NULL) free(task->turn);
+    if (task->priority != NULL) free(task->priority);
+    if (task->status != NULL) free(task->status);
 }

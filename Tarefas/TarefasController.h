@@ -12,5 +12,6 @@ void update_status(
     const char *status_actual,
     const char *message,
     const char *dir);
+void free_struct_task(Tasks *task);
 
 #endif

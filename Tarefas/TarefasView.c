@@ -11,19 +11,6 @@
 #include "../libs/styles.h"
 
 
-/**
- * @brief Função que libera os dados da estrutura caso existam.
- */
-void free_task(Tasks *task) {
-    if (task->cpf) free(task->cpf);
-    if (task->title) free(task->title);
-    if (task->description) free(task->description);
-    if (task->data) free(task->data);
-    if (task->turn) free(task->turn);
-    if (task->priority) free(task->priority);
-    if (task->status) free(task->status);
-}
-
 
 /**
  * @brief Função que carrega dados na estrutura.
@@ -82,7 +69,7 @@ void register_new_task(void) {
 void view_task(void) {
     Tasks task = initialize_task("Visualizar Tarefas");
     enter();
-    free_task(&task);
+    free_struct_task(&task);
 }
 
 
@@ -94,7 +81,7 @@ void edit_task(void) {
     }
 
     enter();
-    free_task(&task);
+    free_struct_task(&task);
 }
 
 
