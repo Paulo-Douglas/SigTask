@@ -53,14 +53,16 @@ char* read_string(void) {
 }
 
 
-char* read_int(void) {
+int read_int(void) {
     char *input_buffer = NULL;
     char *endptr;
     int is_valid;
+    int value = 0;
 
     do {
         input(&input_buffer);
-        strtol(input_buffer, &endptr, 10);
+
+        value = strtol(input_buffer, &endptr, 10);
 
         is_valid = (*endptr == '\0');
 
@@ -72,7 +74,8 @@ char* read_int(void) {
     } while (!is_valid);
 
     free(input_buffer);
-    return input_buffer;
+
+    return value;
 }
 
 

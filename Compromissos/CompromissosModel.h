@@ -1,9 +1,11 @@
 #ifndef COMPROMISSOSMODEL_H
 #define COMPROMISSOSMODEL_H
 
+#define LINE_COMPROMISE 130
+
 typedef struct
 {
-    char *team_id;
+    int team_id;
     char *title;
     char *description;
     char *start_date;
@@ -14,5 +16,6 @@ typedef struct
 } Compromisers;
 
 int load_compromise(const char *cpf);
+int insert_compromise(Compromisers *compromise);
 
 #endif

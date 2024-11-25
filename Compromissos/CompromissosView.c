@@ -29,7 +29,7 @@
 
 void register_compromises(void) {
     show_header("Cadastrar compromisso");
-    register_compromise();
+    register_compromise() ? show_sucess("| Compromisso cadastrado com sucesso!\n") : show_error("| [ERRO]: Erro ao cadastrar!\n");
     enter();
 }
 

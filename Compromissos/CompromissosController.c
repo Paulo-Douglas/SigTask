@@ -16,18 +16,22 @@
 
 int register_compromise(void){
     limpa_buffer();
-    Compromisers compromise = {0};
+    Compromisers compromise;
     int year = year_now();
 
-    read_and_assign(&compromise.team_id, "|\tTime: ", read_int);
-    read_and_assign(&compromise.title, "|\tTítulo: ", read_string);
-    read_and_assign(&compromise.description, "|\tDescrição: ", read_description);
+    printf("|\tEquipe: ");
+    compromise.team_id = read_int();
+
+    printf("|\tTítulo: ");
+    compromise.title = read_string();
+
+    printf("|\tDescrição: ");
+    compromise.description = read_description();
 
     char day_start[MAX_DAY_LENGHT];
     char month_start[MAX_MONTH_LENGHT];
     printf("\t DATA INICIAL\n");
     read_date(day_start, month_start);
-
     compromise.start_date = malloc(sizeof(char) * 12);
     snprintf(compromise.start_date, 12, "%s/%s/%d", day_start, month_start, year);
 
@@ -35,20 +39,18 @@ int register_compromise(void){
     char month_end[MAX_MONTH_LENGHT];
     printf("\t DATA FINAL\n");
     read_date(day_end, month_end);
-
     compromise.end_date = malloc(sizeof(char) * 12);
     snprintf(compromise.end_date, 12, "%s/%s/%d", day_end, month_end, year);
 
-    read_and_assign(&compromise.time, "|\tHorário: ", read_time);
-    printf("\t PRIORIDADE\n");
-    printf("|\t1 - Alta\n");
-    printf("|\t2 - Média\n");
-    printf("|\t3 - Baixa\n");
+    printf("|\tHorario: ");
+    compromise.time = read_time();
+
+    printf("|\tPrioridade: ");
     compromise.priority = read_generic_123("priority");
 
-    free_strcut_compromise(&compromise);
+    int result = insert_compromise(&compromise);
 
-    return FALSE;
+    return result;
 }
 
 
@@ -61,34 +63,12 @@ int upload_data_compromiser(const char* cpf){
     return load_compromise(cpf);
 }
 
-
-void free_strcut_compromise(Compromisers *compromise) {
-    if (compromise->team_id != NULL) {
-        free(compromise->team_id);
-        compromise->team_id = NULL;
-    }
-    if (compromise->title != NULL) {
-        free(compromise->title);
-        compromise->title = NULL;
-    }
-    if (compromise->description != NULL) {
-        free(compromise->description);
-        compromise->description = NULL;
-    }
-    if (compromise->start_date != NULL) {
-        free(compromise->start_date);
-        compromise->start_date = NULL;
-    }
-    if (compromise->end_date != NULL) {
-        free(compromise->end_date);
-        compromise->end_date = NULL;
-    }
-    if (compromise->time != NULL) {
-        free(compromise->time);
-        compromise->time = NULL;
-    }
-    if (compromise->priority != NULL) {
-        free(compromise->priority);
-        compromise->priority = NULL;
-    }
+void free_strcut_compromise(Compromisers *compromise){
+    if(compromise->title != NULL) free(compromise->title);
+    if(compromise->description != NULL) free(compromise->description);
+    if(compromise->start_date != NULL) free(compromise->start_date);
+    if(compromise->end_date != NULL) free(compromise->end_date);
+    if(compromise->time != NULL) free(compromise->time);
+    if(compromise->priority != NULL) free(compromise->priority);
 }
+
