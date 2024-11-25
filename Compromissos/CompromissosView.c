@@ -29,6 +29,7 @@
 
 void register_compromises(void) {
     show_header("Cadastrar compromisso");
+    register_compromise();
     enter();
 }
 

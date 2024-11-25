@@ -3,11 +3,11 @@
 
 typedef struct
 {
-    char *cpf;
+    char *team_id;
     char *title;
     char *description;
-    char *data_start;
-    char *data_end;
+    char *start_date;
+    char *end_date;
     char *time;
     char *priority;
 

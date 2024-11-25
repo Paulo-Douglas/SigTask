@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "reads.h"
 #include "validate.h"
 #include "styles.h"
 #include "utils.h"
 
+
 void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
     printf("%s", prompt);
     free(*field);
     *field = read_function();
 }
+
 
 void input(char **prompt) {
     char line[MAX_LINE_LENGTH];
@@ -47,6 +50,29 @@ char* read_string(void) {
 
     limpa_buffer();
     return string;
+}
+
+
+char* read_int(void) {
+    char *input_buffer = NULL;
+    char *endptr;
+    int is_valid;
+
+    do {
+        input(&input_buffer);
+        strtol(input_buffer, &endptr, 10);
+
+        is_valid = (*endptr == '\0');
+
+        if (!is_valid) {
+            show_error("[ERROR] Entrada inválida!");
+            printf("Tente novamente: ");
+            free(input_buffer);
+        }
+    } while (!is_valid);
+
+    free(input_buffer);
+    return input_buffer;
 }
 
 
@@ -108,11 +134,11 @@ char* read_description(void) {
     return description;
 }
 
-void read_time(char *time){
+char* read_time(void){
+    char *time;
     limpa_buffer();
     do{
-        fgets(time, MAX_TIME_LENGHT, stdin);
-        time[strcspn(time, "\n")] = 0;
+        input(&time);
 
         if (!validate_time(time)){
             show_error("Horário inválido (Formato correto: HH:MM)");    
@@ -120,6 +146,7 @@ void read_time(char *time){
         }
     } while(validate_time(time) == FALSE);
     limpa_buffer();
+    return time;
 }
 
 char* read_generic_123(const char *dir) {
@@ -127,31 +154,34 @@ char* read_generic_123(const char *dir) {
     do {
         input(&prompt);
 
-        if (*prompt < '1' || *prompt > '3'){
+        if (prompt == NULL || *prompt < '1' || *prompt > '3') {
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
             printf("Tente novamente: ");
             free(prompt);
+            prompt = NULL;
         }
-    } while (*prompt < '1' || *prompt > '3');
+    } while (prompt == NULL || *prompt < '1' || *prompt > '3');
 
-    if(strcmp(dir, "turn") == 0){
+    char *result = NULL;
+    if (strcmp(dir, "turn") == 0) {
         if (strcmp(prompt, "1") == 0) {
-            prompt = strdup("M");
+            result = strdup("M");
         } else if (strcmp(prompt, "2") == 0) {
-            prompt = strdup("V");
+            result = strdup("V");
         } else {
-            prompt = strdup("N");
+            result = strdup("N");
         }
-    } else if (strcmp(dir, "priority") == 0){
+    } else if (strcmp(dir, "priority") == 0) {
         if (strcmp(prompt, "1") == 0) {
-            prompt = strdup("A");
+            result = strdup("A");
         } else if (strcmp(prompt, "2") == 0) {
-            prompt = strdup("M");
+            result = strdup("M");
         } else {
-            prompt = strdup("B");
+            result = strdup("B");
         }
     }
 
-    return prompt;
-}
+    free(prompt);
 
+    return result;
+}
