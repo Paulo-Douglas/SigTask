@@ -1,12 +1,16 @@
 #ifndef TAREFASVIEW_H
 #define TAREFASVIEW_H
 
-char menu_tarefas(void);
-void cadastrar_tarefas(void);
-void exibir_tarefas(void);
-void editar_tarefas(void);
-void excluir_tarefas(void);
-void dados_tarefas(void);
-void alterar_dados_tarefas(void);
+#include "TarefasModel.h"
+
+char tasks_menu(void);
+
+void register_new_task(void);
+void view_task(void);
+void edit_task(void);
+void delete_task(void);
+void display_data_task(Tasks *task, int index, const char *id_line);
+
+Tasks initialize_task(const char *title);
 
 #endif

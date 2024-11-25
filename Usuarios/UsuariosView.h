@@ -1,15 +1,18 @@
 #ifndef USUARIOVIEW_H
 #define USUARIOVIEW_H
 
+#include "UsuariosModel.h"
 
-char menu_usuarios(void);
-void cadastrar_usuarios(void);
-void exibir_dados_usuario(void);
-void alterar_dados_usuario(void);
-void excluir_usuario(void);
-void dados_usuario(void);
-void menu_alterar_usuario(void);
-void show_error(const char *message);
-void show_sucess(const char *message);
+void register_user(void);
+void display_user_data(void);
+void modify_user_data(void);
+void delete_user(void);
+void user_data(const User *users);
+void reactivate_user(void);
+void process_action(const char *mod, const char *sucess, const char *error);
+
+char user_menu(void);
+
+User get_user_by_cpf(const char* mod);
 
 #endif

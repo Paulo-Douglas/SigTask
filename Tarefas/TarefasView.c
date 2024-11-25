@@ -1,15 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "TarefasView.h"
 #include "TarefasController.h"
+#include "TarefasModel.h"
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
 #include "../libs/styles.h"
 
 
-char menu_tarefas(void) {
+
+/**
+ * @brief Função que carrega dados na estrutura.
+ * 
+ * @param title Ponteiro que é utilizado em show_header.
+ * 
+ * @return Retorna a estrutura carregada.
+ */
+Tasks initialize_task(const char *title){
+    show_header(title);
+    Tasks task = {0};
+
+    limpa_buffer();
+    printf("| Informe o ID da tarefa: ");
+    char id[3];
+    scanf(" %3s", id);
+
+    if(!load_task(id, &task)){
+        show_error("| Erro ao carregar as tarefas do usuário!\n");
+    }
+    return task;
+}
+
+
+char tasks_menu(void) {
     char op;
     limpar_tela();
     printf("---------------------------------------------------\n");
@@ -26,104 +52,56 @@ char menu_tarefas(void) {
     return op;
 }
 
-void cadastrar_tarefas(void) {    
-    limpar_tela();
-    printf("-----------------------------------------------------------------------\n");
-    printf("|                            Cadastro Tarefas                         |\n");
-    printf("-----------------------------------------------------------------------\n");
-    printf("|  Título  |  Descrição  |  Data  |  Turno  |  Prioridade  |  Status  |\n");
-    printf("-----------------------------------------------------------------------\n");
+
+void register_new_task(void) {    
+    show_header("Cadastrar Tarefa");
 
     if(register_task()){
-        show_sucess("Tarefa cadastrada com sucesso! <ENTER> para continuar\n");
+        show_sucess("| Tarefa cadastrada com sucesso!\n");
     } else {
-        show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
+        show_error("| [ERRO]: Erro ao cadastrar!\n");
     }
-    limpa_buffer();
+
+    enter();
 }
 
 
-void exibir_tarefas(void) { // Esta tela antecede a tela que exibirá os dados das tarefas
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                  Exibir tarefas                |\n");
-    printf("--------------------------------------------------\n");
+void view_task(void) {
+    Tasks task = initialize_task("Visualizar Tarefas");
+    enter();
+    free_struct_task(&task);
+}
 
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
 
-    if(!search_task_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_tarefas();
-        if(!upload_data_task(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
+void edit_task(void) {
+    Tasks task = initialize_task("Editar Tarefas");
+
+    if(task.cpf != NULL){
+        update_task(&task);
     }
-    free(cpf);
-    printf("Tecle <ENTER> para continuar...");
-    limpa_buffer(); 
+
+    enter();
+    free_struct_task(&task);
 }
 
 
-void editar_tarefas(void) { // Esta tela antecede a tela -> alterar dados
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                  Editar Tarefas                |\n");
-    printf("--------------------------------------------------\n");
-
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_task_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        alterar_dados_tarefas();
-        upload_data_task(cpf);
-    }   
-    free(cpf);
-    printf("Tecle <ENTER> para continuar...");
-    limpa_buffer(); 
-
+void delete_task(void) {
+    show_header("Excluir Tarefas");
+    enter();
 }
 
 
-void excluir_tarefas(void) { // Esta tela antece a tela que exibirá os dados das tarefas -> a mesma que exibe os dados da tarefa
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                  Excluir Tarefas               |\n");
-    printf("--------------------------------------------------\n");
-
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_task_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_tarefas();
-        if(!upload_data_task(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
-    }   
-    free(cpf);
-    printf("Tecle <ENTER> para continuar...");
-    limpa_buffer(); 
-}
-
-void dados_tarefas(void) { // será implementado as variveis de cada dado
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                            Dados da Tarefa                                                                    |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|   CPF   |          Título          |                   Descrição                   |    Data   |    Turno   |     Prioridade    |    Status   |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-}
-
-void alterar_dados_tarefas(void) {
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                        Alterar Dados da Tarefa                                                                |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|   CPF   |    1   ->   Título       |             2   ->   Descrição                | 3 -> Data | 4 -> Turno |  5 -> Prioridade  | 6 -> Status |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+void display_data_task(Tasks *task, int index, const char *id_line) {
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Dados da tarefa                                                               |\n");
+    if(index == 0)printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("| \033[1mID:\033[0m %s\n", id_line);
+    printf("| \033[1mTítulo:\033[0m %s\n", task->title);
+    printf("| \033[1mDescrição:\033[0m %s\n", task->description);
+    printf("| \033[1mData:\033[0m %s\n", task->data);
+    printf("| \033[1mTurno:\033[0m %s\n", task->turn);
+    printf("| \033[1mPrioridade:\033[0m %s\n", task->priority);            
+    printf("| \033[1mStatus:\033[0m %s\n", task->status);
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }

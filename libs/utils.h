@@ -25,13 +25,12 @@ typedef struct {
 
 
 void limpa_buffer(void);
-void exibir_menssagem(char *);
 void limpar_tela(void);
 void create_path(const char *name_path);
-
+void enter(void);
+void delete_spaces(char *str);
 int save_file(const char *data[], char *file_name);
-int add_user_to_register(File *read_file, char *anything, char *cpf);
-int move_to_struct(char *anything, char *cpf, char *name_anything);
 int year_now(void);
+int get_next_id(const char *name_of_file);
 
 #endif

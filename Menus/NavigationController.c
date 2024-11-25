@@ -16,16 +16,16 @@ void navegacao_modulos(void) {
         op = menuPrincipal();
         switch (op) {
             case '1':
-                navegacao_usuarios();
+                navigation_users();
                 break;
             case '2':
                 navegacao_times();
                 break;
             case '3':
-                navegacao_tarefas();
+                navigation_tasks();
                 break;
             case '4':
-                navegação_compromissos();
+                navigation_compromise();
                 break;
             case '5':
                 menuSobre();
@@ -35,6 +35,7 @@ void navegacao_modulos(void) {
                 break;
             default:
                 printf("Opção inválida, por favor, digite outro valor\n");
+                limpa_buffer();
                 break;
         }
 

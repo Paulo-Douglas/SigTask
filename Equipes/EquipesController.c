@@ -10,44 +10,37 @@
 
 
 int register_academic_team(void){
+    Team teams;
     printf("Nome da equipe acadêmica: \n");
-    char *name_team = read_string();
+    teams.team_name = read_string();
     
 
     printf("Descrição da equipe acadêmica: \n");
-    char *description = read_description();
+    teams.description = read_description();
 
+    int result = insert_to_teams(&teams, "data/academic_teams.txt");
 
-    const char *data[3];
-    data[0] = name_team;
-    data[1] = description;
-    data[2] = NULL;
-
-    int result = save_file(data, "data/academic_teams.txt");
-
-    free(name_team);
-    free(description);
+    free(teams.team_name);
+    free(teams.description);
 
     return result;
 
 }
 
+
 int register_business_team(void){
+    Team teams;
     printf("Nome da equipe empresarial: \n");
-    char *name_team = read_string();
+    teams.team_name = read_string();
+    
 
     printf("Descrição da equipe empresarial: \n");
-    char *description = read_description();
+    teams.description = read_description();
 
-    const char *data[3];
-    data[0] = name_team;
-    data[1] = description;
-    data[2] = NULL;
+    int result = insert_to_teams(&teams, "data/business_teams.txt");
 
-    int result = save_file(data, "data/academic_teams.txt");
-
-    free(name_team);
-    free(description);
+    free(teams.team_name);
+    free(teams.description);
 
     return result;
 

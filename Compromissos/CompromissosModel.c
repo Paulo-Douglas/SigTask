@@ -1,74 +1,108 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+
+#include "CompromissosModel.h"
+#include "CompromissosView.h"
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
 #include "../libs/utils.h"
 
-#include "CompromissosModel.h"
 
-typedef struct
-{
-    char *cpf;
-    char *title;
-    char *description;
-    char day_start[MAX_DAY_LENGHT];
-    char month_start[MAX_MONTH_LENGHT];
-    int year_start;
-    char day_end[MAX_DAY_LENGHT];
-    char month_end[MAX_MONTH_LENGHT];
-    int year_end;
-    char time[MAX_TIME_LENGHT];
-    char *priority;
-    char data_start[MAX_CALENDAR_LENGHT];
-    char data_end[MAX_CALENDAR_LENGHT];
-} Compromisers;
+int insert_compromise(Compromisers *compromise){
+    FILE *fp = fopen("data/compromisers.txt", "a");
+    if(fp == NULL) return FALSE;
+
+    fprintf(fp, "%-3d:%-50s[%-100s]%-10s-%-10s(%s)%s#1\n",
+        compromise->team_id,
+        compromise->title,
+        compromise->description,
+        compromise->start_date,
+        compromise->end_date,
+        compromise->time,
+        compromise->priority);
+
+    fclose(fp);
+    return TRUE;
+}
 
 
-int load_compromiser(const char *cpf){
-    Compromisers information;
-
+int load_compromise(Compromisers *compromise, const char *id, const char *mod) {
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[MAX_LINE_LENGTH];  
+    char line[LINE_COMPROMISE];
     int found = FALSE;
+    int line_number = 0;
 
-    while (fgets(line, sizeof(line), fp) && !found){
+    while(fgets(line, LINE_COMPROMISE, fp) != NULL) {
+        char *id_line = strtok(line, ",");
+        if(strcmp(id, id_line) == 0) {
 
-        char *cpf_line = strtok(line, ",");
+            char *number_team = strtok(NULL, ":");
+            delete_spaces(number_team);
+            char *title_compromisse = strtok(NULL, "[");
+            delete_spaces(title_compromisse);
+            char *description_compromisse = strtok(NULL, "]");
+            delete_spaces(description_compromisse);
+            char *date_start = strtok(NULL, "-");
+            char *date_end = strtok(NULL, "(");
+            char *time = strtok(NULL, ")");
+            char *prio = strtok(NULL, "#");
+            char *status = strtok(NULL, "\n");
 
-        if(strcmp(cpf_line, cpf) == 0){
-            char *title_line = strtok(NULL, ",");
-            char *description_line = strtok(NULL, ",");
-            char *data_line_start = strtok(NULL, ",");
-            char *data_line_end = strtok(NULL, ",");
-            char *time_line = strtok(NULL, ",");
-            char *priority_line = strtok(NULL, ",");
+            compromise->team_id = atoi(number_team);
+            compromise->title = strdup(title_compromisse);
+            compromise->description = strdup(description_compromisse);
+            compromise->start_date = strdup(date_start);
+            compromise->end_date = strdup(date_end);
+            compromise->time = strdup(time);
+            compromise->priority = strdup(prio);
+            compromise->status = strdup(status);
 
-            information.cpf = cpf_line;
-            information.title = title_line;
-            information.description = description_line;
-            strcpy(information.data_start, data_line_start);
-            strcpy(information.data_end, data_line_end);
-            strcpy(information.time, time_line);
-            information.priority = priority_line;
+            if((strcmp(status, "1") == 0 || strcmp(mod, "1") == 0)) {
+                display_data_compromises(compromise, line_number);
+            }
 
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("| Título: %s\n", information.title);
-            printf("| CPF: %s\n", information.cpf);
-            printf("| Descrição: %s\n", information.description);
-            printf("| Data inicial: %s\n", information.data_start);
-            printf("| Data final: %s\n", information.data_end);
-            printf("| Tempo: %s\n", information.time);
-            printf("| Prioridade: %s\n", information.priority);            
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-
+            line_number++;
+            getchar();
             found = TRUE;
         }
     }
 
+    fclose(fp);
     return found;
+}
 
+
+int update_date_compromise(const char delimit, const char *new_data, const int lenght, int id){
+    FILE *fp = fopen("data/compromisers.txt", "r+");
+    if (fp == NULL) return FALSE;
+
+    char line[LINE_COMPROMISE];
+    long pos;
+    int found = FALSE;
+
+    while(fgets(line, LINE_COMPROMISE, fp) != NULL){
+        if (strcmp(line, strtok(line, ",")) == 0){
+            char *pos_strtok = strtok(NULL, "\n");
+            pos = ftell(fp) - strlen(pos_strtok);
+
+            char *pos_data = strchr(pos_strtok, delimit);
+            if(pos_data != NULL){
+                long data_pos = pos + (pos_data - pos_strtok);
+
+                fseek(fp, data_pos, SEEK_SET);
+                fprintf(fp, "%-*s", lenght, new_data);
+                fflush(fp);
+                found = TRUE;
+            }
+
+            break;
+        }
+    }
+    fclose(fp);
+    return found;
 }

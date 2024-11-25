@@ -1,24 +1,50 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "reads.h"
 #include "validate.h"
 #include "styles.h"
 #include "utils.h"
+#include "date.h"
 
-void input(char **prompt){
-	char line[MAX_LINE_LENGTH];
-	scanf("%255[^\n]", line);
-	int tam = strlen(line);
-	*prompt = (char*) malloc(tam + 1);
 
-	if (*prompt != NULL){
-		strcpy(*prompt, line);
-	}
+char* read_and_format_date(int year) {
+    char day[MAX_DAY_LENGHT], month[MAX_MONTH_LENGHT];
+    read_date(day, month);
 
-    limpa_buffer();
+    char *formatted_date = malloc(sizeof(char) * 12);
+    if (formatted_date != NULL) {
+        snprintf(formatted_date, 12, "%s/%s/%d", day, month, year);
+    }
+    return formatted_date;
 }
+
+
+void read_and_assign(char **field, const char *prompt, char *(*read_function)()) {
+    printf("%s", prompt);
+    free(*field);
+    *field = read_function();
+}
+
+
+void input(char **prompt) {
+    char line[MAX_LINE_LENGTH];
+
+    // Lê a entrada do usuário
+    fgets(line, MAX_LINE_LENGTH, stdin);
+    line[strcspn(line, "\n")] = '\0';
+
+    // Aloca memória para a string e copia o conteúdo
+    *prompt = (char *)malloc(strlen(line) + 1);
+    if (*prompt == NULL) {
+        perror("Erro ao alocar memória");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(*prompt, line);
+}
+
 
 char* read_string(void) {
     char *string;
@@ -37,6 +63,32 @@ char* read_string(void) {
 
     limpa_buffer();
     return string;
+}
+
+
+int read_int(void) {
+    char *input_buffer = NULL;
+    char *endptr;
+    int is_valid;
+    int value = 0;
+
+    do {
+        input(&input_buffer);
+
+        value = strtol(input_buffer, &endptr, 10);
+
+        is_valid = (*endptr == '\0');
+
+        if (!is_valid) {
+            show_error("[ERROR] Entrada inválida!");
+            printf("Tente novamente: ");
+            free(input_buffer);
+        }
+    } while (!is_valid);
+
+    free(input_buffer);
+
+    return value;
 }
 
 
@@ -62,15 +114,19 @@ char* read_cpf(void){
     char *cpf = NULL;
 
     do{
+        if (cpf != NULL){
+            free(cpf);
+        }
+
         input(&cpf);
 
         if (!validate_cpf(cpf)){
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
             printf("Tente novamente: ");
-            free(cpf);
         }
 
     } while(!validate_cpf(cpf));
+
     limpa_buffer();
     return cpf;
 }
@@ -94,11 +150,11 @@ char* read_description(void) {
     return description;
 }
 
-void read_time(char *time){
+char* read_time(void){
+    char *time;
     limpa_buffer();
     do{
-        fgets(time, MAX_TIME_LENGHT, stdin);
-        time[strcspn(time, "\n")] = 0;
+        input(&time);
 
         if (!validate_time(time)){
             show_error("Horário inválido (Formato correto: HH:MM)");    
@@ -106,20 +162,42 @@ void read_time(char *time){
         }
     } while(validate_time(time) == FALSE);
     limpa_buffer();
+    return time;
 }
 
-char* read_generic_123(void) {
+char* read_generic_123(const char *dir) {
     char *prompt = NULL;
     do {
         input(&prompt);
 
-        if (*prompt < '1' || *prompt > '3'){
+        if (prompt == NULL || *prompt < '1' || *prompt > '3') {
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
             printf("Tente novamente: ");
             free(prompt);
+            prompt = NULL;
         }
-    } while (*prompt < '1' || *prompt > '3');
-    limpa_buffer();
-    return prompt;
-}
+    } while (prompt == NULL || *prompt < '1' || *prompt > '3');
 
+    char *result = NULL;
+    if (strcmp(dir, "turn") == 0) {
+        if (strcmp(prompt, "1") == 0) {
+            result = strdup("M");
+        } else if (strcmp(prompt, "2") == 0) {
+            result = strdup("V");
+        } else {
+            result = strdup("N");
+        }
+    } else if (strcmp(dir, "priority") == 0) {
+        if (strcmp(prompt, "1") == 0) {
+            result = strdup("A");
+        } else if (strcmp(prompt, "2") == 0) {
+            result = strdup("M");
+        } else {
+            result = strdup("B");
+        }
+    }
+
+    free(prompt);
+
+    return result;
+}

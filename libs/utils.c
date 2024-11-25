@@ -3,23 +3,27 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "utils.h"
 
+void delete_spaces(char *str) {
+    while (isspace((unsigned char)*str)) str++;
+    char *end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char)*end)) end--;
+    *(end + 1) = '\0';
+}
 
 void limpa_buffer(void) {
     int b;
-    while((b = getchar()) != '\n' && b != EOF) {
-
-    }
+    while((b = getchar()) != '\n' && b != EOF);
 }
 
-void exibir_menssagem(char *menssagem) {
-    printf("%s\n\n", menssagem);
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
+void enter(void) {
+    printf("| Tecle <ENTER> para continuar...");
     limpa_buffer();
 }
+
 
 void limpar_tela(void) {
     system("clear || cls");
@@ -59,68 +63,34 @@ int save_file(const char *data[], char *file_name){
 	return TRUE;
 }
 
-int move_to_struct(char *anything, char *cpf, char *name_anything) {
-    File *read_file = malloc(sizeof(File));
-    if (read_file == NULL) return FALSE;
 
-    read_file->file = NULL;
-    read_file->line_count = 0;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-    char line[MAX_LINE_LENGTH];
-
-    FILE * fp = fopen(name_anything, "r");    
-    if (fp == NULL) return FALSE;                                                     
-
-    while(fgets(line, MAX_LINE_LENGTH, fp) !=NULL) {
-        read_file->line_count++;
-        read_file->file = realloc(read_file->file, read_file->line_count * sizeof(char *));
-
-        if (read_file->file == NULL){
-            fclose(fp);
-            return FALSE;
-        }
-
-        read_file->file[read_file->line_count - 1] = malloc(strlen(line) + 1);
-
-        if (read_file->file[read_file->line_count - 1] == NULL){
-            fclose(fp);
-            return FALSE;
-        }
-
-        strcpy(read_file->file[read_file->line_count - 1], line);
-
+int get_next_id(const char *name_of_file) {
+    FILE *arquivo = fopen(name_of_file, "r");
+    if (arquivo == NULL) {
+        return 1;
     }
 
-    add_user_to_register(read_file, anything, cpf);
-    fclose(fp);
-    free(read_file->file);
-    free(read_file);
-    return TRUE;
+    char line[300];
+    char last_line[300] = "";
 
-}
-
-int add_user_to_register(File *read_file, char *anything, char *cpf) {
-
-    for (int i = 0; i < read_file->line_count; i++){
-        if(strstr(read_file->file[i], anything) == NULL) continue;
-        else {
-            read_file->file[i] = realloc(read_file->file[i], strlen(read_file->file[i]) + strlen(cpf) + 2);
-            read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
-            strcat(read_file->file[i], cpf);
-
-            FILE *fp = fopen("anything.txt", "w");      // mudável
-            if (fp == NULL) return FALSE;
-            for (int i = 0; i < read_file->line_count; i++){
-                read_file->file[i][strlen(read_file->file[i]) - 1] = '\0';
-                fprintf(fp, "%s\n", read_file->file[i]);
-            }
-            fclose(fp);
-
-            break;
-        }
-
-        free(read_file->file[i]);
+    while (fgets(line, sizeof(line), arquivo) != NULL) {
+        strcpy(last_line, line);
     }
 
-    return TRUE;
+    fclose(arquivo);
+
+    if (strlen(last_line) == 0) {
+        return 1;
+    }
+
+    char *comma_pos = strchr(last_line, ',');
+    if (comma_pos == NULL) {
+        return 1;
+    }
+
+    return atoi(comma_pos + 1) + 1;
 }

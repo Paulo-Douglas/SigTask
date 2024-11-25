@@ -9,8 +9,27 @@
 #include "../libs/styles.h"
 
 
-/*************  ✨ Codeium Command ⭐  *************/
-/******  a003a083-17b6-4b8a-a6d9-f8508e158f7b  *******/char menu_compromissos(void) {
+Compromisers initialize_compromisse(const char* title){
+    show_header(title);
+    Compromisers compromise = {0};
+
+    limpa_buffer();
+    printf("|\tID: ");
+    char id[3];
+    scanf(" %s", id);
+    printf("|\t(1) Aberto | (2) Fechado: ");
+    char status[2];
+    scanf(" %s", status);
+
+    if(!load_compromise(&compromise, id, status)){
+        show_error("| [ERRO]: Erro ao carregar compromisso!\n");
+    }
+
+    return compromise;
+}
+
+
+char menu_compromise(void) {
     char op;
     limpar_tela();
     printf("----------------------------------------------------\n");
@@ -27,106 +46,65 @@
     return op;
 }
 
-void cadastrar_compromissos(void) {
-    limpar_tela();
-    printf("-------------------------------------------------------------------------------------\n");
-    printf("|                                  Cadastro Tarefas                                 |\n");
-    printf("-------------------------------------------------------------------------------------\n");
-    printf("|  Título  |  Descrição  |  Data de início |  Data de fim |  Horário  | Prioridade  |\n");
-    printf("-------------------------------------------------------------------------------------\n");
-
-    if (register_compromise()){
-        show_sucess("Compromisso cadastrada com sucesso! <ENTER> para continuar\n");
-    } else {
-        show_error("[ERRO]: Erro ao cadastrar \n<ENTER> para continuar\n");
-    }
-    limpa_buffer();
-    }
+void register_compromises(void) {
+    show_header("Cadastrar compromisso");
+    register_compromise() ? show_sucess("| Compromisso cadastrado com sucesso!\n") : show_error("| [ERRO]: Erro ao cadastrar!\n");
+    enter();
+}
 
 
-void exibir_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                 Exibir Compromissos            | \n");
-    printf("--------------------------------------------------\n");
-
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_compromissos();
-        if(!upload_data_compromiser(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+void show_compromises(void) { 
+    Compromisers compromisse = initialize_compromisse("Exibir Compromisso");
+    if (compromisse.team_id != 0) show_sucess("<- Compromisso carregado com sucesso! ->");
+    enter();
 }    
 
-void editar_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                 Editar Compromissos            |\n");
-    printf("--------------------------------------------------\n");
-    
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
+void edit_compromises(void) { 
+    Compromisers compromise = initialize_compromisse("Editar Compromisso");
 
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        alterar_dados_compromissos();
-        upload_data_compromiser(cpf);
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+    printf("|\tConfirme o ID: ");
+    char id[3];
+    scanf(" %s", id);
 
+    update_compromise(&compromise, id) ? show_sucess("| Compromisso alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
+    enter();
 }
 
-void excluir_compromissos(void) { 
-    limpar_tela();
-    printf("--------------------------------------------------\n");
-    printf("|                Excluir Compromissos            |\n");
-    printf("--------------------------------------------------\n");
-    
-    printf("Informe o CPF: ");
-    char *cpf = read_cpf();
-
-    if(!search_compromiser_to_user(cpf)){
-        show_error("CPF não encontrado!\n");
-    } else {
-        dados_compromissos();
-        if(!upload_data_compromiser(cpf)){
-            show_error("Erro ao carregar as tarefas do usuário!\n");
-        }
-    }   
-    printf("Tecle <ENTER> para continuar...");
-    getchar(); 
-    free(cpf);
+void delete_compromises(void) { 
+    show_header("Excluir compromisso");
+    enter();
 }
 
-void dados_compromissos(void) { // será implementado as variveis de cada dado
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                            Dados do Compromisso                                                               |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|  ID  |        Título        |                Descrição                |    Data de início  |    Data de fim  |    Horário   |    Prioridade   |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");  
+void data_compromises(void) {
+    show_header("Dados do compromisso");
+    enter();
 }
 
-void alterar_dados_compromissos(void) {
-    limpar_tela();
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                          Alterar Dados do Compromisso                                                         |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|   ID   |  1   ->   Título     |        2   ->   Descrição           | 3 -> Data de início | 4 -> Data de fim|  5 -> Horário | 6 -> Prioridade |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("Tecle <ENTER> para continuar...");
-    getchar();
+void change_data_compromisses(void) {
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Alterar compromisso                                                           |\n");
+    printf("\033[1m|\t (1) Título\033[0m\n");
+    printf("\033[1m|\t (2) Descrição\033[0m\n");
+    printf("\033[1m|\t (3) Data de Início\033[0m\n");
+    printf("\033[1m|\t (4) Data de Fim\033[0m\n");
+    printf("\033[1m|\t (5) Horário\033[0m\n");
+    printf("\033[1m|\t (6) Prioridade\033[0m\n");
+    printf("\033[1m|\t (7) Status [FECHAR] \033[0m\n");
+    printf("\033[1m|\t (8) Status [REABRIR] \033[0m\n");
+}
+
+void display_data_compromises(Compromisers *compromise, int line_number){
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Dados do compromisso                                                          |\n");
+    if (line_number == 0) printf("\033[1m\tEQUIPE:\033[m %d\n", compromise->team_id);
+
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("\033[1m\tCOMPROMISSO:\033[m %s\n", compromise->title);
+    printf("\033[1m\tDESCRICAO:\033[m %s\n", compromise->description);
+    printf("\033[1m\tDATA DE INICIO:\033[m %s\n", compromise->start_date);
+    printf("\033[1m\tDATA DE FIM:\033[m %s\n", compromise->end_date);
+    printf("\033[1m\tHORARIO:\033[m %s\n", compromise->time);
+    printf("\033[1m\tPRIORIDADE:\033[m %s\n", compromise->priority);
+    printf("\033[1m\tSTATUS:\033[m %s\n", compromise->status);
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }

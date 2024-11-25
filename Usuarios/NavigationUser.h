@@ -1,6 +1,6 @@
 #ifndef NAVIGATIONUSERIEW_H
 #define NAVIGATIONUSERIEW_H
 
-void navegacao_usuarios(void);
+void navigation_users(void);
 
 #endif
