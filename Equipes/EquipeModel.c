@@ -26,7 +26,7 @@ int insert_to_teams(Team *teams, const char* file_teams){
     fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name_especific);       
     fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name);      
     fprintf(fp, "%s %-*s", FIELD_DESCRIPTION, VARCHAR50, teams ->description);      
-    fprintf(fp,"%s %-*s" );                                
+    fprintf(fp,"}\n" );                                
     fclose(fp);
     return TRUE;
 }
