@@ -20,4 +20,6 @@ int update_user_status(User *users, const char *file_name, const char *dir);
 int select_all_users(const char *file_name);
 int load_user_from_users(const char* cpf, User *users, const char* mod);
 
+User load_user(const char *cpf);
+
 #endif // USUARIOSMODEL_H

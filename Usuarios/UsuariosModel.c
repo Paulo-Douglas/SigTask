@@ -63,6 +63,42 @@ int update_data_user(const char *cpf, const char *new_value, const char *field, 
     return 0;
 }
 
+User load_user(const char *cpf){
+    User users;
+    FILE *fp = fopen("users.txt", "r");
+    if (fp == NULL) exit(1);
+
+    char line[512];
+
+    while (fgets(line, sizeof(line), fp) != NULL) {
+
+        if (strcmp("NULL", cpf) == 0 || strstr(line, cpf) != NULL) {
+
+            char *cpf_pos = strtok(line, ":");
+            char *name_pos = strtok(NULL, ":");
+            if (name_pos == NULL) continue;
+            char *name_value = strtok(NULL, ",");
+            char *phone_pos = strtok(NULL, ":");
+            if (phone_pos == NULL) continue;
+            char *phone_value = strtok(NULL, ",");
+            char *status_pos = strtok(NULL, ":");
+            if (status_pos == NULL) continue;
+            char *status_value = strtok(NULL, "}");
+
+            users.cpf = strdup(cpf_pos);
+            users.name = strdup(name_value);
+            users.phone = strdup(phone_value);
+            users.status = strdup(status_value);
+
+            printf("CPF -> %s\n\tUsuário: %s\n\tTelefone: %s\n\tStatus: %s\n", users.cpf, users.name, users.phone, strcmp(users.status, "0") ? "Inativo" : "Ativo");
+
+        }
+    }
+
+    fclose(fp);
+    return users;
+}
+
 
 /**
  * @brief Atualiza o status de um usuário no arquivo.
