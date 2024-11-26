@@ -29,7 +29,9 @@ int insert_user(void){
     read_and_assign(&users.name, "|\tNome: ", read_string);
     read_and_assign(&users.phone, "|\tTelefone: ", read_phone);
 
-    int result = insert_user_to_file(&users, "data/users.txt");
+    users.status = "1";
+
+    int result = insert_user_to_file(&users);
 
     free(users.name);
     free(users.cpf);

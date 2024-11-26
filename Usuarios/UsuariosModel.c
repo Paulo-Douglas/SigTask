@@ -11,25 +11,20 @@
 
 
 
-/**
- * @brief Insere um novo usuário no arquivo.abort
- * 
- * @param users Estrutura contendo os dados do usuário.
- * @param file_name Caminho para o arquivo onde os dados do usuário serão inseridos.
- * 
- * @return TRUE se o usuário foi inserido com sucesso, FALSE caso contrário.
- */
-int insert_user_to_file(User *users, const char* file_name){
+int insert_user_to_file(User *users){
+    FILE* fp = fopen("users.txt", "a");
+    if (fp == NULL) return FALSE;
 
-    create_path("data/");
+    fprintf(fp, "%s:{", users->cpf);
+    fprintf(fp, "%s %-50s,", FIELD_NAME, users->name);
+    fprintf(fp, "%s %s,", FIELD_PHONE, users->phone);
+    fprintf(fp, "%s %s", FIELD_STATUS, users->status);
+    fprintf(fp, "};\n");
 
-    FILE *fp = fopen(file_name, "a");
-    if(fp == NULL) return FALSE;
-
-    fprintf(fp, "%s:%-229s;%s#1\n", users->cpf, users->name, users->phone);
     fclose(fp);
     return TRUE;
 }
+
 
 /**
  * @brief Atualiza os dados de um usuário no arquivo.

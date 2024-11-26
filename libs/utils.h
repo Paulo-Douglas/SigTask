@@ -1,6 +1,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#define VARCHAR50 50
+#define FIELD_NAME "\"Nome\":" // lenght = 54
+#define FIELD_PHONE "\"Telefone\":" // lenght = 1
+#define FIELD_TITLE "\"Titulo\":" // lenght = 54
+#define FIELD_DESCRIPTION "\"Descricao\":" // lenght = 54
+#define FIELD_DATE "\"Data\":" // lenght = 1
+#define FIELD_PRIORITY "\"Prioridade\":" // 0 = Baixa, 1 = Media, 2 = Alta || length = 1
+#define FIELD_STATUS "\"Status\":" // 0 = Aberto, 1 = Em andamento, 2 = Fechado || 0 = Inativo 1 = Ativo || length = 1
+
+
 #define TRUE 1
 #define FALSE 0
 #define MAX_NAME_LENGTH 51
