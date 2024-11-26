@@ -26,42 +26,41 @@ int insert_user_to_file(User *users){
 }
 
 
-/**
- * @brief Atualiza os dados de um usuário no arquivo.
- * 
- * @param user Estrutura contendo os dados do usuário.
- * @param delimit Delimitador utilizado para identificar o campo a ser alterado.
- * @param new_data Novo dado para o campo especificado.
- * @param lenght Tamanho do novo dado.
- * 
- * @return TRUE se os dados foram atualizados com sucesso, FALSE caso contrário.
- */
-int update_data_user(User *user, const char delimit, const char *new_data, const int lenght){
-    FILE *fp = fopen("data/users.txt", "r+");
-    if (fp == NULL) return FALSE;
-
-    char line[LINE_USER];
-    long pos;
-    int found = FALSE;
-
-    while(fgets(line, LINE_USER, fp) != NULL){
-        if (strstr(line, user->cpf) != NULL){
-            pos = ftell(fp) - strlen(line);
-
-            char *pos_data = strchr(line, delimit);
-            if (pos_data != NULL){
-                long name_pos = pos + (pos_data - line) + 1;
-
-                fseek(fp, name_pos, SEEK_SET);
-                fprintf(fp, "%-*s", lenght, new_data);
-                fflush(fp);
-                found = TRUE;
-            }
-            break;
-        }
+int update_data_user(const char *cpf, const char *new_value, const char *field, int length) {
+    FILE *fp = fopen("users.txt", "r+");
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 0;
     }
+
+    char line[512];
+    memset(line, 0, sizeof(line));
+    int found_cpf = 0;
+    long pos = 0;
+
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        if (strstr(line, cpf) != NULL) {
+            found_cpf = 1;
+        }
+
+        if (found_cpf && strstr(line, field) != NULL) {
+            char *field_pos = strstr(line, field);
+            if (field_pos == NULL) break;
+
+            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
+            fseek(fp, pos, SEEK_SET);
+
+            fprintf(fp, "%-*s", length, new_value);
+
+            fclose(fp);
+            return 1;
+        }
+
+        memset(line, 0, sizeof(line));
+    }
+
     fclose(fp);
-    return found;
+    return 0;
 }
 
 

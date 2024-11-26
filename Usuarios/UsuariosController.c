@@ -59,13 +59,13 @@ int update_user(User *users) {
             case '1':
                 printf("|\tNome: ");
                 users->name = read_string();
-                update = update_data_user(users, ':', users->name, 229);
+                update = update_data_user(users->cpf, users->name, FIELD_NAME, 50);
                 update ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
                 break;
             case '2':
                 printf("|\tTelefone: ");
                 users->phone = read_phone();
-                update = update_data_user(users, ';', users->phone, 13);
+                update = update_data_user(users->cpf, users->phone, FIELD_PHONE, 50);
                 update ? show_sucess("Telefone alterado com sucesso!") : show_error("Erro ao alterar telefone!");
                 break;
             case '0':
