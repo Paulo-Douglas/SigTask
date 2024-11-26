@@ -4,6 +4,7 @@
 #include <ctype.h>
 
 #include "UsuariosModel.h"
+#include "UsuariosView.h"
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -18,9 +19,9 @@ int insert_user_to_file(User *users){
     if (fp == NULL) return FALSE;
 
     fprintf(fp, "%s:{", users->cpf);
-    fprintf(fp, "%s %-50s,", FIELD_NAME, users->name);
-    fprintf(fp, "%s %s,", FIELD_PHONE, users->phone);
-    fprintf(fp, "%s %s", FIELD_STATUS, users->status);
+    fprintf(fp, "%s%-50s,", FIELD_NAME, users->name);
+    fprintf(fp, "%s%s,", FIELD_PHONE, users->phone);
+    fprintf(fp, "%s%s", FIELD_STATUS, users->status);
     fprintf(fp, "};\n");
 
     fclose(fp);
@@ -65,9 +66,11 @@ int update_data_user(const char *cpf, const char *new_value, const char *field, 
     return 0;
 }
 
+
 User load_user(const char *cpf){
     User users;
-    FILE *fp = fopen("users.txt", "r");
+
+    FILE *fp = fopen("data/users.txt", "r");
     if (fp == NULL) exit(1);
 
     char line[512];
@@ -91,9 +94,7 @@ User load_user(const char *cpf){
             users.name = strdup(name_value);
             users.phone = strdup(phone_value);
             users.status = strdup(status_value);
-
-            printf("CPF -> %s\n\tUsuário: %s\n\tTelefone: %s\n\tStatus: %s\n", users.cpf, users.name, users.phone, strcmp(users.status, "0") ? "Inativo" : "Ativo");
-
+            user_data(&users);
         }
     }
 

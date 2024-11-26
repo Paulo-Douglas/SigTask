@@ -97,7 +97,10 @@ void register_user() {
  */
 void display_user_data(void) {
     show_header("Exibir Dados");
-    select_all_users("data/users.txt");
+    User users = load_user("111.111.111-11");
+    if(users.cpf == NULL) {
+        show_error("| Nenhum usuário cadastrado!\n");
+    }
     enter();
 }
 
@@ -162,8 +165,9 @@ void reactivate_user(void) {
 
 void user_data(const User *users) {
     show_header("Dados do usuário");
-    printf("|CPF: %s\n", users->cpf);
-    printf("|Nome: %s\n", users->name);
-    printf("|Telefone: %s\n", users->phone);
+    printf("\033[1m|CPF:\033[m %s\n", users->cpf);
+    printf("\033[1m|Nome:\033[m %s\n", users->name);
+    printf("\033[1m|Telefone:\033[m %s\n", users->phone);
+    printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
