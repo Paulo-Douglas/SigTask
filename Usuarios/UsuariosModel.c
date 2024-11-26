@@ -12,7 +12,9 @@
 
 
 int insert_user_to_file(User *users){
-    FILE* fp = fopen("users.txt", "a");
+    create_path("data/");
+
+    FILE* fp = fopen("data/users.txt", "a");
     if (fp == NULL) return FALSE;
 
     fprintf(fp, "%s:{", users->cpf);
