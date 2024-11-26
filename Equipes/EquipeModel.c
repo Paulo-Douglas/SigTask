@@ -16,13 +16,17 @@
 */
 
 int insert_to_teams(Team *teams, const char* file_teams){
-  int id = get_next_id(file_teams);
+  int id = get_next_id("data/teams.txt");
   create_path("data/");
   FILE *fp = fopen(file_teams, "a");    
   
   if(fp == NULL) return FALSE;
   
-    fprintf(fp, "%d:%-50s;%-100s#1\n", id, teams->team_name, teams->description);
+    fprintf(fp, "%d:{", id);  // id ou CNPJ
+    fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name_especific);       
+    fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name);      
+    fprintf(fp, "%s %-*s", FIELD_DESCRIPTION, VARCHAR50, teams ->description);      
+    fprintf(fp,"%s %-*s" );                                
     fclose(fp);
     return TRUE;
 }
@@ -57,86 +61,64 @@ int view_team(char *name, char *file){
     return found;
 }
 
-int update_name_in_teams(Team *teams, const char* file_teams){
-  FILE *fp = fopen(file_teams, "r+");
-  if (fp == NULL) return FALSE;
 
-  char line[LINE_TEAM];
-  long pos; 
-  int found = FALSE;
+int load_teams(Team *teams, const char *id, const char *mod){    // tanto para equipes academicas e empresariais 
+    FILE *fp = fopen("data/teams.txt", "r");
+    if (fp == NULL)
+        return FALSE;
+    char line[LINE_TEAM];
+    int found = FALSE;
+    int line_number = 0;
 
-  while (fgets(line, LINE_TEAM, fp) != NULL){
-    if (strstr(line, teams -> team_name) != NULL){
-      pos = ftell(fp) - strlen(line);
+    while (fgets(line, LINE_TEAM, fp) != NULL){
+        char *id_line = strtok(line, ",");
+        if(strcmp(id, id_line) == 0) {
+            char *id_academic = strtok(NULL, ":");
+            delete_spaces(id_academic);
+            char *academy_especific = strtok(NULL, ":"); 
+            delete_spaces(academy_especific);
+            char *name_team = strtok(NULL, ":");
+            delete_spaces(name_team);
+            char *description = strtok(NULL, ":");
 
-      char *delimiter_pos = strchr(line, ':');
-      if (delimiter_pos != NULL){
-        long name_pos = pos + (delimiter_pos - line) + 1;
+            teams->id = strdup(id_academic);
+            teams->team_name_especific = strdup(academy_especific);
+            teams->team_name = strdup(name_team);
+            teams->description = strdup(description);
 
-        fseek(fp, name_pos, SEEK_SET);
-        fprintf(fp, "%-50s", teams->team_name);
-        fflush(fp);
-        found = TRUE;
-      }
-
-        break;
-      }
-
+            line_number++;
+            getchar();
+            found = TRUE;
+        }
     }
+    fclose(fp);
     return found;
 }
 
-int update_description_in_teams(Team *teams, const char* file_teams){
-  FILE *fp = fopen(file_teams, "+r");
-  if (fp == NULL) return FALSE;
-
-  char line[LINE_TEAM];
-  long pos;
-  int found = FALSE;
-
-  while(fgets(line, LINE_TEAM, fp) != NULL){
-    if(strstr(line, teams -> description) != NULL){
-      pos = ftell(fp) - strlen(line);
-
-      char *delimiter_pos = strchr (line, ':');
-      if (delimiter_pos != NULL){
-        long name_pos = pos + (delimiter_pos - line) + 1;
-
-        fseek(fp, name_pos, SEEK_SET);
-        fprintf(fp, "%-30s", teams -> description);
-        fflush(fp);
-        found = TRUE;
-      }
-      break;
-        }
-  }
-  return found;
-
-}
-
-int update_status_in_teams(Team *teams, const char* file_teams){
-    FILE *fp = fopen(file_teams, "r+");
-    if (fp == NULL) return FALSE;
-
+int update_date_teams(const char delimit, const char *new_data, const int lenght, int id){
+    FILE *fp = fopen("data/teams.txt", "r+");
+    if (fp == NULL) {
+        return FALSE;
+    }   
     char line[LINE_TEAM];
     long pos;
     int found = FALSE;
 
-    while (fgets(line, LINE_TEAM, fp) != NULL){
-        if (strstr(line, teams->team_name) != NULL){
-            pos = ftell(fp) - strlen(line);
+    while(fgets(line, LINE_TEAM, fp) != NULL){
+        if (strcmp(line, strtok(line, ",")) == 0){
+            char *pos_strtok = strtok(NULL, "\n");
+            pos = ftell(fp) - strlen(pos_strtok);
 
-            char *delimiter_pos = strchr(line, '#');
+            char *pos_data = strchr(pos_strtok, delimit);
+            if(pos_data != NULL){
+                long data_pos = pos + (pos_data - pos_strtok);
 
-            long status_pos = pos + (delimiter_pos - line) + 1;
+                fseek(fp, data_pos, SEEK_SET);
+                fprintf(fp, "%-*s", lenght, new_data);
+                fflush(fp);
+                found = TRUE;
+            }
 
-            char status_actual = *(delimiter_pos + 1);
-            char new_status = (status_actual == '1') ? '0' : '1';
-
-            fseek(fp, status_pos, SEEK_SET);
-            fprintf(fp, "%c", new_status);
-            fflush(fp);
-            found = TRUE;
             break;
         }
     }
