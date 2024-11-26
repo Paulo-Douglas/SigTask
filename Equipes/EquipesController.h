@@ -4,6 +4,6 @@
 int register_academic_team(void);
 int register_business_team(void);
 int search_team(void);
-
+int update_team(Team *teams, char *id);
 
 #endif
