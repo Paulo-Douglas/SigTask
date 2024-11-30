@@ -11,6 +11,4 @@ void edit_task(void);
 void delete_task(void);
 void display_data_task(Tasks *task, int index, const char *id_line);
 
-Tasks initialize_task(const char *title);
-
 #endif

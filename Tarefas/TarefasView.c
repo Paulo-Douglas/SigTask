@@ -12,29 +12,6 @@
 
 
 
-/**
- * @brief Função que carrega dados na estrutura.
- * 
- * @param title Ponteiro que é utilizado em show_header.
- * 
- * @return Retorna a estrutura carregada.
- */
-Tasks initialize_task(const char *title){
-    show_header(title);
-    Tasks task = {0};
-
-    limpa_buffer();
-    printf("| Informe o ID da tarefa: ");
-    char id[3];
-    scanf(" %3s", id);
-
-    if(!load_task(id, &task)){
-        show_error("| Erro ao carregar as tarefas do usuário!\n");
-    }
-    return task;
-}
-
-
 char tasks_menu(void) {
     char op;
     limpar_tela();
@@ -80,14 +57,7 @@ void view_task(void) {
 
 
 void edit_task(void) {
-    Tasks task = initialize_task("Editar Tarefas");
-
-    if(task.cpf != NULL){
-        update_task(&task);
-    }
-
-    enter();
-    free_struct_task(&task);
+    show_header("Editar Tarefas");
 }
 
 

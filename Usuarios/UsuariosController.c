@@ -22,7 +22,7 @@ int insert_user(void){
 
     read_and_assign(&users.cpf, "|\tCPF: ", read_cpf);
 
-    if(cpf_unique_user(users.cpf, "data/users.txt")){
+    if(cpf_exists(users.cpf)){
         return FALSE;
     }
 

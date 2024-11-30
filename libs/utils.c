@@ -64,10 +64,6 @@ int save_file(const char *data[], char *file_name){
 }
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 int get_next_id(const char *name_of_file) {
     FILE *arquivo = fopen(name_of_file, "r");
     if (arquivo == NULL) {
