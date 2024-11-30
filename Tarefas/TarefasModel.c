@@ -58,56 +58,52 @@ int load_task(const char *id, Tasks *task){
 
     char line[300];
     int found = FALSE;
-    int line_number = 0;
 
     while (fgets(line, sizeof(line), fp) != NULL){
-        char *id_line = strtok(line, ",");
+        char *id_line = strtok(line, ":");
         if(id_line == NULL) continue;
 
         if(strcmp(id_line, id) == 0){
-            char *cpf_line = strtok(NULL, ":");
-            char *title_line = strtok(NULL, "[");
-            char *description_line = strtok(NULL, "]");
-            char *data_line = strtok(NULL, ";");
-            char *turn_line = strtok(NULL, "(");
-            char *priority_line = strtok(NULL, ")");
-            char *status_line = strtok(NULL, "\n");
+            char *field_cpf = strtok(NULL, ":");
+            if(field_cpf == NULL) continue;
+            char *cpf = strtok(NULL, ",");
 
+            char *field_title = strtok(NULL, ":");
+            if(field_title == NULL) continue;
+            char *title = strtok(NULL, ",");
 
-            if (strcmp(priority_line, "B") == 0){
-                task->priority = strdup("Baixa");
-            } else if (strcmp(priority_line, "M") == 0){
-                task->priority = strdup("Media");
-            } else {
-                task->priority = strdup("Alta");
-            }
+            char *field_description = strtok(NULL, ":");
+            if(field_description == NULL) continue;
+            char *description = strtok(NULL, ",");
 
-            if(strcmp(turn_line, "M") == 0){
-                task->turn = strdup("Manha");
-            } else if(strcmp(turn_line, "T") == 0){
-                task->turn = strdup("Tarde");
-            } else {
-                task->turn = strdup("Noite");
-            }
+            char *field_date = strtok(NULL, ":");
+            if(field_date == NULL) continue;
+            char *data = strtok(NULL, ",");
 
-            if (strcmp(status_line, "1") == 0){
-                task->status =  strdup("Aberta");
-            } else {
-                task->status = strdup("Fechada");
-            }
+            char *field_turn = strtok(NULL, ":");
+            if(field_turn == NULL) continue;
+            char *turn = strtok(NULL, ",");
 
-            task->cpf = strdup(cpf_line);
-            task->title = strdup(title_line);
-            task->description = strdup(description_line);
-            task->data = strdup(data_line);
+            char *field_priority = strtok(NULL, ":");
+            if(field_priority == NULL) continue;
+            char *priority = strtok(NULL, ",");
 
-            display_data_task(task, line_number, id_line);
+            char *field_status = strtok(NULL, ":");
+            if(field_status == NULL) continue;
+            char *status = strtok(NULL, "}");
 
-            line_number++;
+            task->cpf = strdup(cpf);
+            task->title = strdup(title);
+            task->description = strdup(description);
+            task->data = strdup(data);
+            task->turn = strdup(turn);
+            task->priority = strdup(priority);
+            task->status = strdup(status);
             found = TRUE;
-            getchar();
+            break;
         }
     }
+
     fclose(fp);
     return found;
 

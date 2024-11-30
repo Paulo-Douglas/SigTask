@@ -12,29 +12,12 @@
 #include "../libs/date.h"
 
 
-/**
- * @brief Função para atualizar um campo de uma tarefa
- * 
- * @param task Estrutura contendo os dados da tarefa.
- * @param delimiter Delimitador utilizado para identificar o campo a ser alterado.
- * @param field Campo a ser alterado.
- * @param prompt Mensagem para o usußrio.
- * @param max_length Tamanho do campo.
- * @param read_function Função para ler o dado do usußrio.
- * 
- * @return TRUE se o campo foi atualizado com sucesso, FALSE caso contrário.
- */
 int update_field(Tasks *task, char delimiter, char **field, const char *prompt, int max_length, char *(*read_function)()) {
     read_and_assign(field, prompt, read_function);
     return update_data_task(task, delimiter, *field, max_length);
 }
 
 
-/**
- * @brief Função para registrar uma nova tarefa
- * 
- * @return TRUE se a tarefa foi registrada com sucesso, FALSE caso contrário.
- */
 int register_task(void) {
     limpa_buffer();
     Tasks task = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
@@ -76,6 +59,14 @@ int register_task(void) {
     return result;
 }
 
+
+int search_task(Tasks *task) {
+    char id;
+    printf("|\tInforme o ID da tarefa:\t");
+    scanf(" %c", &id);
+
+    return load_task(&id, task);
+}
 
 /**
  * @brief Função para buscar uma tarefa pelo CPF do usuário
