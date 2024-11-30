@@ -47,9 +47,12 @@ void view_task(void) {
     show_header("Exibir Tarefas");
 
     Tasks task = {0};
+    printf("|\tInforme o ID da tarefa: ");
+    char id[2];
+    scanf(" %1s", id);
 
-    if(!search_task(&task)) show_error("| Tarefa não encontrada!\n");
-    else display_data_task(&task, 0, NULL);
+    if(!load_task(id, &task)) show_error("| Tarefa não encontrada!\n");
+    else display_data_task(&task);
     printf("\n");
 
     enter();
@@ -58,6 +61,22 @@ void view_task(void) {
 
 void edit_task(void) {
     show_header("Editar Tarefas");
+
+    Tasks task = {0};
+    printf("|\tInforme o ID da tarefa: ");
+    char id[2];
+    scanf(" %1s", id);
+
+    if(!load_task(id, &task)) show_error("| Tarefa não encontrada!\n");
+    else {
+        display_data_task(&task);
+        if(update_task(&task, id)) {
+            show_sucess("| Tarefa editada com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao editar!\n");
+        }
+    }
+    enter();
 }
 
 
@@ -67,11 +86,11 @@ void delete_task(void) {
 }
 
 
-void display_data_task(Tasks *task, int index, const char *id_line) {
+void display_data_task(Tasks *task) {
     limpar_tela();
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados da tarefa                                                               |\n");
-    if(index == 0)printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
+    printf("| \033[1mCPF:\033[0m %s\n", task->cpf);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);
     printf("| \033[1mDescrição:\033[0m %s\n", task->description);

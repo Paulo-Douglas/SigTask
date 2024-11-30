@@ -54,14 +54,62 @@ int register_task(void) {
 }
 
 
-int search_task(Tasks *task) {
-    char id;
-    printf("|\tInforme o ID da tarefa:\t");
-    scanf(" %c", &id);
+int update_task(Tasks *task, const char *id) {
+    char op;
 
-    return load_task(&id, task);
+    do{
+        printf("|\t[1] Título\n");
+        printf("|\t[2] Descrição\n");
+        printf("|\t[3] Data\n");
+        printf("|\t[4] Turno\n");
+        printf("|\t[5] Prioridade\n");
+        printf("|\t[6] Fechar\n");
+        printf("|\t[7] Reabrir\n");
+        printf("|\t[0] Sair\n");
+        scanf(" %c", &op);
+        switch (op) {
+
+            case '1':
+                limpa_buffer();
+                printf("|\tTítulo: ");
+                task->title = read_string();
+                return update_data_task(&id, task->title, FIELD_TITLE, VARCHAR50);
+            case '2':
+                limpa_buffer();
+                printf("|\tDescrição: ");
+                task->description = read_description();
+                return update_data_task(&id, task->description, FIELD_DESCRIPTION, VARCHAR50);
+            case '3':
+                limpa_buffer();
+                int year = year_now();
+                printf("|\tData: ");
+                task->data = read_and_format_date(year);
+                return update_data_task(&id, task->data, FIELD_DATA, 1);
+            case '4':
+                limpa_buffer();
+                printf("|\tTurno: ");
+                task->turn = read_generic_123("turn");
+                return update_data_task(&id, task->turn, FIELD_TURN, 1);
+            case '5':
+                limpa_buffer();
+                printf("|\tPrioridade: ");
+                task->priority = read_generic_123("priority");
+                return update_data_task(&id, task->priority, FIELD_PRIORITY, 1);
+            case '6':
+                limpa_buffer();
+                if(strcmp(task->status, "0")) show_error("| Tarefa ja fechada!\n");
+                else return update_data_task(&id, task->status, FIELD_STATUS, 1);
+            case '7':
+                limpa_buffer();
+                if(strcmp(task->status, "1")) show_error("| Tarefa ja aberta!\n");
+                else return update_data_task(&id, task->status, FIELD_STATUS, 1);
+            case '0':
+                return TRUE;    
+            default:
+                return FALSE;
+        }
+    } while(op != '0');
 }
-
 
 void free_struct_task(Tasks *task) {
     if (task->cpf != NULL) free(task->cpf);

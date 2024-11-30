@@ -10,15 +10,6 @@
 #include "../libs/utils.h"
 
 
-
-/**
- * @brief Função para inserir uma nova tarefa no arquivo de tarefas
- * 
- * @param file_name Nome do arquivo de tarefas.
- * @param task Tarefa a ser inserida.
- * 
- * @return TRUE se a tarefa foi inserida com sucesso, FALSE caso contrário.
- */
 int insert_into_tasks(Tasks *task) {
     create_path("data/");
 
@@ -43,14 +34,6 @@ int insert_into_tasks(Tasks *task) {
 }
 
 
-/**
- * @brief Função para carregar tarefa do arquivo de tarefas associadas ao cpf.
- * 
- * @param cpf CPF do usuário.
- * @param task Tarefa a ser carregada.
- * 
- * @return TRUE se a tarefa foi carregada com sucesso, FALSE caso contrário.
- */
 int load_task(const char *id, Tasks *task){
     
     FILE *fp = fopen("data/tasks.txt", "r");
@@ -107,4 +90,41 @@ int load_task(const char *id, Tasks *task){
     fclose(fp);
     return found;
 
+}
+
+
+int update_data_task(const char **id, const char *new_value, const char *field, int length) {
+    FILE *fp = fopen("data/tasks.txt", "r+");
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 0;
+    }
+
+    printf("ID RECEBIDO: %d\n", **id);
+
+    char line[512];
+    memset(line, 0, sizeof(line));
+    int found_id = 0;
+    long pos = 0;
+
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        if (strstr(line, *id) != NULL) {
+            found_id = 1;
+        }
+
+        if (found_id && strstr(line, field) != NULL) {
+            char *field_pos = strstr(line, field);
+            if (field_pos == NULL) break;
+
+            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
+            fseek(fp, pos, SEEK_SET);
+
+            fprintf(fp, "%-*s", length, new_value);
+
+            fclose(fp);
+            return 1;
+        }
+    }
+    fclose(fp);
+    return 0;
 }

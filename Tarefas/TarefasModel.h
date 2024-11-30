@@ -16,6 +16,7 @@ typedef struct
 
 int insert_into_tasks(Tasks *task);
 int load_task(const char *id, Tasks *task);
+int update_data_task(const char **id, const char *new_value, const char *field, int length);
 
 
 #endif

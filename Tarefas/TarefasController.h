@@ -4,8 +4,7 @@
 #include "TarefasModel.h"
 
 int register_task(void);
-int search_task(Tasks *task);
-
+int update_task(Tasks *task, const char *id);
 void free_struct_task(Tasks *task);
 
 #endif
