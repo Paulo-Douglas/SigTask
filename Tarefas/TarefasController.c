@@ -97,12 +97,12 @@ int update_task(Tasks *task, const char *id) {
                 return update_data_task(&id, task->priority, FIELD_PRIORITY, 1);
             case '6':
                 limpa_buffer();
-                if(strcmp(task->status, "0")) show_error("| Tarefa ja fechada!\n");
-                else return update_data_task(&id, task->status, FIELD_STATUS, 1);
+                if(strcmp(task->status, "0") == 0) {show_error("| Tarefa ja fechada!\n"); return FALSE;}
+                return update_data_task(&id, "0", FIELD_STATUS, 1);
             case '7':
                 limpa_buffer();
-                if(strcmp(task->status, "1")) show_error("| Tarefa ja aberta!\n");
-                else return update_data_task(&id, task->status, FIELD_STATUS, 1);
+                if(strcmp(task->status, "1") == 0) {show_error("| Tarefa ja aberta!\n"); return FALSE;}
+                return update_data_task(&id, "1", FIELD_STATUS, 1);
             case '0':
                 return TRUE;    
             default:

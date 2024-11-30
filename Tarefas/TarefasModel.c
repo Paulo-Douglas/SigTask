@@ -100,8 +100,6 @@ int update_data_task(const char **id, const char *new_value, const char *field, 
         return 0;
     }
 
-    printf("ID RECEBIDO: %d\n", **id);
-
     char line[512];
     memset(line, 0, sizeof(line));
     int found_id = 0;
