@@ -19,24 +19,24 @@
  * 
  * @return TRUE se a tarefa foi inserida com sucesso, FALSE caso contrário.
  */
-int insert_into_tasks(const char *file_name, Tasks *task) {
+int insert_into_tasks(Tasks *task) {
     create_path("data/");
 
-    int id_len = get_next_id("data/tasks.txt");
+    int id_len = get_next_id("data/tasks.txt") + 1;
 
 
-    FILE *fp = fopen(file_name, "a");
+    FILE *fp = fopen("data/tasks.txt", "a");
     if (fp == NULL) return FALSE;
 
-    fprintf(fp, "%d,%-14s:%-50s[%-100s]%-10s;%s(%s)%s\n",
-            id_len,
-            task->cpf,
-            task->title,
-            task->description,
-            task->data,
-            task->turn,
-            task->priority,
-            task->status);
+    fprintf(fp, "%d:{", id_len);
+    fprintf(fp, "%s%s,", FIELD_CPF, task->cpf);
+    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, task->title);
+    fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, task->description);
+    fprintf(fp, "%s%s,", FIELD_DATA, task->data);
+    fprintf(fp, "%s%s,", FIELD_TURN, task->turn);
+    fprintf(fp, "%s%s,", FIELD_PRIORITY, task->priority);
+    fprintf(fp, "%s%s", FIELD_STATUS, task->status);
+    fprintf(fp, "}\n");
     
     fclose(fp);
     return TRUE;

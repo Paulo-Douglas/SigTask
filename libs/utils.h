@@ -1,6 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#define FIELD_CPF "\"Cpf\":"
+#define FIELD_DATA "\"Data\":"
+#define FIELD_TURN "\"Turno\":"
 #define VARCHAR50 50
 #define FIELD_NAME "\"Nome\":" // lenght = 54
 #define FIELD_PHONE "\"Telefone\":" // lenght = 1

@@ -69,7 +69,7 @@ int register_task(void) {
 
     if(task.cpf == NULL || task.title == NULL || task.description == NULL || task.data == NULL || task.turn == NULL || task.priority == NULL) return FALSE;
 
-    int result = insert_into_tasks("data/tasks.txt", &task);
+    int result = insert_into_tasks(&task);
 
     free_struct_task(&task);
 
