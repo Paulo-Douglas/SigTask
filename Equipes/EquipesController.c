@@ -25,9 +25,7 @@ int register_academic_team(void){
 
     int result = insert_to_teams(&teams, "data/academic_teams.txt");
 
-    free(teams.team_name);
-    free(teams.description);
-    free(teams.team_name_especific);
+    free_struct_teams(&teams);
 
     return result;
 
@@ -48,9 +46,7 @@ int register_business_team(void){
 
     int result = insert_to_teams(&teams, "data/business_teams.txt");
 
-    free(teams.team_name);
-    free(teams.description);
-    free(teams.team_name_especific);
+    free_struct_teams(&teams);
 
     return result;
 
@@ -79,51 +75,49 @@ int search_team(void) {
 
 }
 
-int update_team(Team *teams, char *id){
+int update_team(Team *teams, const char *id){
     limpar_tela();
     char op;
     char opc;
     int result = FALSE;
     alterar_tipo_de_equipe();
     scanf(" %c", &op);
-    if (op == '1'){
-        do {
-            limpar_tela();
-            change_data_teams_academic();
-            scanf(" %c", &opc);
+    if (op == '1') {
+    do {
+        limpar_tela();
+        change_data_teams_academic();
+        scanf(" %c", &opc);
 
-            switch(opc) {
-                case '1':
-                    limpa_buffer();
-                    printf("|\tNome da instituição: "); 
-                    teams->team_name_especific = read_string();
-                    result = update_date_teams(':', teams->team_name_especific, 50, *id);
-                    result ? show_sucess("| Nome da instituição alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;
-                case '2':
-                    limpa_buffer();
-                    printf("|\tNome da equipe: ");
-                    teams-> team_name = read_string();
-                    result = update_date_teams (':', teams->team_name, 50, *id);
-                    result ? show_sucess("| Nome da equipe alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;
-                case '3':
-                    limpa_buffer();
-                    printf("|\tDescrição: ");
-                    teams ->description = read_description();
-                    result = update_date_teams(';', teams->description, 100, *id);
-                    result ? show_sucess("| Descrição alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;                                               
-            }
+        switch (opc) {
+            case '1':
+                limpa_buffer();
+                printf("|\tNome da instituição: ");
+                teams->team_name_especific = read_string();
+                result = update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                
+            case '2':
+                limpa_buffer();
+                printf("|\tNome da equipe: ");
+                teams->team_name = read_string();
+                result = update_date_teams(&id, teams->team_name, FIELD_NAME, VARCHAR50);
+                
 
+            case '3':
+                limpa_buffer();
+                printf("|\tDescrição: ");
+                teams->description = read_description();
+                result = update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
 
-        } while (opc != '0');
-          return result;
+            case '0':
+                return TRUE;
 
-    } 
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+                return FALSE;
+        }
+    } while (opc != '0');
+}
+
     else if (op == '2'){
         do {
             limpar_tela();
@@ -135,26 +129,18 @@ int update_team(Team *teams, char *id){
                     limpa_buffer();
                     printf("|\tNome da empresa: "); 
                     teams->team_name_especific = read_string();
-                    result = update_date_teams(':', teams->team_name_especific, 50, *id);
-                    result ? show_sucess("| Nome da empresa alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;
+                    return update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
                 case '2':
                     limpa_buffer();
                     printf("|\tNome da equipe: ");
                     teams-> team_name = read_string();
-                    result = update_date_teams (':', teams->team_name, 50, *id);
-                    result ? show_sucess("| Nome da equipe alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;
+                    return update_date_teams (&id, teams->team_name, FIELD_NAME, VARCHAR50);
                 case '3':
                     limpa_buffer();
                     printf("|\tDescrição: ");
                     teams ->description = read_description();
-                    result = update_date_teams(';', teams->description, 100, *id);
-                    result ? show_sucess("| Descrição alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                    getchar();
-                    break;         
+                    return update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
+                          
 
         }
     } while (opc != '0');
@@ -163,3 +149,10 @@ int update_team(Team *teams, char *id){
 }
     return result;
 }   
+
+void free_struct_teams(Team *teams) {
+    if (teams->id != NULL) free(teams->id);
+    if (teams->team_name_especific != NULL) free(teams->team_name_especific);
+    if (teams->team_name != NULL) free(teams->team_name);
+    if (teams->description != NULL) free(teams->description);
+}
