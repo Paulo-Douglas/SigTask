@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../libs/utils.h"
+#include "../libs/styles.h"
 
 #include "EquipeModel.h"
 
@@ -62,32 +63,30 @@ int view_team(char *name, char *file){
 }
 
 
-int load_teams(Team *teams, const char *id, const char *mod){    // tanto para equipes academicas e empresariais 
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL)
-        return FALSE;
-    char line[LINE_TEAM];
+int load_teams(const char *cpf,Team *teams){    // tanto para equipes academicas e empresariais 
     int found = FALSE;
-    int line_number = 0;
+    FILE *fp = fopen("data/teams.txt", "r");
+    if (fp == NULL){
+        show_error("Erro ao abrir o arquivo");
+        return found;
+    }
 
-    while (fgets(line, LINE_TEAM, fp) != NULL){
-        char *id_line = strtok(line, ",");
-        if(strcmp(id, id_line) == 0) {
+    char line[512];
+    while (fgets(line, sizeof(line), fp) != NULL){
+        
+        if(strstr(line, cpf) != NULL) {
             char *id_academic = strtok(NULL, ":");
-            delete_spaces(id_academic);
             char *academy_especific = strtok(NULL, ":"); 
-            delete_spaces(academy_especific);
-            char *name_team = strtok(NULL, ":");
-            delete_spaces(name_team);
+            if (academy_especific == NULL) continue;
+            char *team_name_pos = strtok(NULL, ":");
+            if (team_name_pos == NULL) continue;
             char *description = strtok(NULL, ":");
 
             teams->id = strdup(id_academic);
             teams->team_name_especific = strdup(academy_especific);
-            teams->team_name = strdup(name_team);
+            teams->team_name = strdup(team_name_pos);
             teams->description = strdup(description);
 
-            line_number++;
-            getchar();
             found = TRUE;
         }
     }
@@ -95,33 +94,38 @@ int load_teams(Team *teams, const char *id, const char *mod){    // tanto para e
     return found;
 }
 
-int update_date_teams(const char delimit, const char *new_data, const int lenght, int id){
+int update_date_teams(const char **id, const char *new_value, const char *field, int length){
     FILE *fp = fopen("data/teams.txt", "r+");
     if (fp == NULL) {
-        return FALSE;
+        show_error("Erro ao abrir o arquivo");
+        return 0;
     }   
-    char line[LINE_TEAM];
+    char line[512];
+    memset(line, 0, sizeof(line));
     long pos;
-    int found = FALSE;
+    int found_id = 0;
 
-    while(fgets(line, LINE_TEAM, fp) != NULL){
-        if (strcmp(line, strtok(line, ",")) == 0){
-            char *pos_strtok = strtok(NULL, "\n");
-            pos = ftell(fp) - strlen(pos_strtok);
-
-            char *pos_data = strchr(pos_strtok, delimit);
-            if(pos_data != NULL){
-                long data_pos = pos + (pos_data - pos_strtok);
-
-                fseek(fp, data_pos, SEEK_SET);
-                fprintf(fp, "%-*s", lenght, new_data);
-                fflush(fp);
-                found = TRUE;
-            }
-
-            break;
+    while(fgets(line, sizeof(line), fp) != NULL){
+        if (strstr(line, *id) != NULL) {
+            found_id = 1;
         }
+
+        if (found_id && strstr(line, field) != NULL ) {
+            char *field_pos = strstr(line, field);
+            if (field_pos == NULL) break;
+
+            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
+            fseek(fp, pos, SEEK_SET);
+            fprintf(fp, "%-*s", length, new_value);
+            
+            fclose(fp);
+            return 1;
+        }
+
+           memset(line, 0, sizeof(line));
+        }
+         fclose(fp);
+        return 0;
     }
-    fclose(fp);
-    return found;
-}
+   
+
