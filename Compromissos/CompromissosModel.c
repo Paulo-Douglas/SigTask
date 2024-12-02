@@ -29,32 +29,53 @@ int insert_compromise(Compromisers *compromise){
 }
 
 
-int load_compromise(Compromisers *compromise, const char *id, const char *mod) {
+int load_compromise(Compromisers *compromise, const char *id) {
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
-    char line[LINE_COMPROMISE];
+    char line[300];
     int found = FALSE;
-    int line_number = 0;
 
-    while(fgets(line, LINE_COMPROMISE, fp) != NULL) {
-        char *id_line = strtok(line, ",");
-        if(strcmp(id, id_line) == 0) {
+    while (fgets(line, sizeof(line), fp) != NULL){
+        char *id_line = strtok(line, ":");
+        if(id_line == NULL) continue;
 
+        if(strcmp(id_line, id) == 0){
+
+            char *field_number_team = strtok(NULL, ":");
+            if(field_number_team == NULL) continue;
             char *number_team = strtok(NULL, ":");
-            delete_spaces(number_team);
-            char *title_compromisse = strtok(NULL, "[");
-            delete_spaces(title_compromisse);
-            char *description_compromisse = strtok(NULL, "]");
-            delete_spaces(description_compromisse);
+
+            char *field_title = strtok(NULL, ":");
+            if(field_title == NULL) continue;
+            char *title = strtok(NULL, ",");
+
+            char *field_description = strtok(NULL, ":");
+            if(field_description == NULL) continue;
+            char *description_compromisse = strtok(NULL, ",");
+
+            char *field_date_s = strtok(NULL, ":");
+            if (field_date_s == NULL) continue;     
             char *date_start = strtok(NULL, "-");
-            char *date_end = strtok(NULL, "(");
+            
+            char *field_date_e = strtok(NULL, ":");
+            if (field_date_e == NULL) continue; 
+            char *date_end = strtok(NULL, "(");     // tenho que ver colocar entre aspas aq 
+
+            char *field_time = strtok(NULL, ":");
+            if (field_time == NULL) continue;          // tenho que ver colocar entre aspas aq 
             char *time = strtok(NULL, ")");
+
+            char *field_prio = strtok(NULL, ":");
+            if(field_prio == NULL) continue;          // tenho que ver colocar entre aspas aq 
             char *prio = strtok(NULL, "#");
+
+            char *field_status = strtok(NULL, ":");
+            if(field_status == NULL) continue;            // tenho que ver colocar entre aspas aq 
             char *status = strtok(NULL, "\n");
 
             compromise->team_id = atoi(number_team);
-            compromise->title = strdup(title_compromisse);
+            compromise->title = strdup(title);
             compromise->description = strdup(description_compromisse);
             compromise->start_date = strdup(date_start);
             compromise->end_date = strdup(date_end);
@@ -62,13 +83,8 @@ int load_compromise(Compromisers *compromise, const char *id, const char *mod) {
             compromise->priority = strdup(prio);
             compromise->status = strdup(status);
 
-            if((strcmp(status, "1") == 0 || strcmp(mod, "1") == 0)) {
-                display_data_compromises(compromise, line_number);
-            }
-
-            line_number++;
-            getchar();
             found = TRUE;
+            break;
         }
     }
 
@@ -77,32 +93,36 @@ int load_compromise(Compromisers *compromise, const char *id, const char *mod) {
 }
 
 
-int update_date_compromise(const char delimit, const char *new_data, const int lenght, int id){
+int update_date_compromise(const char **id, const char *new_value, const char *field, int length){
     FILE *fp = fopen("data/compromisers.txt", "r+");
-    if (fp == NULL) return FALSE;
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 0;
+    }
 
-    char line[LINE_COMPROMISE];
-    long pos;
-    int found = FALSE;
+    char line[512];
+    memset(line, 0, sizeof(line));
+    int found_id = 0;
+    long pos = 0;
 
-    while(fgets(line, LINE_COMPROMISE, fp) != NULL){
-        if (strcmp(line, strtok(line, ",")) == 0){
-            char *pos_strtok = strtok(NULL, "\n");
-            pos = ftell(fp) - strlen(pos_strtok);
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        if (strstr(line, *id) != NULL) {
+            found_id = 1;
+        }
 
-            char *pos_data = strchr(pos_strtok, delimit);
-            if(pos_data != NULL){
-                long data_pos = pos + (pos_data - pos_strtok);
+        if (found_id && strstr(line, field) != NULL) {
+            char *field_pos = strstr(line, field);
+            if (field_pos == NULL) break;
 
-                fseek(fp, data_pos, SEEK_SET);
-                fprintf(fp, "%-*s", lenght, new_data);
-                fflush(fp);
-                found = TRUE;
-            }
+            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
+            fseek(fp, pos, SEEK_SET);
 
-            break;
+            fprintf(fp, "%-*s", length, new_value);
+
+            fclose(fp);
+            return 1;
         }
     }
     fclose(fp);
-    return found;
+    return 0;
 }
