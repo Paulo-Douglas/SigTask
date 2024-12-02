@@ -20,6 +20,6 @@ int insert_to_teams(Team *teams, const char* file_teams);
 int update_name_in_teams(Team *teams, const char* file_teams);
 int update_description_in_teams(Team *teams, const char* file_teams);
 int update_status_in_teams(Team *teams, const char* file_teams);
-int load_teams(Team *teams, const char *id, const char *mod);
-int update_date_teams(const char delimit, const char *new_data, const int lenght, int id);
+int load_teams(const char *cpf,Team *teams);
+int update_date_teams(const char **id, const char *new_value, const char *field, int length);
 #endif
