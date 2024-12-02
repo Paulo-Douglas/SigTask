@@ -6,6 +6,7 @@
 int register_academic_team(void);
 int register_business_team(void);
 int search_team(void);
-int update_team(Team *teams, char *id);
+int update_team(Team *teams, const char *id);
+void free_struct_teams(Team *teams);
 
 #endif
