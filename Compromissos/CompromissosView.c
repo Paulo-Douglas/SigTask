@@ -21,7 +21,7 @@ Compromisers initialize_compromisse(const char* title){
     char status[2];
     scanf(" %s", status);
 
-    if(!load_compromise(&compromise, id, status)){
+    if(!load_compromise(&compromise, id)){
         show_error("| [ERRO]: Erro ao carregar compromisso!\n");
     }
 
