@@ -93,20 +93,20 @@ int update_team(Team *teams, const char *id){
                 limpa_buffer();
                 printf("|\tNome da instituição: ");
                 teams->team_name_especific = read_string();
-                result = update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                return update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
                 
             case '2':
                 limpa_buffer();
                 printf("|\tNome da equipe: ");
                 teams->team_name = read_string();
-                result = update_date_teams(&id, teams->team_name, FIELD_NAME, VARCHAR50);
+                return update_date_teams(&id, teams->team_name, FIELD_NAME, VARCHAR50);
                 
 
             case '3':
                 limpa_buffer();
                 printf("|\tDescrição: ");
                 teams->description = read_description();
-                result = update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
+                return update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
 
             case '0':
                 return TRUE;
