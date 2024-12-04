@@ -13,14 +13,14 @@
 
 int register_academic_team(void){
     Team teams;
-    printf("Nome da instituição");
+    printf("|\tNome da instituição: ");
     teams.team_name_especific = read_string();
 
-    printf("Nome da equipe acadêmica: \n");
+    printf("|\tNome da equipe acadêmica: ");
     teams.team_name = read_string();
     
 
-    printf("Descrição da equipe acadêmica: \n");
+    printf("|\tDescrição da equipe acadêmica: ");
     teams.description = read_description();
 
     int result = insert_to_teams(&teams, "data/academic_teams.txt");
@@ -34,14 +34,14 @@ int register_academic_team(void){
 
 int register_business_team(void){
     Team teams;
-    printf("Nome da empresa: \n");
+    printf("|\tNome da empresa: ");
     teams.team_name_especific = read_string();
 
-    printf("Nome da equipe empresarial: \n");
+    printf("|\tNome da equipe empresarial: ");
     teams.team_name = read_string();
     
 
-    printf("Descrição da equipe empresarial: \n");
+    printf("|\tDescrição da equipe empresarial: ");
     teams.description = read_description();
 
     int result = insert_to_teams(&teams, "data/business_teams.txt");
@@ -54,11 +54,11 @@ int register_business_team(void){
 
 int search_team(void) {
     int result = FALSE;
-    printf("Nome da equipe a ser buscada:\n");
+    printf("|\tNome da equipe a ser buscada: ");
     char *name_team = read_string();
 
     char file;
-    printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
+    printf("|\tDigite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA): ");
     scanf(" %c", &file);
     getchar();
     limpar_tela();
@@ -140,12 +140,9 @@ int update_team(Team *teams, const char *id){
                     printf("|\tDescrição: ");
                     teams ->description = read_description();
                     return update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
-                          
 
         }
     } while (opc != '0');
-     
-
 }
     return result;
 }   
