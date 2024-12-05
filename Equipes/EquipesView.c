@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -19,6 +20,7 @@ char menu_equipes(void) {
     printf("|               [3] Adicionar membro a Equipe      |\n");
     printf("|               [4] Remover membro da Equipe       |\n");
     printf("|               [5] Excluir Equipe                 |\n");
+    printf("|               [6] Editar Equipe                  |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -64,7 +66,7 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    if (register_academic_team()){
+    if (insert_team_academic()){
         show_sucess("Sucesso ao registrar a equipe!");
     } else {
         show_error("[ERROR] Falha ao cadastrar a equipe!");
@@ -82,7 +84,7 @@ void cadastrar_equipe_empresarial(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    if(register_business_team()){
+    if(insert_team_business()){
         show_sucess("Sucesso ao registrar a equipe!");
     } else {
         show_error("[ERROR] Falha ao cadastrar a equipe!");
@@ -145,10 +147,10 @@ void alterar_tipo_de_equipe(void) {
 
     switch(op) {
         case '1':
-            change_data_teams_academic();
+            modify_team_data_academic();
             break;
         case '2':
-            change_data_teams_business();
+            modify_team_data_business();
             break;
         default:
             printf("Opção inválida. Voltando ao menu principal...\n");
@@ -156,18 +158,65 @@ void alterar_tipo_de_equipe(void) {
     }
 }
 
-void change_data_teams_academic(void) {
-    printf("|+---------------------------------------------------------------------+---------------------------------------------------------------------------+|\n");
-    printf("|                                                                 Alterar equipe acadêmica                                                          |\n");
-    printf("\033[1m|\t (1) Nome da instituição\033[0m\n");
-    printf("\033[1m|\t (2) Nome da equipe\033[0m\n");
-    printf("\033[1m|\t (3) Descrição da equipe\033[0m\n");
+
+void team_data_academic(const Team *teams){
+    show_header("Dados do time");
+    printf("\033[1m|ID:\033[m %s\n", teams->id);
+    printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios);
+    printf("\033[1m|Nome da instituição:\033[m %s\n", teams->team_name_especific);
+    printf("\033[1m|Nome da equipe:\033[m %s\n", teams->team_name);
+    printf("\033[1m|Descrição:\033[m %s\n", teams->description);
+    printf("\033[1m|Status:\033[m %s\n", strcmp(teams->status, "0") ? "Ativo" : "Invativo");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
 
-void change_data_teams_business(void) {
-    printf("|+---------------------------------------------------------------------+---------------------------------------------------------------------------+|\n");
-    printf("|                                                                 Alterar equipe empresarial                                                        |\n");
-    printf("\033[1m|\t (1) Nome da empresa\033[0m\n");
-    printf("\033[1m|\t (2) Nome da equipe\033[0m\n");
-    printf("\033[1m|\t (3) Descrição da equipe\033[0m\n");
+void team_data_business(const Team *teams){
+    show_header("Dados do time");
+    printf("\033[1m|CNPJ:\033[m %s\n", teams->id);
+    printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios);
+    printf("\033[1m|Nome da empresa:\033[m %s\n", teams->team_name_especific);
+    printf("\033[1m|Nome da equipe:\033[m %s\n", teams->team_name);
+    printf("\033[1m|Descrição:\033[m %s\n", teams->description);
+    printf("\033[1m|Status:\033[m %s\n", strcmp(teams->status, "0") ? "Ativo" : "Invativo");
+    printf("|-------------------------------------------------------------------------------------------------------|\n");
+}
+
+void modify_team_data_academic(void){
+    show_header("Editar dados");
+    printf("|\tID:\t");
+    char *id = read_id();
+    Team teams = load_teams_academic(id);
+
+    if (teams.id != NULL){
+        team_data_academic(&teams);
+        int result = update_team_academic(&teams);
+        if (result){
+            show_sucess("| Dados alterados com sucesso!\n");
+        }else {
+            show_error("| [ERRO]: Erro ao alterar!\n");
+        }
+    }
+
+    enter();
+
+}
+
+void modify_team_data_business(void){
+    show_header("Editar dados");
+    printf("|\tID:\t");
+    char *id = read_id();
+    Team teams = load_teams_business(id);
+
+    if (teams.id != NULL){
+        team_data_business(&teams);
+        int result = update_team_business(&teams);
+        if (result){
+            show_sucess("| Dados alterados com sucesso!\n");
+        }else {
+            show_error("| [ERRO]: Erro ao alterar!\n");
+        }
+    }
+
+    enter();
+
 }
