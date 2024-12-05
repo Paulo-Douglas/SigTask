@@ -23,6 +23,9 @@ void navegacao_times(void){
             case '5':
                 excluir_equipe();
                 break;
+            case '6':
+                alterar_tipo_de_equipe();
+                break;
             case '0':
                 break;
             default:

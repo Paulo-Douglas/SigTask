@@ -190,7 +190,6 @@ void modify_team_data_academic(void){
     if (teams.id != NULL){
         team_data_academic(&teams);
         int result = update_team_academic(&teams);
-        if (result){
             show_sucess("| Dados alterados com sucesso!\n");
         }else {
             show_error("| [ERRO]: Erro ao alterar!\n");
