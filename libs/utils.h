@@ -5,6 +5,7 @@
 #define FIELD_DATA "\"Data\":"
 #define FIELD_TURN "\"Turno\":"
 #define VARCHAR50 50
+#define VARCHAR250 250
 #define FIELD_NAME "\"Nome\":" // lenght = 54
 #define FIELD_PHONE "\"Telefone\":" // lenght = 1
 #define FIELD_TITLE "\"Titulo\":" // lenght = 54
