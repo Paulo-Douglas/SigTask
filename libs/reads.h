@@ -9,8 +9,8 @@ char* read_generic_123(const char *dir);
 char* read_time(void);
 char* read_and_format_date(int year);
 int read_int(void);
-
 void read_and_assign(char **field, const char *prompt, char *(*read_function)());
 void input(char **prompt);
+char* read_id(void);
 
 #endif // READS_H

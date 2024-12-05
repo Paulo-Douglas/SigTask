@@ -201,3 +201,18 @@ char* read_generic_123(const char *dir) {
 
     return result;
 }
+
+char* read_id(void){
+    char *id;
+     int is_valid;
+
+do { 
+      input(&id);
+
+      if(!isdigit(id)){
+        show_error("Digite apenas números: \n");
+        printf("Tente novamente");
+    }
+    } while (!is_valid);
+    return id;
+}
