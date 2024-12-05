@@ -11,46 +11,41 @@
 #include "EquipesView.h"
 
 
-int register_academic_team(void){
-    Team teams;
-    printf("Nome da instituição");
-    teams.team_name_especific = read_string();
-
-    printf("Nome da equipe acadêmica: \n");
-    teams.team_name = read_string();
+int insert_team_academic(void){
+    Team teams = {NULL, NULL, NULL, NULL,};
     
+    read_and_assign(&teams.id, "|\tID: ", read_id);
+    read_and_assign(&teams.usuarios,"|\tUsuários: ", read_string);
+    read_and_assign(&teams.team_name_especific,"|\tNome da instituição: ", read_string);
+    read_and_assign(&teams.team_name, "|\tNome da equipe: ", read_string);
+    read_and_assign(&teams.description, "|\tDescrição: ", read_string);
 
-    printf("Descrição da equipe acadêmica: \n");
-    teams.description = read_description();
+    teams.status = "1";
 
-    int result = insert_to_teams(&teams, "data/academic_teams.txt");
+    int result = insert_team_to_file(&teams); 
 
     free_struct_teams(&teams);
-
     return result;
-
 }
 
 
-int register_business_team(void){
-    Team teams;
-    printf("Nome da empresa: \n");
-    teams.team_name_especific = read_string();
+int insert_team_business(void){
+    Team teams = {NULL, NULL, NULL, NULL};
+   
+    read_and_assign(&teams.id, "|\tCNPJ: ", read_id);
+    read_and_assign(&teams.usuarios,"|\tUsuários: ", read_string);
+    read_and_assign(&teams.team_name_especific,"|\tNome da empresa: ", read_string);
+    read_and_assign(&teams.team_name, "|\tNome da equipe: ", read_string);
+    read_and_assign(&teams.description, "|\tDescrição: ", read_string);
 
-    printf("Nome da equipe empresarial: \n");
-    teams.team_name = read_string();
-    
+    teams.status = "1";
 
-    printf("Descrição da equipe empresarial: \n");
-    teams.description = read_description();
-
-    int result = insert_to_teams(&teams, "data/business_teams.txt");
+    int result = insert_team_to_file(&teams); 
 
     free_struct_teams(&teams);
-
     return result;
-
 }
+
 
 int search_team(void) {
     int result = FALSE;
@@ -75,38 +70,34 @@ int search_team(void) {
 
 }
 
-int update_team(Team *teams, const char *id){
+int update_team_academic(Team *teams){
     limpar_tela();
-    char op;
-    char opc;
+    
+    char opc = '\0';
     int result = FALSE;
-    alterar_tipo_de_equipe();
-    scanf(" %c", &op);
-    if (op == '1') {
-    do {
-        limpar_tela();
-        change_data_teams_academic();
-        scanf(" %c", &opc);
 
+    do {
+        printf("| Escolha uma opção para alterar: (1) Nome da instituição, (2) Nome da equipe, (3) Descrição, (0) Sair: \n");
+        opc = getchar();
+        getchar();
         switch (opc) {
             case '1':
-                limpa_buffer();
                 printf("|\tNome da instituição: ");
                 teams->team_name_especific = read_string();
-                return update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                result = update_date_teams(teams->id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                result ? show_sucess("Nome da instituição alterado com sucesso!") : show_error("Erro ao alterar nome!");
                 
             case '2':
-                limpa_buffer();
                 printf("|\tNome da equipe: ");
                 teams->team_name = read_string();
-                return update_date_teams(&id, teams->team_name, FIELD_NAME, VARCHAR50);
-                
+                result = update_date_teams(teams->id, teams->team_name, FIELD_NAME, VARCHAR50);
+                result ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
 
             case '3':
-                limpa_buffer();
                 printf("|\tDescrição: ");
                 teams->description = read_description();
-                return update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
+                result = update_date_teams(teams->id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
+                result ? show_sucess("Descrição alterada com sucesso!") : show_error("Erro ao alterar descrição!");
 
             case '0':
                 return TRUE;
@@ -116,39 +107,48 @@ int update_team(Team *teams, const char *id){
                 return FALSE;
         }
     } while (opc != '0');
+
+    return result;
 }
 
-    else if (op == '2'){
-        do {
-            limpar_tela();
-            change_data_teams_business();
-            scanf(" %c", &opc);
+int update_team_business(Team *teams){
+    limpar_tela();
 
-            switch(opc) {
-                case '1':
-                    limpa_buffer();
-                    printf("|\tNome da empresa: "); 
-                    teams->team_name_especific = read_string();
-                    return update_date_teams(&id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
-                case '2':
-                    limpa_buffer();
-                    printf("|\tNome da equipe: ");
-                    teams-> team_name = read_string();
-                    return update_date_teams (&id, teams->team_name, FIELD_NAME, VARCHAR50);
-                case '3':
-                    limpa_buffer();
-                    printf("|\tDescrição: ");
-                    teams ->description = read_description();
-                    return update_date_teams(&id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
-                          
+    char opc = '\0';
+    int result = FALSE;
+    do {
+        printf("| Escolha uma opção para alterar: (1) Nome da empresa, (2) Nome da equipe, (3) Descrição, (0) Sair: \n");
+    
+        switch (opc) {
+            case '1':
+                printf("|\tNome da empresa: ");
+                teams->team_name_especific = read_string();
+                result = update_date_teams(teams->id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                result ? show_sucess("Nome da empresa alterado com sucesso!") : show_error("Erro ao alterar nome!");
+                
+            case '2':
+                printf("|\tNome da equipe: ");
+                teams->team_name = read_string();
+                result = update_date_teams(teams->id, teams->team_name, FIELD_NAME, VARCHAR50);
+                result ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
 
+            case '3':
+                printf("|\tDescrição: ");
+                teams->description = read_description();
+                result = update_date_teams(teams->id, teams->description, FIELD_DESCRIPTION, VARCHAR50);
+                result ? show_sucess("Descrição alterada com sucesso!") : show_error("Erro ao alterar descrição!");
+
+            case '0':
+                return TRUE;
+
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+                return FALSE;
         }
     } while (opc != '0');
-     
 
-}
     return result;
-}   
+} 
 
 void free_struct_teams(Team *teams) {
     if (teams->id != NULL) free(teams->id);
