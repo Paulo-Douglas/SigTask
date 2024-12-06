@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "CompromissosController.h"
 #include "CompromissosView.h"
@@ -7,6 +8,7 @@
 #include "../libs/utils.h"
 #include "../libs/reads.h"
 #include "../libs/styles.h"
+
 
 
 Compromisers initialize_compromisse(const char* title){
@@ -21,7 +23,7 @@ Compromisers initialize_compromisse(const char* title){
     char status[2];
     scanf(" %s", status);
 
-    if(!load_compromise(&compromise, id)){
+    if(!load_compromise(id ,&compromise)){
         show_error("| [ERRO]: Erro ao carregar compromisso!\n");
     }
 
@@ -47,28 +49,51 @@ char menu_compromise(void) {
 }
 
 void register_compromises(void) {
-    show_header("Cadastrar compromisso");
-    register_compromise() ? show_sucess("| Compromisso cadastrado com sucesso!\n") : show_error("| [ERRO]: Erro ao cadastrar!\n");
+    show_header("Cadastrar Compromisso");
+
+    if(register_compromise()){
+        show_sucess("| Compromisso cadastrado com sucesso!\n");
+    } else {
+        show_error("| [ERRO]: Erro ao cadastrar!\n");
+    }
+
     enter();
 }
 
+void view_compromise(void) {
+    show_header("Exibir compromisso");
 
-void show_compromises(void) { 
-    Compromisers compromisse = initialize_compromisse("Exibir Compromisso");
-    if (compromisse.team_id != 0) show_sucess("<- Compromisso carregado com sucesso! ->");
-    enter();
-}    
+    Compromisers compromise = {0};
+    printf("|\tInforme o ID do compromisso: ");
+    char id[2];
+    scanf(" %1s", id);
 
-void edit_compromises(void) { 
-    Compromisers compromise = initialize_compromisse("Editar Compromisso");
+    if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
+    else display_data_compromises(&compromise);
+    printf("\n");
 
-    printf("|\tConfirme o ID: ");
-    char id[3];
-    scanf(" %s", id);
-
-    update_compromise(&compromise, id) ? show_sucess("| Compromisso alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
     enter();
 }
+void edit_compromise(void) {
+    show_header("Editar compromissos");
+
+    Compromisers compromise = {0};
+    printf("|\tInforme o ID do compromisso: ");
+    char id[2];
+    scanf(" %1s", id);
+
+    if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
+    else {
+        display_data_compromises(&compromise);
+        if(update_compromise(&compromise, id)) {
+            show_sucess("| Compromisso editado com sucesso!\n");
+        } else {
+            show_error("| [ERRO]: Erro ao editar!\n");
+        }
+    }
+    enter();
+}
+
 
 void delete_compromises(void) { 
     show_header("Excluir compromisso");
@@ -93,18 +118,18 @@ void change_data_compromisses(void) {
     printf("\033[1m|\t (8) Status [REABRIR] \033[0m\n");
 }
 
-void display_data_compromises(Compromisers *compromise, int line_number){
+void display_data_compromises(Compromisers *compromise){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do compromisso                                                          |\n");
-    if (line_number == 0) printf("\033[1m\tEQUIPE:\033[m %d\n", compromise->team_id);
-
+    printf("| \033[1mID:\033[0m %s\n", compromise->team_id);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("\033[1m\tCOMPROMISSO:\033[m %s\n", compromise->title);
-    printf("\033[1m\tDESCRICAO:\033[m %s\n", compromise->description);
-    printf("\033[1m\tDATA DE INICIO:\033[m %s\n", compromise->start_date);
-    printf("\033[1m\tDATA DE FIM:\033[m %s\n", compromise->end_date);
-    printf("\033[1m\tHORARIO:\033[m %s\n", compromise->time);
-    printf("\033[1m\tPRIORIDADE:\033[m %s\n", compromise->priority);
-    printf("\033[1m\tSTATUS:\033[m %s\n", compromise->status);
+    printf("\033[1m\tCompromisso:\033[m %s\n", compromise->title);
+    printf("\033[1m\tDescrição:\033[m %s\n", compromise->description);
+    printf("\033[1m\tData de inicio:\033[m %s\n", compromise->start_date);
+    printf("\033[1m\tData de fim:\033[m %s\n", compromise->end_date);
+    printf("\033[1m\tHorário:\033[m %s\n", compromise->time);
+    printf("| \033[1mPrioridade:\033[0m %s\n", strcmp(compromise->priority, "1") ? "Alta" : (strcmp(compromise->priority, "2") ? "Média" : "Baixa"));  
+    printf("| \033[1mStatus:\033[0m %s\n", strcmp(compromise->status, "0") ? "Aberta" : "Fechada");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }
+
