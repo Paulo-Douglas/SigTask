@@ -12,24 +12,27 @@
 
 
 int insert_compromise(Compromisers *compromise){
+    create_path("data/");
+    int id_len = get_next_id("data/tasks.txt") + 1;
+
     FILE *fp = fopen("data/compromisers.txt", "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%-3d:%-50s[%-100s]%-10s-%-10s(%s)%s#1\n",
-        compromise->team_id,
-        compromise->title,
-        compromise->description,
-        compromise->start_date,
-        compromise->end_date,
-        compromise->time,
-        compromise->priority);
+    fprintf(fp, "%d:{", id_len);
+    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, compromise->title);
+    fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, compromise->description);
+    fprintf(fp, "%s%s,", FIELD_DATE, compromise->start_date);
+    fprintf(fp, "%s%s,", FIELD_DATE, compromise->end_date);
+    fprintf(fp, "%s%s,", FIELD_TIME, compromise->time);
+    fprintf(fp, "%s%s", FIELD_PRIORITY, compromise->priority);
+    fprintf(fp, "}\n");
 
     fclose(fp);
     return TRUE;
 }
 
 
-int load_compromise(Compromisers *compromise, const char *id) {
+int load_compromise(const char *id, Compromisers *compromise) {
     FILE *fp = fopen("data/compromisers.txt", "r");
     if(fp == NULL) return FALSE;
 
@@ -74,7 +77,7 @@ int load_compromise(Compromisers *compromise, const char *id) {
             if(field_status == NULL) continue;            // tenho que ver colocar entre aspas aq 
             char *status = strtok(NULL, "\n");
 
-            compromise->team_id = atoi(number_team);
+            compromise->team_id = strdup(number_team);
             compromise->title = strdup(title);
             compromise->description = strdup(description_compromisse);
             compromise->start_date = strdup(date_start);
