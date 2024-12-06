@@ -16,17 +16,12 @@
 
 int register_compromise(void){
     limpa_buffer();
-    Compromisers compromise;
+    Compromisers compromise = {NULL, NULL, NULL, NULL, NULL, NULL};
     int year = year_now();
 
-    printf("|\tEquipe: ");
-    compromise.team_id = read_int();
-
-    printf("|\tTítulo: ");
-    compromise.title = read_string();
-
-    printf("|\tDescrição: ");
-    compromise.description = read_description();
+    read_and_assign(&compromise.team_id, "|\tID: ", read_id);
+    read_and_assign(&compromise.title, "|\tTítulo: ", read_string);
+    read_and_assign(&compromise.description, "|\tDescrição: ", read_string);
 
     char day_start[MAX_DAY_LENGHT];
     char month_start[MAX_MONTH_LENGHT];
@@ -42,14 +37,11 @@ int register_compromise(void){
     compromise.end_date = malloc(sizeof(char) * 12);
     snprintf(compromise.end_date, 12, "%s/%s/%d", day_end, month_end, year);
 
-    printf("|\tHorario: ");
-    compromise.time = read_time();
-
-    printf("|\tPrioridade: (1) Alta | (2) Media | (3) Baixa: ");
-    compromise.priority = read_generic_123("priority");
+    read_and_assign(&compromise.time, "|\tHorário: ", read_time);
+    read_and_assign(&compromise.priority, "|\tPrioridade: (1) Alta | (2) Media | (3) Baixa: ", read_generic_123);
 
     int result = insert_compromise(&compromise);
-
+    free_struct_compromise(&compromise);
     return result;
 }
 
@@ -62,7 +54,6 @@ int search_compromiser_to_user(const char* cpf){
 int update_compromise(Compromisers *compromise, const char *id) {
     limpar_tela();
     char opc;
-    int result = FALSE;
     int year = year_now();
 
     do {
@@ -127,12 +118,10 @@ int update_compromise(Compromisers *compromise, const char *id) {
                 return FALSE;
         }
     } while (opc != '0');
-
-    return result;
 }
 
 
-void free_strcut_compromise(Compromisers *compromise){
+void free_struct_compromise(Compromisers *compromise){
     if(compromise->title != NULL) free(compromise->title);
     if(compromise->description != NULL) free(compromise->description);
     if(compromise->start_date != NULL) free(compromise->start_date);
