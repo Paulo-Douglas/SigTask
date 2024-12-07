@@ -10,11 +10,11 @@
 
 
 
-int insert_team_to_file(Team *teams){
+int insert_team_to_file(Team *teams, char *file_name){
   create_path("data/");
-  FILE *fp = fopen("data/teams.txt", "a");   
+  FILE *fp = fopen(file_name, "a");   
 
-  int id = get_next_id("data/teams.txt");
+  int id = get_next_id(file_name);
   
   if(fp == NULL) return FALSE;
   
@@ -30,33 +30,29 @@ int insert_team_to_file(Team *teams){
 }
 
 
-int view_team(char *name, char *file){
-    Team teams;
-    FILE *fp = fopen(file, "r");
-    if (fp == NULL) return FALSE;
+int view_team(const char *id, const char *file_name) {
+    FILE *fp = fopen(file_name, "r");
+    if (fp == NULL) return 0; // Retorna FALSE se o arquivo não for encontrado
 
-    char line[MAX_LINE_LENGTH];
-    int found = FALSE;
+    char line[500];
+    int found = 0; // Variável para indicar se o ID foi encontrado
 
-    while(fgets(line, sizeof(line), fp) && !found){
-      char *team_name = strtok(line, ",");
-
-      if(strcmp(team_name, name) == 0){
-        char *team_description = strtok(NULL, "\n");
-
-        teams.team_name = team_name;
-        teams.description = team_description;
-
-        printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-        printf("| EQUIPE: %s\n", teams.team_name);
-        printf("| DESCRIÇÃO: %s\n", teams.description);
-        printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-
-        found = TRUE;
-      }
+    while (fgets(line, sizeof(line), fp)) {
+        // Verifica se a linha começa com o ID especificado
+        if (strncmp(line, id, strlen(id)) == 0) {
+            printf("Registro encontrado:\n%s", line);
+            found = 1;
+            break;
+        }
     }
+
     fclose(fp);
-    return found;
+
+    if (!found) {
+        printf("ID %s não encontrado no arquivo %s.\n", id, file_name);
+    }
+
+    return found; // Retorna TRUE (1) se encontrado, FALSE (0) caso contrário
 }
 
 
@@ -81,10 +77,7 @@ Team load_teams_academic(const char *id){    // tanto para equipes academicas e 
             char *status_pos = strtok(NULL, ":");
             if (status_pos == NULL) continue;
             char *status_value = strtok(NULL, "}");
-
-
-        
-            
+    
 
             teams.id = strdup(id_academic);
             teams.team_name_especific = strdup(academy_especific);

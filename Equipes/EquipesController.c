@@ -20,7 +20,7 @@ int insert_team_academic(void){
 
     teams.status = "1";
 
-    int result = insert_team_to_file(&teams); 
+    int result = insert_team_to_file(&teams, "data/academic_teams.txt"); 
 
     free_struct_teams(&teams);
     return result;
@@ -38,7 +38,7 @@ int insert_team_business(void){
 
     teams.status = "1";
 
-    int result = insert_team_to_file(&teams); 
+    int result = insert_team_to_file(&teams, "data/business_teams.txt"); 
 
     free_struct_teams(&teams);
     return result;
@@ -47,22 +47,21 @@ int insert_team_business(void){
 
 int search_team(void) {
     int result = FALSE;
-    printf("Nome da equipe a ser buscada:\n");
-    char *name_team = read_string();
+    char id;
+    printf("ID da equipe a ser buscada:\n");
+    scanf(" %c", &id);
 
-    char file;
+    char team_type;
     printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
-    scanf(" %c", &file);
+    scanf(" %c", &team_type);
     getchar();
     limpar_tela();
 
-    if (file == '1') {
-        result = view_team(name_team, "data/business_teams.txt");
-    } else if (file == '2') {
-        result = view_team(name_team, "data/academic_teams.txt");
+    if (team_type == '1') {
+        result = view_team(&id, "data/business_teams.txt");
+    } else if (team_type == '2') {
+        result = view_team(&id, "data/academic_teams.txt");
     }
-
-    free(name_team);
 
     return result;
 
