@@ -1,12 +1,16 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#define VARCHAR50 50
+#define VARCHAR250 250
+
 #define FIELD_CPF "\"Cpf\":"
 #define FIELD_DATA "\"Data\":"
 #define FIELD_TURN "\"Turno\":"
-#define VARCHAR50 50
-#define VARCHAR250 250
 #define FIELD_NAME "\"Nome\":" // lenght = 54
+#define FIELD_INSTITUICAO "\"Instituição\":"
+#define FIELD_TEAM "\"Time\":"
+#define FIELD_USER "\"Usuarios\":"
 #define FIELD_PHONE "\"Telefone\":" // lenght = 1
 #define FIELD_TITLE "\"Titulo\":" // lenght = 54
 #define FIELD_DESCRIPTION "\"Descricao\":" // lenght = 54

@@ -14,8 +14,6 @@
 int insert_team_academic(void){
     Team teams = {NULL, NULL, NULL, NULL,};
     
-    read_and_assign(&teams.id, "|\tID: ", read_id);
-    read_and_assign(&teams.usuarios,"|\tUsuários: ", read_string);
     read_and_assign(&teams.team_name_especific,"|\tNome da instituição: ", read_string);
     read_and_assign(&teams.team_name, "|\tNome da equipe: ", read_string);
     read_and_assign(&teams.description, "|\tDescrição: ", read_string);

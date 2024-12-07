@@ -10,23 +10,18 @@
 
 
 
-/*
-  %s:%-100s#%c\n
-  1-> Tamanho do arquivo + 1
-  2-> Tamaho da descrição
-  3-> 1 para ativo / 0 para inativo
-*/
-
 int insert_team_to_file(Team *teams){
   create_path("data/");
-  FILE *fp = fopen("data/teams.txt", "a");    
+  FILE *fp = fopen("data/teams.txt", "a");   
+
+  int id = get_next_id("data/teams.txt");
   
   if(fp == NULL) return FALSE;
   
-    fprintf(fp, "%s:{", teams->id);  // id ou CNPJ
-    fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR250, teams->usuarios);    
-    fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name_especific);       
-    fprintf(fp, "%s %-*s", FIELD_NAME, VARCHAR50, teams->team_name);      
+    fprintf(fp, "%d:{", id);
+    fprintf(fp, "%s %-*s", FIELD_USER, VARCHAR250, "");    
+    fprintf(fp, "%s %-*s", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
+    fprintf(fp, "%s %-*s", FIELD_TEAM, VARCHAR50, teams->team_name);      
     fprintf(fp, "%s %-*s", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
     fprintf(fp, "%s%s", FIELD_STATUS, teams->status); 
     fprintf(fp,"}\n" );                                
