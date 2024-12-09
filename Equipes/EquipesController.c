@@ -43,7 +43,7 @@ int search_team(void) {
 
 }
 
-int update_team_academic(Team *teams){
+int update_team_academic(Team *teams, const char id){
     limpar_tela();
     
     char opc = '\0';
@@ -57,7 +57,7 @@ int update_team_academic(Team *teams){
             case '1':
                 printf("|\tNome da instituição: ");
                 teams->team_name_especific = read_string();
-                result = update_date_teams(teams->id, teams->team_name_especific, FIELD_NAME, VARCHAR50);
+                result = update_date_teams(teams->id, teams->team_name_especific, FIELD_INSTITUICAO, VARCHAR50);
                 result ? show_sucess("Nome da instituição alterado com sucesso!") : show_error("Erro ao alterar nome!");
                 
             case '2':

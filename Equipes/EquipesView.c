@@ -46,6 +46,11 @@ void register_team_academic(void){
 }
 
 
+void modify_team_data_academic(void){
+    show_header("Editar dados");
+}
+
+
 void exibir_equipe(void) { 
     limpar_tela();
     printf("\n");
@@ -98,17 +103,3 @@ void team_data_academic(const Team *teams){
 }
 
 
-void modify_team_data_academic(void){
-    show_header("Editar dados");
-    printf("|\tID:\t");
-    char *id = read_id();
-    Team teams = load_teams_academic(id);
-
-    if (teams.id != NULL){
-        team_data_academic(&teams);
-        int result = update_team_academic(&teams);
-        if (result) show_sucess("| Dados alterados com sucesso!\n");
-        else show_error("| [ERRO]: Erro ao alterar!\n");
-    }
-    enter();
-}

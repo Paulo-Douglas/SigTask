@@ -85,44 +85,6 @@ int view_team(const char *id) {
 }
 
 
-Team load_teams_academic(const char *id){ 
-    Team teams;
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL) exit(1);
-       
-
-    char line[512];
-    while (fgets(line, sizeof(line), fp) != NULL){
-        
-        if (strcmp("NULL", id) == 0 || strstr(line, id) != NULL) {
-            char *id_academic = strtok(NULL, ":");
-            char *academy_especific = strtok(NULL, ":");    
-            if (academy_especific == NULL) continue;
-            char *team_name_pos = strtok(NULL, ":");
-            if (team_name_pos == NULL) continue;
-            char *description_pos = strtok(NULL, ":");
-            if (description_pos == NULL) continue;
-            char *description_value = strtok(NULL, ",");
-            char *status_pos = strtok(NULL, ":");
-            if (status_pos == NULL) continue;
-            char *status_value = strtok(NULL, "}");
-    
-
-            teams.id = strdup(id_academic);
-            teams.team_name_especific = strdup(academy_especific);
-            teams.team_name = strdup(team_name_pos);
-            teams.description = strdup(description_value);
-            teams.status = strdup(status_value);
-            team_data_academic(&teams);
-            
-
-        }
-    }
-    fclose(fp);
-    return teams;
-}
-
-
 int update_date_teams(const char *id, const char *new_value, const char *field, int length){
     FILE *fp = fopen("data/academic_teams.txt", "r+");
     if (fp == NULL) {

@@ -5,6 +5,6 @@
 
 int insert_team_academic(void);
 int search_team(void);
-int update_team_academic(Team *teams);
+int update_team_academic(Team *teams, const char id);
 
 #endif
