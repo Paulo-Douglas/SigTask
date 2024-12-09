@@ -10,11 +10,11 @@
 
 
 
-int insert_team_to_file(Team *teams, char *file_name){
+int insert_team_to_file(Team *teams){
   create_path("data/");
-  FILE *fp = fopen(file_name, "a");   
+  FILE *fp = fopen("data/academic_teams.txt", "a");   
 
-  int id = get_next_id(file_name);
+  int id = get_next_id("data/academic_teams.txt");
   if (id == 0) id = 1;
   
   if(fp == NULL) return FALSE;
@@ -31,8 +31,8 @@ int insert_team_to_file(Team *teams, char *file_name){
 }
 
 
-int view_team(const char *id, const char *file_name) {
-    FILE *fp = fopen(file_name, "r");
+int view_team(const char *id) {
+    FILE *fp = fopen("data/academic_teams.txt", "r");
     if (fp == NULL) {
         return FALSE;
     };
@@ -53,7 +53,7 @@ int view_team(const char *id, const char *file_name) {
 }
 
 
-Team load_teams_academic(const char *id){    // tanto para equipes academicas e empresariais 
+Team load_teams_academic(const char *id){ 
     Team teams;
     FILE *fp = fopen("data/teams.txt", "r");
     if (fp == NULL) exit(1);
@@ -91,44 +91,8 @@ Team load_teams_academic(const char *id){    // tanto para equipes academicas e 
 }
 
 
-Team load_teams_business(const char *id){    // tanto para equipes academicas e empresariais 
-    Team teams;
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL) exit(1);
-       
-
-    char line[512];
-    while (fgets(line, sizeof(line), fp) != NULL){
-        
-        if (strcmp("NULL", id) == 0 || strstr(line, id) != NULL) {
-            char *id_academic = strtok(NULL, ":");
-            char *academy_especific = strtok(NULL, ":");    
-            if (academy_especific == NULL) continue;
-            char *team_name_pos = strtok(NULL, ":");
-            if (team_name_pos == NULL) continue;
-            char *description_pos = strtok(NULL, ":");
-            if (description_pos == NULL) continue;
-            char *description_value = strtok(NULL, ",");
-            char *status_pos = strtok(NULL, ":");
-            if (status_pos == NULL) continue;
-            char *status_value = strtok(NULL, "}");
-
-            teams.id = strdup(id_academic);
-            teams.team_name_especific = strdup(academy_especific);
-            teams.team_name = strdup(team_name_pos);
-            teams.description = strdup(description_value);
-            teams.status = strdup(status_value);
-            team_data_business(&teams);
-
-        }
-    }
-    fclose(fp);
-    return teams;
-}
-
-
 int update_date_teams(const char *id, const char *new_value, const char *field, int length){
-    FILE *fp = fopen("data/teams.txt", "r+");
+    FILE *fp = fopen("data/academic_teams.txt", "r+");
     if (fp == NULL) {
         show_error("Erro ao abrir o arquivo");
         return 0;
@@ -160,5 +124,3 @@ int update_date_teams(const char *id, const char *new_value, const char *field, 
          fclose(fp);
         return 0;
     }
-   
-
