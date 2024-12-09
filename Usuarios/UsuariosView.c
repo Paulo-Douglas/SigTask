@@ -11,32 +11,6 @@
 #include "../libs/styles.h"
 
 
-User get_user_by_cpf(const char* mod) {
-    User users = {NULL, NULL, NULL};
-    printf("| Informe o CPF: ");
-    char *cpf = read_cpf();
-    if (!load_user_from_users(cpf, &users, mod)) {
-        show_error("| Erro ao carregar os dados do usuário!\n");
-    }
-    return users;
-}
-
-
-void process_action(const char *dir, const char *sucess, const char *error) {
-    User users = get_user_by_cpf("NULL");
-
-    if (users.cpf != NULL) {
-        user_data(&users);
-        int result = update_user_status(&users, "data/users.txt", dir); 
-        if (result) {
-            show_sucess(sucess);
-        } else {
-            show_error(error);
-        }
-    }
-}
-
-
 /**
  * Exibe o menu de usuários com opções para cadastrar, exibir dados,
  * editar dados, excluir conta, reativar conta ou sair.
@@ -97,7 +71,10 @@ void register_user() {
  */
 void display_user_data(void) {
     show_header("Exibir Dados");
-    select_all_users("data/users.txt");
+    User users = load_user("111.111.111-11");
+    if(users.cpf == NULL) {
+        show_error("| Nenhum usuário cadastrado!\n");
+    }
     enter();
 }
 
@@ -112,9 +89,9 @@ void display_user_data(void) {
  **/
 void modify_user_data(void) {
     show_header("Editar Dados");
-    const char *mod = "EDIT";
-
-    User users = get_user_by_cpf(mod);
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User users = load_user(cpf);
 
     if (users.cpf != NULL) {
         user_data(&users);
@@ -130,40 +107,41 @@ void modify_user_data(void) {
 }
 
 
-/**
- * Exibe a tela de excluir usuários.
- * 
- * Esta tela pede o CPF do usuário e, se encontrado, exclui a conta do usuário.
- * 
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- * 
- */
 void delete_user(void) {
     show_header("Excluir Conta");
-    process_action("0", "| Conta excluida com sucesso!", "| [ERRO]: Erro ao excluir!");
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User users = load_user(cpf);
+    if ((users.cpf != NULL) && (strcmp(users.status, "0") != 0)) {
+        update_data_user(cpf, "0", FIELD_STATUS, 1);
+        show_sucess("| Conta excluida com sucesso!\n");
+    }else {
+        show_error("| [ERRO]: Erro ao excluir!\n");
+    }
     enter();
 }
 
 
-/**
- * Exibe a tela de reativar usuários.
- * 
- * Esta tela pede o CPF do usuário e, se encontrado, reativa a conta do usuário.
- * 
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- * 
- */
 void reactivate_user(void) {
     show_header("Reativar Conta");
-    process_action("1", "| Conta reativada com sucesso!", "| [ERRO]: Erro ao reativar!");
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User users = load_user(cpf);
+    if ((users.cpf != NULL) && (strcmp(users.status, "1") != 0)) {
+        update_data_user(cpf, "1", FIELD_STATUS, 1);
+        show_sucess("| Conta ativada com sucesso!\n");
+    }else {
+        show_error("| [ERRO]: Erro ao ativar!\n");
+    }
     enter();
 }
 
 
 void user_data(const User *users) {
     show_header("Dados do usuário");
-    printf("|CPF: %s\n", users->cpf);
-    printf("|Nome: %s\n", users->name);
-    printf("|Telefone: %s\n", users->phone);
+    printf("\033[1m|CPF:\033[m %s\n", users->cpf);
+    printf("\033[1m|Nome:\033[m %s\n", users->name);
+    printf("\033[1m|Telefone:\033[m %s\n", users->phone);
+    printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }

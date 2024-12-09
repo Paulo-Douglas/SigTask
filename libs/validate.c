@@ -111,6 +111,23 @@ int cpf_unique_user(const char *cpf, const char *file){
 
 }
 
+int cpf_exists(const char *cpf) {
+    FILE *fp = fopen("users.txt", "r");
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 0;
+    }
+
+    char line[15];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        if (strstr(line, cpf) != NULL) {
+            return 1;
+        }
+    }
+    fclose(fp);
+    return 0;
+}
+
 int validate_time(char tempo[]) {
     if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
         tempo[2] != ':' || (tempo[3] - '0') > 6 ) {

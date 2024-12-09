@@ -64,18 +64,14 @@ int save_file(const char *data[], char *file_name){
 }
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 int get_next_id(const char *name_of_file) {
     FILE *arquivo = fopen(name_of_file, "r");
     if (arquivo == NULL) {
-        return 1;
+        return FALSE;
     }
 
-    char line[300];
-    char last_line[300] = "";
+    char line[500];
+    char last_line[500] = "";
 
     while (fgets(line, sizeof(line), arquivo) != NULL) {
         strcpy(last_line, line);
@@ -84,13 +80,18 @@ int get_next_id(const char *name_of_file) {
     fclose(arquivo);
 
     if (strlen(last_line) == 0) {
-        return 1;
+        return FALSE;
     }
 
-    char *comma_pos = strchr(last_line, ',');
-    if (comma_pos == NULL) {
-        return 1;
+    char *colon_pos = strchr(last_line, ':');
+    if (colon_pos == NULL) {
+        return FALSE; 
     }
 
-    return atoi(comma_pos + 1) + 1;
+    char id_str[20] = ""; 
+    strncpy(id_str, last_line, colon_pos - last_line);
+    id_str[colon_pos - last_line] = '\0';
+
+    int id = atoi(id_str);
+    return id + 1; // Incrementa e retorna o próximo ID
 }

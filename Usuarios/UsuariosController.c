@@ -22,14 +22,16 @@ int insert_user(void){
 
     read_and_assign(&users.cpf, "|\tCPF: ", read_cpf);
 
-    if(cpf_unique_user(users.cpf, "data/users.txt")){
+    if(cpf_exists(users.cpf)){
         return FALSE;
     }
 
     read_and_assign(&users.name, "|\tNome: ", read_string);
     read_and_assign(&users.phone, "|\tTelefone: ", read_phone);
 
-    int result = insert_user_to_file(&users, "data/users.txt");
+    users.status = "1";
+
+    int result = insert_user_to_file(&users);
 
     free(users.name);
     free(users.cpf);
@@ -57,13 +59,13 @@ int update_user(User *users) {
             case '1':
                 printf("|\tNome: ");
                 users->name = read_string();
-                update = update_data_user(users, ':', users->name, 229);
+                update = update_data_user(users->cpf, users->name, FIELD_NAME, VARCHAR50);
                 update ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
                 break;
             case '2':
                 printf("|\tTelefone: ");
                 users->phone = read_phone();
-                update = update_data_user(users, ';', users->phone, 13);
+                update = update_data_user(users->cpf, users->phone, FIELD_PHONE, 1);
                 update ? show_sucess("Telefone alterado com sucesso!") : show_error("Erro ao alterar telefone!");
                 break;
             case '0':

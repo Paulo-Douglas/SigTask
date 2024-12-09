@@ -16,17 +16,12 @@
 
 int register_compromise(void){
     limpa_buffer();
-    Compromisers compromise;
+    Compromisers compromise = {NULL, NULL, NULL, NULL, NULL, NULL};
     int year = year_now();
 
-    printf("|\tEquipe: ");
-    compromise.team_id = read_int();
-
-    printf("|\tTítulo: ");
-    compromise.title = read_string();
-
-    printf("|\tDescrição: ");
-    compromise.description = read_description();
+    read_and_assign(&compromise.team_id, "|\tID: ", read_id);
+    read_and_assign(&compromise.title, "|\tTítulo: ", read_string);
+    read_and_assign(&compromise.description, "|\tDescrição: ", read_string);
 
     char day_start[MAX_DAY_LENGHT];
     char month_start[MAX_MONTH_LENGHT];
@@ -42,14 +37,11 @@ int register_compromise(void){
     compromise.end_date = malloc(sizeof(char) * 12);
     snprintf(compromise.end_date, 12, "%s/%s/%d", day_end, month_end, year);
 
-    printf("|\tHorario: ");
-    compromise.time = read_time();
-
-    printf("|\tPrioridade: (1) Alta | (2) Media | (3) Baixa: ");
-    compromise.priority = read_generic_123("priority");
+    read_and_assign(&compromise.time, "|\tHorário: ", read_time);
+    read_and_assign(&compromise.priority, "|\tPrioridade: (1) Alta | (2) Media | (3) Baixa: ", read_generic_123);
 
     int result = insert_compromise(&compromise);
-
+    free_struct_compromise(&compromise);
     return result;
 }
 
@@ -59,10 +51,9 @@ int search_compromiser_to_user(const char* cpf){
 }
 
 
-int update_compromise(Compromisers *compromise, char *id) {
+int update_compromise(Compromisers *compromise, const char *id) {
     limpar_tela();
     char opc;
-    int result = FALSE;
     int year = year_now();
 
     do {
@@ -75,83 +66,62 @@ int update_compromise(Compromisers *compromise, char *id) {
                 limpa_buffer();
                 printf("|\tTítulo: ");
                 compromise->title = read_string();
-                result = update_date_compromise(':', compromise->title, 50, *id);
-                result ? show_sucess("| Titulo alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->title, FIELD_TITLE, VARCHAR50);
 
             case '2':
                 limpa_buffer();
                 printf("|\tDescrição: ");
                 compromise->description = read_description();
-                result = update_date_compromise('[', compromise->description, 100, *id);
-                result ? show_sucess("| Descrição alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->description, FIELD_DESCRIPTION, VARCHAR50);
+                
 
             case '3':
                 limpa_buffer();
                 printf("\t DATA INICIAL\n");
                 free(compromise->start_date);
                 compromise->start_date = read_and_format_date(year);
-                result = update_date_compromise(']', compromise->start_date, 10, *id);
-                result ? show_sucess("| Data alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->start_date, FIELD_DATE, VARCHAR50);
 
             case '4':
                 limpa_buffer();
                 printf("\t DATA FINAL\n");
                 free(compromise->end_date);
                 compromise->end_date = read_and_format_date(year);
-                result = update_date_compromise('-', compromise->end_date, 10, *id);
-                result ? show_sucess("| Data alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->end_date, FIELD_DATE, VARCHAR50);
 
             case '5':
                 limpa_buffer();
                 printf("|\tHorário: ");
                 compromise->time = read_time();
-                result = update_date_compromise('(', compromise->time, 5, *id);
-                result ? show_sucess("| Horário alterado com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->time, FIELD_TIME, VARCHAR50);
+                
 
             case '6':
                 limpa_buffer();
                 printf("|\tPrioridade: (1) Alta | (2) Media | (3) Baixa: ");
                 compromise->priority = read_generic_123("priority");
-                result = update_date_compromise(')', compromise->priority, 1, *id);
-                result ? show_sucess("| Prioridade alterada com sucesso!\n") : show_error("| [ERRO]: Erro ao alterar!\n");
-                getchar();
-                break;
+                return update_date_compromise(&id, compromise->priority, FIELD_PRIORITY, VARCHAR50);
 
             case '7':
                 limpa_buffer();
-                result = update_date_compromise('#', "0", 1, *id);
-                result ? show_sucess("| Tarefa fechada com sucesso!\n") : show_error("| [ERRO]: Erro ao fechar!\n");
-                getchar();
-                break;
+                if(strcmp(compromise->status, "0") == 0) {show_error("| Compromisso ja fechado!\n"); return FALSE;}
+                return update_date_compromise(&id, "0", FIELD_STATUS, 1);
+                
             case '8':
                 limpa_buffer();
-                result = update_date_compromise('#', "1", 1, *id);
-                result ? show_sucess("| Tarefa aberta com sucesso!\n") : show_error("| [ERRO]: Erro ao abrir!\n");
-                getchar();
-                break;
+                if(strcmp(compromise->status, "1") == 0) {show_error("| Compromisso ja aberto!\n"); return FALSE;}
+                return update_date_compromise(&id, "1", FIELD_STATUS, 1);
+                
             case '0':
-                break;
+                return TRUE;
             default:
-                show_error("Opção inválida. Tente novamente.\n");
-                break;
+                return FALSE;
         }
     } while (opc != '0');
-
-    return result;
 }
 
 
-void free_strcut_compromise(Compromisers *compromise){
+void free_struct_compromise(Compromisers *compromise){
     if(compromise->title != NULL) free(compromise->title);
     if(compromise->description != NULL) free(compromise->description);
     if(compromise->start_date != NULL) free(compromise->start_date);

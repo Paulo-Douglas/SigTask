@@ -6,6 +6,7 @@ typedef struct
     char *name;
     char *cpf;
     char *phone;
+    char *status;
 } User;
 
 #define CPF_SIZE 14
@@ -13,10 +14,8 @@ typedef struct
 #define PHONE_SIZE 13
 #define LINE_USER (CPF_SIZE + NAME_SIZE + PHONE_SIZE + 6)
 
-int insert_user_to_file(User *users, const char* file_name);
-int update_data_user(User *user, const char delimit, const char *new_data, const int lenght);
-int update_user_status(User *users, const char *file_name, const char *dir);
-int select_all_users(const char *file_name);
-int load_user_from_users(const char* cpf, User *users, const char* mod);
+int insert_user_to_file(User *users);
+int update_data_user(const char *cpf, const char *new_value, const char *field, int length);
+User load_user(const char *cpf);
 
 #endif // USUARIOSMODEL_H

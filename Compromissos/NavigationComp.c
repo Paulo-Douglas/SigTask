@@ -16,11 +16,11 @@ void navigation_compromise(void) {
                 limpa_buffer();
                 break;
             case '2':
-                show_compromises();
+                view_compromise();
                 limpa_buffer();
                 break;
             case '3':
-                edit_compromises();
+                edit_compromise();
                 limpa_buffer();
                 break;
             case '4':
