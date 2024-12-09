@@ -15,6 +15,7 @@ int insert_team_to_file(Team *teams, char *file_name){
   FILE *fp = fopen(file_name, "a");   
 
   int id = get_next_id(file_name);
+  if (id == 0) id = 1;
   
   if(fp == NULL) return FALSE;
   
@@ -32,27 +33,23 @@ int insert_team_to_file(Team *teams, char *file_name){
 
 int view_team(const char *id, const char *file_name) {
     FILE *fp = fopen(file_name, "r");
-    if (fp == NULL) return 0; // Retorna FALSE se o arquivo não for encontrado
+    if (fp == NULL) {
+        return FALSE;
+    };
 
     char line[500];
-    int found = 0; // Variável para indicar se o ID foi encontrado
+    int found = FALSE;
 
     while (fgets(line, sizeof(line), fp)) {
-        // Verifica se a linha começa com o ID especificado
-        if (strncmp(line, id, strlen(id)) == 0) {
-            printf("Registro encontrado:\n%s", line);
-            found = 1;
-            break;
+        char *id_team = strtok(line, ":");
+        if (id[0] == *id_team){
+            found = TRUE;
         }
     }
 
     fclose(fp);
 
-    if (!found) {
-        printf("ID %s não encontrado no arquivo %s.\n", id, file_name);
-    }
-
-    return found; // Retorna TRUE (1) se encontrado, FALSE (0) caso contrário
+    return found;
 }
 
 
@@ -93,6 +90,7 @@ Team load_teams_academic(const char *id){    // tanto para equipes academicas e 
     return teams;
 }
 
+
 Team load_teams_business(const char *id){    // tanto para equipes academicas e empresariais 
     Team teams;
     FILE *fp = fopen("data/teams.txt", "r");
@@ -115,10 +113,6 @@ Team load_teams_business(const char *id){    // tanto para equipes academicas e 
             if (status_pos == NULL) continue;
             char *status_value = strtok(NULL, "}");
 
-
-        
-            
-
             teams.id = strdup(id_academic);
             teams.team_name_especific = strdup(academy_especific);
             teams.team_name = strdup(team_name_pos);
@@ -131,6 +125,7 @@ Team load_teams_business(const char *id){    // tanto para equipes academicas e 
     fclose(fp);
     return teams;
 }
+
 
 int update_date_teams(const char *id, const char *new_value, const char *field, int length){
     FILE *fp = fopen("data/teams.txt", "r+");

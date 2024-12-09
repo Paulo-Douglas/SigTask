@@ -62,9 +62,6 @@ void cadastrar_equipe_academica(void){
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Cadastro de equipe acadêmica                                                       |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|  ID  |        Nome da instituição          |               Nome da equipe               |             Descrição da equipe                     |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
     if (insert_team_academic()){
         show_sucess("Sucesso ao registrar a equipe!");
@@ -74,14 +71,12 @@ void cadastrar_equipe_academica(void){
     limpa_buffer();
 }
 
+
 void cadastrar_equipe_empresarial(void){
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Cadastro de equipe empresarial                                                     |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|  CNPJ        |        Nome da empresa             |               Nome da equipe               |               Descrição da equipe            |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
     if(insert_team_business()){
@@ -92,6 +87,7 @@ void cadastrar_equipe_empresarial(void){
     limpa_buffer();
 }
 
+
 void exibir_equipe(void) { 
     limpar_tela();
     printf("\n");
@@ -101,10 +97,11 @@ void exibir_equipe(void) {
     if(!search_team()){
         show_error("Equipe inexistente; <ENTER> para continuar\n");
     } else {
-        printf("Tecle <ENTER> para continuar...");
+        show_sucess("Tecle <ENTER> para continuar...");
     }
     getchar();
 }
+
 
 void add_user_to_team(void) { 
     limpar_tela();

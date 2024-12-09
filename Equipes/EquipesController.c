@@ -50,11 +50,13 @@ int search_team(void) {
     char id;
     printf("ID da equipe a ser buscada:\n");
     scanf(" %c", &id);
+    getchar();
 
     char team_type;
     printf("Digite o tipo de equipe ( [1] EMPRESARIAL ou [2] ACADEMICA):\n");
     scanf(" %c", &team_type);
     getchar();
+
     limpar_tela();
 
     if (team_type == '1') {
