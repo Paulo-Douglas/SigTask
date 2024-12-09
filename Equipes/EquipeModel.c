@@ -20,10 +20,10 @@ int insert_team_to_file(Team *teams){
   if(fp == NULL) return FALSE;
   
     fprintf(fp, "%d:{", id);
-    fprintf(fp, "%s %-*s", FIELD_USER, VARCHAR250, "");    
-    fprintf(fp, "%s %-*s", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
-    fprintf(fp, "%s %-*s", FIELD_TEAM, VARCHAR50, teams->team_name);      
-    fprintf(fp, "%s %-*s", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
+    fprintf(fp, "%s%-*s,", FIELD_USER, VARCHAR50, "");    
+    fprintf(fp, "%s%-*s,", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
+    fprintf(fp, "%s%-*s,", FIELD_TEAM, VARCHAR50, teams->team_name);      
+    fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
     fprintf(fp, "%s%s", FIELD_STATUS, teams->status); 
     fprintf(fp,"}\n" );                                
     fclose(fp);
@@ -32,6 +32,8 @@ int insert_team_to_file(Team *teams){
 
 
 int view_team(const char *id) {
+    Team team;
+
     FILE *fp = fopen("data/academic_teams.txt", "r");
     if (fp == NULL) {
         return FALSE;
@@ -44,6 +46,36 @@ int view_team(const char *id) {
         char *id_team = strtok(line, ":");
         if (id[0] == *id_team){
             found = TRUE;
+            team.id = id_team;
+
+            char *field_user = strtok(NULL, ":");
+            if(field_user == NULL) return FALSE;
+            char *value_user = strtok(NULL, ",");
+
+            char *field_inst = strtok(NULL, ":");
+            if(field_inst == NULL) return FALSE;
+            char *value_inst = strtok(NULL, ",");
+
+            char *field_team = strtok(NULL, ":");
+            if(field_team == NULL) return FALSE;
+            char *value_team = strtok(NULL, ",");
+
+            char *field_description = strtok(NULL, ":");
+            if(field_description == NULL) return FALSE;
+            char *value_description = strtok(NULL, ",");
+
+            char *field_status = strtok(NULL, ":");
+            if(field_status == NULL) return FALSE;
+            char *value_status = strtok(NULL, "}");
+
+            team.usuarios = value_user;
+            team.team_name_especific = value_inst;
+            team.team_name = value_team;
+            team.description = value_description;
+            team.status = value_status;
+
+            team_data_academic(&team);
+
         }
     }
 

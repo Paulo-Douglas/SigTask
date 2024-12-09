@@ -89,7 +89,7 @@ void excluir_equipe(void) {
 void team_data_academic(const Team *teams){
     show_header("Dados do time");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
-    printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios);
+    printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios == NULL ? "Sem usuários" : teams->usuarios);
     printf("\033[1m|Nome da instituição:\033[m %s\n", teams->team_name_especific);
     printf("\033[1m|Nome da equipe:\033[m %s\n", teams->team_name);
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
