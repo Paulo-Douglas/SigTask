@@ -98,7 +98,9 @@ void modify_user_data(void) {
     const char *cpf = read_cpf();
     User users = load_user(cpf);
 
-    if (users.cpf != NULL) {
+    if (users.cpf == NULL) show_error("| CPF não encontrado");
+    else if (strcmp(users.status, "0") == 0) show_error("| Não é possível editar esse usuário");
+    else {
         user_data(&users);
         int result = update_user(&users);   
         if (result) {
