@@ -13,18 +13,16 @@
 
 int insert_compromise(Compromisers *compromise){
     create_path("data/");
-    int id_len = get_next_id("data/tasks.txt") + 1;
+
 
     FILE *fp = fopen("data/compromisers.txt", "a");
     if(fp == NULL) return FALSE;
 
-    fprintf(fp, "%d:{", id_len);
-    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, compromise->title);
+    fprintf(fp, "%s:{", compromise->id);
+    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, compromise->name_anything);
+    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, compromise->situation);
+    fprintf(fp, "%s%s,", FIELD_DATE, compromise->date);
     fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, compromise->description);
-    fprintf(fp, "%s%s,", FIELD_DATE, compromise->start_date);
-    fprintf(fp, "%s%s,", FIELD_DATE, compromise->end_date);
-    fprintf(fp, "%s%s,", FIELD_TIME, compromise->time);
-    fprintf(fp, "%s%s", FIELD_PRIORITY, compromise->priority);
     fprintf(fp, "}\n");
 
     fclose(fp);
@@ -45,50 +43,40 @@ int load_compromise(const char *id, Compromisers *compromise) {
 
         if(strcmp(id_line, id) == 0){
 
-            char *field_number_team = strtok(NULL, ":");
-            if(field_number_team == NULL) continue;
-            char *number_team = strtok(NULL, ":");
+            char *field_number_anything = strtok(NULL, ":");
+            if(field_number_anything == NULL) continue;
+            char *number_anything = strtok(NULL, ":");
 
-            char *field_title = strtok(NULL, ":");
-            if(field_title == NULL) continue;
-            char *title = strtok(NULL, ",");
+            char *field_name = strtok(NULL, ":");
+            if(field_name == NULL) continue;
+            char *name_all = strtok(NULL, ",");
+
+            char *field_situation = strtok(NULL, ":");
+            if(field_situation == NULL) continue;
+            char *type_situation = strtok(NULL, ",");
+
+            char *field_date = strtok(NULL, ":");
+            if (field_date == NULL) continue;     
+            char *date_compromise = strtok(NULL, "-");
 
             char *field_description = strtok(NULL, ":");
-            if(field_description == NULL) continue;
-            char *description_compromisse = strtok(NULL, ",");
-
-            char *field_date_s = strtok(NULL, ":");
-            if (field_date_s == NULL) continue;     
-            char *date_start = strtok(NULL, "-");
+            if (field_description == NULL) continue;
+            char *description_compromise = strtok(NULL, "\n");
             
-            char *field_date_e = strtok(NULL, ":");
-            if (field_date_e == NULL) continue; 
-            char *date_end = strtok(NULL, "(");     // tenho que ver colocar entre aspas aq 
-
-            char *field_time = strtok(NULL, ":");
-            if (field_time == NULL) continue;          // tenho que ver colocar entre aspas aq 
-            char *time = strtok(NULL, ")");
-
-            char *field_prio = strtok(NULL, ":");
-            if(field_prio == NULL) continue;          // tenho que ver colocar entre aspas aq 
-            char *prio = strtok(NULL, "#");
-
             char *field_status = strtok(NULL, ":");
             if(field_status == NULL) continue;            // tenho que ver colocar entre aspas aq 
             char *status = strtok(NULL, "\n");
 
-            compromise->team_id = strdup(number_team);
-            compromise->title = strdup(title);
-            compromise->description = strdup(description_compromisse);
-            compromise->start_date = strdup(date_start);
-            compromise->end_date = strdup(date_end);
-            compromise->time = strdup(time);
-            compromise->priority = strdup(prio);
+            compromise->id = strdup(number_anything);
+            compromise->name_anything = strdup(name_all);
+            compromise->situation = strdup(type_situation);
+            compromise->date = strdup(date_compromise);
+            compromise->description = strdup(description_compromise);
             compromise->status = strdup(status);
 
             found = TRUE;
             break;
-        }
+        } 
     }
 
     fclose(fp);
