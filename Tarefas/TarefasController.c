@@ -18,6 +18,7 @@ int register_task(void) {
 
     read_and_assign(&task.cpf, "|\tCPF: ", read_cpf);
     read_and_assign(&task.title, "|\tTarefa: ", read_string);
+    read_and_assign(&task.type, "|\tTipo: ", read_string);
     read_and_assign(&task.description, "|\tDescrição: ", read_description);
 
     char day[MAX_DAY_LENGHT];
@@ -60,11 +61,12 @@ int update_task(Tasks *task, const char *id) {
     do{
         printf("|\t[1] Título\n");
         printf("|\t[2] Descrição\n");
-        printf("|\t[3] Data\n");
-        printf("|\t[4] Turno\n");
-        printf("|\t[5] Prioridade\n");
-        printf("|\t[6] Fechar\n");
-        printf("|\t[7] Reabrir\n");
+        printf("|\t[3] Tipo\n");
+        printf("|\t[4] Data\n");
+        printf("|\t[5] Turno\n");
+        printf("|\t[6] Prioridade\n");
+        printf("|\t[7] Fechar\n");
+        printf("|\t[8] Reabrir\n");
         printf("|\t[0] Sair\n");
         scanf(" %c", &op);
         switch (op) {
@@ -81,25 +83,30 @@ int update_task(Tasks *task, const char *id) {
                 return update_data_task(&id, task->description, FIELD_DESCRIPTION, VARCHAR50);
             case '3':
                 limpa_buffer();
+                printf("|\tSituação: ");
+                task->type = read_string();
+                return update_data_task(&id, task->type, FIELD_TITLE, VARCHAR50);    
+            case '4':
+                limpa_buffer();
                 int year = year_now();
                 printf("|\tData: ");
                 task->data = read_and_format_date(year);
                 return update_data_task(&id, task->data, FIELD_DATA, 1);
-            case '4':
+            case '5':
                 limpa_buffer();
                 printf("|\tTurno: ");
                 task->turn = read_generic_123("turn");
                 return update_data_task(&id, task->turn, FIELD_TURN, 1);
-            case '5':
+            case '6':
                 limpa_buffer();
                 printf("|\tPrioridade: ");
                 task->priority = read_generic_123("priority");
                 return update_data_task(&id, task->priority, FIELD_PRIORITY, 1);
-            case '6':
+            case '7':
                 limpa_buffer();
                 if(strcmp(task->status, "0") == 0) {show_error("| Tarefa ja fechada!\n"); return FALSE;}
                 return update_data_task(&id, "0", FIELD_STATUS, 1);
-            case '7':
+            case '8':
                 limpa_buffer();
                 if(strcmp(task->status, "1") == 0) {show_error("| Tarefa ja aberta!\n"); return FALSE;}
                 return update_data_task(&id, "1", FIELD_STATUS, 1);
@@ -118,5 +125,6 @@ void free_struct_task(Tasks *task) {
     if (task->data != NULL) free(task->data);
     if (task->turn != NULL) free(task->turn);
     if (task->priority != NULL) free(task->priority);
+    if (task->type != NULL) free (task -> type);
     if (task->status != NULL) free(task->status);
 }
