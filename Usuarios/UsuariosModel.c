@@ -77,24 +77,22 @@ User load_user(const char *cpf){
 
     while (fgets(line, sizeof(line), fp) != NULL) {
 
-        if (strcmp("NULL", cpf) == 0 || strstr(line, cpf) != NULL) {
+        if (strstr(line, cpf) != NULL) {
+            char *cpf_user = strtok(line, ":");
+            char *cursor = strtok(NULL, "\n");
 
-            char *cpf_pos = strtok(line, ":");
-            char *name_pos = strtok(NULL, ":");
-            if (name_pos == NULL) continue;
-            char *name_value = strtok(NULL, ",");
-            char *phone_pos = strtok(NULL, ":");
-            if (phone_pos == NULL) continue;
-            char *phone_value = strtok(NULL, ",");
-            char *status_pos = strtok(NULL, ":");
-            if (status_pos == NULL) continue;
-            char *status_value = strtok(NULL, "}");
+            char *name = extract_value(&cursor, ":", ",");
+            char *phone = extract_value(&cursor, ":", ",");
+            char *status = extract_value(&cursor, ":", "}");
 
-            users.cpf = strdup(cpf_pos);
-            users.name = strdup(name_value);
-            users.phone = strdup(phone_value);
-            users.status = strdup(status_value);
-            user_data(&users);
+            if (cpf_user && name && phone && status) {
+                users.cpf = strdup(cpf_user);
+                users.name = strdup(name);
+                users.phone = strdup(phone);
+                users.status = strdup(status);
+                user_data(&users);
+            }
+            getchar();
         }
     }
 

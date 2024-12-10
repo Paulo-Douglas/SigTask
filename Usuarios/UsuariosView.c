@@ -71,7 +71,7 @@ void register_user() {
  */
 void display_user_data(void) {
     show_header("Exibir Dados");
-    User users = load_user("111.111.111-11");
+    User users = load_user("133.216.004-20");
     if(users.cpf == NULL) {
         show_error("| Nenhum usuário cadastrado!\n");
     }
