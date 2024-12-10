@@ -17,8 +17,7 @@ int register_task(void) {
     Tasks task = {NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
     read_and_assign(&task.cpf, "|\tCPF: ", read_cpf);
-    read_and_assign(&task.title, "|\tTarefa: ", read_string);
-    read_and_assign(&task.type, "|\tTipo: ", read_string);
+    read_and_assign(&task.title, "|\tTítulo: ", read_string);
     read_and_assign(&task.description, "|\tDescrição: ", read_description);
 
     char day[MAX_DAY_LENGHT];
@@ -42,6 +41,12 @@ int register_task(void) {
     printf("|\t2 - Média\n");
     printf("|\t3 - Baixa\n");
     task.priority = read_generic_123("priority");
+
+    printf("\t TIPO\n");
+    printf("|\t1 - Evento\n");
+    printf("|\t2 - Reunião\n");
+    printf("|\t3 - Projetos\n");
+    task.type = read_generic_123("type");
 
     task.status = strdup("1");
 

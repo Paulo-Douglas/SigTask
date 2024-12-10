@@ -6,11 +6,11 @@ typedef struct
     char *cpf;
     char *title;
     char *description;
-    char *turn;
-    char *type;
-    char *priority;
-    char *status;
     char *data;  
+    char *turn;
+    char *priority;
+    char *type;
+    char *status;
 } Tasks;
 
 #define LINE_TASKS 190

@@ -3,6 +3,7 @@
 
 // Tamanhos de cadastros
 #define VARCHAR50 50
+#define VARCHAR10 10
 
 // Campos de cadastro no arquivo
 #define FIELD_CPF "\"Cpf\":"
@@ -13,7 +14,8 @@
 #define FIELD_TEAM "\"Time\":"
 #define FIELD_USER "\"Usuarios\":"
 #define FIELD_PHONE "\"Telefone\":"
-#define FIELD_TITLE "\"Titulo\":" 
+#define FIELD_TITLE "\"Titulo\":"
+#define FIELD_TYPE "\"Tipo\":" 
 #define FIELD_DESCRIPTION "\"Descricao\":"
 #define FIELD_DATE "\"Data\":"
 #define FIELD_PRIORITY "\"Prioridade\":"
