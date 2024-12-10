@@ -127,6 +127,22 @@ int cpf_exists(const char *cpf) {
     return FALSE;
 }
 
+int id_exists(const char *id){
+    FILE *fp = fopen("data/teams.txt", "r");
+    if (fp == NULL) {
+        return FALSE;
+    }
+
+    char line[15];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        if (strstr(line, id) != NULL){
+            return TRUE;
+        }
+    }
+    fclose(fp);
+    return FALSE;
+}
+
 int validate_time(char tempo[]) {
     if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
         tempo[2] != ':' || (tempo[3] - '0') > 6 ) {
