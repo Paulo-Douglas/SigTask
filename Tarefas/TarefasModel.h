@@ -7,6 +7,7 @@ typedef struct
     char *title;
     char *description;
     char *turn;
+    char *type;
     char *priority;
     char *status;
     char *data;  
