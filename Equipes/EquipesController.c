@@ -27,23 +27,7 @@ int insert_team_academic(void){
 
 
 
-int search_team(void) {
-    int result = FALSE;
-    char id;
-    printf("ID da equipe a ser buscada:\n");
-    scanf(" %c", &id);
-    getchar();
-
-
-    limpar_tela();
-
-    result = view_team(&id);
-
-    return result;
-
-}
-
-int update_team_academic(Team *teams, const char id){
+int update_team_academic(Team *teams){
     limpar_tela();
     
     char opc = '\0';

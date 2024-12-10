@@ -31,58 +31,50 @@ int insert_team_to_file(Team *teams){
 }
 
 
-int view_team(const char *id) {
-    Team team;
+Team upload_struct(char *id) {
+    Team team = {0}; // Inicializa a estrutura com valores padrão
 
     FILE *fp = fopen("data/academic_teams.txt", "r");
     if (fp == NULL) {
-        return FALSE;
-    };
+        return team;
+    }
 
     char line[500];
-    int found = FALSE;
 
     while (fgets(line, sizeof(line), fp)) {
         char *id_team = strtok(line, ":");
-        if (id[0] == *id_team){
-            found = TRUE;
-            team.id = id_team;
+        if (id_team && strcmp(id, id_team) == 0) {
+            // Preenche os campos da estrutura com segurança
+            team.id = strdup(id_team);
 
             char *field_user = strtok(NULL, ":");
-            if(field_user == NULL) return FALSE;
             char *value_user = strtok(NULL, ",");
+            if (field_user && value_user) team.usuarios = strdup(value_user);
 
             char *field_inst = strtok(NULL, ":");
-            if(field_inst == NULL) return FALSE;
             char *value_inst = strtok(NULL, ",");
+            if (field_inst && value_inst) team.team_name_especific = strdup(value_inst);
 
             char *field_team = strtok(NULL, ":");
-            if(field_team == NULL) return FALSE;
             char *value_team = strtok(NULL, ",");
+            if (field_team && value_team) team.team_name = strdup(value_team);
 
             char *field_description = strtok(NULL, ":");
-            if(field_description == NULL) return FALSE;
             char *value_description = strtok(NULL, ",");
+            if (field_description && value_description) team.description = strdup(value_description);
 
             char *field_status = strtok(NULL, ":");
-            if(field_status == NULL) return FALSE;
             char *value_status = strtok(NULL, "}");
+            if (field_status && value_status) team.status = strdup(value_status);
 
-            team.usuarios = value_user;
-            team.team_name_especific = value_inst;
-            team.team_name = value_team;
-            team.description = value_description;
-            team.status = value_status;
-
-            team_data_academic(&team);
-
+            break; // Sai do loop após encontrar o time
         }
     }
 
     fclose(fp);
-
-    return found;
+    return team;
 }
+
 
 
 int update_date_teams(const char *id, const char *new_value, const char *field, int length){

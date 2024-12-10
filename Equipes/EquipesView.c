@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -48,21 +49,27 @@ void register_team_academic(void){
 
 void modify_team_data_academic(void){
     show_header("Editar dados");
+    enter();
 }
 
 
-void exibir_equipe(void) { 
+void search_team(void) { 
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Exibir equipe                                                                   |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    if(!search_team()){
-        show_error("Equipe inexistente; <ENTER> para continuar\n");
-    } else {
-        show_sucess("Tecle <ENTER> para continuar...");
-    }
-    getchar();
+    printf("|\t Insira o ID:    ");
+    char *id = (char*)malloc(10 * sizeof(char));
+    scanf("%10s", id);
+
+    Team teams = upload_struct(id);
+
+    if (teams.id != NULL) view_team(&teams);
+    else show_error("Time não encontrado!");
+
+    limpa_buffer();
+    enter();
 }
 
 
@@ -91,7 +98,7 @@ void excluir_equipe(void) {
 }
 
 
-void team_data_academic(const Team *teams){
+void view_team(const Team *teams){
     show_header("Dados do time");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
     printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios == NULL ? "Sem usuários" : teams->usuarios);
@@ -100,6 +107,7 @@ void team_data_academic(const Team *teams){
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", strcmp(teams->status, "0") ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
+    getchar();
 }
 
 

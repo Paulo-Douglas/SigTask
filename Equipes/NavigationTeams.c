@@ -12,7 +12,7 @@ void navegacao_times(void){
                 register_team_academic();
                 break;
             case '2':
-                exibir_equipe();
+                search_team();
                 break;
             case '3':
                 add_user_to_team();

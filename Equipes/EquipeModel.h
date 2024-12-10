@@ -17,7 +17,7 @@ typedef struct {
     char *status;
 } Team;
 
-int view_team(const char *id);
+Team upload_struct(char *id);
 int insert_team_to_file(Team *teams);
 int update_date_teams(const char *id, const char *new_value, const char *field, int length);
 #endif
