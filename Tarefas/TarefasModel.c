@@ -23,6 +23,7 @@ int insert_into_tasks(Tasks *task) {
     fprintf(fp, "%s%s,", FIELD_CPF, task->cpf);
     fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, task->title);
     fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, task->description);
+    fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, task->type);
     fprintf(fp, "%s%s,", FIELD_DATA, task->data);
     fprintf(fp, "%s%s,", FIELD_TURN, task->turn);
     fprintf(fp, "%s%s,", FIELD_PRIORITY, task->priority);
@@ -71,6 +72,10 @@ int load_task(const char *id, Tasks *task){
             if(field_priority == NULL) continue;
             char *priority = strtok(NULL, ",");
 
+            char *field_type = strtok(NULL, ":");
+            if(field_type == NULL) continue;
+            char *type = strtok(NULL, ",");
+
             char *field_status = strtok(NULL, ":");
             if(field_status == NULL) continue;
             char *status = strtok(NULL, "}");
@@ -80,6 +85,7 @@ int load_task(const char *id, Tasks *task){
             task->description = strdup(description);
             task->data = strdup(data);
             task->turn = strdup(turn);
+            task->type = strdup(type);
             task->priority = strdup(priority);
             task->status = strdup(status);
             found = TRUE;
