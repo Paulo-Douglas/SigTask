@@ -95,3 +95,13 @@ int get_next_id(const char *name_of_file) {
     int id = atoi(id_str);
     return id + 1; // Incrementa e retorna o próximo ID
 }
+
+char* extract_value(char **source, const char *start_delim, const char *end_delim) {
+    char *start = strtok(*source, start_delim);
+    if (start == NULL) return NULL;
+
+    *source = NULL;
+
+    char *end = strtok(NULL, end_delim);
+    return end;
+}
