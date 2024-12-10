@@ -90,9 +90,7 @@ User load_user(const char *cpf){
                 users.name = strdup(name);
                 users.phone = strdup(phone);
                 users.status = strdup(status);
-                user_data(&users);
             }
-            getchar();
         }
     }
 
