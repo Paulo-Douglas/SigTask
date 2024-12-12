@@ -12,6 +12,33 @@
 #include "../libs/date.h"
 #include "../libs/reads.h"
 
+char* responsible(void){
+    printf("|\tCompromisso destinado a:\n");
+    printf("|\t[1] Usuário\n\t[2] Equipe\b");
+
+    char *choice = (char*)malloc(4 * sizeof(char));
+    char op;
+
+    scanf(" %c", &op);
+
+    switch (op) {
+        case '1':
+            printf("ID ou CPF do usuário: ");
+            scanf("%4s", choice);
+            if(user_exists(choice)) return choice;
+            break;
+        case '2':
+            printf("ID do time: ");
+            scanf("%4s", choice);
+            return choice;
+            break;
+        default:
+            show_error("Opção inválida.");
+            break;
+    }
+
+    return NULL;
+}
 
 
 int register_compromise(void){
@@ -19,6 +46,9 @@ int register_compromise(void){
     int year = year_now();
 
     Compromisers compromise = {0};
+
+    char *id = responsible();
+    strcpy(compromise.responsible, id);
 
     printf("|\tTítulo: ");
     char *title = read_string();

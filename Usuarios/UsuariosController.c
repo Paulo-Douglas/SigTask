@@ -17,7 +17,7 @@ int add_user(void){
     char *cpf = read_cpf();
     strcpy(user.cpf, cpf);
 
-    if(cpf_exists(user.cpf)){
+    if(user_exists(user.cpf)){
         return FALSE;
     }
 

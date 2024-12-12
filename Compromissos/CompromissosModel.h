@@ -6,6 +6,7 @@
 typedef struct
 {
     char id[4];
+    char responsible[4];
     char title[100];
     char description[100];
     char date[11];

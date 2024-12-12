@@ -90,7 +90,7 @@ int validate_cpf(char cpf[]) {
     }
 
 
-int cpf_exists(const char *cpf) {
+int user_exists(const char *key) {
     int exists = FALSE;
 
     FILE *fp = fopen("data/users.dat", "rb");
@@ -98,7 +98,9 @@ int cpf_exists(const char *cpf) {
 
     User *user = (User*)malloc(sizeof(User));
     while (fread(user, sizeof(User), 1, fp) && !exists){
-        if (strcmp(user->cpf, cpf) == 0){
+        if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5)){
+            exists = TRUE;
+        } else if (strcmp(user->id, key) == 0){
             exists = TRUE;
         }
     }
