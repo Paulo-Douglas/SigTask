@@ -13,6 +13,10 @@
 
 
 int insert_user(User *user){
+    int id = get_next_id("data/users.dat");
+    if(id == 0) id = 1;
+
+    snprintf(user->id, sizeof(user->id), "%d", id);
     create_path("data/");
 
     FILE *fp = fopen("data/users.dat", "ab");

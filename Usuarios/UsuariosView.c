@@ -151,6 +151,7 @@ void reactivate_user(void) {
 
 void user_data(const User *user) {
     show_header("Dados do usuário");
+    printf("\033[1m|ID:\033[m %s\n", user->id);
     printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);

@@ -63,11 +63,6 @@ void search_team(void) {
     char *id = (char*)malloc(10 * sizeof(char));
     scanf("%10s", id);
 
-    Team teams = upload_struct(id);
-
-    if (teams.id != NULL) view_team(&teams);
-    else show_error("Time não encontrado!");
-
     limpa_buffer();
     enter();
 }

@@ -78,12 +78,3 @@ int get_next_id(const char *name_of_file) {
 
 }
 
-char* extract_value(char **source, const char *start_delim, const char *end_delim) {
-    char *start = strtok(*source, start_delim);
-    if (start == NULL) return NULL;
-
-    *source = NULL;
-
-    char *end = strtok(NULL, end_delim);
-    return end;
-}

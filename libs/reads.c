@@ -208,21 +208,3 @@ char read_generic_123(const char *dir) {
 
     return result;
 }
-
-char* read_id(void){
-    char *id;
-    int is_valid = FALSE;
-
-    do { 
-        input(&id);
-
-        if(!isdigit(id)){
-            show_error("Digite apenas números: \n");
-            printf("Tente novamente");
-        } else {
-            is_valid = TRUE;
-        }
-    } while (!is_valid);
-
-    return id;
-}
