@@ -5,12 +5,13 @@
 
 typedef struct
 {
-    char *id;
-    char *name_anything;
-    char *situation;
-    char *description;
-    char *date;
-    char *status;
+    int id;
+    char title[100];
+    char description[100];
+    char date[11];
+    char type;
+    char priority;
+    char status;
 
 } Compromisers;
 

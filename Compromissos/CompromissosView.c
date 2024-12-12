@@ -63,34 +63,34 @@ void register_compromises(void) {
 void view_compromise(void) {
     show_header("Exibir compromisso");
 
-    Compromisers compromise = {0};
-    printf("|\tInforme o ID do compromisso: ");
-    char id[2];
-    scanf(" %1s", id);
+    // Compromisers compromise = {0};
+    // printf("|\tInforme o ID do compromisso: ");
+    // char id[2];
+    // scanf(" %1s", id);
 
-    if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
-    else display_data_compromises(&compromise);
-    printf("\n");
+    // if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
+    // else display_data_compromises(&compromise);
+    // printf("\n");
 
     enter();
 }
 void edit_compromise(void) {
     show_header("Editar compromissos");
 
-    Compromisers compromise = {0};
-    printf("|\tInforme o ID do compromisso: ");
-    char id[2];
-    scanf(" %1s", id);
+    // Compromisers compromise = {0};
+    // printf("|\tInforme o ID do compromisso: ");
+    // char id[2];
+    // scanf(" %1s", id);
 
-    if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
-    else {
-        display_data_compromises(&compromise);
-        if(update_compromise(&compromise, id)) {
-            show_sucess("| Compromisso editado com sucesso!\n");
-        } else {
-            show_error("| [ERRO]: Erro ao editar!\n");
-        }
-    }
+    // if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
+    // else {
+    //     display_data_compromises(&compromise);
+    //     if(update_compromise(&compromise, id)) {
+    //         show_sucess("| Compromisso editado com sucesso!\n");
+    //     } else {
+    //         show_error("| [ERRO]: Erro ao editar!\n");
+    //     }
+    // }
     enter();
 }
 
@@ -119,13 +119,13 @@ void change_data_compromisses(void) {
 void display_data_compromises(Compromisers *compromise){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do compromisso                                                          |\n");
-    printf("| \033[1mID:\033[0m %s\n", compromise->id);
-    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("\033[1m\tCompromisso:\033[m %s\n", compromise->name_anything);
-    printf("\033[1m\tSituação:\033[m %s\n", compromise->situation);
-    printf("\033[1m\tData de inicio:\033[m %s\n", compromise->date);
-    printf("\033[1m\tDescrição:\033[m %s\n", compromise->description);
-    printf("| \033[1mStatus:\033[0m %s\n", strcmp(compromise->status, "0") ? "Aberta" : "Fechada");
-    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    // printf("| \033[1mID:\033[0m %s\n", compromise->id);
+    // printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    // printf("\033[1m\tCompromisso:\033[m %s\n", compromise->name_anything);
+    // printf("\033[1m\tSituação:\033[m %s\n", compromise->situation);
+    // printf("\033[1m\tData de inicio:\033[m %s\n", compromise->date);
+    // printf("\033[1m\tDescrição:\033[m %s\n", compromise->description);
+    // printf("| \033[1mStatus:\033[0m %s\n", strcmp(compromise->status, "0") ? "Aberta" : "Fechada");
+    // printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }
 

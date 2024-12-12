@@ -165,7 +165,7 @@ char* read_time(void){
     return time;
 }
 
-char* read_generic_123(const char *dir) {
+char read_generic_123(const char *dir) {
     char *prompt = NULL;
     do {
         input(&prompt);
@@ -178,30 +178,30 @@ char* read_generic_123(const char *dir) {
         }
     } while (prompt == NULL || *prompt < '1' || *prompt > '3');
 
-    char *result = NULL;
+    char result;
     if (strcmp(dir, "turn") == 0) {
         if (strcmp(prompt, "1") == 0) {
-            result = strdup("M");
+            result = 'M';
         } else if (strcmp(prompt, "2") == 0) {
-            result = strdup("V");
+            result = 'V';
         } else {
-            result = strdup("N");
+            result = 'N';
         }
     } else if (strcmp(dir, "priority") == 0) {
         if (strcmp(prompt, "1") == 0) {
-            result = strdup("A");
+            result = 'A';
         } else if (strcmp(prompt, "2") == 0) {
-            result = strdup("M");
+            result = 'M';
         } else {
-            result = strdup("B");
+            result = 'B';
         }
     } else if (strcmp(dir, "type") == 0) {
         if (strcmp(prompt, "1") == 0) {
-            result = strdup("E");
+            result = 'E';
         } else if (strcmp(prompt, "2") == 0) {
-            result = strdup("R");
+            result = 'R';
         } else {
-            result = strdup("P");
+            result = 'P';
         }
     }
     free(prompt);

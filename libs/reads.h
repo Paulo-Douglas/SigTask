@@ -5,7 +5,7 @@ char* read_string(void);
 char* read_phone(void);
 char* read_cpf(void);
 char* read_description(void);
-char* read_generic_123(const char *dir);
+char read_generic_123(const char *dir);
 char* read_time(void);
 char* read_and_format_date(int year);
 int read_int(void);

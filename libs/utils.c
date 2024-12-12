@@ -6,6 +6,7 @@
 #include <ctype.h>
 
 #include "utils.h"
+#include "../Compromissos/CompromissosController.h"
 
 void delete_spaces(char *str) {
     while (isspace((unsigned char)*str)) str++;
@@ -65,35 +66,16 @@ int save_file(const char *data[], char *file_name){
 
 
 int get_next_id(const char *name_of_file) {
-    FILE *arquivo = fopen(name_of_file, "r");
-    if (arquivo == NULL) {
-        return FALSE;
-    }
+    FILE *fp = fopen(name_of_file, "rb");
+    if (fp == NULL) return FALSE;
 
-    char line[500];
-    char last_line[500] = "";
+    fseek(fp, 0, SEEK_END);
+    long lenght_fp = ftell(fp);
+    int number = lenght_fp / sizeof(Compromisers);
 
-    while (fgets(line, sizeof(line), arquivo) != NULL) {
-        strcpy(last_line, line);
-    }
+    fclose(fp);
+    return number + 1;
 
-    fclose(arquivo);
-
-    if (strlen(last_line) == 0) {
-        return FALSE;
-    }
-
-    char *colon_pos = strchr(last_line, ':');
-    if (colon_pos == NULL) {
-        return FALSE; 
-    }
-
-    char id_str[20] = ""; 
-    strncpy(id_str, last_line, colon_pos - last_line);
-    id_str[colon_pos - last_line] = '\0';
-
-    int id = atoi(id_str);
-    return id + 1; // Incrementa e retorna o próximo ID
 }
 
 char* extract_value(char **source, const char *start_delim, const char *end_delim) {

@@ -5,7 +5,6 @@
 #include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
 #include "../Compromissos/NavigationComp.h"
-#include "../Tarefas/NavigationTasks.h"
 #include "../Compromissos/CompromissosView.h"
 #include "../Equipes/EquipesView.h"
 #include "../Equipes/NavigationTeams.h"
