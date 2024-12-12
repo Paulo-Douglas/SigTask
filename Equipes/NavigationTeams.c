@@ -9,22 +9,16 @@ void navegacao_times(void){
         op = menu_equipes();
         switch(op){
             case '1':  
-                register_team_academic();
+                add_team();
                 break;
             case '2':
                 search_team();
                 break;
             case '3':
-                add_user_to_team();
+                delete_team();
                 break;
             case '4':
-                remove_user_from_team();
-                break;
-            case '5':
-                excluir_equipe();
-                break;
-            case '6':
-                modify_team_data_academic();
+                edit_team();
                 break;
             case '0':
                 break;

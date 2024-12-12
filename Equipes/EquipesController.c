@@ -30,3 +30,39 @@ int register_team(void){
 
     return result;
 }
+
+void modify_team_data(Team *team){
+    char op;
+    int result = FALSE;
+
+    do {
+        printf("|\t[1] Editar nome\n");
+        printf("|\t[2] Editar descrição\n");
+        printf("|\t[0] Sair\n");
+        scanf(" %c", &op);
+
+        switch (op){
+            case '1':
+                limpa_buffer();
+                printf("|\tNome: ");
+                char *name = read_string();
+                strcpy(team->name, name);
+                result = update_team(team);
+                result ? show_sucess("Nome editado com sucesso!") : show_error ("Erro ao editar o nome");
+                break;
+            case '2':
+                limpa_buffer();
+                printf("|\tDescrição: ");
+                char *description = read_string();
+                strcpy(team->description, description);
+                result = update_team(team);
+                result ? show_sucess("Descrição editada com sucesso!") : show_error ("Erro ao editar a descrição");
+                break;
+            case '0':
+                break;
+            default:
+                show_error("Opção inválida.");
+                break;
+        }
+    } while (op != '0');
+}

@@ -13,6 +13,7 @@ typedef struct {
 } Team;
 
 int insert_team(Team *teams);
+int update_team(Team *new_team);
 Team *load_team(const char *id);
 
 #endif

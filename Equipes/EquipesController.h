@@ -4,5 +4,6 @@
 #include "EquipeModel.h"
 
 int register_team(void);
+void modify_team_data(Team *team);
 
 #endif
