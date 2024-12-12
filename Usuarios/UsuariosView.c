@@ -93,21 +93,17 @@ void search_user(void) {
  **/
 void modify_user_data(void) {
     show_header("Editar Dados");
-    // printf("|\tCPF:\t");
-    // const char *cpf = read_cpf();
-    // User users = load_user(cpf);
 
-    // if (users.cpf == NULL) show_error("| CPF não encontrado");
-    // else if (strcmp(users.status, "0") == 0) show_error("| Não é possível editar esse usuário");
-    // else {
-    //     user_data(&users);
-    //     int result = update_user(&users);   
-    //     if (result) {
-    //         show_sucess("| Dados alterados com sucesso!\n");
-    //     } else {
-    //         show_error("| [ERRO]: Erro ao alterar!\n");
-    //     }
-    // }
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User *user = load_user(cpf);
+
+    if (user == NULL) show_error("| CPF não encontrado");
+    else if (user->status == '0') show_error("| Não é possível editar esse usuário");
+    else {
+        user_data(user);
+        edit_user(user);   
+    }
 
     enter();
 }

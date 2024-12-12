@@ -4,6 +4,6 @@
 #include "UsuariosModel.h"
 
 int add_user(void);
-int update_user(User *users);
+void edit_user(User *user);
 
 #endif // USUARIOSCONTROLLER_H
