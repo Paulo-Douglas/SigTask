@@ -111,30 +111,40 @@ void modify_user_data(void) {
 
 void delete_user(void) {
     show_header("Excluir Conta");
-    // printf("|\tCPF:\t");
-    // const char *cpf = read_cpf();
-    // User users = load_user(cpf);
-    // if ((users.cpf != NULL) && (strcmp(users.status, "0") != 0)) {
-    //     update_data_user(cpf, "0", FIELD_STATUS, 1);
-    //     show_sucess("| Conta excluida com sucesso!\n");
-    // }else {
-    //     show_error("| [ERRO]: Erro ao excluir!\n");
-    // }
+
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User *user = load_user(cpf);
+
+    if(user == NULL) show_error("| CPF não encontrado");
+    else if (user->status == '0') show_error("| Não é possível acessar este usuário");
+    else {
+        user_data(user);
+        user->status = '0';
+        update_user(user);
+        show_sucess("Usuário desativado");
+    }
+
     enter();
 }
 
 
 void reactivate_user(void) {
     show_header("Reativar Conta");
-    // printf("|\tCPF:\t");
-    // const char *cpf = read_cpf();
-    // User users = load_user(cpf);
-    // if ((users.cpf != NULL) && (strcmp(users.status, "1") != 0)) {
-    //     update_data_user(cpf, "1", FIELD_STATUS, 1);
-    //     show_sucess("| Conta ativada com sucesso!\n");
-    // }else {
-    //     show_error("| [ERRO]: Erro ao ativar!\n");
-    // }
+
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User *user = load_user(cpf);
+
+    if(user == NULL) show_error("| CPF não encontrado");
+    else if (user->status == '1') show_error("| Não é possível reativar uma conta ativa");
+    else {
+        user_data(user);
+        user->status = '1';
+        update_user(user);
+        show_sucess("Usuário ativado");
+    }
+
     enter();
 }
 
