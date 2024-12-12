@@ -6,7 +6,7 @@
 #include <ctype.h>
 
 #include "utils.h"
-#include "../Compromissos/CompromissosController.h"
+#include "../Tarefas/TarefasController.h"
 
 void delete_spaces(char *str) {
     while (isspace((unsigned char)*str)) str++;
@@ -71,7 +71,7 @@ int get_next_id(const char *name_of_file) {
 
     fseek(fp, 0, SEEK_END);
     long lenght_fp = ftell(fp);
-    int number = lenght_fp / sizeof(Compromisers);
+    int number = lenght_fp / sizeof(Task);
 
     fclose(fp);
     return number + 1;

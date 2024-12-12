@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "CompromissosController.h"
-#include "CompromissosView.h"
-#include "CompromissosModel.h"
+#include "TarefasController.h"
+#include "TarefasView.h"
+#include "TarefasModel.h"
 
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -14,7 +14,7 @@
 
 
 char* responsible(void){
-    printf("|\tCompromisso destinado a:\n");
+    printf("|\tTarefa destinado a:\n");
     printf("|\t[1] Usuário\n\t[2] Equipe\n");
 
     char *choice = (char*)malloc(4 * sizeof(char));
@@ -42,48 +42,48 @@ char* responsible(void){
 }
 
 
-int register_compromise(void){
+int register_task(void){
     limpa_buffer();
     int year = year_now();
 
-    Compromisers compromise = {0};
+    Task task = {0};
 
     char *id = responsible();
-    strcpy(compromise.responsible, id);
+    strcpy(task.responsible, id);
 
     limpa_buffer();
     printf("|\tTítulo: ");
     char *title = read_string();
-    strcpy(compromise.title, title);
+    strcpy(task.title, title);
 
     printf("|\tDescrição: ");
     char *description = read_string();
-    strcpy(compromise.description, description);
+    strcpy(task.description, description);
 
     limpa_buffer();
     char day[MAX_DAY_LENGHT];
     char month[MAX_MONTH_LENGHT];
     printf("\tData: \n");
     read_date(day, month);
-    snprintf(compromise.date, 12, "%s/%s/%d", day, month, year);
+    snprintf(task.date, 12, "%s/%s/%d", day, month, year);
 
     limpa_buffer();
-    printf("\tTipo de compromisso: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
+    printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
     char type = read_generic_123("type");
-    compromise.type = type;
+    task.type = type;
 
     printf("\tNível de urgência: \n\t[1]Alta \n\t[2]Média \n\t[3]Baixa\n");
     char priority = read_generic_123("priority");
-    compromise.priority = priority;
+    task.priority = priority;
 
-    compromise.status = '1';
+    task.status = '1';
 
-    int result = insert_compromise(&compromise);
+    int result = insert_task(&task);
 
     return result;
 }
 
-void edit_compromise(Compromisers *compromise){
+void edit_task(Task *task){
     limpa_buffer();
     
     int year = year_now();
@@ -105,22 +105,22 @@ void edit_compromise(Compromisers *compromise){
             case '1':
                 limpa_buffer();
                 char *id = responsible();
-                strcpy(compromise->responsible, id);
-                result = update_compromise(compromise);
+                strcpy(task->responsible, id);
+                result = update_task(task);
                 result ? show_sucess("Responsável editado com sucesso!") : show_error ("Erro ao editar o responsável");
             case '2':
                 limpa_buffer();
                 printf("|\tTítulo: ");
                 char *title = read_string();
-                strcpy(compromise->title, title);
-                result = update_compromise(compromise);
+                strcpy(task->title, title);
+                result = update_task(task);
                 result ? show_sucess("Título editado com sucesso!") : show_error ("Erro ao editar o titulo");
             case '3':
                 limpa_buffer();
                 printf("|\tDescrição: ");
                 char *description = read_string();
-                strcpy(compromise->description, description);
-                result = update_compromise(compromise);
+                strcpy(task->description, description);
+                result = update_task(task);
                 result ? show_sucess("Descrição editada com sucesso!") : show_error ("Erro ao editar a descrição");
                 break;
             case '4':
@@ -129,24 +129,24 @@ void edit_compromise(Compromisers *compromise){
                 char month[MAX_MONTH_LENGHT];
                 printf("\tData: \n");
                 read_date(day, month);
-                snprintf(compromise->date, 12, "%s/%s/%d", day, month, year);
-                result = update_compromise(compromise);
+                snprintf(task->date, 12, "%s/%s/%d", day, month, year);
+                result = update_task(task);
                 result ? show_sucess("Data editada com sucesso!") : show_error ("Erro ao editar a data");
                 break;
             case '5':
                 limpa_buffer();
                 printf("\tNível de urgência: \n\t[1]Alta \n\t[2]Média \n\t[3]Baixa\n");
                 char priority = read_generic_123("priority");
-                compromise->priority = priority;
-                result = update_compromise(compromise);
+                task->priority = priority;
+                result = update_task(task);
                 result ? show_sucess("Prioridade editada com sucesso!") : show_error ("Erro ao editar a prioridade");
                 break;
             case '6':
                 limpa_buffer();
-                printf("\tTipo de compromisso: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
+                printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
                 char type = read_generic_123("type");
-                compromise->type = type;
-                result = update_compromise(compromise);
+                task->type = type;
+                result = update_task(task);
                 result ? show_sucess("Tipo editado com sucesso!") : show_error ("Erro ao editar o tipo");
                 break;
             case '0':

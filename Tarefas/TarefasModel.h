@@ -14,10 +14,10 @@ typedef struct
     char priority;
     char status;
 
-} Compromisers;
+} Task;
 
-int insert_compromise(Compromisers *compromise);
-Compromisers * load_compromise(const char *id);
-int update_compromise(Compromisers *compromise);
+int insert_task(Task *task);
+Task * load_task(const char *id);
+int update_task(Task *task);
 
 #endif

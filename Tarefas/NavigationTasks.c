@@ -1,30 +1,30 @@
 #include <stdio.h>
 
-#include "CompromissosView.h"
+#include "TarefasView.h"
 
 #include "../libs/utils.h"
 #include "../libs/styles.h"
 
 
-void navigation_compromise(void) {
+void navigation_tasks(void) {
     char op;
     do {
-        op = menu_compromise();
+        op = menu_task();
         switch(op) {
             case '1':
-                register_compromises();
+                add_task();
                 limpa_buffer();
                 break;
             case '2':
-                view_compromise();
+                search_task();
                 limpa_buffer();
                 break;
             case '3':
-                change_compromise();
+                change_task();
                 limpa_buffer();
                 break;
             case '4':
-                delete_compromises();
+                delete_task();
                 limpa_buffer();
                 break;
             case '0':
