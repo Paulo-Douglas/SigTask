@@ -9,19 +9,34 @@
 #include "EquipesView.h"
 
 
+int get_id_team(void){
+    FILE * fp = fopen("data/teams.dat", "rb");
+    if (fp == NULL) return FALSE;
+
+    Team last_team;
+    int next_id = 1;
+
+    fseek(fp, -sizeof(Team), SEEK_END);
+
+    if (fread(&last_team, sizeof(Team), 1, fp)){
+        next_id = atoi(last_team.id) + 1;
+    }
+
+    fclose(fp);
+    return next_id;
+}
+
 
 int insert_team(Team *teams){
     int result = FALSE;
 
     create_path("data/");
-    FILE *fp = fopen("data/academic_teams.dat", "ab");   
+    FILE *fp = fopen("data/teams.dat", "ab");   
     if (fp == NULL) return result;
 
-    int id = get_next_id("data/academic_teams.dat");
-    if(id == 0) id = 1;
+    int id = get_id_team();
 
     snprintf(teams->id, sizeof(teams->id), "%d", id);
-
 
     if (fwrite(teams, sizeof(Team), 1, fp)) result = TRUE;
 
@@ -29,8 +44,9 @@ int insert_team(Team *teams){
     return TRUE;
 }
 
+
 Team *load_team(const char *id){
-    FILE *fp = fopen("data/academic_teams.dat", "rb");
+    FILE *fp = fopen("data/teams.dat", "rb");
     if(fp == NULL) return NULL;
 
     Team *team = (Team *)malloc(sizeof(Team));
@@ -45,8 +61,9 @@ Team *load_team(const char *id){
     return NULL;
 }
 
+
 int update_team(Team *new_team){
-    FILE *fp = fopen("data/academic_teams.dat", "rb+");
+    FILE *fp = fopen("data/teams.dat", "rb+");
     if(fp == NULL) return FALSE;
 
     Team team;

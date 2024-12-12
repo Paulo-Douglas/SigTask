@@ -14,7 +14,7 @@ typedef struct {
 
 int insert_team(Team *teams);
 int update_team(Team *new_team);
-int get_id_user(void);
+int get_id_team(void);
 Team *load_team(const char *id);
 
 #endif
