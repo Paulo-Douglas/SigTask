@@ -16,6 +16,6 @@ typedef struct
 
 int insert_user_to_file(User *users);
 int update_data_user(const char *cpf, const char *new_value, const char *field, int length);
-User load_user(const char *cpf);
+User* load_user(const char *cpf);
 
 #endif // USUARIOSMODEL_H

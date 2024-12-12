@@ -64,33 +64,19 @@ int update_data_user(const char *cpf, const char *new_value, const char *field, 
 }
 
 
-User load_user(const char *cpf){
-    User users;
+User* load_user(const char *cpf){
+    FILE * fp = fopen("data/users.dat", "rb");
+    if (fp == NULL) return NULL;
 
-    FILE *fp = fopen("data/users.txt", "r");
-    if (fp == NULL) exit(1);
-
-//     char line[512];
-
-//     while (fgets(line, sizeof(line), fp) != NULL) {
-
-//         if (strstr(line, cpf) != NULL) {
-//             char *cpf_user = strtok(line, ":");
-//             char *cursor = strtok(NULL, "\n");
-
-//             char *name = extract_value(&cursor, ":", ",");
-//             char *phone = extract_value(&cursor, ":", ",");
-//             char *status = extract_value(&cursor, ":", "}");
-
-//             if (cpf_user && name && phone && status) {
-//                 users.cpf = strdup(cpf_user);
-//                 users.name = strdup(name);
-//                 users.phone = strdup(phone);
-//                 users.status = strdup(status);
-//             }
-//         }
-//     }
+    User *user = (User *)malloc(sizeof(User));
+    while (fread(user, sizeof(User), 1, fp)){
+        if (strcmp(user->cpf, cpf) == 0){
+            fclose(fp);
+            return user;
+        }
+    }
 
     fclose(fp);
-    return users;
+    free(user);
+    return NULL;
 }

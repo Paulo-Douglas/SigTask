@@ -10,7 +10,7 @@
 #include "../libs/styles.h"
 
 
-int insert_user(void){
+int add_user(void){
     User user = {0};
 
     printf("|\tCPF: ");
