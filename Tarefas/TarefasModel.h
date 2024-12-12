@@ -17,7 +17,8 @@ typedef struct
 } Task;
 
 int insert_task(Task *task);
-Task * load_task(const char *id);
+int get_id_task(void);
 int update_task(Task *task);
+Task * load_task(const char *id);
 
 #endif

@@ -11,9 +11,26 @@
 #include "../libs/utils.h"
 
 
+int get_id_task(void){
+    FILE * fp = fopen("data/task.dat", "rb");
+    if (fp == NULL) return FALSE;
+
+    Task task;
+    int next_id = 1;
+
+    fseek(fp, -sizeof(Task), SEEK_END);
+
+    if (fread(&task, sizeof(Task), 1, fp)){
+        next_id = atoi(task.id) + 1;
+    }
+
+    fclose(fp);
+    return next_id;
+}
+
+
 int insert_task(Task *task){
-    int id = get_next_id("data/task.dat");
-    if(id == 0) id = 1;
+    int id = get_id_task();
 
     snprintf(task->id, sizeof(task->id), "%d", id);
 
