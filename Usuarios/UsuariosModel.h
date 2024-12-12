@@ -3,10 +3,10 @@
 
 typedef struct
 {
-    char *name;
-    char *cpf;
-    char *phone;
-    char *status;
+    char cpf[15];
+    char name[100];
+    char phone[14];
+    char status;
 } User;
 
 #define CPF_SIZE 14

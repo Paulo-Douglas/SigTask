@@ -56,7 +56,6 @@ void register_user() {
     } else {
         printf("|-------------------------------------------------------------------------------------------------------|\n");
         show_error("| [ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
-        show_error("| Se deseja reativar a conta, escolha a opcao [5] Reativar conta\n");
     }
     enter();
 }
@@ -72,13 +71,13 @@ void register_user() {
 void display_user_data(void) {
     show_header("Exibir Dados");
 
-    printf("|\tCPF: ");
-    char *cpf = read_cpf();
-    User users = load_user(cpf);
+    // printf("|\tCPF: ");
+    // char *cpf = read_cpf();
+    // User users = load_user(cpf);
 
-    if(users.cpf == NULL) show_error("| CPF não alcançado!\n");
-    else if (strcmp(users.status, "0") == 0) show_error("| Usuário não pode ser acessado");
-    else user_data(&users);
+    // if(users.cpf == NULL) show_error("| CPF não alcançado!\n");
+    // else if (strcmp(users.status, "0") == 0) show_error("| Usuário não pode ser acessado");
+    // else user_data(&users);
 
     enter();
 }
@@ -94,21 +93,21 @@ void display_user_data(void) {
  **/
 void modify_user_data(void) {
     show_header("Editar Dados");
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User users = load_user(cpf);
+    // printf("|\tCPF:\t");
+    // const char *cpf = read_cpf();
+    // User users = load_user(cpf);
 
-    if (users.cpf == NULL) show_error("| CPF não encontrado");
-    else if (strcmp(users.status, "0") == 0) show_error("| Não é possível editar esse usuário");
-    else {
-        user_data(&users);
-        int result = update_user(&users);   
-        if (result) {
-            show_sucess("| Dados alterados com sucesso!\n");
-        } else {
-            show_error("| [ERRO]: Erro ao alterar!\n");
-        }
-    }
+    // if (users.cpf == NULL) show_error("| CPF não encontrado");
+    // else if (strcmp(users.status, "0") == 0) show_error("| Não é possível editar esse usuário");
+    // else {
+    //     user_data(&users);
+    //     int result = update_user(&users);   
+    //     if (result) {
+    //         show_sucess("| Dados alterados com sucesso!\n");
+    //     } else {
+    //         show_error("| [ERRO]: Erro ao alterar!\n");
+    //     }
+    // }
 
     enter();
 }
@@ -116,39 +115,39 @@ void modify_user_data(void) {
 
 void delete_user(void) {
     show_header("Excluir Conta");
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User users = load_user(cpf);
-    if ((users.cpf != NULL) && (strcmp(users.status, "0") != 0)) {
-        update_data_user(cpf, "0", FIELD_STATUS, 1);
-        show_sucess("| Conta excluida com sucesso!\n");
-    }else {
-        show_error("| [ERRO]: Erro ao excluir!\n");
-    }
+    // printf("|\tCPF:\t");
+    // const char *cpf = read_cpf();
+    // User users = load_user(cpf);
+    // if ((users.cpf != NULL) && (strcmp(users.status, "0") != 0)) {
+    //     update_data_user(cpf, "0", FIELD_STATUS, 1);
+    //     show_sucess("| Conta excluida com sucesso!\n");
+    // }else {
+    //     show_error("| [ERRO]: Erro ao excluir!\n");
+    // }
     enter();
 }
 
 
 void reactivate_user(void) {
     show_header("Reativar Conta");
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User users = load_user(cpf);
-    if ((users.cpf != NULL) && (strcmp(users.status, "1") != 0)) {
-        update_data_user(cpf, "1", FIELD_STATUS, 1);
-        show_sucess("| Conta ativada com sucesso!\n");
-    }else {
-        show_error("| [ERRO]: Erro ao ativar!\n");
-    }
+    // printf("|\tCPF:\t");
+    // const char *cpf = read_cpf();
+    // User users = load_user(cpf);
+    // if ((users.cpf != NULL) && (strcmp(users.status, "1") != 0)) {
+    //     update_data_user(cpf, "1", FIELD_STATUS, 1);
+    //     show_sucess("| Conta ativada com sucesso!\n");
+    // }else {
+    //     show_error("| [ERRO]: Erro ao ativar!\n");
+    // }
     enter();
 }
 
 
 void user_data(const User *users) {
     show_header("Dados do usuário");
-    printf("\033[1m|CPF:\033[m %s\n", users->cpf);
-    printf("\033[1m|Nome:\033[m %s\n", users->name);
-    printf("\033[1m|Telefone:\033[m %s\n", users->phone);
-    printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Inativo");
+    // printf("\033[1m|CPF:\033[m %s\n", users->cpf);
+    // printf("\033[1m|Nome:\033[m %s\n", users->name);
+    // printf("\033[1m|Telefone:\033[m %s\n", users->phone);
+    // printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Inativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
