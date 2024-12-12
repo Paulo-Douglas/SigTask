@@ -22,9 +22,6 @@ void navegacao_modulos(void) {
                 navegacao_times();
                 break;
             case '3':
-                navigation_tasks();
-                break;
-            case '4':
                 navigation_compromise();
                 break;
             case '5':

@@ -13,9 +13,8 @@ char menuPrincipal(void) {
     printf("|                                                                   |\n");
     printf("|                           [1] Usuários                            |\n");
     printf("|                           [2] Gerir Equipes                       |\n");
-    printf("|                           [3] Tarefas                             |\n");
-    printf("|                           [4] Compromissos                        |\n");
-    printf("|                           [5] Sobre                               |\n");
+    printf("|                           [3] Compromissos                        |\n");
+    printf("|                           [4] Sobre                               |\n");
     printf("|                           [0] Sair                                |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
