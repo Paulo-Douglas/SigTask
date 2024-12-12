@@ -15,8 +15,7 @@ int insert_compromise(Compromisers *compromise){
     int id = get_next_id("data/compromisers.dat");
     if(id == 0) id = 1;
 
-    compromise->id = id;
-    printf("%d", compromise->id);
+    snprintf(compromise->id, sizeof(compromise->id), "%d", id);
 
     create_path("data/");
     int result = FALSE;
@@ -30,58 +29,21 @@ int insert_compromise(Compromisers *compromise){
     return result;
 }
 
+Compromisers * load_compromise(const char *id){
+    FILE *fp = fopen("data/compromisers.dat", "rb");
+    if(fp == NULL) return NULL;
 
-int load_compromise(const char *id, Compromisers *compromise) {
-    FILE *fp = fopen("data/compromisers.txt", "r");
-    if(fp == NULL) return FALSE;
-
-//     char line[300];
-//     int found = FALSE;
-
-//     while (fgets(line, sizeof(line), fp) != NULL){
-//         char *id_line = strtok(line, ":");
-//         if(id_line == NULL) continue;
-
-//         if(strcmp(id_line, id) == 0){
-
-//             char *field_number_anything = strtok(NULL, ":");
-//             if(field_number_anything == NULL) continue;
-//             char *number_anything = strtok(NULL, ":");
-
-//             char *field_name = strtok(NULL, ":");
-//             if(field_name == NULL) continue;
-//             char *name_all = strtok(NULL, ",");
-
-//             char *field_situation = strtok(NULL, ":");
-//             if(field_situation == NULL) continue;
-//             char *type_situation = strtok(NULL, ",");
-
-//             char *field_date = strtok(NULL, ":");
-//             if (field_date == NULL) continue;     
-//             char *date_compromise = strtok(NULL, "-");
-
-//             char *field_description = strtok(NULL, ":");
-//             if (field_description == NULL) continue;
-//             char *description_compromise = strtok(NULL, "\n");
-            
-//             char *field_status = strtok(NULL, ":");
-//             if(field_status == NULL) continue;            // tenho que ver colocar entre aspas aq 
-//             char *status = strtok(NULL, "\n");
-
-//             compromise->id = strdup(number_anything);
-//             compromise->name_anything = strdup(name_all);
-//             compromise->situation = strdup(type_situation);
-//             compromise->date = strdup(date_compromise);
-//             compromise->description = strdup(description_compromise);
-//             compromise->status = strdup(status);
-
-//             found = TRUE;
-//             break;
-//         } 
-//     }
-
+    Compromisers *compromise = (Compromisers *)malloc(sizeof(Compromisers));
+    while(fread(compromise, sizeof(Compromisers), 1, fp)){
+        if(strcmp(compromise->id, id) == 0){
+            fclose(fp);
+            return compromise;
+        }
+    }
     fclose(fp);
-    return FALSE;
+    free(compromise);
+    return NULL;
+
 }
 
 

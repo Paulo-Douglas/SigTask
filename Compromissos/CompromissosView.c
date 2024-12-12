@@ -10,27 +10,6 @@
 #include "../libs/styles.h"
 
 
-
-Compromisers initialize_compromisse(const char* title){
-    show_header(title);
-    Compromisers compromise = {0};
-
-    limpa_buffer();
-    printf("|\tID: ");
-    char id[3];
-    scanf(" %s", id);
-    printf("|\t(1) Aberto | (2) Fechado: ");
-    char status[2];
-    scanf(" %s", status);
-
-    if(!load_compromise(id ,&compromise)){
-        show_error("| [ERRO]: Erro ao carregar compromisso!\n");
-    }
-
-    return compromise;
-}
-
-
 char menu_compromise(void) {
     char op;
     limpar_tela();
@@ -49,7 +28,9 @@ char menu_compromise(void) {
 }
 
 void register_compromises(void) {
-    show_header("Cadastrar Compromisso");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                              Cadastrar compromisso                                                            |\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
     if(register_compromise()){
         show_sucess("| Compromisso cadastrado com sucesso!\n");
@@ -61,21 +42,27 @@ void register_compromises(void) {
 }
 
 void view_compromise(void) {
-    show_header("Exibir compromisso");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Exibir compromisso                                                            |\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
-    // Compromisers compromise = {0};
-    // printf("|\tInforme o ID do compromisso: ");
-    // char id[2];
-    // scanf(" %1s", id);
+    printf("|\tInforme o ID: ");
+    char id[4];
+    scanf("%4s", id);
 
-    // if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
-    // else display_data_compromises(&compromise);
-    // printf("\n");
+    Compromisers *compromise = load_compromise(id);
+    if(compromise != NULL){
+        display_data_compromises(compromise);
+    } else show_error("Compromisso não encontrado");
 
     enter();
 }
+
+
 void edit_compromise(void) {
-    show_header("Editar compromissos");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Editar compromisso                                                            |\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
     // Compromisers compromise = {0};
     // printf("|\tInforme o ID do compromisso: ");
@@ -96,14 +83,12 @@ void edit_compromise(void) {
 
 
 void delete_compromises(void) { 
-    show_header("Excluir compromisso");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                 Fechar compromisso                                                            |\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     enter();
 }
 
-void data_compromises(void) {
-    show_header("Dados do compromisso");
-    enter();
-}
 
 void change_data_compromisses(void) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
@@ -119,13 +104,14 @@ void change_data_compromisses(void) {
 void display_data_compromises(Compromisers *compromise){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do compromisso                                                          |\n");
-    // printf("| \033[1mID:\033[0m %s\n", compromise->id);
-    // printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    // printf("\033[1m\tCompromisso:\033[m %s\n", compromise->name_anything);
-    // printf("\033[1m\tSituação:\033[m %s\n", compromise->situation);
-    // printf("\033[1m\tData de inicio:\033[m %s\n", compromise->date);
-    // printf("\033[1m\tDescrição:\033[m %s\n", compromise->description);
-    // printf("| \033[1mStatus:\033[0m %s\n", strcmp(compromise->status, "0") ? "Aberta" : "Fechada");
-    // printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("| \033[1mID:\033[0m %s\n", compromise->id);
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|\033[1m\tCompromisso:\033[m %s\n", compromise->title);
+    printf("|\033[1m\tDescrição:\033[m %s\n", compromise->description);
+    printf("|\033[1m\tData:\033[m %s\n", compromise->date);
+    printf("|\033[1m\tPrioridade:\033[m %s\n", compromise->priority == 'A' ? "Alta" : compromise->type == 'M' ? "Média" : "Baixa");
+    printf("|\033[1m\tTipo:\033[m %s\n", compromise->type == 'E' ? "Evento" : compromise->type == 'R' ? "Reunião" : "Projeto");
+    printf("|\033[1m\tStatus:\033[0m %s\n", compromise->status == '0' ? "Aberta" : "Fechada");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }
 
