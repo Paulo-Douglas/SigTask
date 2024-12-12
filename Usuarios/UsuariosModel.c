@@ -11,10 +11,26 @@
 #include "../libs/reads.h"
 
 
+int get_id_user(void){
+    FILE * fp = fopen("data/users.dat", "rb");
+    if (fp == NULL) return FALSE;
+
+    User last_user;
+    int next_id = 1;
+
+    fseek(fp, -sizeof(User), SEEK_END);
+
+    if (fread(&last_user, sizeof(User), 1, fp)){
+        next_id = atoi(last_user.id) + 1;
+    }
+
+    fclose(fp);
+    return next_id;
+}
+
 
 int insert_user(User *user){
-    int id = get_next_id("data/users.dat");
-    if(id == 0) id = 1;
+    int id = get_id_user();
 
     snprintf(user->id, sizeof(user->id), "%d", id);
     create_path("data/");
@@ -24,6 +40,7 @@ int insert_user(User *user){
     int result = FALSE;
 
     if (fwrite(user, sizeof(User), 1, fp)) result = TRUE;
+    fputc('\n', fp);
 
     fclose(fp);
     return result;
