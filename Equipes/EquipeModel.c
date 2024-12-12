@@ -10,20 +10,20 @@
 
 
 
-int insert_team_to_file(Team *teams, char *file_name){
+int insert_team_to_file(Team *teams){
   create_path("data/");
-  FILE *fp = fopen(file_name, "a");   
+  FILE *fp = fopen("data/academic_teams.txt", "a");   
 
-  int id = get_next_id(file_name);
+  int id = get_next_id("data/academic_teams.txt");
   if (id == 0) id = 1;
   
   if(fp == NULL) return FALSE;
   
     fprintf(fp, "%d:{", id);
-    fprintf(fp, "%s %-*s", FIELD_USER, VARCHAR250, "");    
-    fprintf(fp, "%s %-*s", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
-    fprintf(fp, "%s %-*s", FIELD_TEAM, VARCHAR50, teams->team_name);      
-    fprintf(fp, "%s %-*s", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
+    fprintf(fp, "%s%-*s,", FIELD_USER, VARCHAR50, "");    
+    fprintf(fp, "%s%-*s,", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
+    fprintf(fp, "%s%-*s,", FIELD_TEAM, VARCHAR50, teams->team_name);      
+    fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
     fprintf(fp, "%s%s", FIELD_STATUS, teams->status); 
     fprintf(fp,"}\n" );                                
     fclose(fp);
@@ -31,104 +31,54 @@ int insert_team_to_file(Team *teams, char *file_name){
 }
 
 
-int view_team(const char *id, const char *file_name) {
-    FILE *fp = fopen(file_name, "r");
+Team upload_struct(char *id) {
+    Team team = {0}; // Inicializa a estrutura com valores padrão
+
+    FILE *fp = fopen("data/academic_teams.txt", "r");
     if (fp == NULL) {
-        return FALSE;
-    };
+        return team;
+    }
 
     char line[500];
-    int found = FALSE;
 
     while (fgets(line, sizeof(line), fp)) {
         char *id_team = strtok(line, ":");
-        if (id[0] == *id_team){
-            found = TRUE;
+        if (id_team && strcmp(id, id_team) == 0) {
+            // Preenche os campos da estrutura com segurança
+            team.id = strdup(id_team);
+
+            char *field_user = strtok(NULL, ":");
+            char *value_user = strtok(NULL, ",");
+            if (field_user && value_user) team.usuarios = strdup(value_user);
+
+            char *field_inst = strtok(NULL, ":");
+            char *value_inst = strtok(NULL, ",");
+            if (field_inst && value_inst) team.team_name_especific = strdup(value_inst);
+
+            char *field_team = strtok(NULL, ":");
+            char *value_team = strtok(NULL, ",");
+            if (field_team && value_team) team.team_name = strdup(value_team);
+
+            char *field_description = strtok(NULL, ":");
+            char *value_description = strtok(NULL, ",");
+            if (field_description && value_description) team.description = strdup(value_description);
+
+            char *field_status = strtok(NULL, ":");
+            char *value_status = strtok(NULL, "}");
+            if (field_status && value_status) team.status = strdup(value_status);
+
+            break; // Sai do loop após encontrar o time
         }
     }
 
     fclose(fp);
-
-    return found;
+    return team;
 }
 
-
-Team load_teams_academic(const char *id){    // tanto para equipes academicas e empresariais 
-    Team teams;
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL) exit(1);
-       
-
-    char line[512];
-    while (fgets(line, sizeof(line), fp) != NULL){
-        
-        if (strcmp("NULL", id) == 0 || strstr(line, id) != NULL) {
-            char *id_academic = strtok(NULL, ":");
-            char *academy_especific = strtok(NULL, ":");    
-            if (academy_especific == NULL) continue;
-            char *team_name_pos = strtok(NULL, ":");
-            if (team_name_pos == NULL) continue;
-            char *description_pos = strtok(NULL, ":");
-            if (description_pos == NULL) continue;
-            char *description_value = strtok(NULL, ",");
-            char *status_pos = strtok(NULL, ":");
-            if (status_pos == NULL) continue;
-            char *status_value = strtok(NULL, "}");
-    
-
-            teams.id = strdup(id_academic);
-            teams.team_name_especific = strdup(academy_especific);
-            teams.team_name = strdup(team_name_pos);
-            teams.description = strdup(description_value);
-            teams.status = strdup(status_value);
-            team_data_academic(&teams);
-            
-
-        }
-    }
-    fclose(fp);
-    return teams;
-}
-
-
-Team load_teams_business(const char *id){    // tanto para equipes academicas e empresariais 
-    Team teams;
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL) exit(1);
-       
-
-    char line[512];
-    while (fgets(line, sizeof(line), fp) != NULL){
-        
-        if (strcmp("NULL", id) == 0 || strstr(line, id) != NULL) {
-            char *id_academic = strtok(NULL, ":");
-            char *academy_especific = strtok(NULL, ":");    
-            if (academy_especific == NULL) continue;
-            char *team_name_pos = strtok(NULL, ":");
-            if (team_name_pos == NULL) continue;
-            char *description_pos = strtok(NULL, ":");
-            if (description_pos == NULL) continue;
-            char *description_value = strtok(NULL, ",");
-            char *status_pos = strtok(NULL, ":");
-            if (status_pos == NULL) continue;
-            char *status_value = strtok(NULL, "}");
-
-            teams.id = strdup(id_academic);
-            teams.team_name_especific = strdup(academy_especific);
-            teams.team_name = strdup(team_name_pos);
-            teams.description = strdup(description_value);
-            teams.status = strdup(status_value);
-            team_data_business(&teams);
-
-        }
-    }
-    fclose(fp);
-    return teams;
-}
 
 
 int update_date_teams(const char *id, const char *new_value, const char *field, int length){
-    FILE *fp = fopen("data/teams.txt", "r+");
+    FILE *fp = fopen("data/academic_teams.txt", "r+");
     if (fp == NULL) {
         show_error("Erro ao abrir o arquivo");
         return 0;
@@ -160,5 +110,3 @@ int update_date_teams(const char *id, const char *new_value, const char *field, 
          fclose(fp);
         return 0;
     }
-   
-

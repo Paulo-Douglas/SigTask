@@ -94,6 +94,7 @@ void display_data_task(Tasks *task) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("| \033[1mTítulo:\033[0m %s\n", task->title);
     printf("| \033[1mDescrição:\033[0m %s\n", task->description);
+    printf("| \033[1mTipo:\033[0m %s\n", task->type);
     printf("| \033[1mData:\033[0m %s\n", task->data);
     printf("| \033[1mTurno:\033[0m %s\n", strcmp(task->turn, "1") ? "Matutino" : (strcmp(task->turn, "2") ? "Vespertino" : "Noturno"));
     printf("| \033[1mPrioridade:\033[0m %s\n", strcmp(task->priority, "1") ? "Alta" : (strcmp(task->priority, "2") ? "Média" : "Baixa"));            

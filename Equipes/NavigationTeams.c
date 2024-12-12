@@ -9,10 +9,10 @@ void navegacao_times(void){
         op = menu_equipes();
         switch(op){
             case '1':  
-                cadastro_tipo_de_equipe();
+                register_team_academic();
                 break;
             case '2':
-                exibir_equipe();
+                search_team();
                 break;
             case '3':
                 add_user_to_team();
@@ -24,7 +24,7 @@ void navegacao_times(void){
                 excluir_equipe();
                 break;
             case '6':
-                alterar_tipo_de_equipe();
+                modify_team_data_academic();
                 break;
             case '0':
                 break;
@@ -36,4 +36,4 @@ void navegacao_times(void){
     } while (op != '0');
     limpa_buffer();
     limpar_tela();
-}   
+}

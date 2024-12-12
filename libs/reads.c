@@ -195,8 +195,15 @@ char* read_generic_123(const char *dir) {
         } else {
             result = strdup("B");
         }
+    } else if (strcmp(dir, "type") == 0) {
+        if (strcmp(prompt, "1") == 0) {
+            result = strdup("E");
+        } else if (strcmp(prompt, "2") == 0) {
+            result = strdup("R");
+        } else {
+            result = strdup("P");
+        }
     }
-
     free(prompt);
 
     return result;

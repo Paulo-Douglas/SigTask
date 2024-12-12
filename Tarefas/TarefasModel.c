@@ -23,6 +23,7 @@ int insert_into_tasks(Tasks *task) {
     fprintf(fp, "%s%s,", FIELD_CPF, task->cpf);
     fprintf(fp, "%s%-*s,", FIELD_TITLE, VARCHAR50, task->title);
     fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, task->description);
+    fprintf(fp, "%s%s,", FIELD_TYPE, task->type);
     fprintf(fp, "%s%s,", FIELD_DATA, task->data);
     fprintf(fp, "%s%s,", FIELD_TURN, task->turn);
     fprintf(fp, "%s%s,", FIELD_PRIORITY, task->priority);
@@ -43,43 +44,26 @@ int load_task(const char *id, Tasks *task){
     int found = FALSE;
 
     while (fgets(line, sizeof(line), fp) != NULL){
-        char *id_line = strtok(line, ":");
-        if(id_line == NULL) continue;
+        char *id_team = strtok(line, ":");
 
-        if(strcmp(id_line, id) == 0){
-            char *field_cpf = strtok(NULL, ":");
-            if(field_cpf == NULL) continue;
-            char *cpf = strtok(NULL, ",");
+        if(strcmp(id_team, id) == 0){
+            char *cursor = strtok(NULL, "\n");
 
-            char *field_title = strtok(NULL, ":");
-            if(field_title == NULL) continue;
-            char *title = strtok(NULL, ",");
-
-            char *field_description = strtok(NULL, ":");
-            if(field_description == NULL) continue;
-            char *description = strtok(NULL, ",");
-
-            char *field_date = strtok(NULL, ":");
-            if(field_date == NULL) continue;
-            char *data = strtok(NULL, ",");
-
-            char *field_turn = strtok(NULL, ":");
-            if(field_turn == NULL) continue;
-            char *turn = strtok(NULL, ",");
-
-            char *field_priority = strtok(NULL, ":");
-            if(field_priority == NULL) continue;
-            char *priority = strtok(NULL, ",");
-
-            char *field_status = strtok(NULL, ":");
-            if(field_status == NULL) continue;
-            char *status = strtok(NULL, "}");
+            char *cpf = extract_value(&cursor, ":", ",");
+            char *title = extract_value(&cursor, ":", ",");
+            char *description = extract_value(&cursor, ":", ",");
+            char *date = extract_value(&cursor, ":", ",");
+            char *turn = extract_value(&cursor, ":", ",");
+            char *priority = extract_value(&cursor, ":", ",");
+            char *type = extract_value(&cursor, ":", ",");
+            char *status = extract_value(&cursor, ":", "}");
 
             task->cpf = strdup(cpf);
             task->title = strdup(title);
             task->description = strdup(description);
-            task->data = strdup(data);
+            task->data = strdup(date);
             task->turn = strdup(turn);
+            task->type = strdup(type);
             task->priority = strdup(priority);
             task->status = strdup(status);
             found = TRUE;

@@ -109,11 +109,9 @@ void change_data_compromisses(void) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Alterar compromisso                                                           |\n");
     printf("\033[1m|\t (1) Título\033[0m\n");
-    printf("\033[1m|\t (2) Descrição\033[0m\n");
-    printf("\033[1m|\t (3) Data de Início\033[0m\n");
-    printf("\033[1m|\t (4) Data de Fim\033[0m\n");
-    printf("\033[1m|\t (5) Horário\033[0m\n");
-    printf("\033[1m|\t (6) Prioridade\033[0m\n");
+    printf("\033[1m|\t (2) Situação\033[0m\n");
+    printf("\033[1m|\t (3) Data\033[0m\n");
+    printf("\033[1m|\t (3) Descrição\033[0m\n");
     printf("\033[1m|\t (7) Status [FECHAR] \033[0m\n");
     printf("\033[1m|\t (8) Status [REABRIR] \033[0m\n");
 }
@@ -121,14 +119,12 @@ void change_data_compromisses(void) {
 void display_data_compromises(Compromisers *compromise){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do compromisso                                                          |\n");
-    printf("| \033[1mID:\033[0m %s\n", compromise->team_id);
+    printf("| \033[1mID:\033[0m %s\n", compromise->id);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("\033[1m\tCompromisso:\033[m %s\n", compromise->title);
+    printf("\033[1m\tCompromisso:\033[m %s\n", compromise->name_anything);
+    printf("\033[1m\tSituação:\033[m %s\n", compromise->situation);
+    printf("\033[1m\tData de inicio:\033[m %s\n", compromise->date);
     printf("\033[1m\tDescrição:\033[m %s\n", compromise->description);
-    printf("\033[1m\tData de inicio:\033[m %s\n", compromise->start_date);
-    printf("\033[1m\tData de fim:\033[m %s\n", compromise->end_date);
-    printf("\033[1m\tHorário:\033[m %s\n", compromise->time);
-    printf("| \033[1mPrioridade:\033[0m %s\n", strcmp(compromise->priority, "1") ? "Alta" : (strcmp(compromise->priority, "2") ? "Média" : "Baixa"));  
     printf("| \033[1mStatus:\033[0m %s\n", strcmp(compromise->status, "0") ? "Aberta" : "Fechada");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }

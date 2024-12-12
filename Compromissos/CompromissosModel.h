@@ -5,13 +5,11 @@
 
 typedef struct
 {
-    char *team_id;
-    char *title;
+    char *id;
+    char *name_anything;
+    char *situation;
     char *description;
-    char *start_date;
-    char *end_date;
-    char *time;
-    char *priority;
+    char *date;
     char *status;
 
 } Compromisers;

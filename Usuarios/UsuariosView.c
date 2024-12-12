@@ -71,10 +71,15 @@ void register_user() {
  */
 void display_user_data(void) {
     show_header("Exibir Dados");
-    User users = load_user("111.111.111-11");
-    if(users.cpf == NULL) {
-        show_error("| Nenhum usuário cadastrado!\n");
-    }
+
+    printf("|\tCPF: ");
+    char *cpf = read_cpf();
+    User users = load_user(cpf);
+
+    if(users.cpf == NULL) show_error("| CPF não alcançado!\n");
+    else if (strcmp(users.status, "0") == 0) show_error("| Usuário não pode ser acessado");
+    else user_data(&users);
+
     enter();
 }
 
@@ -93,7 +98,9 @@ void modify_user_data(void) {
     const char *cpf = read_cpf();
     User users = load_user(cpf);
 
-    if (users.cpf != NULL) {
+    if (users.cpf == NULL) show_error("| CPF não encontrado");
+    else if (strcmp(users.status, "0") == 0) show_error("| Não é possível editar esse usuário");
+    else {
         user_data(&users);
         int result = update_user(&users);   
         if (result) {
@@ -142,6 +149,6 @@ void user_data(const User *users) {
     printf("\033[1m|CPF:\033[m %s\n", users->cpf);
     printf("\033[1m|Nome:\033[m %s\n", users->name);
     printf("\033[1m|Telefone:\033[m %s\n", users->phone);
-    printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Invativo");
+    printf("\033[1m|Status:\033[m %s\n", strcmp(users->status, "0") ? "Ativo" : "Inativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }
