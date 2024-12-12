@@ -22,11 +22,8 @@ void limpa_buffer(void);
 void limpar_tela(void);
 void create_path(const char *name_path);
 void enter(void);
-void delete_spaces(char *str);
 
-int save_file(const char *data[], char *file_name);
 int year_now(void);
-int get_next_id(const char *name_of_file);
 
 
 #endif
