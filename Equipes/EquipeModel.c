@@ -10,10 +10,37 @@
 
 
 
-int insert_team_to_file(Team *teams){
+int insert_team(Team *teams){
+    int result = FALSE;
+
     create_path("data/");
-    FILE *fp = fopen("data/academic_teams.txt", "a");   
+    FILE *fp = fopen("data/academic_teams.dat", "ab");   
+    if (fp == NULL) return result;
+
+    int id = get_next_id("data/academic_teams.dat");
+    if(id == 0) id = 1;
+
+    snprintf(teams->id, sizeof(teams->id), "%d", id);
+
+
+    if (fwrite(teams, sizeof(Team), 1, fp)) result = TRUE;
 
     fclose(fp);
     return TRUE;
+}
+
+Team *load_team(const char *id){
+    FILE *fp = fopen("data/academic_teams.dat", "rb");
+    if(fp == NULL) return NULL;
+
+    Team *team = (Team *)malloc(sizeof(Team));
+    while(fread(team, sizeof(Team), 1, fp)){
+        if(strcmp(team->id, id) == 0){
+            fclose(fp);
+            return team;
+        }
+    }
+    fclose(fp);
+    free(team);
+    return NULL;
 }

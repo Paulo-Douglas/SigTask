@@ -3,6 +3,6 @@
 
 #include "EquipeModel.h"
 
-int insert_team_academic(void);
+int register_team(void);
 
 #endif

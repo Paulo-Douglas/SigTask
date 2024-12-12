@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../libs/utils.h"
 #include "../libs/reads.h"
@@ -11,16 +12,21 @@
 #include "EquipesView.h"
 
 
-int insert_team_academic(void){
-    // Team teams = {NULL, NULL, NULL, NULL,};
+int register_team(void){
+    limpa_buffer();
+    Team teams = {0};
     
-    // read_and_assign(&teams.team_name_especific,"|\tNome da instituição: ", read_string);
-    // read_and_assign(&teams.team_name, "|\tNome da equipe: ", read_string);
-    // read_and_assign(&teams.description, "|\tDescrição: ", read_string);
+    printf("|\tNome da equipe: ");
+    char *name = read_string();
+    strcpy(teams.name, name);
 
-    // teams.status = "1";
+    printf("|\tDescrição da equipe: ");
+    char *description = read_string();
+    strcpy(teams.description, description);
 
-    // int result = insert_team_to_file(&teams); 
+    teams.status = '1';
 
-    return FALSE;
+    int result = insert_team(&teams);
+
+    return result;
 }

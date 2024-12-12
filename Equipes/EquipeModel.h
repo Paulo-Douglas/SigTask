@@ -5,13 +5,14 @@
 
 
 typedef struct {
-    char *id;
-    char *usuarios;
-    char *team_name_especific;
-    char *team_name;
-    char *description;
-    char *status;
+    char id[4];
+    char users[10];
+    char name[50];
+    char description[100];
+    char status;
 } Team;
 
-int insert_team_to_file(Team *teams);
+int insert_team(Team *teams);
+Team *load_team(const char *id);
+
 #endif

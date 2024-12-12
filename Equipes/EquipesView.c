@@ -38,7 +38,7 @@ void register_team_academic(void){
     printf("|                                                            Cadastro de equipe acadêmica                                                       |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    if (insert_team_academic()){
+    if (register_team()){
         show_sucess("Sucesso ao registrar a equipe!");
     } else {
         show_error("[ERROR] Falha ao cadastrar a equipe!");
@@ -59,9 +59,17 @@ void search_team(void) {
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Exibir equipe                                                                   |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    
     printf("|\t Insira o ID:    ");
-    char *id = (char*)malloc(10 * sizeof(char));
-    scanf("%10s", id);
+    char id[4];
+    scanf("%4s", id);
+
+    Team *team = load_team(id);
+    if (team == NULL) show_error("Equipe não encontrada");
+    if (team->status == '0') show_error("Equipe não disponível");
+    else{
+        view_team(team);
+    }
 
     limpa_buffer();
     enter();
@@ -96,11 +104,10 @@ void excluir_equipe(void) {
 void view_team(const Team *teams){
     show_header("Dados do time");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
-    printf("\033[1m|Usuários:\033[m %s\n", teams->usuarios == NULL ? "Sem usuários" : teams->usuarios);
-    printf("\033[1m|Nome da instituição:\033[m %s\n", teams->team_name_especific);
-    printf("\033[1m|Nome da equipe:\033[m %s\n", teams->team_name);
+    printf("\033[1m|Usuários:\033[m %s\n", teams->users);
+    printf("\033[1m|Nome da instituição:\033[m %s\n", teams->name);
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
-    printf("\033[1m|Status:\033[m %s\n", strcmp(teams->status, "0") ? "Ativo" : "Invativo");
+    printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
     getchar();
 }
