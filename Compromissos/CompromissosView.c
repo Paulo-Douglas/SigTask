@@ -42,6 +42,7 @@ void register_compromises(void) {
 }
 
 void view_compromise(void) {
+    limpa_buffer();
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Exibir compromisso                                                            |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
@@ -59,25 +60,22 @@ void view_compromise(void) {
 }
 
 
-void edit_compromise(void) {
+void change_compromise(void) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Editar compromisso                                                            |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
-    // Compromisers compromise = {0};
-    // printf("|\tInforme o ID do compromisso: ");
-    // char id[2];
-    // scanf(" %1s", id);
+    printf("|\tInforme o ID: ");
+    char id[4];
+    scanf("%4s", id);
 
-    // if(!load_compromise(id, &compromise)) show_error("| Compromisso não encontrada!\n");
-    // else {
-    //     display_data_compromises(&compromise);
-    //     if(update_compromise(&compromise, id)) {
-    //         show_sucess("| Compromisso editado com sucesso!\n");
-    //     } else {
-    //         show_error("| [ERRO]: Erro ao editar!\n");
-    //     }
-    // }
+    Compromisers *compromise = load_compromise(id);
+    if(compromise != NULL){
+        display_data_compromises(compromise);
+        edit_compromise(compromise);
+    } else show_error("Compromisso não encontrado");
+
+
     enter();
 }
 
@@ -87,24 +85,29 @@ void delete_compromises(void) {
     printf("|                                                                 Fechar compromisso                                                            |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     enter();
+
+    printf("|\tInforme o ID: ");
+    char id[4];
+    scanf("%4s", id);
+
+    Compromisers *compromise = load_compromise(id);
+    if(compromise == NULL) show_error("Compromisso não encontrado");
+    else if (compromise->status == '0') show_error("Compromisso ja fechado");
+    else {
+        compromise->status = '0';
+        update_compromise(compromise);
+        show_sucess("Compromisso fechado com sucesso!");
+    }
+
+    enter();
 }
 
-
-void change_data_compromisses(void) {
-    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("|                                                                 Alterar compromisso                                                           |\n");
-    printf("\033[1m|\t (1) Título\033[0m\n");
-    printf("\033[1m|\t (2) Situação\033[0m\n");
-    printf("\033[1m|\t (3) Data\033[0m\n");
-    printf("\033[1m|\t (3) Descrição\033[0m\n");
-    printf("\033[1m|\t (7) Status [FECHAR] \033[0m\n");
-    printf("\033[1m|\t (8) Status [REABRIR] \033[0m\n");
-}
 
 void display_data_compromises(Compromisers *compromise){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do compromisso                                                          |\n");
     printf("| \033[1mID:\033[0m %s\n", compromise->id);
+    printf("| \033[1mID do Usuário/Time:\033[0m %s\n", compromise->responsible);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\033[1m\tCompromisso:\033[m %s\n", compromise->title);
     printf("|\033[1m\tDescrição:\033[m %s\n", compromise->description);

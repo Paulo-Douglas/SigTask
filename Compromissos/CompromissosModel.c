@@ -35,6 +35,7 @@ Compromisers * load_compromise(const char *id){
 
     Compromisers *compromise = (Compromisers *)malloc(sizeof(Compromisers));
     while(fread(compromise, sizeof(Compromisers), 1, fp)){
+        getchar();
         if(strcmp(compromise->id, id) == 0){
             fclose(fp);
             return compromise;
@@ -46,37 +47,19 @@ Compromisers * load_compromise(const char *id){
 
 }
 
+int update_compromise(Compromisers *compromise){
+    FILE *fp = fopen("data/compromisers.dat", "rb+");
+    if(fp == NULL) return FALSE;
 
-int update_date_compromise(const char **id, const char *new_value, const char *field, int length){
-    FILE *fp = fopen("data/compromisers.txt", "r+");
-    if (fp == NULL) {
-        perror("Erro ao abrir o arquivo");
-        return 0;
+    Compromisers compromiser;
+    while(fread(&compromiser, sizeof(Compromisers), 1, fp)){
+        if(strcmp(compromiser.id, compromise->id) == 0){
+            fseek(fp, -sizeof(Compromisers), SEEK_CUR);
+            fwrite(compromise, sizeof(Compromisers), 1, fp);
+            fclose(fp);
+            return TRUE;
+        }
     }
-
-//     char line[512];
-//     memset(line, 0, sizeof(line));
-//     int found_id = 0;
-//     long pos = 0;
-
-//     while (fgets(line, sizeof(line), fp) != NULL) {
-//         if (strstr(line, *id) != NULL) {
-//             found_id = 1;
-//         }
-
-//         if (found_id && strstr(line, field) != NULL) {
-//             char *field_pos = strstr(line, field);
-//             if (field_pos == NULL) break;
-
-//             pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
-//             fseek(fp, pos, SEEK_SET);
-
-//             fprintf(fp, "%-*s", length, new_value);
-
-//             fclose(fp);
-//             return 1;
-//         }
-//     }
     fclose(fp);
-    return 0;
+    return FALSE;
 }

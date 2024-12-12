@@ -20,7 +20,7 @@ void navigation_compromise(void) {
                 limpa_buffer();
                 break;
             case '3':
-                edit_compromise();
+                change_compromise();
                 limpa_buffer();
                 break;
             case '4':

@@ -24,7 +24,6 @@ int insert_user(User *user){
     int result = FALSE;
 
     if (fwrite(user, sizeof(User), 1, fp)) result = TRUE;
-    fputc('\n', fp);
 
     fclose(fp);
     return result;
