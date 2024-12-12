@@ -7,13 +7,13 @@ char menuPrincipal(void) {
     printf("\n");
     printf("---------------------------------------------------------------------\n");
     printf("|                                                                   |\n");
-    printf("|           Sig-task: Sua genda de Tarefas e Compromissos           |\n");
+    printf("|                               Sig-task                            |\n");
     printf("|                                                                   |\n");
     printf("---------------------------------------------------------------------\n");
     printf("|                                                                   |\n");
     printf("|                           [1] Usuários                            |\n");
     printf("|                           [2] Gerir Equipes                       |\n");
-    printf("|                           [3] Compromissos                        |\n");
+    printf("|                           [3] Tarefas                             |\n");
     printf("|                           [4] Sobre                               |\n");
     printf("|                           [0] Sair                                |\n");
     printf("|                                                                   |\n");
@@ -37,7 +37,7 @@ void menuSobre(void) {
     printf("|              Departamento de Computação e Tecnologia              |\n");
     printf("|                    Sistemas de Informação - BSI                   |\n");
     printf("|                       Programação - DCT1106                       |\n");
-    printf("|                 Agenda de Tarefas e Compromissos                  |\n");
+    printf("|                       Agenda de Tarefas                           |\n");
     printf("---------------------------------------------------------------------\n");
     printf("|                                                                   |\n");
     printf("|       Desenvolvedores:                                            |\n");

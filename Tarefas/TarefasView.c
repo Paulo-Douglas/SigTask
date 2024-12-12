@@ -13,14 +13,14 @@
 char menu_task(void) {
     char op;
     limpar_tela();
-    printf("----------------------------------------------------\n");
+    printf("|---------------------------------------------------|\n");
     printf("|                     Tarefas                       |\n");
-    printf("----------------------------------------------------\n");
+    printf("|---------------------------------------------------|\n");
     printf("|               [1] Cadastrar Tarefa                |\n");
     printf("|               [2] Exibir Tarefa                   |\n");
     printf("|               [3] Editar Tarefa                   |\n");
     printf("|               [4] Excluir Tarefa                  |\n");
-    printf("|               [0] Sair                           |\n");
+    printf("|               [0] Sair                            |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
     scanf(" %c", &op);
