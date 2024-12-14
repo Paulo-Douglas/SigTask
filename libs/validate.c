@@ -113,7 +113,7 @@ int user_exists(const char *key) {
 int team_exists(const char *key) {
     int exists = FALSE;
 
-    FILE *fp = fopen("data/academic_teams.dat", "rb");
+    FILE *fp = fopen("data/teams.dat", "rb");
     if (fp == NULL) return exists;
 
     Team *team = (Team*)malloc(sizeof(Team));

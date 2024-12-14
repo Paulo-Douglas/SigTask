@@ -20,6 +20,8 @@ char menu_equipes(void) {
     printf("|               [2] Exibir Equipe                  |\n");
     printf("|               [3] Excluir Equipe                 |\n");
     printf("|               [4] Editar Equipe                  |\n");
+    printf("|               [5] Adicionar Usuário na Equipe    |\n");
+    printf("|               [6] Remover Usuário na Equipe      |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -45,7 +47,7 @@ void add_team(void){
 }
 
 
-void search_team(void) { 
+void search_team(void) {
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -57,15 +59,28 @@ void search_team(void) {
     scanf("%4s", id);
 
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    if (team->status == '0') show_error("Equipe não disponível");
-    else{
-        view_team(team);
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
+
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    view_team(team);
+    free(team);
 
     limpa_buffer();
     enter();
 }
+
 
 
 void delete_team(void) { 
@@ -109,11 +124,31 @@ void edit_team(void) {
         modify_team_data(team);
         getchar();
     }
-    printf("ESTOU aqui\n");
-    getchar();
     enter();
 }
 
+void add_user_to_team(void) {
+    limpar_tela();
+    printf("\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Adicionar usuário na equipe                                                     |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+
+    printf("|\t Insira o ID:    ");
+    char id[4];
+    scanf("%4s", id);
+    getchar();
+
+    Team *team = load_team(id);
+    if (team == NULL) show_error("Equipe não encontrada");
+    else if (team->status == '0') show_error("Equipe não di sponivel");
+    else if (team->users[10] != ' ') show_error("Equipe cheia");
+    else{
+        view_team(team);
+        add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+    }
+    enter();
+}
 
 void view_team(const Team *teams){
     show_header("Dados do time");

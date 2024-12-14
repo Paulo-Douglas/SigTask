@@ -20,6 +20,9 @@ void navegacao_times(void){
             case '4':
                 edit_team();
                 break;
+            case '5':
+                add_user_to_team();
+                break;
             case '0':
                 break;
             default:
