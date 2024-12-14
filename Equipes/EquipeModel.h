@@ -6,7 +6,7 @@
 
 typedef struct {
     char id[4];
-    char users[10];
+    char users[10][4];
     char name[50];
     char description[100];
     char status;

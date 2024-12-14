@@ -27,7 +27,7 @@ int register_team(void){
     teams.status = '1';
     
     for(int i = 0; i < 10; i++){
-        teams.users[i] = ' ';
+        teams.users[i][0] = '\0';
     }
 
     int result = insert_team(&teams);
@@ -72,14 +72,18 @@ void modify_team_data(Team *team){
 }
 
 int add_user_to_team_data(Team *team){
-    limpa_buffer();
     printf("|\tInsira o ID do usuário: ");
     char id[4];
     scanf("%4s", id);
 
     if(!user_exists(id)) return FALSE;
 
-    strcpy(team->users, id);
-    update_team(team);
+    for (int i = 0; i < 10; i++) {
+        if (team->users[i][0] == '\0') {
+            strcpy(team->users[i], id);
+            update_team(team);
+            return TRUE;
+        }
+    }
     return TRUE;
 }

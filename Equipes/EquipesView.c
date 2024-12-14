@@ -141,19 +141,25 @@ void add_user_to_team(void) {
 
     Team *team = load_team(id);
     if (team == NULL) show_error("Equipe não encontrada");
-    else if (team->status == '0') show_error("Equipe não di sponivel");
-    else if (team->users[10] != ' ') show_error("Equipe cheia");
+    else if (team->status == '0') show_error("Equipe não disponivel");
     else{
         view_team(team);
         add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
     }
+
+    getchar();
     enter();
 }
 
 void view_team(const Team *teams){
     show_header("Dados do time");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
-    printf("\033[1m|Usuários:\033[m %s\n", teams->users);
+    printf("\033[1m|Usuários:\033[m\n");
+    for (int i = 0; i < 10; i++) {
+        if (teams->users[i][0] != '\0') {
+            printf("\t-> %s\n", teams->users[i]);
+        }
+    }
     printf("\033[1m|Nome da instituição:\033[m %s\n", teams->name);
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
