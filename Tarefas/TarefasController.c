@@ -31,7 +31,7 @@ char* responsible(void){
         case '2':
             printf("ID do time: \n");
             scanf("%4s", choice);
-            return choice;
+            if(team_exists(choice)) return choice;
             break;
         default:
             show_error("Opção inválida.");
@@ -49,6 +49,8 @@ int register_task(void){
     Task task = {0};
 
     char *id = responsible();
+    if(id == NULL) return FALSE;
+
     strcpy(task.responsible, id);
 
     limpa_buffer();

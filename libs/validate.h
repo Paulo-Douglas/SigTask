@@ -7,5 +7,6 @@ int validate_description(char *description);
 int validate_cpf(char cpf[]);
 int length_prompt(char *prompt, int minLength);
 int user_exists(const char *cpf);
+int team_exists(const char *key);
 
 #endif

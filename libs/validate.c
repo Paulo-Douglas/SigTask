@@ -7,6 +7,7 @@
 
 
 #include "../Usuarios/UsuariosController.h"
+#include "../Equipes/EquipesController.h"
 
 
 int valid_phone(char *telephone) {
@@ -106,5 +107,22 @@ int user_exists(const char *key) {
     }
     fclose(fp);
     free(user);
+    return exists;
+}
+
+int team_exists(const char *key) {
+    int exists = FALSE;
+
+    FILE *fp = fopen("data/academic_teams.dat", "rb");
+    if (fp == NULL) return exists;
+
+    Team *team = (Team*)malloc(sizeof(Team));
+    while (fread(team, sizeof(Team), 1, fp) && !exists){
+        if (strcmp(team->id, key) == 0){
+            exists = TRUE;
+        }
+    }
+    fclose(fp);
+    free(team);
     return exists;
 }
