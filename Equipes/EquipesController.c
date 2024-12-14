@@ -79,11 +79,12 @@ int add_user_to_team_data(Team *team){
     if(!user_exists(id)) return FALSE;
 
     for (int i = 0; i < 10; i++) {
-        if (team->users[i][0] == '\0') {
+        if (team->users[i][0] == '\0' && team->users[i][0] != id[0]) {
             strcpy(team->users[i], id);
             update_team(team);
             return TRUE;
         }
+        else return FALSE;
     }
     return TRUE;
 }
