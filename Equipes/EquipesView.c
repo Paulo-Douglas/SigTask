@@ -96,14 +96,28 @@ void delete_team(void) {
     scanf("%4s", id);
 
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        team->status = '0';
-        update_team(team);
-        show_sucess("Equipe excluida com sucesso!");
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
 
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    
+    team->status = '0';
+    update_team(team);
+    show_sucess("Equipe excluida com sucesso!");
+    getchar();
+
+    free(team);
     enter();
 }
 
@@ -117,14 +131,28 @@ void edit_team(void) {
     char id[4];
     scanf("%4s", id);
 
+
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    else if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        display_data_team(team);
-        modify_team_data(team);
-        getchar();
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
+
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    display_data_team(team);
+    modify_team_data(team);
+    getchar();
+    free(team);
+
     enter();
 }
 
@@ -141,14 +169,26 @@ void add_user_to_team(void) {
     getchar();
 
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    else if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        display_data_team(team);
-        add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
 
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    display_data_team(team);
+    add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+    free(team);
     getchar();
+
     enter();
 }
 
