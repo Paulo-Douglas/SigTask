@@ -231,6 +231,43 @@ void add_user_to_team(void) {
     enter();
 }
 
+void remove_user_from_team(void) {
+    limpar_tela();
+    printf("\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Remover usuário da equipe                                                       |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+
+    printf("|\t Insira o ID do time:    ");
+    char id[4];
+    scanf("%4s", id);
+    getchar();
+
+    Team *team = load_team(id);
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return; 
+    }
+
+    display_data_team(team);
+    remove_user_from_team_data(team) ? show_sucess("Usuário removido com sucesso!") : show_error("Erro ao remover usuário");
+    free(team);
+    getchar();
+
+    enter();
+
+}
+
 void show_all_teams(void) {
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Relatório de Equipes                                                            |\n");

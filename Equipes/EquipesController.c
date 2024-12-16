@@ -88,3 +88,18 @@ int add_user_to_team_data(Team *team){
     }
     return TRUE;
 }
+
+int remove_user_from_team_data(Team *team){
+    printf("|\tInsira o ID do usuário: ");
+    char id[4];
+    scanf("%4s", id);
+
+    for (int i = 0; i < 10; i++) {
+        if (strcmp(team->users[i], id) == 0) {
+            team->users[i][0] = '\0';
+            update_team(team);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}

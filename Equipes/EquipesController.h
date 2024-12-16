@@ -6,5 +6,6 @@
 int register_team(void);
 void modify_team_data(Team *team);
 int add_user_to_team_data(Team *team);
+int remove_user_from_team_data(Team *team);
 
 #endif
