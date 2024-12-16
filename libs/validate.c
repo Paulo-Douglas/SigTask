@@ -101,7 +101,7 @@ int user_exists(const char *key) {
     while (fread(user, sizeof(User), 1, fp) && !exists){
         if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5)){
             exists = TRUE;
-        } else if (strcmp(user->id, key) == 0){
+        } else if ((strcmp(user->id, key) == 0) && (user->status == '1')){
             exists = TRUE;
         }
     }
@@ -118,7 +118,7 @@ int team_exists(const char *key) {
 
     Team *team = (Team*)malloc(sizeof(Team));
     while (fread(team, sizeof(Team), 1, fp) && !exists){
-        if (strcmp(team->id, key) == 0){
+        if ((strcmp(team->id, key) == 0) && (team->status == '1')){
             exists = TRUE;
         }
     }

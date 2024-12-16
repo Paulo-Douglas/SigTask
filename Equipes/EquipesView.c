@@ -19,9 +19,11 @@ char menu_equipes(void) {
     printf("|               [1] Cadastrar Equipe               |\n");
     printf("|               [2] Exibir Equipe                  |\n");
     printf("|               [3] Excluir Equipe                 |\n");
-    printf("|               [4] Editar Equipe                  |\n");
-    printf("|               [5] Adicionar Usuário na Equipe    |\n");
-    printf("|               [6] Remover Usuário na Equipe      |\n");
+    printf("|               [4] Reativar Equipe                |\n");
+    printf("|               [5] Editar Equipe                  |\n");
+    printf("|               [6] Adicionar Usuário na Equipe    |\n");
+    printf("|               [7] Remover Usuário na Equipe      |\n");
+    printf("|               [8] Relatorio de Equipes           |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -74,7 +76,7 @@ void search_team(void) {
         return;
     }
 
-    view_team(team);
+    display_data_team(team);
     free(team);
 
     limpa_buffer();
@@ -95,14 +97,66 @@ void delete_team(void) {
     scanf("%4s", id);
 
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        team->status = '0';
-        update_team(team);
-        show_sucess("Equipe excluida com sucesso!");
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
 
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    
+    team->status = '0';
+    update_team(team);
+    show_sucess("Equipe excluida com sucesso!");
+    getchar();
+
+    free(team);
+    enter();
+}
+
+void reactive_team(void) {
+    limpar_tela();
+    limpar_tela();
+    printf("\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Reabrir equipe                                                                  |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+
+    printf("|\t Insira o ID:    ");
+    char id[4];
+    scanf("%4s", id);
+
+    Team *team = load_team(id);
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    if (team->status == '1') {
+        show_error("Equipe já está ativa");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    
+    team->status = '1';
+    update_team(team);
+    show_sucess("Equipe excluida com sucesso!");
+    getchar();
+
+    free(team);
     enter();
 }
 
@@ -116,14 +170,28 @@ void edit_team(void) {
     char id[4];
     scanf("%4s", id);
 
+
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    else if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        view_team(team);
-        modify_team_data(team);
-        getchar();
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
+
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    display_data_team(team);
+    modify_team_data(team);
+    getchar();
+    free(team);
+
     enter();
 }
 
@@ -134,25 +202,45 @@ void add_user_to_team(void) {
     printf("|                                                               Adicionar usuário na equipe                                                     |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    printf("|\t Insira o ID:    ");
+    printf("|\t Insira o ID do time:    ");
     char id[4];
     scanf("%4s", id);
     getchar();
 
     Team *team = load_team(id);
-    if (team == NULL) show_error("Equipe não encontrada");
-    else if (team->status == '0') show_error("Equipe não disponivel");
-    else{
-        view_team(team);
-        add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
     }
 
+    if (team->status == '0') {
+        show_error("Equipe não disponível");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    display_data_team(team);
+    add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+    free(team);
     getchar();
+
     enter();
 }
 
-void view_team(const Team *teams){
-    show_header("Dados do time");
+void show_all_teams(void) {
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Relatório de Equipes                                                            |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    show_teams();
+    enter();
+}
+
+void display_data_team(const Team *teams){
+    printf("|\t\t\033[1m-> Dados do Time\033[m \n");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
     printf("\033[1m|Usuários:\033[m\n");
     for (int i = 0; i < 10; i++) {
@@ -164,7 +252,4 @@ void view_team(const Team *teams){
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-    getchar();
 }
-
-

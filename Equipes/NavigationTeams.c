@@ -18,10 +18,16 @@ void navegacao_times(void){
                 delete_team();
                 break;
             case '4':
-                edit_team();
+                reactive_team();
                 break;
             case '5':
+                edit_team();
+                break;
+            case '6':
                 add_user_to_team();
+                break;
+            case '8':
+                show_all_teams();
                 break;
             case '0':
                 break;

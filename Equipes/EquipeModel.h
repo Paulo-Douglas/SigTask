@@ -12,6 +12,8 @@ typedef struct {
     char status;
 } Team;
 
+void show_teams(void);
+
 int insert_team(Team *teams);
 int update_team(Team *new_team);
 int get_id_team(void);

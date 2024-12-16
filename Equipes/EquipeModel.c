@@ -78,3 +78,14 @@ int update_team(Team *new_team){
     fclose(fp);
     return FALSE;
 }
+
+void show_teams(void){
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if(fp == NULL) return;
+
+    Team team;
+    while(fread(&team, sizeof(Team), 1, fp)){
+        display_data_team(&team);
+    }
+    fclose(fp);
+}

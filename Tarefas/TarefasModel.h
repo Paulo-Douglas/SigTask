@@ -1,5 +1,5 @@
-#ifndef COMPROMISSOSMODEL_H
-#define COMPROMISSOSMODEL_H
+#ifndef TAREFASMODEL_H
+#define TAREFASMODEL_H
 
 #define LINE_COMPROMISE 200
 
@@ -15,6 +15,8 @@ typedef struct
     char status;
 
 } Task;
+
+void show_tasks(void);
 
 int insert_task(Task *task);
 int get_id_task(void);
