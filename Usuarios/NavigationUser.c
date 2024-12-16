@@ -36,6 +36,5 @@ void navigation_users(void){
         }
             
     } while (op != '0');
-    limpa_buffer();
     limpar_tela();
 }   

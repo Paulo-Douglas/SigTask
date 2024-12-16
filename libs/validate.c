@@ -101,7 +101,7 @@ int user_exists(const char *key) {
     while (fread(user, sizeof(User), 1, fp) && !exists){
         if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5)){
             exists = TRUE;
-        } else if (strcmp(user->id, key) == 0){
+        } else if ((strcmp(user->id, key) == 0) && (user->status == '1')){
             exists = TRUE;
         }
     }

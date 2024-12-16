@@ -135,7 +135,7 @@ void add_user_to_team(void) {
     printf("|                                                               Adicionar usuário na equipe                                                     |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    printf("|\t Insira o ID:    ");
+    printf("|\t Insira o ID do time:    ");
     char id[4];
     scanf("%4s", id);
     getchar();
@@ -173,7 +173,4 @@ void display_data_team(const Team *teams){
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-    getchar();
 }
-
-

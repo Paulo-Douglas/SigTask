@@ -24,7 +24,7 @@ char* responsible(void){
 
     switch (op) {
         case '1':
-            printf("ID ou CPF do usuário: \n");
+            printf("ID do usuário: \n");
             scanf("%4s", choice);
             if(user_exists(choice)) return choice;
             break;

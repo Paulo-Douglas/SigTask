@@ -31,6 +31,7 @@ int get_id_user(void){
 
 int insert_user(User *user){
     int id = get_id_user();
+    if (id == 0) id = 1;
 
     snprintf(user->id, sizeof(user->id), "%d", id);
     create_path("data/");
@@ -40,7 +41,6 @@ int insert_user(User *user){
     int result = FALSE;
 
     if (fwrite(user, sizeof(User), 1, fp)) result = TRUE;
-    fputc('\n', fp);
 
     fclose(fp);
     return result;
