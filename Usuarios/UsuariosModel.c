@@ -11,89 +11,74 @@
 #include "../libs/reads.h"
 
 
-
-int insert_user_to_file(User *users){
-    create_path("data/");
-
-    FILE* fp = fopen("data/users.txt", "a");
+int get_id_user(void){
+    FILE * fp = fopen("data/users.dat", "rb");
     if (fp == NULL) return FALSE;
 
-    fprintf(fp, "%s:{", users->cpf);
-    fprintf(fp, "%s%-50s,", FIELD_NAME, users->name);
-    fprintf(fp, "%s%s,", FIELD_PHONE, users->phone);
-    fprintf(fp, "%s%s", FIELD_STATUS, users->status);
-    fprintf(fp, "};\n");
+    User last_user;
+    int next_id = 1;
+
+    fseek(fp, -sizeof(User), SEEK_END);
+
+    if (fread(&last_user, sizeof(User), 1, fp)){
+        next_id = atoi(last_user.id) + 1;
+    }
 
     fclose(fp);
-    return TRUE;
+    return next_id;
 }
 
 
-int update_data_user(const char *cpf, const char *new_value, const char *field, int length) {
-    FILE *fp = fopen("data/users.txt", "r+");
-    if (fp == NULL) {
-        perror("Erro ao abrir o arquivo");
-        return 0;
-    }
+int insert_user(User *user){
+    int id = get_id_user();
 
-    char line[512];
-    memset(line, 0, sizeof(line));
-    int found_cpf = 0;
-    long pos = 0;
+    snprintf(user->id, sizeof(user->id), "%d", id);
+    create_path("data/");
 
-    while (fgets(line, sizeof(line), fp) != NULL) {
-        if (strstr(line, cpf) != NULL) {
-            found_cpf = 1;
-        }
+    FILE *fp = fopen("data/users.dat", "ab");
+    if (fp == NULL) return FALSE;
+    int result = FALSE;
 
-        if (found_cpf && strstr(line, field) != NULL) {
-            char *field_pos = strstr(line, field);
-            if (field_pos == NULL) break;
+    if (fwrite(user, sizeof(User), 1, fp)) result = TRUE;
+    fputc('\n', fp);
 
-            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
-            fseek(fp, pos, SEEK_SET);
+    fclose(fp);
+    return result;
+}
 
-            fprintf(fp, "%-*s", length, new_value);
 
+int update_user(User *new_data){
+    FILE *fp = fopen("data/users.dat", "rb+");
+    if (fp == NULL) return FALSE;
+
+    User user;
+    while (fread(&user, sizeof(User), 1, fp)){
+
+        if(strcmp(user.cpf, new_data->cpf) == 0){
+            fseek(fp, -sizeof(User), SEEK_CUR);
+            fwrite(new_data, sizeof(User), 1, fp);
             fclose(fp);
-            return 1;
+            return TRUE;
         }
-
-        memset(line, 0, sizeof(line));
     }
-
     fclose(fp);
-    return 0;
+    return FALSE;
 }
 
 
-User load_user(const char *cpf){
-    User users;
+User* load_user(const char *cpf){
+    FILE * fp = fopen("data/users.dat", "rb");
+    if (fp == NULL) return NULL;
 
-    FILE *fp = fopen("data/users.txt", "r");
-    if (fp == NULL) exit(1);
-
-    char line[512];
-
-    while (fgets(line, sizeof(line), fp) != NULL) {
-
-        if (strstr(line, cpf) != NULL) {
-            char *cpf_user = strtok(line, ":");
-            char *cursor = strtok(NULL, "\n");
-
-            char *name = extract_value(&cursor, ":", ",");
-            char *phone = extract_value(&cursor, ":", ",");
-            char *status = extract_value(&cursor, ":", "}");
-
-            if (cpf_user && name && phone && status) {
-                users.cpf = strdup(cpf_user);
-                users.name = strdup(name);
-                users.phone = strdup(phone);
-                users.status = strdup(status);
-            }
+    User *user = (User *)malloc(sizeof(User));
+    while (fread(user, sizeof(User), 1, fp)){
+        if (strcmp(user->cpf, cpf) == 0){
+            fclose(fp);
+            return user;
         }
     }
 
     fclose(fp);
-    return users;
+    free(user);
+    return NULL;
 }

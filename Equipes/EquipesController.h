@@ -3,7 +3,8 @@
 
 #include "EquipeModel.h"
 
-int insert_team_academic(void);
-int update_team_academic(Team *teams);
+int register_team(void);
+void modify_team_data(Team *team);
+int add_user_to_team_data(Team *team);
 
 #endif

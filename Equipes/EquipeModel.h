@@ -4,20 +4,17 @@
 #include "../libs/utils.h"
 
 
-#define DESCRIPTION_SIZE 100
-#define NAME_SIZE 228
-#define LINE_TEAM (NAME_SIZE + DESCRIPTION_SIZE + 6)
-
 typedef struct {
-    char *id;
-    char *usuarios;
-    char *team_name_especific;
-    char *team_name;
-    char *description;
-    char *status;
+    char id[4];
+    char users[10][4];
+    char name[50];
+    char description[100];
+    char status;
 } Team;
 
-Team upload_struct(char *id);
-int insert_team_to_file(Team *teams);
-int update_date_teams(const char *id, const char *new_value, const char *field, int length);
+int insert_team(Team *teams);
+int update_team(Team *new_team);
+int get_id_team(void);
+Team *load_team(const char *id);
+
 #endif

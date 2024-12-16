@@ -9,104 +9,72 @@
 #include "EquipesView.h"
 
 
+int get_id_team(void){
+    FILE * fp = fopen("data/teams.dat", "rb");
+    if (fp == NULL) return FALSE;
 
-int insert_team_to_file(Team *teams){
-  create_path("data/");
-  FILE *fp = fopen("data/academic_teams.txt", "a");   
+    Team last_team;
+    int next_id = 1;
 
-  int id = get_next_id("data/academic_teams.txt");
-  if (id == 0) id = 1;
-  
-  if(fp == NULL) return FALSE;
-  
-    fprintf(fp, "%d:{", id);
-    fprintf(fp, "%s%-*s,", FIELD_USER, VARCHAR50, "");    
-    fprintf(fp, "%s%-*s,", FIELD_INSTITUICAO, VARCHAR50, teams->team_name_especific);       
-    fprintf(fp, "%s%-*s,", FIELD_TEAM, VARCHAR50, teams->team_name);      
-    fprintf(fp, "%s%-*s,", FIELD_DESCRIPTION, VARCHAR50, teams ->description);     
-    fprintf(fp, "%s%s", FIELD_STATUS, teams->status); 
-    fprintf(fp,"}\n" );                                
+    fseek(fp, -sizeof(Team), SEEK_END);
+
+    if (fread(&last_team, sizeof(Team), 1, fp)){
+        next_id = atoi(last_team.id) + 1;
+    }
+
+    fclose(fp);
+    return next_id;
+}
+
+
+int insert_team(Team *teams){
+    int result = FALSE;
+
+    create_path("data/");
+    FILE *fp = fopen("data/teams.dat", "ab");   
+    if (fp == NULL) return result;
+
+    int id = get_id_team();
+
+    snprintf(teams->id, sizeof(teams->id), "%d", id);
+
+    if (fwrite(teams, sizeof(Team), 1, fp)) result = TRUE;
+
     fclose(fp);
     return TRUE;
 }
 
 
-Team upload_struct(char *id) {
-    Team team = {0}; // Inicializa a estrutura com valores padrão
+Team *load_team(const char *id){
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if(fp == NULL) return NULL;
 
-    FILE *fp = fopen("data/academic_teams.txt", "r");
-    if (fp == NULL) {
-        return team;
-    }
-
-    char line[500];
-
-    while (fgets(line, sizeof(line), fp)) {
-        char *id_team = strtok(line, ":");
-        if (id_team && strcmp(id, id_team) == 0) {
-            // Preenche os campos da estrutura com segurança
-            team.id = strdup(id_team);
-
-            char *field_user = strtok(NULL, ":");
-            char *value_user = strtok(NULL, ",");
-            if (field_user && value_user) team.usuarios = strdup(value_user);
-
-            char *field_inst = strtok(NULL, ":");
-            char *value_inst = strtok(NULL, ",");
-            if (field_inst && value_inst) team.team_name_especific = strdup(value_inst);
-
-            char *field_team = strtok(NULL, ":");
-            char *value_team = strtok(NULL, ",");
-            if (field_team && value_team) team.team_name = strdup(value_team);
-
-            char *field_description = strtok(NULL, ":");
-            char *value_description = strtok(NULL, ",");
-            if (field_description && value_description) team.description = strdup(value_description);
-
-            char *field_status = strtok(NULL, ":");
-            char *value_status = strtok(NULL, "}");
-            if (field_status && value_status) team.status = strdup(value_status);
-
-            break; // Sai do loop após encontrar o time
+    Team *team = (Team *)malloc(sizeof(Team));
+    while(fread(team, sizeof(Team), 1, fp)){
+        if(strcmp(team->id, id) == 0){
+            fclose(fp);
+            return team;
         }
     }
-
     fclose(fp);
-    return team;
+    free(team);
+    return NULL;
 }
 
 
+int update_team(Team *new_team){
+    FILE *fp = fopen("data/teams.dat", "rb+");
+    if(fp == NULL) return FALSE;
 
-int update_date_teams(const char *id, const char *new_value, const char *field, int length){
-    FILE *fp = fopen("data/academic_teams.txt", "r+");
-    if (fp == NULL) {
-        show_error("Erro ao abrir o arquivo");
-        return 0;
-    }   
-    char line[512];
-    memset(line, 0, sizeof(line));
-    long pos;
-    int found_id = 0;
-
-    while(fgets(line, sizeof(line), fp) != NULL){
-        if (strstr(line, id) != NULL) {
-            found_id = 1;
-        }
-
-        if (found_id && strstr(line, field) != NULL ) {
-            char *field_pos = strstr(line, field);
-            if (field_pos == NULL) break;
-
-            pos = ftell(fp) - strlen(line) + (field_pos - line) + strlen(field);
-            fseek(fp, pos, SEEK_SET);
-            fprintf(fp, "%-*s", length, new_value);
-            
+    Team team;
+    while(fread(&team, sizeof(Team), 1, fp)){
+        if(strcmp(team.id, new_team->id) == 0){
+            fseek(fp, -sizeof(Team), SEEK_CUR);
+            fwrite(new_team, sizeof(Team), 1, fp);
             fclose(fp);
-            return 1;
+            return TRUE;
         }
-
-           memset(line, 0, sizeof(line));
-        }
-         fclose(fp);
-        return 0;
     }
+    fclose(fp);
+    return FALSE;
+}

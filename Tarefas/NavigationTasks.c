@@ -1,25 +1,26 @@
 #include <stdio.h>
 
-#include "NavigationTasks.h"
 #include "TarefasView.h"
 
 #include "../libs/utils.h"
+#include "../libs/styles.h"
 
-void navigation_tasks(void){
+
+void navigation_tasks(void) {
     char op;
-    do{
-        op = tasks_menu();
-        switch(op){
-            case '1':  
-                register_new_task();
+    do {
+        op = menu_task();
+        switch(op) {
+            case '1':
+                add_task();
                 limpa_buffer();
                 break;
             case '2':
-                view_task();
+                search_task();
                 limpa_buffer();
                 break;
             case '3':
-                edit_task();
+                change_task();
                 limpa_buffer();
                 break;
             case '4':
@@ -29,10 +30,11 @@ void navigation_tasks(void){
             case '0':
                 break;
             default:
-                printf("Opção inválida, por favor, digite outro valor\n");
+                show_error("Opção inválida, por favor, digite outro número.");
+                limpa_buffer();
                 break;
         }
     } while (op != '0');
     limpa_buffer();
     limpar_tela();
-}   
+}

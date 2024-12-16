@@ -1,23 +1,24 @@
-#ifndef TAREFASMODEL_H
-#define TAREFASMODEL_H
+#ifndef COMPROMISSOSMODEL_H
+#define COMPROMISSOSMODEL_H
+
+#define LINE_COMPROMISE 200
 
 typedef struct
 {
-    char *cpf;
-    char *title;
-    char *description;
-    char *data;  
-    char *turn;
-    char *priority;
-    char *type;
-    char *status;
-} Tasks;
+    char id[4];
+    char responsible[4];
+    char title[100];
+    char description[100];
+    char date[11];
+    char type;
+    char priority;
+    char status;
 
-#define LINE_TASKS 190
+} Task;
 
-int insert_into_tasks(Tasks *task);
-int load_task(const char *id, Tasks *task);
-int update_data_task(const char **id, const char *new_value, const char *field, int length);
-
+int insert_task(Task *task);
+int get_id_task(void);
+int update_task(Task *task);
+Task * load_task(const char *id);
 
 #endif

@@ -1,10 +1,10 @@
-#ifndef TAREFASCONTROLLER_H
-#define TAREFASCONTROLLER_H
+#ifndef COMPROMISSOSCONTROLLER_H
+#define COMPROMISSOSCONTROLLER_H
 
 #include "TarefasModel.h"
 
 int register_task(void);
-int update_task(Tasks *task, const char *id);
-void free_struct_task(Tasks *task);
+char* responsible(void);
+void edit_task(Task *task);
 
 #endif

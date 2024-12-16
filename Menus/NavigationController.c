@@ -4,9 +4,8 @@
 #include "../Equipes/EquipesView.h" // Mantendo a inclusão do módulo de equipes
 #include "../libs/utils.h"
 #include "../Usuarios/NavigationUser.h"
-#include "../Compromissos/NavigationComp.h"
 #include "../Tarefas/NavigationTasks.h"
-#include "../Compromissos/CompromissosView.h"
+#include "../Tarefas/TarefasView.h"
 #include "../Equipes/EquipesView.h"
 #include "../Equipes/NavigationTeams.h"
 
@@ -23,9 +22,6 @@ void navegacao_modulos(void) {
                 break;
             case '3':
                 navigation_tasks();
-                break;
-            case '4':
-                navigation_compromise();
                 break;
             case '5':
                 menuSobre();

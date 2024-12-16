@@ -6,6 +6,10 @@
 #include "validate.h"
 
 
+#include "../Usuarios/UsuariosController.h"
+#include "../Equipes/EquipesController.h"
+
+
 int valid_phone(char *telephone) {
     regex_t phoneRegex;
 
@@ -86,68 +90,39 @@ int validate_cpf(char cpf[]) {
     }   
     }
 
-int cpf_unique_user(const char *cpf, const char *file){
-    FILE *fp = fopen(file, "r");
-    if(fp == NULL){
-        return 0;
-    }
 
-    char line[MAX_LINE_LENGTH];
-    char *cpf_user;
+int user_exists(const char *key) {
+    int exists = FALSE;
 
-    while (fgets(line, sizeof(line), fp)) {
+    FILE *fp = fopen("data/users.dat", "rb");
+    if (fp == NULL) return exists;
 
-        cpf_user = strtok(line, ":");
-        // Comparação de vetores
-        if (strcmp(cpf, cpf_user) == 0) {
-            fclose(fp);
-            return TRUE;
-        }
-
-    }
-
-    fclose(fp);
-    return FALSE;
-
-}
-
-int cpf_exists(const char *cpf) {
-    FILE *fp = fopen("data/users.txt", "r");
-    if (fp == NULL) {
-        return FALSE;
-    }
-
-    char line[15];
-    while (fgets(line, sizeof(line), fp) != NULL) {
-        if (strstr(line, cpf) != NULL) {
-            return TRUE;
+    User *user = (User*)malloc(sizeof(User));
+    while (fread(user, sizeof(User), 1, fp) && !exists){
+        if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5)){
+            exists = TRUE;
+        } else if (strcmp(user->id, key) == 0){
+            exists = TRUE;
         }
     }
     fclose(fp);
-    return FALSE;
+    free(user);
+    return exists;
 }
 
-int id_exists(const char *id){
-    FILE *fp = fopen("data/teams.txt", "r");
-    if (fp == NULL) {
-        return FALSE;
-    }
+int team_exists(const char *key) {
+    int exists = FALSE;
 
-    char line[15];
-    while (fgets(line, sizeof(line), fp) != NULL) {
-        if (strstr(line, id) != NULL){
-            return TRUE;
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if (fp == NULL) return exists;
+
+    Team *team = (Team*)malloc(sizeof(Team));
+    while (fread(team, sizeof(Team), 1, fp) && !exists){
+        if (strcmp(team->id, key) == 0){
+            exists = TRUE;
         }
     }
     fclose(fp);
-    return FALSE;
-}
-
-int validate_time(char tempo[]) {
-    if ((tempo[0] - '0') > 2 || ((tempo[0] - '0') == 2 && (tempo[1] - '0') > 4) || 
-        tempo[2] != ':' || (tempo[3] - '0') > 6 ) {
-        return 0;
-    } else {
-        return 1;
-    }
+    free(team);
+    return exists;
 }

@@ -1,14 +1,14 @@
-#ifndef TAREFASVIEW_H
-#define TAREFASVIEW_H
+#ifndef COMPROMISSOSVIEW_H
+#define COMPROMISSOSVIEW_H
 
-#include "TarefasModel.h"
+#include "TarefasController.h"
 
-char tasks_menu(void);
-
-void register_new_task(void);
-void view_task(void);
-void edit_task(void);
+char menu_task(void);
+void add_task(void);
+void search_task(void);
+void change_task(void);
 void delete_task(void);
-void display_data_task(Tasks *task);
+void display_data_task(Task *task);
+
 
 #endif

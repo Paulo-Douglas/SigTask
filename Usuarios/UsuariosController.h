@@ -3,7 +3,7 @@
 
 #include "UsuariosModel.h"
 
-int insert_user(void);
-int update_user(User *users);
+int add_user(void);
+void edit_user(User *user);
 
 #endif // USUARIOSCONTROLLER_H

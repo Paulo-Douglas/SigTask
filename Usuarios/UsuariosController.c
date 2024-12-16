@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
@@ -9,73 +10,63 @@
 #include "../libs/styles.h"
 
 
+int add_user(void){
+    User user = {0};
 
-/**
- * @brief Cadastra um novo usuario.
- * 
- * Recebe do usuario o CPF, nome e telefone e cadastra um novo usuario.
- * 
- * @return TRUE se o usuario for cadastrado com sucesso, FALSE caso contrario.
- */
-int insert_user(void){
-    User users = {NULL, NULL, NULL};
+    printf("|\tCPF: ");
+    char *cpf = read_cpf();
+    strcpy(user.cpf, cpf);
 
-    read_and_assign(&users.cpf, "|\tCPF: ", read_cpf);
-
-    if(cpf_exists(users.cpf)){
+    if(user_exists(user.cpf)){
         return FALSE;
     }
 
-    read_and_assign(&users.name, "|\tNome: ", read_string);
-    read_and_assign(&users.phone, "|\tTelefone: ", read_phone);
+    printf("|\tNome: ");
+    char *name = read_string();
+    strcpy(user.name, name);
 
-    users.status = "1";
+    printf("|\tTelefone: ");
+    char *phone = read_phone();
+    strcpy(user.phone, phone);
 
-    int result = insert_user_to_file(&users);
+    user.status = '1';
 
-    free(users.name);
-    free(users.cpf);
-    free(users.phone);
+    int result = insert_user(&user);
 
     return result;
 }
 
-
-/**
- * @brief Altera os dados de um usuario.
- * 
- * @param users Estrutura contendo os dados do usuario.
- * @return TRUE se os dados forem alterados com sucesso, FALSE caso contrário.
- */
-int update_user(User *users) {
-    char opc = '\0';
-    int update = FALSE;
+void edit_user(User *user){
+    char op;
+    int result = FALSE;
 
     do {
-        printf("| Escolha uma opção para alterar: (1) Nome, (2) Telefone, (0) Sair: \n");
-        opc = getchar();
-        getchar();
-        switch (opc) {
+        printf("|\t[1] Editar nome\n");
+        printf("|\t[2] Editar telefone\n");
+        printf("|\t[0] Sair\n");
+        scanf(" %c", &op);
+
+        switch (op){
             case '1':
+                printf("%s", user->cpf);
+                limpa_buffer();
                 printf("|\tNome: ");
-                users->name = read_string();
-                update = update_data_user(users->cpf, users->name, FIELD_NAME, VARCHAR50);
-                update ? show_sucess("Nome alterado com sucesso!") : show_error("Erro ao alterar nome!");
+                char *name = read_string();
+                strcpy(user->name, name);
+                result = update_user(user);
+                result ? show_sucess("Nome editado com sucesso!") : show_error ("Erro ao editar o nome");
                 break;
             case '2':
                 printf("|\tTelefone: ");
-                users->phone = read_phone();
-                update = update_data_user(users->cpf, users->phone, FIELD_PHONE, 1);
-                update ? show_sucess("Telefone alterado com sucesso!") : show_error("Erro ao alterar telefone!");
+                char *phone = read_phone();
+                strcpy(user->phone, phone);
+                result = update_user(user);
+                result ? show_sucess("Telefone editado com sucesso!") : show_error ("Erro ao editar o telefone");
                 break;
             case '0':
-                update = TRUE;
                 break;
             default:
-                show_error("| Opção inválida! Tente novamente.\n");
-                break;
+                show_error("É preciso digitar uma opção válida!");
         }
-    } while (opc != '0');
-
-    return update;
+    } while (op != '0');
 }

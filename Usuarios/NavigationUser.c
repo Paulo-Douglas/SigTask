@@ -14,7 +14,7 @@ void navigation_users(void){
                 register_user();
                 break;
             case '2':
-                display_user_data();
+                search_user();
                 break;
             case '3':
                 modify_user_data();
