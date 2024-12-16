@@ -1,5 +1,5 @@
-#ifndef NAVEGATIONCOMP_H
-#define NAVEGATIONCOMP_H
+#ifndef NAVIGATIONTASKS_H
+#define NAVIGATIONTASKS_H
 
 void navigation_tasks(void);
 

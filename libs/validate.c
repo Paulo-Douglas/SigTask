@@ -118,7 +118,7 @@ int team_exists(const char *key) {
 
     Team *team = (Team*)malloc(sizeof(Team));
     while (fread(team, sizeof(Team), 1, fp) && !exists){
-        if (strcmp(team->id, key) == 0){
+        if ((strcmp(team->id, key) == 0) && (team->status == '1')){
             exists = TRUE;
         }
     }

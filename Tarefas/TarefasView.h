@@ -1,5 +1,5 @@
-#ifndef COMPROMISSOSVIEW_H
-#define COMPROMISSOSVIEW_H
+#ifndef TAREFASVIEW_H
+#define TAREFASVIEW_H
 
 #include "TarefasController.h"
 
