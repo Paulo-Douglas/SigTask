@@ -25,6 +25,9 @@ void navigation_users(void){
             case '5':
                 reactivate_user();
                 break;
+            case '6':
+                show_all_users();
+                break;
             case '0':
                 break;
             default:

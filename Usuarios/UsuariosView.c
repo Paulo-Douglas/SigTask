@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "UsuariosView.h"
 #include "UsuariosController.h"
@@ -28,6 +29,7 @@ char user_menu(void) {
     printf("|                [3] Editar Dados                |\n");
     printf("|                [4] Excluir Conta               |\n");
     printf("|                [5] Reativar Conta              |\n");
+    printf("|                [6] Relatório de Usuários       |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -77,7 +79,7 @@ void search_user(void) {
 
     if(user == NULL) show_error("| CPF não alcançado!\n");
     else if (user->status == '0') show_error("| Usuário não pode ser acessado");
-    else user_data(user);
+    else display_data_user(user);
 
     enter();
 }
@@ -101,7 +103,7 @@ void modify_user_data(void) {
     if (user == NULL) show_error("| CPF não encontrado");
     else if (user->status == '0') show_error("| Não é possível editar esse usuário");
     else {
-        user_data(user);
+        display_data_user(user);
         edit_user(user);   
     }
 
@@ -119,7 +121,7 @@ void delete_user(void) {
     if(user == NULL) show_error("| CPF não encontrado");
     else if (user->status == '0') show_error("| Não é possível acessar este usuário");
     else {
-        user_data(user);
+        display_data_user(user);
         user->status = '0';
         update_user(user);
         show_sucess("Usuário desativado");
@@ -139,7 +141,7 @@ void reactivate_user(void) {
     if(user == NULL) show_error("| CPF não encontrado");
     else if (user->status == '1') show_error("| Não é possível reativar uma conta ativa");
     else {
-        user_data(user);
+        display_data_user(user);
         user->status = '1';
         update_user(user);
         show_sucess("Usuário ativado");
@@ -148,13 +150,20 @@ void reactivate_user(void) {
     enter();
 }
 
+void show_all_users(void) {
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("|                                                                   Relatório                                                                   |\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    show_users();
+    enter();
+}
 
-void user_data(const User *user) {
-    show_header("Dados do usuário");
+void display_data_user(const User *user) {
+    printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
     printf("\033[1m|ID:\033[m %s\n", user->id);
-    printf("\033[1m|CPF:\033[m %s\n", user->cpf);
+    printf("\033[1m|CPF:\033[m %s\n", user->status == '0' ? "Desativado" : user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
     printf("\033[1m|Status:\033[m %s\n", user->status == '1' ? "Ativo" : "Inativo");
-    printf("|-------------------------------------------------------------------------------------------------------|\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }

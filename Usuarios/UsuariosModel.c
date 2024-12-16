@@ -82,3 +82,14 @@ User* load_user(const char *cpf){
     free(user);
     return NULL;
 }
+
+void show_users(void){
+    FILE *fp = fopen("data/users.dat", "rb");
+    if (fp == NULL) return;
+
+    User user;
+    while (fread(&user, sizeof(User), 1, fp)){
+        display_data_user(&user);
+    }
+    fclose(fp);
+}
