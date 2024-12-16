@@ -27,6 +27,10 @@ void navigation_tasks(void) {
                 delete_task();
                 limpa_buffer();
                 break;
+            case '5':
+                show_all_tasks();
+                limpa_buffer();
+                break;
             case '0':
                 break;
             default:

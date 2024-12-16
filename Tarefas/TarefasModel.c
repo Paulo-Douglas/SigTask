@@ -31,6 +31,7 @@ int get_id_task(void){
 
 int insert_task(Task *task){
     int id = get_id_task();
+    if (id == 0) id = 1;
 
     snprintf(task->id, sizeof(task->id), "%d", id);
 
@@ -80,3 +81,15 @@ int update_task(Task *new_task){
     fclose(fp);
     return FALSE;
 }
+
+void show_tasks(void){
+    FILE *fp = fopen("data/task.dat", "rb");
+    if(fp == NULL) return;
+
+    Task task;
+    while(fread(&task, sizeof(Task), 1, fp)){
+        display_data_task(&task);
+    }
+    fclose(fp);
+
+} 

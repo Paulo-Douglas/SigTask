@@ -16,6 +16,8 @@ typedef struct
 
 } Task;
 
+void show_tasks(void);
+
 int insert_task(Task *task);
 int get_id_task(void);
 int update_task(Task *task);
