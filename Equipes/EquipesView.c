@@ -19,10 +19,11 @@ char menu_equipes(void) {
     printf("|               [1] Cadastrar Equipe               |\n");
     printf("|               [2] Exibir Equipe                  |\n");
     printf("|               [3] Excluir Equipe                 |\n");
-    printf("|               [4] Editar Equipe                  |\n");
-    printf("|               [5] Adicionar Usuário na Equipe    |\n");
-    printf("|               [6] Remover Usuário na Equipe      |\n");
-    printf("|               [7] Relatorio de Equipes           |\n");
+    printf("|               [4] Reativar Equipe                |\n");
+    printf("|               [5] Editar Equipe                  |\n");
+    printf("|               [6] Adicionar Usuário na Equipe    |\n");
+    printf("|               [7] Remover Usuário na Equipe      |\n");
+    printf("|               [8] Relatorio de Equipes           |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -113,6 +114,44 @@ void delete_team(void) {
 
     
     team->status = '0';
+    update_team(team);
+    show_sucess("Equipe excluida com sucesso!");
+    getchar();
+
+    free(team);
+    enter();
+}
+
+void reactive_team(void) {
+    limpar_tela();
+    limpar_tela();
+    printf("\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Reabrir equipe                                                                  |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+
+    printf("|\t Insira o ID:    ");
+    char id[4];
+    scanf("%4s", id);
+
+    Team *team = load_team(id);
+    if (team == NULL) {
+        show_error("Equipe não encontrada");
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    if (team->status == '1') {
+        show_error("Equipe já está ativa");
+        free(team);
+        limpa_buffer();
+        enter();
+        return;
+    }
+
+    
+    team->status = '1';
     update_team(team);
     show_sucess("Equipe excluida com sucesso!");
     getchar();
