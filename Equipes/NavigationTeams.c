@@ -23,6 +23,9 @@ void navegacao_times(void){
             case '5':
                 add_user_to_team();
                 break;
+            case '7':
+                show_all_teams();
+                break;
             case '0':
                 break;
             default:

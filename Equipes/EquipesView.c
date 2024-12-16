@@ -22,6 +22,7 @@ char menu_equipes(void) {
     printf("|               [4] Editar Equipe                  |\n");
     printf("|               [5] Adicionar Usuário na Equipe    |\n");
     printf("|               [6] Remover Usuário na Equipe      |\n");
+    printf("|               [7] Relatorio de Equipes           |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -74,7 +75,7 @@ void search_team(void) {
         return;
     }
 
-    view_team(team);
+    display_data_team(team);
     free(team);
 
     limpa_buffer();
@@ -120,7 +121,7 @@ void edit_team(void) {
     if (team == NULL) show_error("Equipe não encontrada");
     else if (team->status == '0') show_error("Equipe não disponivel");
     else{
-        view_team(team);
+        display_data_team(team);
         modify_team_data(team);
         getchar();
     }
@@ -143,7 +144,7 @@ void add_user_to_team(void) {
     if (team == NULL) show_error("Equipe não encontrada");
     else if (team->status == '0') show_error("Equipe não disponivel");
     else{
-        view_team(team);
+        display_data_team(team);
         add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
     }
 
@@ -151,8 +152,16 @@ void add_user_to_team(void) {
     enter();
 }
 
-void view_team(const Team *teams){
-    show_header("Dados do time");
+void show_all_teams(void) {
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    printf("|                                                               Relatório de Equipes                                                            |\n");
+    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    show_teams();
+    enter();
+}
+
+void display_data_team(const Team *teams){
+    printf("|\t\t\033[1m-> Dados do Time\033[m \n");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
     printf("\033[1m|Usuários:\033[m\n");
     for (int i = 0; i < 10; i++) {

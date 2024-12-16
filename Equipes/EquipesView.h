@@ -9,7 +9,8 @@ void search_team(void);
 void delete_team(void);
 void edit_team(void);
 void add_user_to_team(void);
-void view_team(const Team *teams);
+void display_data_team(const Team *teams);
+void show_all_teams(void);
 
 
 #endif
