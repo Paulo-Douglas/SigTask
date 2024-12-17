@@ -89,3 +89,18 @@ void show_teams(void){
     }
     fclose(fp);
 }
+
+void remove_user_inactive_teams(const char id[4]){
+    FILE *fp = fopen("data/teams.dat", "rb+");
+    if (fp == NULL) return;
+
+    Team team;
+    while (fread(&team, sizeof(Team), 1, fp) != EOF){
+        for (int i = 0; i < 10; i++){
+            if (strcmp(team.users[i], id) == 0){
+                team.users[i][0] = '\0';
+                update_team(&team);
+            }
+        }
+    }
+}

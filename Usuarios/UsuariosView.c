@@ -7,6 +7,7 @@
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
 
+#include "../Equipes/EquipeModel.h"
 #include "../libs/utils.h"
 #include "../libs/reads.h"
 #include "../libs/styles.h"
@@ -124,6 +125,7 @@ void delete_user(void) {
         display_data_user(user);
         user->status = '0';
         update_user(user);
+        remove_user_inactive_teams(user->id);
         show_sucess("Usuário desativado");
     }
 

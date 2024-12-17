@@ -13,6 +13,7 @@ typedef struct {
 } Team;
 
 void show_teams(void);
+void remove_user_inactive_teams(const char id[4]);
 
 int insert_team(Team *teams);
 int update_team(Team *new_team);
