@@ -15,7 +15,7 @@ typedef struct
 #define PHONE_SIZE 13
 #define LINE_USER (CPF_SIZE + NAME_SIZE + PHONE_SIZE + 6)
 
-void show_users(void);
+void report_users(const char condition);
 
 int insert_user(User *users);
 int update_user(User *new_data);

@@ -83,13 +83,24 @@ User* load_user(const char *cpf){
     return NULL;
 }
 
-void show_users(void){
+
+void report_users(const char condition){
     FILE *fp = fopen("data/users.dat", "rb");
     if (fp == NULL) return;
 
     User user;
     while (fread(&user, sizeof(User), 1, fp)){
-        display_data_user(&user);
+        if (condition == '\0'){
+            display_data_user(&user);
+        } else {
+            printf("Entrei no else.\n");
+            if (user.status == condition){
+                printf("Entrei na condição.\n");
+                display_data_user(&user);
+            }
+        }
     }
+
+    getchar();
     fclose(fp);
 }

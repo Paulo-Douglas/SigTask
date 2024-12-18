@@ -152,18 +152,47 @@ void reactivate_user(void) {
     enter();
 }
 
-void show_all_users(void) {
+void show_users(void) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                   Relatório                                                                   |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    show_users();
+    printf("|[1] -> Todos os Usuários\n");
+    printf("|[2] -> Usuários Ativos\n");
+    printf("|[3] -> Usuários Inativos\n");
+    printf("|[0] -> Voltar\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    
+    char op;
+    printf("Escolha a opção desejada: ");
+    scanf(" %c", &op);
+    limpar_tela();
+
+    switch (op) {
+        case '1':
+            report_users('\0');
+            break;
+        case '2':
+            report_users('1');
+            break;
+        case '3':
+            report_users('0');
+            break;
+        case '0':
+            break;
+        default:
+            show_error("Opção inválida!");
+            break;
+    }
+
     enter();
+    getchar();
 }
 
 void display_data_user(const User *user) {
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
     printf("\033[1m|ID:\033[m %s\n", user->id);
-    printf("\033[1m|CPF:\033[m %s\n", user->status == '0' ? "Desativado" : user->cpf);
+    printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
     printf("\033[1m|Status:\033[m %s\n", user->status == '1' ? "Ativo" : "Inativo");

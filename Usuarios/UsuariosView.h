@@ -8,7 +8,7 @@ void search_user(void);
 void modify_user_data(void);
 void delete_user(void);
 void reactivate_user(void);
-void show_all_users(void);
+void show_users(void);
 void display_data_user(const User *users);
 char user_menu(void);
 
