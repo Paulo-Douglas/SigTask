@@ -276,6 +276,8 @@ void show_teams(void) {
     printf("|[1] -> Listar Equipes\n");
     printf("|[2] -> Equipes ativas\n");
     printf("|[3] -> Equipes inativas\n");
+    printf("|[4] -> Equipes com usuários\n");
+    printf("|[5] -> Equipes sem usuários\n");
     printf("|[0] -> Voltar\n");
     
     char opc;
@@ -289,6 +291,14 @@ void show_teams(void) {
             break;
         case '3':
             report_teams('0', "status");
+            break;
+        case '4':
+            report_teams('1', "users");
+            break;
+        case '5':
+            report_teams('0', "users");
+            break;
+        case '0':
             break;
         default:
             show_error("Opção inválida");
@@ -311,4 +321,5 @@ void display_data_team(const Team *teams){
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
+
 }

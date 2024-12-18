@@ -100,8 +100,27 @@ void report_teams(const char condition, const char *key){
 
     Team team;
     while (fread(&team, sizeof(Team), 1, fp)){
-        if (condition == '\0' && strcmp(key, "all") == 0) display_data_team(&team);
-        else if (team.status == condition && strcmp(key, "status") == 0) display_data_team(&team);
+        int users = 0; 
+
+        for (int i = 0; i < 10; i++) {
+            if (team.users[i][0] != '\0') {
+                users++;
+            }
+        }
+
+        if (condition == '\0' && strcmp(key, "all") == 0) {
+            display_data_team(&team);
+        }
+        else if (team.status == condition && strcmp(key, "status") == 0) {
+            display_data_team(&team);
+        }
+        else if (strcmp(key, "users") == 0) {
+            if (users > 0 && condition == '1') {
+                display_data_team(&team);
+            } else if (users == 0 && condition == '0') {
+                display_data_team(&team);
+            }
+        }
     }
 
     getchar();
