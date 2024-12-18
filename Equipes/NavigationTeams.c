@@ -30,7 +30,7 @@ void navegacao_times(void){
                 remove_user_from_team();
                 break;
             case '8':
-                show_all_teams();
+                show_teams();
                 break;
             case '0':
                 break;
@@ -40,6 +40,5 @@ void navegacao_times(void){
         }
             
     } while (op != '0');
-    limpa_buffer();
     limpar_tela();
 }

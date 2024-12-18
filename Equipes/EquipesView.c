@@ -268,11 +268,33 @@ void remove_user_from_team(void) {
 
 }
 
-void show_all_teams(void) {
+void show_teams(void) {
+    limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Relatório de Equipes                                                            |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    show_teams();
+    printf("|[1] -> Listar Equipes\n");
+    printf("|[2] -> Equipes ativas\n");
+    printf("|[3] -> Equipes inativas\n");
+    printf("|[0] -> Voltar\n");
+    
+    char opc;
+    scanf(" %c", &opc);
+    switch (opc) {
+        case '1':
+            report_teams('\0', "all");
+            break;
+        case '2':
+            report_teams('1', "status");
+            break;
+        case '3':
+            report_teams('0', "status");
+            break;
+        default:
+            show_error("Opção inválida");
+            break;
+    }
+
     enter();
 }
 

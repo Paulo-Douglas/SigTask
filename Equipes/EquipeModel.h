@@ -12,7 +12,7 @@ typedef struct {
     char status;
 } Team;
 
-void show_teams(void);
+void report_teams(const char condition, const char *key);
 void remove_user_inactive_teams(const char id[4]);
 
 int insert_team(Team *teams);

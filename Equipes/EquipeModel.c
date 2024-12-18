@@ -79,17 +79,6 @@ int update_team(Team *new_team){
     return FALSE;
 }
 
-void show_teams(void){
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if(fp == NULL) return;
-
-    Team team;
-    while(fread(&team, sizeof(Team), 1, fp)){
-        display_data_team(&team);
-    }
-    fclose(fp);
-}
-
 void remove_user_inactive_teams(const char id[4]){
     FILE *fp = fopen("data/teams.dat", "rb+");
     if (fp == NULL) return;
@@ -103,4 +92,18 @@ void remove_user_inactive_teams(const char id[4]){
             }
         }
     }
+}
+
+void report_teams(const char condition, const char *key){
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if (fp == NULL) return; 
+
+    Team team;
+    while (fread(&team, sizeof(Team), 1, fp)){
+        if (condition == '\0' && strcmp(key, "all") == 0) display_data_team(&team);
+        else if (team.status == condition && strcmp(key, "status") == 0) display_data_team(&team);
+    }
+
+    getchar();
+    fclose(fp);
 }
