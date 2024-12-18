@@ -31,6 +31,25 @@ char menu_equipes(void) {
     return op;
 }
 
+Team * load_and_check_team(const char *id){
+    Team *team = load_team(id);
+    if (team == NULL) {
+        show_error("Equipe nao encontrada");
+        limpa_buffer();
+        enter();
+        return NULL;
+    }
+
+    if (team->status == '0') {
+        show_error("Equipe nao disponivel");
+        limpa_buffer();
+        enter();
+        return NULL;
+    }
+
+    return team;
+}
+
 
 void add_team(void){
     limpar_tela();
@@ -59,21 +78,8 @@ void search_team(void) {
     char id[4];
     scanf("%4s", id);
 
-    Team *team = load_team(id);
-    if (team == NULL) {
-        show_error("Equipe não encontrada");
-        limpa_buffer();
-        enter();
-        return;
-    }
-
-    if (team->status == '0') {
-        show_error("Equipe não disponível");
-        free(team);
-        limpa_buffer();
-        enter();
-        return;
-    }
+    Team *team = load_and_check_team(id);
+    if (team == NULL) return;
 
     display_data_team(team);
     free(team);
@@ -81,7 +87,6 @@ void search_team(void) {
     limpa_buffer();
     enter();
 }
-
 
 
 void delete_team(void) { 
@@ -95,22 +100,8 @@ void delete_team(void) {
     char id[4];
     scanf("%4s", id);
 
-    Team *team = load_team(id);
-    if (team == NULL) {
-        show_error("Equipe não encontrada");
-        limpa_buffer();
-        enter();
-        return;
-    }
-
-    if (team->status == '0') {
-        show_error("Equipe não disponível");
-        free(team);
-        limpa_buffer();
-        enter();
-        return;
-    }
-
+    Team *team = load_and_check_team(id);
+    if (team == NULL) return;
     
     team->status = '0';
     update_team(team);
@@ -120,6 +111,7 @@ void delete_team(void) {
     free(team);
     enter();
 }
+
 
 void reactive_team(void) {
     limpar_tela();
@@ -133,13 +125,8 @@ void reactive_team(void) {
     char id[4];
     scanf("%4s", id);
 
-    Team *team = load_team(id);
-    if (team == NULL) {
-        show_error("Equipe não encontrada");
-        limpa_buffer();
-        enter();
-        return;
-    }
+    Team *team = load_and_check_team(id);
+    if (team == NULL) return;
 
     if (team->status == '1') {
         show_error("Equipe já está ativa");
@@ -149,15 +136,15 @@ void reactive_team(void) {
         return;
     }
 
-    
     team->status = '1';
     update_team(team);
-    show_sucess("Equipe excluida com sucesso!");
+    show_sucess("Equipe reaberta com sucesso!");
     getchar();
 
     free(team);
     enter();
 }
+
 
 void edit_team(void) { 
     limpar_tela();
@@ -169,22 +156,8 @@ void edit_team(void) {
     char id[4];
     scanf("%4s", id);
 
-
-    Team *team = load_team(id);
-    if (team == NULL) {
-        show_error("Equipe não encontrada");
-        limpa_buffer();
-        enter();
-        return;
-    }
-
-    if (team->status == '0') {
-        show_error("Equipe não disponível");
-        free(team);
-        limpa_buffer();
-        enter();
-        return;
-    }
+    Team *team = load_and_check_team(id);
+    if (team == NULL) return;
 
     display_data_team(team);
     modify_team_data(team);
@@ -193,6 +166,7 @@ void edit_team(void) {
 
     enter();
 }
+
 
 void edit_team_user(void) {
     limpar_tela();
@@ -228,6 +202,7 @@ void edit_team_user(void) {
     printf("|[0] -> Voltar\n");
     char opc;
     scanf(" %c", &opc);
+
     switch (opc) {
         case '1':
             add_user_to_team_data(team) ? show_sucess("Usuario adicionado com sucesso") : show_error("Erro ao adicionar");
@@ -288,6 +263,7 @@ void show_teams(void) {
 
     enter();
 }
+
 
 void display_data_team(const Team *teams){
     printf("|\t\t\033[1m-> Dados do Time\033[m \n");
