@@ -21,9 +21,8 @@ char menu_equipes(void) {
     printf("|               [3] Excluir Equipe                 |\n");
     printf("|               [4] Reativar Equipe                |\n");
     printf("|               [5] Editar Equipe                  |\n");
-    printf("|               [6] Adicionar Usuário na Equipe    |\n");
-    printf("|               [7] Remover Usuário na Equipe      |\n");
-    printf("|               [8] Relatorio de Equipes           |\n");
+    printf("|               [6] Editar Usuário na Equipe       |\n");
+    printf("|               [7] Relatorio de Equipes           |\n");
     printf("|               [0] Sair                           |\n");
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -195,11 +194,11 @@ void edit_team(void) {
     enter();
 }
 
-void add_user_to_team(void) {
+void edit_team_user(void) {
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                               Adicionar usuário na equipe                                                     |\n");
+    printf("|                                                               Editar usuário na equipe                                                     |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
     printf("|\t Insira o ID do time:    ");
@@ -222,51 +221,33 @@ void add_user_to_team(void) {
         enter();
         return;
     }
-
     display_data_team(team);
-    add_user_to_team_data(team) ? show_sucess("Usuário adicionado com sucesso!") : show_error("Erro ao adicionar usuário");
+
+    printf("|[1] -> Adicionar usuário\n");
+    printf("|[2] -> Remover remover usuário\n");
+    printf("|[0] -> Voltar\n");
+    char opc;
+    scanf(" %c", &opc);
+    switch (opc) {
+        case '1':
+            add_user_to_team_data(team) ? show_sucess("Usuario adicionado com sucesso") : show_error("Erro ao adicionar");
+            break;
+        case '2':
+            remove_user_from_team_data(team) ? show_sucess("Usuario removido com sucesso") : show_error("Erro ao remover");
+            break;
+        case '0':
+            break;
+        default:
+            show_error("Opção inválida");
+            break;
+    }
+
     free(team);
     getchar();
 
     enter();
 }
 
-void remove_user_from_team(void) {
-    limpar_tela();
-    printf("\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    printf("|                                                               Remover usuário da equipe                                                       |\n");
-    printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-
-    printf("|\t Insira o ID do time:    ");
-    char id[4];
-    scanf("%4s", id);
-    getchar();
-
-    Team *team = load_team(id);
-    if (team == NULL) {
-        show_error("Equipe não encontrada");
-        limpa_buffer();
-        enter();
-        return;
-    }
-
-    if (team->status == '0') {
-        show_error("Equipe não disponível");
-        free(team);
-        limpa_buffer();
-        enter();
-        return; 
-    }
-
-    display_data_team(team);
-    remove_user_from_team_data(team) ? show_sucess("Usuário removido com sucesso!") : show_error("Erro ao remover usuário");
-    free(team);
-    getchar();
-
-    enter();
-
-}
 
 void show_teams(void) {
     limpar_tela();

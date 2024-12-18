@@ -24,12 +24,9 @@ void navegacao_times(void){
                 edit_team();
                 break;
             case '6':
-                add_user_to_team();
+                edit_team_user();
                 break;
             case '7':
-                remove_user_from_team();
-                break;
-            case '8':
                 show_teams();
                 break;
             case '0':
