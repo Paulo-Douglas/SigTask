@@ -82,14 +82,30 @@ int update_task(Task *new_task){
     return FALSE;
 }
 
-void show_tasks(void){
+void show_tasks(const char status, const char *key){
     FILE *fp = fopen("data/task.dat", "rb");
     if(fp == NULL) return;
 
     Task task;
-    while(fread(&task, sizeof(Task), 1, fp)){
-        display_data_task(&task);
+    while (fread(&task, sizeof(Task), 1, fp)) {
+        // Condição para exibir todos os registros
+        if (strcmp(key, "all") == 0) {
+            display_data_task(&task);
+            continue;
+        }
+
+        if (status == '\0' || status == task.status) {
+            if (strcmp(key, "status") == 0) {
+                display_data_task(&task);
+            } else if (strcmp(key, "users") == 0 && strchr(task.id, 'U') != NULL) {
+                display_data_task(&task);
+            } else if (strcmp(key, "team") == 0 && strchr(task.id, 'T') != NULL) {
+                display_data_task(&task);
+            }
+        }
     }
+
     fclose(fp);
 
-} 
+}
+ 

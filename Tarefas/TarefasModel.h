@@ -16,7 +16,7 @@ typedef struct
 
 } Task;
 
-void show_tasks(void);
+void show_tasks(const char status, const char *key);
 
 int insert_task(Task *task);
 int get_id_task(void);

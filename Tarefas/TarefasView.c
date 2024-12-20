@@ -108,7 +108,42 @@ void show_all_tasks(void) {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                              Relatorio de Tarefa                                                              |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    show_tasks();
+
+    char opc;
+
+    do {
+        printf("|[1] -> Tarefas ativas\n");
+        printf("|[2] -> Tarefas inativas\n");
+        printf("|[3] -> Tarefas por usuários\n");
+        printf("|[4] -> Tarefas com times\n");
+        printf("|[5] -> Todas as tarefas\n");
+        printf("|[0] -> Voltar\n");
+        scanf(" %c", &opc);
+
+        switch (opc) {    
+            case '1':
+                show_tasks('1', "status");
+                break;
+            case '2':
+                show_tasks('0', "status");
+                break;
+            case '3':
+                show_tasks('\0', "users");
+                break;
+            case '4':
+                show_tasks('\0', "team");
+                break;
+            case '5':
+                show_tasks('\0', "all");
+                break;
+            case '0':
+                return;
+            default:
+                show_error("Opção inválida!");
+        }
+
+    } while (opc != 0);
+
     enter();
 }
 
