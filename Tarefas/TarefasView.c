@@ -128,10 +128,10 @@ void show_all_tasks(void) {
                 show_tasks('0', "status");
                 break;
             case '3':
-                show_tasks('\0', "users");
+                show_tasks('1', "users");
                 break;
             case '4':
-                show_tasks('\0', "team");
+                show_tasks('1', "teams");
                 break;
             case '5':
                 show_tasks('\0', "all");
