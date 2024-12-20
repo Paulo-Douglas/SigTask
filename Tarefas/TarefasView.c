@@ -116,7 +116,8 @@ void display_data_task(Task *task){
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do Tarefa                                                               |\n");
     printf("| \033[1mID:\033[0m %s\n", task->id);
-    printf("| \033[1mID do Usuário/Time:\033[0m %s\n", task->responsible);
+    if(strstr(task->responsible, "T")) printf("|\033[1m\tTime responsável:\033[0m %s\n", task->responsible);
+    else printf("|\033[1m\tUsuario responsável:\033[0m %s\n", task->responsible);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\033[1m\tTarefa:\033[m %s\n", task->title);
     printf("|\033[1m\tDescrição:\033[m %s\n", task->description);
