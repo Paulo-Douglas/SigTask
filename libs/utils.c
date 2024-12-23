@@ -41,6 +41,29 @@ int year_now(void) {
 
 void date_now(char *date) {
     time_t time_now = time(NULL);
-    struct  tm *tm_info = localtime(&time_now);
+    struct tm *tm_info = localtime(&time_now);
     strftime(date, 11, "%d/%m/%Y", tm_info);
+}
+
+int check_dates(const char *date1, const char *date2){
+    struct tm tm1 = {0}; // Inicialização
+    struct tm tm2 = {0};
+    time_t t1, t2; // Datas em segundos
+
+    sscanf(date1, "%d/%d/%d", &tm1.tm_mday, &tm1.tm_mon, &tm1.tm_year);
+    sscanf(date2, "%d/%d/%d", &tm2.tm_mday, &tm2.tm_mon, &tm2.tm_year);
+
+    // Ajustes
+    tm1.tm_year -= 1900;
+    tm2.tm_year -= 1900;
+    tm1.tm_mon --;
+    tm2.tm_mon --;
+
+    t1 = mktime(&tm1); // Conversão
+    t2 = mktime(&tm2);
+
+    double diff = difftime(t1, t2); // Diferença em segundos
+
+    if (diff > 0) return TRUE;
+    else return FALSE;
 }
