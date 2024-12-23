@@ -112,11 +112,12 @@ void show_all_tasks(void) {
     char opc;
 
     do {
-        printf("|[1] -> Tarefas ativas\n");
-        printf("|[2] -> Tarefas inativas\n");
+        printf("|[1] -> Tarefas não concluidas\n");
+        printf("|[2] -> Tarefas concluídas\n");
         printf("|[3] -> Tarefas por usuários\n");
         printf("|[4] -> Tarefas com times\n");
         printf("|[5] -> Todas as tarefas\n");
+        printf("|[6] -> Tarefas em atraso\n");
         printf("|[0] -> Voltar\n");
         scanf(" %c", &opc);
 
@@ -136,13 +137,16 @@ void show_all_tasks(void) {
             case '5':
                 show_tasks('\0', "all");
                 break;
+            case '6':
+                show_tasks('1', "pending");
+                break;
             case '0':
                 return;
             default:
                 show_error("Opção inválida!");
         }
 
-    } while (opc != 0);
+    } while (opc != '0');
 
     enter();
 }

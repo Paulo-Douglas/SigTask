@@ -91,6 +91,12 @@ void show_tasks(const char status, const char *key){
 
         if (strcmp(key, "all") == 0) {
             display_data_task(&task);
+        } else if (task.status == '1' && strcmp(key, "pending") == 0) {
+            char date[11];
+            date_now(date);
+            if (strcmp(date, task.date) > 0) {
+                display_data_task(&task);
+            }
         } else if (task.status == status && strcmp(key, "status") == 0) {
             display_data_task(&task);
         } else if (strcmp(key, "users") == 0 && strstr(task.responsible, "U")){
