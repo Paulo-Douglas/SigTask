@@ -38,3 +38,9 @@ int year_now(void) {
     int year = tm.tm_year + 1900; // Soma 1900 para obter o ano completo
     return year;
 }
+
+void date_now(char *date) {
+    time_t time_now = time(NULL);
+    struct  tm *tm_info = localtime(&time_now);
+    strftime(date, 11, "%d/%m/%Y", tm_info);
+}
