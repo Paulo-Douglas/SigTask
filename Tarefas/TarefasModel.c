@@ -93,7 +93,7 @@ void show_tasks(const char status, const char *key){
 
         if (strcmp(key, "all") == 0) {
             display_data_task(&task);
-        } else if (task.status == '1' && strcmp(key, "pending") == 0 && check_dates(date, task.date)){
+        } else if (task.status == '1' && strcmp(key, "pending") == 0 && check_dates(task.date)){
             display_data_task(&task);
         } else if (task.status == status && strcmp(key, "status") == 0) {
             display_data_task(&task);

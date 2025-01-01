@@ -45,7 +45,11 @@ void date_now(char *date) {
     strftime(date, 11, "%d/%m/%Y", tm_info);
 }
 
-int check_dates(const char *date1, const char *date2){
+int check_dates(const char *date1){
+
+    char date2[11];
+    date_now(date2);
+
     struct tm tm1 = {0}; // Inicialização
     struct tm tm2 = {0};
     time_t t1, t2; // Datas em segundos
