@@ -75,6 +75,11 @@ int register_task(void){
     read_date(day, month);
     snprintf(task.date, 12, "%s/%s/%d", day, month, year);
 
+    if (check_dates(task.date)) {
+        show_error("Data não pode ser menor que a data atual!");
+        return FALSE;
+    }
+
     limpa_buffer();
     printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
     char type = read_generic_123("type");
