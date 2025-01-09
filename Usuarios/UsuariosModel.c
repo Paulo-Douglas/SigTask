@@ -53,7 +53,6 @@ int update_user(User *new_data){
 
     User user;
     while (fread(&user, sizeof(User), 1, fp)){
-
         if(strcmp(user.cpf, new_data->cpf) == 0){
             fseek(fp, -sizeof(User), SEEK_CUR);
             fwrite(new_data, sizeof(User), 1, fp);

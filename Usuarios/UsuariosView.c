@@ -64,6 +64,23 @@ void register_user() {
 }
 
 
+User* struct_user(const char status){
+    printf("|\tCPF:\t");
+    const char *cpf = read_cpf();
+    User *user = load_user(cpf);
+
+    if (user == NULL) {
+        show_error("| CPF nao encontrado");
+        return NULL;
+    } else if (user->status == status) {
+        show_error("| Nao é possível acessar esse usuário");
+        return NULL;
+    }
+
+    return user;
+}
+
+
 /**
  * Exibe a tela de exibir dados dos usuários.
  * 
@@ -73,17 +90,13 @@ void register_user() {
  */
 void search_user(void) {
     show_header("Exibir Dados");
+    User *user = struct_user('0');
 
-    printf("|\tCPF: ");
-    char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if(user == NULL) show_error("| CPF não alcançado!\n");
-    else if (user->status == '0') show_error("| Usuário não pode ser acessado");
-    else display_data_user(user);
+    if (user != NULL) display_data_user(user);
 
     enter();
 }
+
 
 
 /**
@@ -96,14 +109,9 @@ void search_user(void) {
  **/
 void modify_user_data(void) {
     show_header("Editar Dados");
+    User *user = struct_user('0');
 
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if (user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '0') show_error("| Não é possível editar esse usuário");
-    else {
+    if (user != NULL) {
         display_data_user(user);
         edit_user(user);   
     }
@@ -114,35 +122,25 @@ void modify_user_data(void) {
 
 void delete_user(void) {
     show_header("Excluir Conta");
+    User *user = struct_user('0');
 
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if(user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '0') show_error("| Não é possível acessar este usuário");
-    else {
+    if (user != NULL) {
         display_data_user(user);
         user->status = '0';
         update_user(user);
         remove_user_inactive_teams(user->id);
+        printf("sai");
         show_sucess("Usuário desativado");
     }
-
     enter();
 }
 
 
 void reactivate_user(void) {
     show_header("Reativar Conta");
+    User *user = struct_user('1');
 
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if(user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '1') show_error("| Não é possível reativar uma conta ativa");
-    else {
+    if (user != NULL) {
         display_data_user(user);
         user->status = '1';
         update_user(user);
