@@ -10,5 +10,6 @@ void change_task(void);
 void delete_task(void);
 void display_data_task(Task *task);
 void show_all_tasks(void);
+Task *struct_task(void);
 
 #endif

@@ -36,7 +36,7 @@ void add_task(void)
 
     if (register_task())
     {
-        show_sucess("| Tarefa cadastrado com sucesso!\n");
+        show_sucess("| Tarefa cadastrada com sucesso!\n");
     }
     else
     {
@@ -46,24 +46,30 @@ void add_task(void)
     enter();
 }
 
+Task *struct_task(void)
+{
+    printf("|\tInforme o ID: ");
+    char id[4];
+    scanf("%4s", id);
+    Task *task = load_task(id);
+
+    return task;
+}
+
 void search_task(void)
 {
     limpa_buffer();
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Exibir Tarefa                                                                 |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    Task *task = struct_task();
 
-    printf("|\tInforme o ID: ");
-    char id[4];
-    scanf("%4s", id);
-
-    Task *task = load_task(id);
     if (task != NULL)
     {
         display_data_task(task);
     }
     else
-        show_error("Tarefa não encontrado");
+        show_error("Tarefa não encontrada");
 
     enter();
 }
@@ -73,19 +79,15 @@ void change_task(void)
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Editar Tarefa                                                            |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    Task *task = struct_task();
 
-    printf("|\tInforme o ID: ");
-    char id[4];
-    scanf("%4s", id);
-
-    Task *task = load_task(id);
     if (task != NULL)
     {
         display_data_task(task);
         edit_task(task);
     }
     else
-        show_error("Tarefa não encontrado");
+        show_error("Tarefa não encontrada");
 
     enter();
 }
@@ -96,21 +98,17 @@ void delete_task(void)
     printf("|                                                                 Fechar Tarefa                                                                 |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     enter();
+    Task *task = struct_task();
 
-    printf("|\tInforme o ID: ");
-    char id[4];
-    scanf("%4s", id);
-
-    Task *task = load_task(id);
     if (task == NULL)
-        show_error("Tarefa não encontrado");
+        show_error("Tarefa não encontrada");
     else if (task->status == '0')
-        show_error("Tarefa ja fechado");
+        show_error("Tarefa já fechada");
     else
     {
         task->status = '0';
         update_task(task);
-        show_sucess("Tarefa fechado com sucesso!");
+        show_sucess("Tarefa fechada com sucesso!");
     }
 
     enter();
