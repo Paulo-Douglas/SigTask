@@ -9,7 +9,8 @@
 #include "EquipesView.h"
 #include "EquipesController.h"
 
-char menu_equipes(void) {
+char menu_equipes(void)
+{
     char op;
     limpar_tela();
     printf("\n");
@@ -27,20 +28,23 @@ char menu_equipes(void) {
     printf("----------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
     scanf(" %c", &op);
-    getchar();  
+    getchar();
     return op;
 }
 
-Team * load_and_check_team(const char *id){
+Team *load_and_check_team(const char *id)
+{
     Team *team = load_team(id);
-    if (team == NULL) {
+    if (team == NULL)
+    {
         show_error("Equipe nao encontrada");
         limpa_buffer();
         enter();
         return NULL;
     }
 
-    if (team->status == '0') {
+    if (team->status == '0')
+    {
         show_error("Equipe nao disponivel");
         limpa_buffer();
         enter();
@@ -50,36 +54,40 @@ Team * load_and_check_team(const char *id){
     return team;
 }
 
-
-void add_team(void){
+void add_team(void)
+{
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                            Cadastro de equipe acadêmica                                                       |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
 
-    if (register_team()){
+    if (register_team())
+    {
         show_sucess("Sucesso ao registrar a equipe!");
-    } else {
+    }
+    else
+    {
         show_error("[ERROR] Falha ao cadastrar a equipe!");
     }
     limpa_buffer();
 }
 
-
-void search_team(void) {
+void search_team(void)
+{
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Exibir equipe                                                                   |\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
-    
+
     printf("|\t Insira o ID:    ");
     char id[4];
     scanf("%4s", id);
 
     Team *team = load_and_check_team(id);
-    if (team == NULL) return;
+    if (team == NULL)
+        return;
 
     display_data_team(team);
     free(team);
@@ -88,8 +96,8 @@ void search_team(void) {
     enter();
 }
 
-
-void delete_team(void) { 
+void delete_team(void)
+{
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -101,8 +109,9 @@ void delete_team(void) {
     scanf("%4s", id);
 
     Team *team = load_and_check_team(id);
-    if (team == NULL) return;
-    
+    if (team == NULL)
+        return;
+
     team->status = '0';
     update_team(team);
     show_sucess("Equipe excluida com sucesso!");
@@ -112,8 +121,8 @@ void delete_team(void) {
     enter();
 }
 
-
-void reactive_team(void) {
+void reactive_team(void)
+{
     limpar_tela();
     limpar_tela();
     printf("\n");
@@ -126,9 +135,11 @@ void reactive_team(void) {
     scanf("%4s", id);
 
     Team *team = load_and_check_team(id);
-    if (team == NULL) return;
+    if (team == NULL)
+        return;
 
-    if (team->status == '1') {
+    if (team->status == '1')
+    {
         show_error("Equipe já está ativa");
         free(team);
         limpa_buffer();
@@ -145,8 +156,8 @@ void reactive_team(void) {
     enter();
 }
 
-
-void edit_team(void) { 
+void edit_team(void)
+{
     limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Editar equipe                                                                   |\n");
@@ -157,7 +168,8 @@ void edit_team(void) {
     scanf("%4s", id);
 
     Team *team = load_and_check_team(id);
-    if (team == NULL) return;
+    if (team == NULL)
+        return;
 
     display_data_team(team);
     modify_team_data(team);
@@ -167,8 +179,8 @@ void edit_team(void) {
     enter();
 }
 
-
-void edit_team_user(void) {
+void edit_team_user(void)
+{
     limpar_tela();
     printf("\n");
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
@@ -181,14 +193,16 @@ void edit_team_user(void) {
     getchar();
 
     Team *team = load_team(id);
-    if (team == NULL) {
+    if (team == NULL)
+    {
         show_error("Equipe não encontrada");
         limpa_buffer();
         enter();
         return;
     }
 
-    if (team->status == '0') {
+    if (team->status == '0')
+    {
         show_error("Equipe não disponível");
         free(team);
         limpa_buffer();
@@ -203,18 +217,19 @@ void edit_team_user(void) {
     char opc;
     scanf(" %c", &opc);
 
-    switch (opc) {
-        case '1':
-            add_user_to_team_data(team) ? show_sucess("Usuario adicionado com sucesso") : show_error("Erro ao adicionar");
-            break;
-        case '2':
-            remove_user_from_team_data(team) ? show_sucess("Usuario removido com sucesso") : show_error("Erro ao remover");
-            break;
-        case '0':
-            break;
-        default:
-            show_error("Opção inválida");
-            break;
+    switch (opc)
+    {
+    case '1':
+        add_user_to_team_data(team) ? show_sucess("Usuario adicionado com sucesso") : show_error("Erro ao adicionar");
+        break;
+    case '2':
+        remove_user_from_team_data(team) ? show_sucess("Usuario removido com sucesso") : show_error("Erro ao remover");
+        break;
+    case '0':
+        break;
+    default:
+        show_error("Opção inválida");
+        break;
     }
 
     free(team);
@@ -223,8 +238,8 @@ void edit_team_user(void) {
     enter();
 }
 
-
-void show_teams(void) {
+void show_teams(void)
+{
     limpar_tela();
     printf("|-----------------------------------------------------------------------------------------------------------------------------------------------|\n");
     printf("|                                                               Relatório de Equipes                                                            |\n");
@@ -235,42 +250,45 @@ void show_teams(void) {
     printf("|[4] -> Equipes com usuários\n");
     printf("|[5] -> Equipes sem usuários\n");
     printf("|[0] -> Voltar\n");
-    
+
     char opc;
     scanf(" %c", &opc);
-    switch (opc) {
-        case '1':
-            report_teams('\0', "all");
-            break;
-        case '2':
-            report_teams('1', "status");
-            break;
-        case '3':
-            report_teams('0', "status");
-            break;
-        case '4':
-            report_teams('1', "users");
-            break;
-        case '5':
-            report_teams('0', "users");
-            break;
-        case '0':
-            break;
-        default:
-            show_error("Opção inválida");
-            break;
+    switch (opc)
+    {
+    case '1':
+        report_teams('\0', "all");
+        break;
+    case '2':
+        report_teams('1', "status");
+        break;
+    case '3':
+        report_teams('0', "status");
+        break;
+    case '4':
+        report_teams('1', "users");
+        break;
+    case '5':
+        report_teams('0', "users");
+        break;
+    case '0':
+        break;
+    default:
+        show_error("Opção inválida");
+        break;
     }
 
     enter();
 }
 
-
-void display_data_team(const Team *teams){
+void display_data_team(const Team *teams)
+{
     printf("|\t\t\033[1m-> Dados do Time\033[m \n");
     printf("\033[1m|ID:\033[m %s\n", teams->id);
     printf("\033[1m|Usuários:\033[m\n");
-    for (int i = 0; i < 10; i++) {
-        if (teams->users[i][0] != '\0') {
+    for (int i = 0; i < 10; i++)
+    {
+        if (teams->users[i][0] != '\0')
+        {
             printf("\t-> %s\n", teams->users[i]);
         }
     }
@@ -278,5 +296,4 @@ void display_data_team(const Team *teams){
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
     printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
-
 }

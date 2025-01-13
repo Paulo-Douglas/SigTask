@@ -3,8 +3,8 @@
 
 #include "../libs/utils.h"
 
-
-typedef struct {
+typedef struct
+{
     char id[4];
     char users[10][4];
     char name[50];

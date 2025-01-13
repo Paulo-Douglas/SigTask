@@ -8,17 +8,19 @@
 #include "EquipeModel.h"
 #include "EquipesView.h"
 
-
-int get_id_team(void){
-    FILE * fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL) return FALSE;
+int get_id_team(void)
+{
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if (fp == NULL)
+        return FALSE;
 
     Team last_team;
     int next_id = 1;
 
     fseek(fp, -sizeof(Team), SEEK_END);
 
-    if (fread(&last_team, sizeof(Team), 1, fp)){
+    if (fread(&last_team, sizeof(Team), 1, fp))
+    {
         next_id = atoi(last_team.id) + 1;
     }
 
@@ -26,32 +28,37 @@ int get_id_team(void){
     return next_id;
 }
 
-
-int insert_team(Team *teams){
+int insert_team(Team *teams)
+{
     int result = FALSE;
 
     create_path("data/");
-    FILE *fp = fopen("data/teams.dat", "ab");   
-    if (fp == NULL) return result;
+    FILE *fp = fopen("data/teams.dat", "ab");
+    if (fp == NULL)
+        return result;
 
     int id = get_id_team();
 
     snprintf(teams->id, sizeof(teams->id), "%d", id);
 
-    if (fwrite(teams, sizeof(Team), 1, fp)) result = TRUE;
+    if (fwrite(teams, sizeof(Team), 1, fp))
+        result = TRUE;
 
     fclose(fp);
     return TRUE;
 }
 
-
-Team *load_team(const char *id){
+Team *load_team(const char *id)
+{
     FILE *fp = fopen("data/teams.dat", "rb");
-    if(fp == NULL) return NULL;
+    if (fp == NULL)
+        return NULL;
 
     Team *team = (Team *)malloc(sizeof(Team));
-    while(fread(team, sizeof(Team), 1, fp)){
-        if(strcmp(team->id, id) == 0){
+    while (fread(team, sizeof(Team), 1, fp))
+    {
+        if (strcmp(team->id, id) == 0)
+        {
             fclose(fp);
             return team;
         }
@@ -61,14 +68,17 @@ Team *load_team(const char *id){
     return NULL;
 }
 
-
-int update_team(Team *new_team){
+int update_team(Team *new_team)
+{
     FILE *fp = fopen("data/teams.dat", "rb+");
-    if(fp == NULL) return FALSE;
+    if (fp == NULL)
+        return FALSE;
 
     Team team;
-    while(fread(&team, sizeof(Team), 1, fp)){
-        if(strcmp(team.id, new_team->id) == 0){
+    while (fread(&team, sizeof(Team), 1, fp))
+    {
+        if (strcmp(team.id, new_team->id) == 0)
+        {
             fseek(fp, -sizeof(Team), SEEK_CUR);
             fwrite(new_team, sizeof(Team), 1, fp);
             fclose(fp);
@@ -79,14 +89,19 @@ int update_team(Team *new_team){
     return FALSE;
 }
 
-void remove_user_inactive_teams(const char id[4]){
+void remove_user_inactive_teams(const char id[4])
+{
     FILE *fp = fopen("data/teams.dat", "rb+");
-    if (fp == NULL) return;
+    if (fp == NULL)
+        return;
 
     Team team;
-    while (fread(&team, sizeof(Team), 1, fp) == 1){
-        for (int i = 0; i < 10; i++){
-            if (strcmp(team.users[i], id) == 0){
+    while (fread(&team, sizeof(Team), 1, fp) == 1)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (strcmp(team.users[i], id) == 0)
+            {
                 team.users[i][0] = '\0';
                 update_team(&team);
             }
@@ -94,30 +109,41 @@ void remove_user_inactive_teams(const char id[4]){
     }
 }
 
-void report_teams(const char condition, const char *key){
+void report_teams(const char condition, const char *key)
+{
     FILE *fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL) return; 
+    if (fp == NULL)
+        return;
 
     Team team;
-    while (fread(&team, sizeof(Team), 1, fp)){
-        int users = 0; 
+    while (fread(&team, sizeof(Team), 1, fp))
+    {
+        int users = 0;
 
-        for (int i = 0; i < 10; i++) {
-            if (team.users[i][0] != '\0') {
+        for (int i = 0; i < 10; i++)
+        {
+            if (team.users[i][0] != '\0')
+            {
                 users++;
             }
         }
 
-        if (condition == '\0' && strcmp(key, "all") == 0) {
+        if (condition == '\0' && strcmp(key, "all") == 0)
+        {
             display_data_team(&team);
         }
-        else if (team.status == condition && strcmp(key, "status") == 0) {
+        else if (team.status == condition && strcmp(key, "status") == 0)
+        {
             display_data_team(&team);
         }
-        else if (strcmp(key, "users") == 0) {
-            if (users > 0 && condition == '1') {
+        else if (strcmp(key, "users") == 0)
+        {
+            if (users > 0 && condition == '1')
+            {
                 display_data_team(&team);
-            } else if (users == 0 && condition == '0') {
+            }
+            else if (users == 0 && condition == '0')
+            {
                 display_data_team(&team);
             }
         }

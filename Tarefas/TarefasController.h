@@ -4,7 +4,7 @@
 #include "TarefasModel.h"
 
 int register_task(void);
-char* responsible(void);
+char *responsible(void);
 void edit_task(Task *task);
 
 #endif

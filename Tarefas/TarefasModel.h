@@ -21,6 +21,6 @@ void show_tasks(const char status, const char *key);
 int insert_task(Task *task);
 int get_id_task(void);
 int update_task(Task *task);
-Task * load_task(const char *id);
+Task *load_task(const char *id);
 
 #endif

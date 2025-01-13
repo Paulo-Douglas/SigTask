@@ -13,7 +13,6 @@ void edit_team_user(void);
 void display_data_team(const Team *teams);
 void show_teams(void);
 
-Team * load_and_check_team(const char *id);
-
+Team *load_and_check_team(const char *id);
 
 #endif

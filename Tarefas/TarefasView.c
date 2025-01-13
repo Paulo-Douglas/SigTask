@@ -9,8 +9,8 @@
 #include "../libs/reads.h"
 #include "../libs/styles.h"
 
-
-char menu_task(void) {
+char menu_task(void)
+{
     char op;
     limpar_tela();
     printf("|---------------------------------------------------|\n");
@@ -28,21 +28,26 @@ char menu_task(void) {
     return op;
 }
 
-void add_task(void) {
+void add_task(void)
+{
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                              Cadastrar Tarefa                                                                 |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
-    if(register_task()){
+    if (register_task())
+    {
         show_sucess("| Tarefa cadastrado com sucesso!\n");
-    } else {
+    }
+    else
+    {
         show_error("| [ERRO]: Erro ao cadastrar!\n");
     }
 
     enter();
 }
 
-void search_task(void) {
+void search_task(void)
+{
     limpa_buffer();
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Exibir Tarefa                                                                 |\n");
@@ -53,15 +58,18 @@ void search_task(void) {
     scanf("%4s", id);
 
     Task *task = load_task(id);
-    if(task != NULL){
+    if (task != NULL)
+    {
         display_data_task(task);
-    } else show_error("Tarefa não encontrado");
+    }
+    else
+        show_error("Tarefa não encontrado");
 
     enter();
 }
 
-
-void change_task(void) {
+void change_task(void)
+{
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Editar Tarefa                                                            |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
@@ -71,17 +79,19 @@ void change_task(void) {
     scanf("%4s", id);
 
     Task *task = load_task(id);
-    if(task != NULL){
+    if (task != NULL)
+    {
         display_data_task(task);
         edit_task(task);
-    } else show_error("Tarefa não encontrado");
-
+    }
+    else
+        show_error("Tarefa não encontrado");
 
     enter();
 }
 
-
-void delete_task(void) { 
+void delete_task(void)
+{
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Fechar Tarefa                                                                 |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
@@ -92,9 +102,12 @@ void delete_task(void) {
     scanf("%4s", id);
 
     Task *task = load_task(id);
-    if(task == NULL) show_error("Tarefa não encontrado");
-    else if (task->status == '0') show_error("Tarefa ja fechado");
-    else {
+    if (task == NULL)
+        show_error("Tarefa não encontrado");
+    else if (task->status == '0')
+        show_error("Tarefa ja fechado");
+    else
+    {
         task->status = '0';
         update_task(task);
         show_sucess("Tarefa fechado com sucesso!");
@@ -103,7 +116,8 @@ void delete_task(void) {
     enter();
 }
 
-void show_all_tasks(void) {
+void show_all_tasks(void)
+{
     limpar_tela();
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                              Relatorio de Tarefa                                                              |\n");
@@ -111,7 +125,8 @@ void show_all_tasks(void) {
 
     char opc;
 
-    do {
+    do
+    {
         printf("|[1] -> Tarefas não concluidas\n");
         printf("|[2] -> Tarefas concluídas\n");
         printf("|[3] -> Tarefas por usuários\n");
@@ -121,29 +136,30 @@ void show_all_tasks(void) {
         printf("|[0] -> Voltar\n");
         scanf(" %c", &opc);
 
-        switch (opc) {    
-            case '1':
-                show_tasks('1', "status");
-                break;
-            case '2':
-                show_tasks('0', "status");
-                break;
-            case '3':
-                show_tasks('1', "users");
-                break;
-            case '4':
-                show_tasks('1', "teams");
-                break;
-            case '5':
-                show_tasks('\0', "all");
-                break;
-            case '6':
-                show_tasks('1', "pending");
-                break;
-            case '0':
-                return;
-            default:
-                show_error("Opção inválida!");
+        switch (opc)
+        {
+        case '1':
+            show_tasks('1', "status");
+            break;
+        case '2':
+            show_tasks('0', "status");
+            break;
+        case '3':
+            show_tasks('1', "users");
+            break;
+        case '4':
+            show_tasks('1', "teams");
+            break;
+        case '5':
+            show_tasks('\0', "all");
+            break;
+        case '6':
+            show_tasks('1', "pending");
+            break;
+        case '0':
+            return;
+        default:
+            show_error("Opção inválida!");
         }
 
     } while (opc != '0');
@@ -151,19 +167,23 @@ void show_all_tasks(void) {
     enter();
 }
 
-void display_data_task(Task *task){
+void display_data_task(Task *task)
+{
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados do Tarefa                                                               |\n");
     printf("| \033[1mID:\033[0m %s\n", task->id);
-    if(strstr(task->responsible, "T")) printf("|\033[1m\tTime responsável:\033[0m %s\n", task->responsible);
-    else printf("|\033[1m\tUsuario responsável:\033[0m %s\n", task->responsible);
+    if (strstr(task->responsible, "T"))
+        printf("|\033[1m\tTime responsável:\033[0m %s\n", task->responsible);
+    else
+        printf("|\033[1m\tUsuario responsável:\033[0m %s\n", task->responsible);
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\033[1m\tTarefa:\033[m %s\n", task->title);
     printf("|\033[1m\tDescrição:\033[m %s\n", task->description);
     printf("|\033[1m\tData:\033[m %s\n", task->date);
-    printf("|\033[1m\tPrioridade:\033[m %s\n", task->priority == 'A' ? "Alta" : task->type == 'M' ? "Média" : "Baixa");
-    printf("|\033[1m\tTipo:\033[m %s\n", task->type == 'E' ? "Evento" : task->type == 'R' ? "Reunião" : "Projeto");
+    printf("|\033[1m\tPrioridade:\033[m %s\n", task->priority == 'A' ? "Alta" : task->type == 'M' ? "Média"
+                                                                                                  : "Baixa");
+    printf("|\033[1m\tTipo:\033[m %s\n", task->type == 'E' ? "Evento" : task->type == 'R' ? "Reunião"
+                                                                                          : "Projeto");
     printf("|\033[1m\tStatus:\033[0m %s\n", task->status == '0' ? "Fechada" : "Ativa");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }
-
