@@ -14,7 +14,9 @@ int get_id_task(void)
 {
     FILE *fp = fopen("data/task.dat", "rb");
     if (fp == NULL)
+    {
         return FALSE;
+    }
 
     Task task;
     int next_id = 1;
@@ -43,10 +45,14 @@ int insert_task(Task *task)
 
     FILE *fp = fopen("data/task.dat", "ab");
     if (fp == NULL)
+    {
         return result;
+    }
 
     if (fwrite(task, sizeof(Task), 1, fp))
+    {
         result = TRUE;
+    }
 
     fclose(fp);
     return result;
@@ -56,7 +62,9 @@ Task *load_task(const char *id)
 {
     FILE *fp = fopen("data/task.dat", "rb");
     if (fp == NULL)
+    {
         return NULL;
+    }
 
     Task *task = (Task *)malloc(sizeof(Task));
     while (fread(task, sizeof(Task), 1, fp))
