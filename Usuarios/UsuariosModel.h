@@ -19,6 +19,6 @@ void report_users(const char condition);
 
 int insert_user(User *users);
 int update_user(User *new_data);
-User* load_user(const char *cpf);
+User *load_user(const char *cpf);
 
 #endif // USUARIOSMODEL_H
