@@ -12,12 +12,6 @@
 #include "../libs/reads.h"
 #include "../libs/styles.h"
 
-/**
- * Exibe o menu de usuários com opções para cadastrar, exibir dados,
- * editar dados, excluir conta, reativar conta ou sair.
- *
- * @return O caractere que representa a opção de menu escolhida.
- */
 char user_menu(void)
 {
     char op;
@@ -40,15 +34,6 @@ char user_menu(void)
     return op;
 }
 
-/**
- * Exibe a tela de cadastro de usuários.
- *
- * Se o cadastro for efetuado com sucesso, exibe mensagem de sucesso.
- * Caso contrário, exibe mensagem de erro e informa que o CPF ja esta cadastrado ou
- * que houve um erro ao cadastrar.
- *
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- */
 void register_user()
 {
     show_header("Cadastrar Usuário");
@@ -86,13 +71,6 @@ User *struct_user(const char status)
     return user;
 }
 
-/**
- * Exibe a tela de exibir dados dos usuários.
- *
- * Esta tela apenas exibe os dados dos usuários sem realizar nenhuma ação.
- *
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- */
 void search_user(void)
 {
     show_header("Exibir Dados");
@@ -104,14 +82,6 @@ void search_user(void)
     enter();
 }
 
-/**
- * Exibe a tela de alterar dados dos usuários.
- *
- * Esta tela pede o CPF do usuário e, se encontrado, permite alterar os dados do usuário.
- *
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- *
- **/
 void modify_user_data(void)
 {
     show_header("Editar Dados");
