@@ -82,20 +82,25 @@ int add_user_to_team_data(Team *team)
     scanf("%4s", id);
 
     if (!user_exists(id))
+    {
         return FALSE;
+    }
 
     for (int i = 0; i < 10; i++)
     {
-        if (team->users[i][0] == '\0' && team->users[i][0] != id[0])
+        if (team->users[i][0] == '\0')
         {
             strcpy(team->users[i], id);
             update_team(team);
             return TRUE;
         }
-        else
+        else if (strcmp(team->users[i], id) == 0)
+        {
             return FALSE;
+        }
     }
-    return TRUE;
+
+    return FALSE;
 }
 
 int remove_user_from_team_data(Team *team)

@@ -292,8 +292,8 @@ void display_data_team(const Team *teams)
             printf("\t-> %s\n", teams->users[i]);
         }
     }
-    printf("\033[1m|Nome da instituição:\033[m %s\n", teams->name);
+    printf("\033[1m|Nome da equuipe:\033[m %s\n", teams->name);
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
-    printf("\033[1m|Definicoes:\033[m %s\n", teams->status == ATIVO ? "Ativo" : "Invativo");
+    printf("\033[1m|Status:\033[m %s\n", teams->status == ATIVO ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }

@@ -102,22 +102,38 @@ int user_exists(const char *key)
 
     FILE *fp = fopen("data/users.dat", "rb");
     if (fp == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
         return exists;
+    }
 
     User *user = (User *)malloc(sizeof(User));
-    while (fread(user, sizeof(User), 1, fp) && !exists)
+    if (user == NULL)
     {
+        printf("Erro ao alocar memória.\n");
+        fclose(fp);
+        return exists;
+    }
+
+    while (fread(user, sizeof(User), 1, fp))
+    {
+        printf("ID: %s, CPF: %s\n", user->id, user->cpf);
+
         if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5))
         {
             exists = TRUE;
+            break;
         }
         else if ((strcmp(user->id, key) == 0) && (user->status == '1'))
         {
             exists = TRUE;
+            break;
         }
     }
+
     fclose(fp);
     free(user);
+
     return exists;
 }
 
