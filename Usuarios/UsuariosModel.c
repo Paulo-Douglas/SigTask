@@ -32,6 +32,14 @@ int get_id_user(void)
 
 int insert_user(User *new_user)
 {
+    int id = get_id_user();
+    if (id == 0)
+    {
+        id = 1;
+    }
+
+    snprintf(new_user->id, sizeof(new_user->id), "%d", id);
+
     User *head = NULL;
     User *tail = NULL;
 
@@ -156,10 +164,8 @@ void report_users(const char condition)
         }
         else
         {
-            printf("Entrei no else.\n");
             if (user.status == condition)
             {
-                printf("Entrei na condição.\n");
                 display_data_user(&user);
             }
         }

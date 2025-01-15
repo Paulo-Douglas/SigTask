@@ -89,8 +89,6 @@ char *read_cpf(void)
 
         input(&cpf);
 
-        printf("CPF LIDO %s\n", cpf);
-
         if (!validate_cpf(cpf))
         {
             show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
