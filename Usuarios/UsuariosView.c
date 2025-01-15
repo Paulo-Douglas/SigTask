@@ -53,16 +53,16 @@ void register_user()
 {
     show_header("Cadastrar Usuário");
 
-    if (add_user())
+    int result = create_user();
+    if (result)
     {
-        printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_sucess("| Cadastrado com sucesso!\n");
+        show_sucess("Usuário cadastrado com sucesso!");
     }
     else
     {
-        printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_error("| [ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
+        show_error("Erro ao cadastrar o usuário");
     }
+
     enter();
 }
 

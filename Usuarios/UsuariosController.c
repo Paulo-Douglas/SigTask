@@ -9,30 +9,55 @@
 #include "../libs/validate.h"
 #include "../libs/styles.h"
 
-int add_user(void)
+int create_user(void)
 {
-    User user = {0};
-
-    printf("|\tCPF: ");
-    char *cpf = read_cpf();
-    strcpy(user.cpf, cpf);
-
-    if (user_exists(user.cpf))
+    User *new_user = (User *)malloc(sizeof(User));
+    if (!new_user)
     {
+        show_error("Não foi possível alocar memória para o usuário");
+        return FALSE;
+    }
+
+    printf("|\tCPF [XXX.XXX.XXX-XX]: ");
+    char *cpf = read_cpf();
+    if (!cpf)
+    {
+        free(new_user);
+        return FALSE;
+    }
+    strcpy(new_user->cpf, cpf);
+    free(cpf);
+
+    if (user_exists(new_user->cpf))
+    {
+        free(new_user);
         return FALSE;
     }
 
     printf("|\tNome: ");
     char *name = read_string();
-    strcpy(user.name, name);
+    if (!name)
+    {
+        free(new_user);
+        return FALSE;
+    }
+    strcpy(new_user->name, name);
+    free(name);
 
     printf("|\tTelefone: ");
     char *phone = read_phone();
-    strcpy(user.phone, phone);
+    if (!phone)
+    {
+        free(new_user);
+        return FALSE;
+    }
+    strcpy(new_user->phone, phone);
+    free(phone);
 
-    user.status = '1';
+    new_user->status = '1';
+    new_user->next = NULL;
 
-    int result = insert_user(&user);
+    int result = insert_user(new_user);
 
     return result;
 }

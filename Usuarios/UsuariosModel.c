@@ -30,25 +30,73 @@ int get_id_user(void)
     return next_id;
 }
 
-int insert_user(User *user)
+int insert_user(User *new_user)
 {
-    int id = get_id_user();
-    if (id == 0)
-        id = 1;
+    User *head = NULL;
+    User *tail = NULL;
 
-    snprintf(user->id, sizeof(user->id), "%d", id);
-    create_path("data/");
+    FILE *fp = fopen("data/users.dat", "rb");
+    if (fp != NULL)
+    {
+        User temp_user;
+        while (fread(&temp_user, sizeof(User), 1, fp))
+        {
+            User *node = (User *)malloc(sizeof(User));
+            if (!node)
+            {
+                fclose(fp);
+                return FALSE;
+            }
+            *node = temp_user;
+            node->next = NULL;
 
-    FILE *fp = fopen("data/users.dat", "ab");
+            if (head == NULL)
+            {
+                head = tail = node;
+            }
+            else
+            {
+                tail->next = node;
+                tail = node;
+            }
+        }
+        fclose(fp);
+    }
+
+    if (head == NULL)
+    {
+        head = new_user;
+    }
+    else
+    {
+        tail->next = new_user;
+    }
+
+    fp = fopen("data/users.dat", "wb");
     if (fp == NULL)
+    {
         return FALSE;
-    int result = FALSE;
+    }
 
-    if (fwrite(user, sizeof(User), 1, fp))
-        result = TRUE;
+    User *current = head;
+    while (current != NULL)
+    {
+        User temp = *current;
+        temp.next = NULL;
+        fwrite(&temp, sizeof(User), 1, fp);
+        current = current->next;
+    }
 
     fclose(fp);
-    return result;
+
+    while (head != NULL)
+    {
+        User *temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return TRUE;
 }
 
 int update_user(User *new_data)
