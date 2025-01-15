@@ -174,6 +174,7 @@ void display_data_user(const User *user)
     printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
-    printf("\033[1m|Definicoes:\033[m %s\n", user->status == ATIVO ? "Ativo" : "Inativo");
+    printf("\033[1m|Status:\033[m %s\n", user->status == ATIVO ? "Ativo" : "Inativo");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+    printf("%p", (void *)user->next);
 }
