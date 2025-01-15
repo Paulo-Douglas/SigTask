@@ -32,6 +32,13 @@ int get_id_user(void)
 
 int insert_user(User *new_user)
 {
+    int id = get_id_user();
+    if (id == 0)
+    {
+        id = 1;
+    }
+
+    snprintf(new_user->id, sizeof(new_user->id), "%d", id);
     User *first_user = NULL;
     User *last_user = NULL;
 
