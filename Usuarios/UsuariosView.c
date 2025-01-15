@@ -51,7 +51,7 @@ void register_user()
     enter();
 }
 
-User *struct_user(const char status)
+User *initialize_user(const char status)
 {
     printf("|\tCPF:\t");
     const char *cpf = read_cpf();
@@ -74,7 +74,7 @@ User *struct_user(const char status)
 void search_user(void)
 {
     show_header("Exibir Dados");
-    User *user = struct_user('0');
+    User *user = initialize_user(INATIVO);
 
     if (user != NULL)
         display_data_user(user);
@@ -85,7 +85,7 @@ void search_user(void)
 void modify_user_data(void)
 {
     show_header("Editar Dados");
-    User *user = struct_user('0');
+    User *user = initialize_user(INATIVO);
 
     if (user != NULL)
     {
@@ -99,15 +99,14 @@ void modify_user_data(void)
 void delete_user(void)
 {
     show_header("Excluir Conta");
-    User *user = struct_user('0');
+    User *user = initialize_user(INATIVO);
 
     if (user != NULL)
     {
         display_data_user(user);
-        user->status = '0';
+        user->status = INATIVO;
         update_user(user);
         remove_user_inactive_teams(user->id);
-        printf("sai");
         show_sucess("Usuário desativado");
     }
     enter();
@@ -116,12 +115,12 @@ void delete_user(void)
 void reactivate_user(void)
 {
     show_header("Reativar Conta");
-    User *user = struct_user('1');
+    User *user = initialize_user(ATIVO);
 
     if (user != NULL)
     {
         display_data_user(user);
-        user->status = '1';
+        user->status = ATIVO;
         update_user(user);
         show_sucess("Usuário ativado");
     }
@@ -148,13 +147,13 @@ void show_users(void)
     switch (op)
     {
     case '1':
-        report_users('\0');
+        report_users(TODOS);
         break;
     case '2':
-        report_users('1');
+        report_users(ATIVO);
         break;
     case '3':
-        report_users('0');
+        report_users(INATIVO);
         break;
     case '0':
         break;
@@ -175,6 +174,6 @@ void display_data_user(const User *user)
     printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
-    printf("\033[1m|Status:\033[m %s\n", user->status == '1' ? "Ativo" : "Inativo");
+    printf("\033[1m|Definicoes:\033[m %s\n", user->status == ATIVO ? "Ativo" : "Inativo");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 }

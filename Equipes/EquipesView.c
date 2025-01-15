@@ -43,7 +43,7 @@ Team *load_and_check_team(const char *id)
         return NULL;
     }
 
-    if (team->status == '0')
+    if (team->status == INATIVO)
     {
         show_error("Equipe nao disponivel");
         limpa_buffer();
@@ -112,7 +112,7 @@ void delete_team(void)
     if (team == NULL)
         return;
 
-    team->status = '0';
+    team->status = INATIVO;
     update_team(team);
     show_sucess("Equipe excluida com sucesso!");
     getchar();
@@ -138,7 +138,7 @@ void reactive_team(void)
     if (team == NULL)
         return;
 
-    if (team->status == '1')
+    if (team->status == ATIVO)
     {
         show_error("Equipe já está ativa");
         free(team);
@@ -147,7 +147,7 @@ void reactive_team(void)
         return;
     }
 
-    team->status = '1';
+    team->status = ATIVO;
     update_team(team);
     show_sucess("Equipe reaberta com sucesso!");
     getchar();
@@ -201,7 +201,7 @@ void edit_team_user(void)
         return;
     }
 
-    if (team->status == '0')
+    if (team->status == INATIVO)
     {
         show_error("Equipe não disponível");
         free(team);
@@ -256,19 +256,19 @@ void show_teams(void)
     switch (opc)
     {
     case '1':
-        report_teams('\0', "all");
+        report_teams(TODOS, "all");
         break;
     case '2':
-        report_teams('1', "status");
+        report_teams(ATIVO, "status");
         break;
     case '3':
-        report_teams('0', "status");
+        report_teams(INATIVO, "status");
         break;
     case '4':
-        report_teams('1', "users");
+        report_teams(ATIVO, "users");
         break;
     case '5':
-        report_teams('0', "users");
+        report_teams(INATIVO, "users");
         break;
     case '0':
         break;
@@ -294,6 +294,6 @@ void display_data_team(const Team *teams)
     }
     printf("\033[1m|Nome da instituição:\033[m %s\n", teams->name);
     printf("\033[1m|Descrição:\033[m %s\n", teams->description);
-    printf("\033[1m|Status:\033[m %s\n", teams->status == '1' ? "Ativo" : "Invativo");
+    printf("\033[1m|Definicoes:\033[m %s\n", teams->status == ATIVO ? "Ativo" : "Invativo");
     printf("|-------------------------------------------------------------------------------------------------------|\n");
 }

@@ -12,6 +12,6 @@ void show_users(void);
 void display_data_user(const User *users);
 char user_menu(void);
 
-User *struct_user(const char status);
+User *initialize_user(const char status);
 
 #endif

@@ -143,45 +143,45 @@ char read_generic_123(const char *dir)
     {
         if (strcmp(prompt, "1") == 0)
         {
-            result = 'M';
+            result = MATUTINO;
         }
         else if (strcmp(prompt, "2") == 0)
         {
-            result = 'V';
+            result = VESPERTINO;
         }
         else
         {
-            result = 'N';
+            result = NOTURNO;
         }
     }
     else if (strcmp(dir, "priority") == 0)
     {
         if (strcmp(prompt, "1") == 0)
         {
-            result = 'A';
+            result = ALTA;
         }
         else if (strcmp(prompt, "2") == 0)
         {
-            result = 'M';
+            result = MEDIA;
         }
         else
         {
-            result = 'B';
+            result = BAIXA;
         }
     }
     else if (strcmp(dir, "type") == 0)
     {
         if (strcmp(prompt, "1") == 0)
         {
-            result = 'E';
+            result = EVENTO;
         }
         else if (strcmp(prompt, "2") == 0)
         {
-            result = 'R';
+            result = REUNIAO;
         }
         else
         {
-            result = 'P';
+            result = PROJETO;
         }
     }
     free(prompt);

@@ -19,9 +19,19 @@ typedef struct
 
 typedef enum
 {
-  DESATIVADO,
-  ATIVADO
-} Status;
+  INATIVO = '0',
+  ATIVO = '1',
+  TODOS = '\0',
+  MATUTINO = 'M',
+  VESPERTINO = 'V',
+  NOTURNO = 'N',
+  ALTA = 'A',
+  MEDIA = 'M',
+  BAIXA = 'B',
+  EVENTO = 'E',
+  REUNIAO = 'R',
+  PROJETO = 'P'
+} Definicoes;
 
 void limpa_buffer(void);
 void limpar_tela(void);

@@ -108,13 +108,13 @@ void delete_task(void)
     {
         show_error("Tarefa não encontrada");
     }
-    else if (task->status == '0')
+    else if (task->status == INATIVO)
     {
         show_error("Tarefa já fechada");
     }
     else
     {
-        task->status = '0';
+        task->status = INATIVO;
         update_task(task);
         show_sucess("Tarefa fechada com sucesso!");
     }
@@ -145,22 +145,22 @@ void show_all_tasks(void)
         switch (opc)
         {
         case '1':
-            show_tasks('1', "status");
+            show_tasks(ATIVO, "status");
             break;
         case '2':
-            show_tasks('0', "status");
+            show_tasks(INATIVO, "status");
             break;
         case '3':
-            show_tasks('1', "users");
+            show_tasks(ATIVO, "users");
             break;
         case '4':
-            show_tasks('1', "teams");
+            show_tasks(ATIVO, "teams");
             break;
         case '5':
-            show_tasks('\0', "all");
+            show_tasks(TODOS, "all");
             break;
         case '6':
-            show_tasks('1', "pending");
+            show_tasks(ATIVO, "pending");
             break;
         case '0':
             return;
@@ -189,11 +189,11 @@ void display_data_task(Task *task)
         printf("|\033[1m\tTarefa:\033[m %s\n", task->title);
         printf("|\033[1m\tDescrição:\033[m %s\n", task->description);
         printf("|\033[1m\tData:\033[m %s\n", task->date);
-        printf("|\033[1m\tPrioridade:\033[m %s\n", task->priority == 'A' ? "Alta" : task->type == 'M' ? "Média"
-                                                                                                      : "Baixa");
-        printf("|\033[1m\tTipo:\033[m %s\n", task->type == 'E' ? "Evento" : task->type == 'R' ? "Reunião"
-                                                                                              : "Projeto");
-        printf("|\033[1m\tStatus:\033[0m %s\n", task->status == '0' ? "Fechada" : "Ativa");
+        printf("|\033[1m\tPrioridade:\033[m %s\n", task->priority == ALTA ? "Alta" : task->type == MEDIA ? "Média"
+                                                                                                         : "Baixa");
+        printf("|\033[1m\tTipo:\033[m %s\n", task->type == EVENTO ? "Evento" : task->type == REUNIAO ? "Reunião"
+                                                                                                     : "Projeto");
+        printf("|\033[1m\tStatus:\033[0m %s\n", task->status == INATIVO ? "Fechada" : "Ativa");
         printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     }
 }
