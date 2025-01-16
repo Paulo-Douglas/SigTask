@@ -3,7 +3,7 @@
 
 #include "UsuariosModel.h"
 
-void register_user(void);
+void user_menu_register(void);
 void search_user(void);
 void modify_user_data(void);
 void delete_user(void);

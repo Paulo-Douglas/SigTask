@@ -44,7 +44,7 @@ int create_user(void)
     strcpy(new_user->name, name);
     free(name);
 
-    printf("|\tTelefone: ");
+    printf("|\tTelefone [XX X XXXXXXX]: ");
     char *phone = read_phone();
     if (!phone)
     {
@@ -54,8 +54,7 @@ int create_user(void)
     strcpy(new_user->phone, phone);
     free(phone);
 
-    new_user->status = '1';
-    new_user->next = NULL;
+    new_user->status = ATIVO;
 
     int result = insert_user(new_user);
 

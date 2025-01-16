@@ -103,7 +103,6 @@ int user_exists(const char *key)
     FILE *fp = fopen("data/users.dat", "rb");
     if (fp == NULL)
     {
-        printf("Erro ao abrir o arquivo.\n");
         return exists;
     }
 
@@ -117,7 +116,6 @@ int user_exists(const char *key)
 
     while (fread(user, sizeof(User), 1, fp))
     {
-        printf("ID: %s, CPF: %s\n", user->id, user->cpf);
 
         if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5))
         {

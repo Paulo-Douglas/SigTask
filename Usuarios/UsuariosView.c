@@ -34,7 +34,7 @@ char user_menu(void)
     return op;
 }
 
-void register_user()
+void user_menu_register()
 {
     show_header("Cadastrar Usuário");
 

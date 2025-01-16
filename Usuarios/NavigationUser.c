@@ -14,7 +14,7 @@ void navigation_users(void)
         switch (op)
         {
         case '1':
-            register_user();
+            user_menu_register();
             break;
         case '2':
             search_user();

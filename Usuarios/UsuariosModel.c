@@ -32,77 +32,25 @@ int get_id_user(void)
 
 int insert_user(User *new_user)
 {
+    create_path("data/");
+    FILE *fp = fopen("data/users.dat", "ab");
+    if (fp == NULL)
+        return FALSE;
+
     int id = get_id_user();
     if (id == 0)
-    {
         id = 1;
-    }
 
     snprintf(new_user->id, sizeof(new_user->id), "%d", id);
-    User *first_user = NULL;
-    User *last_user = NULL;
 
-    FILE *fp = fopen("data/users.dat", "rb");
-    if (fp != NULL)
+    User *current_user = new_user;
+    while (current_user != NULL)
     {
-        User temp_user;
-        while (fread(&temp_user, sizeof(User), 1, fp))
-        {
-            User *node = (User *)malloc(sizeof(User));
-            if (!node)
-            {
-                fclose(fp);
-                return FALSE;
-            }
-            *node = temp_user;
-            node->next = NULL;
-
-            if (first_user == NULL)
-            {
-                first_user = last_user = node;
-            }
-            else
-            {
-                last_user->next = node;
-                last_user = node;
-            }
-        }
-        fclose(fp);
-    }
-
-    if (first_user == NULL)
-    {
-        first_user = new_user;
-    }
-    else
-    {
-        last_user->next = new_user;
-    }
-
-    new_user->next = NULL;
-
-    fp = fopen("data/users.dat", "wb");
-    if (fp == NULL)
-    {
-        return FALSE;
-    }
-
-    User *current = first_user;
-    while (current != NULL)
-    {
-        fwrite(current, sizeof(User), 1, fp);
-        current = current->next;
+        fwrite(current_user, sizeof(User), 1, fp);
+        current_user = current_user->next;
     }
 
     fclose(fp);
-
-    while (first_user != NULL)
-    {
-        User *temp = first_user;
-        first_user = first_user->next;
-        free(temp);
-    }
-
     return TRUE;
 }
 
