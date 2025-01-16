@@ -54,6 +54,43 @@ int insert_user(User *new_user)
     return TRUE;
 }
 
+User *get_user_lit(void)
+{
+    FILE *fp = fopen("data/users.dat", "rb");
+    if (fp == NULL)
+        return NULL;
+
+    User *first_user = NULL;
+    User *current_user = NULL;
+
+    while (1)
+    {
+        User *new_user = malloc(sizeof(User));
+        if (new_user == NULL)
+            return NULL;
+
+        if (fread(new_user, sizeof(User), 1, fp) != 1)
+        {
+            free(new_user);
+            return NULL;
+        }
+
+        new_user->next = NULL;
+        if (first_user == NULL)
+        {
+            first_user = new_user;
+            current_user = first_user;
+        }
+        else
+        {
+            current_user->next = new_user;
+            current_user = new_user;
+        }
+    }
+    fclose(fp);
+    return first_user;
+}
+
 int update_user(User *new_data)
 {
     FILE *fp = fopen("data/users.dat", "rb+");
