@@ -144,21 +144,23 @@ void show_users(void)
     scanf(" %c", &op);
     limpar_tela();
     User *user = get_user_list();
+
     if (user == NULL)
     {
-        printf("lista vazia");
+        show_error("Nenhum usuário cadastrado!");
+        return;
     }
 
     switch (op)
     {
     case '1':
-        diplay_users(user);
+        show_all_users(user);
         break;
     case '2':
-        report_users(ATIVO);
+        users_by_status(user, ATIVO);
         break;
     case '3':
-        report_users(INATIVO);
+        users_by_status(user, INATIVO);
         break;
     case '0':
         break;
@@ -169,23 +171,6 @@ void show_users(void)
 
     enter();
     getchar();
-}
-
-void diplay_users(User *lista)
-{
-    User *usuario_atual = lista;
-    while (usuario_atual != NULL)
-    {
-        printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-        printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
-        printf("\033[1m|ID:\033[m %s\n", usuario_atual->id);
-        printf("\033[1m|CPF:\033[m %s\n", usuario_atual->cpf);
-        printf("\033[1m|Nome:\033[m %s\n", usuario_atual->name);
-        printf("\033[1m|Telefone:\033[m %s\n", usuario_atual->phone);
-        printf("\033[1m|Status:\033[m %s\n", usuario_atual->status == ATIVO ? "Ativo" : "Inativo");
-        printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-        usuario_atual = usuario_atual->next;
-    }
 }
 
 void display_data_user(const User *user)

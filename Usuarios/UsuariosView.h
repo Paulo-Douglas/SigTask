@@ -11,7 +11,6 @@ void reactivate_user(void);
 void show_users(void);
 void display_data_user(const User *users);
 char user_menu(void);
-void diplay_users(User *lista);
 
 User *initialize_user(const char status);
 

@@ -4,6 +4,7 @@
 
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
+#include "UsuariosView.h"
 #include "../libs/reads.h"
 #include "../libs/utils.h"
 #include "../libs/validate.h"
@@ -97,4 +98,27 @@ void edit_user(User *user)
             show_error("É preciso digitar uma opção válida!");
         }
     } while (op != '0');
+}
+
+void show_all_users(User *lista)
+{
+    User *usuario_atual = lista;
+    while (usuario_atual != NULL)
+    {
+        display_data_user(usuario_atual);
+        usuario_atual = usuario_atual->next;
+    }
+}
+
+void users_by_status(User *lista, const char status)
+{
+    User *usuario_atual = lista;
+    while (usuario_atual != NULL)
+    {
+        if (usuario_atual->status == status)
+        {
+            display_data_user(usuario_atual);
+        }
+        usuario_atual = usuario_atual->next;
+    }
 }
