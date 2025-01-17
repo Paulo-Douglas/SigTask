@@ -20,11 +20,10 @@ char user_menu(void)
     printf("|                     Usuários                   |\n");
     printf("--------------------------------------------------\n");
     printf("|                [1] Cadastre - se               |\n");
-    printf("|                [2] Exibir Dados                |\n");
+    printf("|                [2] Buscar Usuário              |\n");
     printf("|                [3] Editar Dados                |\n");
-    printf("|                [4] Excluir Conta               |\n");
-    printf("|                [5] Reativar Conta              |\n");
-    printf("|                [6] Relatório de Usuários       |\n");
+    printf("|                [4] Mudar status da Conta       |\n");
+    printf("|                [5] Relatório de Usuários       |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -51,84 +50,83 @@ void user_menu_register()
     enter();
 }
 
-User *initialize_user(const char status)
-{
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if (user == NULL)
-    {
-        show_error("| CPF nao encontrado");
-        return NULL;
-    }
-    else if (user->status == status)
-    {
-        show_error("| Nao é possível acessar esse usuário");
-        return NULL;
-    }
-
-    return user;
-}
-
-void search_user(void)
+void user_menu_search(void)
 {
     show_header("Exibir Dados");
-    User *user = initialize_user(INATIVO);
 
-    if (user != NULL)
-        display_data_user(user);
+    User *users = get_user_list();
 
+    if (users == NULL)
+    {
+        show_error("Lista de usuários indisponivel!");
+        return;
+    }
+
+    printf("|\tID do usuário: ");
+    char id[4];
+    scanf("%4s", id);
+
+    if (!search_id_user(users, id))
+    {
+        show_error("Usuário não encontrado!");
+        return;
+    }
+
+    free_user_list(users);
     enter();
+    getchar();
 }
 
-void modify_user_data(void)
+void user_menu_edit(void)
 {
     show_header("Editar Dados");
-    User *user = initialize_user(INATIVO);
+    User *users = get_user_list();
 
-    if (user != NULL)
+    feedback_user(users, "Erro ao acessar a lista", "Lista gerada <Enter>");
+
+    printf("|\tID do usuário: ");
+    char id[4];
+    scanf("%4s", id);
+
+    if (!search_id_user(users, id))
     {
-        display_data_user(user);
-        edit_user(user);
+        show_error("Usuário não encontrado!");
+        return;
     }
 
+    edit_user(users, id);
+    free_user_list(users);
     enter();
+    getchar();
 }
 
-void delete_user(void)
+void user_menu_status(void)
 {
     show_header("Excluir Conta");
-    User *user = initialize_user(INATIVO);
+    User *users = get_user_list();
 
-    if (user != NULL)
+    if (users == NULL)
     {
-        display_data_user(user);
-        user->status = INATIVO;
-        update_user(user);
-        remove_user_inactive_teams(user->id);
-        show_sucess("Usuário desativado");
+        show_error("Lista de usuários indisponivel!");
+        return;
     }
+
+    printf("|\tID do usuário: ");
+    char id[4];
+    scanf("%4s", id);
+
+    if (!search_id_user(users, id))
+    {
+        show_error("Usuário não encontrado!");
+        return;
+    }
+
+    change_status_user(users, id);
+    free_user_list(users);
     enter();
 }
 
-void reactivate_user(void)
-{
-    show_header("Reativar Conta");
-    User *user = initialize_user(ATIVO);
-
-    if (user != NULL)
-    {
-        display_data_user(user);
-        user->status = ATIVO;
-        update_user(user);
-        show_sucess("Usuário ativado");
-    }
-
-    enter();
-}
-
-void show_users(void)
+void user_menu_reports(void)
 {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                   Relatório                                                                   |\n");
@@ -143,9 +141,9 @@ void show_users(void)
     printf("Escolha a opção desejada: ");
     scanf(" %c", &op);
     limpar_tela();
-    User *user = get_user_list();
+    User *user_list = get_user_list();
 
-    if (user == NULL)
+    if (user_list == NULL)
     {
         show_error("Nenhum usuário cadastrado!");
         return;
@@ -154,13 +152,13 @@ void show_users(void)
     switch (op)
     {
     case '1':
-        show_all_users(user);
+        show_all_users(user_list);
         break;
     case '2':
-        users_by_status(user, ATIVO);
+        users_by_status(user_list, ATIVO);
         break;
     case '3':
-        users_by_status(user, INATIVO);
+        users_by_status(user_list, INATIVO);
         break;
     case '0':
         break;
@@ -169,11 +167,12 @@ void show_users(void)
         break;
     }
 
+    free_user_list(user_list);
     enter();
     getchar();
 }
 
-void display_data_user(const User *user)
+void user_menu_display(const User *user)
 {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
@@ -183,4 +182,18 @@ void display_data_user(const User *user)
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
     printf("\033[1m|Status:\033[m %s\n", user->status == ATIVO ? "Ativo" : "Inativo");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+}
+
+void feedback_user(User *current_user, const char *error_message, const char *success_message)
+{
+    if (current_user == NULL)
+    {
+        show_error(error_message);
+        getchar();
+    }
+    else
+    {
+        show_sucess(success_message);
+        getchar();
+    }
 }

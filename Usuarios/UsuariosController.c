@@ -62,42 +62,60 @@ int create_user(void)
     return result;
 }
 
-void edit_user(User *user)
+void edit_user(User *lista, const char id[4])
 {
-    char op;
-    int result = FALSE;
-
-    do
+    User *current_user = lista;
+    while (current_user != NULL)
     {
-        printf("|\t[1] Editar nome\n");
-        printf("|\t[2] Editar telefone\n");
-        printf("|\t[0] Sair\n");
-        scanf(" %c", &op);
-
-        switch (op)
+        if (strcmp(id, current_user->id) == 0)
         {
-        case '1':
-            printf("%s", user->cpf);
-            limpa_buffer();
-            printf("|\tNome: ");
-            char *name = read_string();
-            strcpy(user->name, name);
-            result = update_user(user);
-            result ? show_sucess("Nome editado com sucesso!") : show_error("Erro ao editar o nome");
-            break;
-        case '2':
-            printf("|\tTelefone: ");
-            char *phone = read_phone();
-            strcpy(user->phone, phone);
-            result = update_user(user);
-            result ? show_sucess("Telefone editado com sucesso!") : show_error("Erro ao editar o telefone");
-            break;
-        case '0':
-            break;
-        default:
-            show_error("É preciso digitar uma opção válida!");
+            printf("Opção de edição:\n");
+            printf("[1] Nome\n");
+            printf("[2] Telefone\n");
+            printf("[0] Sair\n");
+            char op;
+            scanf(" %c", &op);
+            switch (op)
+            {
+            case '1':
+                change_name(current_user);
+                feedback_user(current_user, "Erro ao alterar o nome", "Nome alterado com sucesso");
+                break;
+            case '2':
+                change_phone(current_user);
+                feedback_user(current_user, "Erro ao alterar o telefone", "Telefone alterado com sucesso");
+                break;
+            default:
+                break;
+            }
         }
-    } while (op != '0');
+        current_user = current_user->next;
+    }
+    update_user_list(lista);
+}
+
+void change_name(User *user)
+{
+    limpa_buffer();
+    printf("|\tNome: ");
+    char *name = read_string();
+    if (name)
+    {
+        strcpy(user->name, name);
+        free(name);
+    }
+}
+
+void change_phone(User *user)
+{
+    limpa_buffer();
+    printf("|\tTelefone [XX X XXXXXXX]: ");
+    char *phone = read_phone();
+    if (phone)
+    {
+        strcpy(user->phone, phone);
+        free(phone);
+    }
 }
 
 void show_all_users(User *lista)
@@ -105,7 +123,7 @@ void show_all_users(User *lista)
     User *usuario_atual = lista;
     while (usuario_atual != NULL)
     {
-        display_data_user(usuario_atual);
+        user_menu_display(usuario_atual);
         usuario_atual = usuario_atual->next;
     }
 }
@@ -117,8 +135,46 @@ void users_by_status(User *lista, const char status)
     {
         if (usuario_atual->status == status)
         {
-            display_data_user(usuario_atual);
+            user_menu_display(usuario_atual);
         }
         usuario_atual = usuario_atual->next;
     }
+}
+
+int search_id_user(User *lista, const char *id)
+{
+    User *current_user = lista;
+    while (current_user != NULL)
+    {
+        if (strcmp(id, current_user->id) == 0)
+        {
+            user_menu_display(current_user);
+            return TRUE;
+        }
+        current_user = current_user->next;
+    }
+    return FALSE;
+}
+
+void change_status_user(User *user, const char *id)
+{
+    User *current_user = user;
+    while (current_user != NULL)
+    {
+        if (strcmp(id, current_user->id) == 0)
+        {
+            if (current_user->status == ATIVO)
+            {
+                current_user->status = INATIVO;
+                feedback_user(current_user, "Erro ao alterar o status", "Status alterado com sucesso");
+            }
+            else
+            {
+                current_user->status = ATIVO;
+                feedback_user(current_user, "Erro ao alterar o status", "Status alterado com sucesso");
+            }
+        }
+        current_user = current_user->next;
+    }
+    update_user_list(user);
 }

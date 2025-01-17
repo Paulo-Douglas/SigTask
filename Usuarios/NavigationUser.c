@@ -17,19 +17,16 @@ void navigation_users(void)
             user_menu_register();
             break;
         case '2':
-            search_user();
+            user_menu_search();
             break;
         case '3':
-            modify_user_data();
+            user_menu_edit();
             break;
         case '4':
-            delete_user();
+            user_menu_status();
             break;
         case '5':
-            reactivate_user();
-            break;
-        case '6':
-            show_users();
+            user_menu_reports();
             break;
         case '0':
             break;

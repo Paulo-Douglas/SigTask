@@ -13,10 +13,9 @@ struct user
     User *next;
 };
 
-void report_users(const char condition);
+void update_user_list(User *lista);
 int insert_user(User *users);
-int update_user(User *new_data);
-User *load_user(const char *cpf);
 User *get_user_list(void);
+void free_user_list(User *lista);
 
 #endif // USUARIOSMODEL_H

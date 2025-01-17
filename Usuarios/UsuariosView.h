@@ -3,15 +3,13 @@
 
 #include "UsuariosModel.h"
 
-void user_menu_register(void);
-void search_user(void);
-void modify_user_data(void);
-void delete_user(void);
-void reactivate_user(void);
-void show_users(void);
-void display_data_user(const User *users);
 char user_menu(void);
-
-User *initialize_user(const char status);
+void user_menu_register(void);
+void user_menu_search(void);
+void user_menu_edit(void);
+void user_menu_status(void);
+void user_menu_reports(void);
+void user_menu_display(const User *users);
+void feedback_user(User *current_user, const char *error_message, const char *success_message);
 
 #endif

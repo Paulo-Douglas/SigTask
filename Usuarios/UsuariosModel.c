@@ -32,25 +32,54 @@ int get_id_user(void)
 
 int insert_user(User *new_user)
 {
-    create_path("data/");
-    FILE *fp = fopen("data/users.dat", "ab");
-    if (fp == NULL)
-        return FALSE;
-
     int id = get_id_user();
     if (id == 0)
         id = 1;
 
     snprintf(new_user->id, sizeof(new_user->id), "%d", id);
 
-    User *current_user = new_user;
-    while (current_user != NULL)
+    User *user_list = get_user_list();
+
+    if (!user_list)
     {
-        fwrite(current_user, sizeof(User), 1, fp);
-        current_user = current_user->next;
+        user_list = new_user;
+    }
+    else
+    {
+
+        User *current = user_list;
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = new_user;
+    }
+
+    FILE *fp = fopen("data/users.dat", "wb");
+    if (!fp)
+    {
+        perror("Erro ao abrir o arquivo para salvar");
+        free_user_list(user_list);
+        return FALSE;
+    }
+
+    User *current = user_list;
+    while (current != NULL)
+    {
+        if (fwrite(current, sizeof(User), 1, fp) != 1)
+        {
+            perror("Erro ao salvar usuário no arquivo");
+            fclose(fp);
+            free_user_list(user_list);
+            return FALSE;
+        }
+        current = current->next;
     }
 
     fclose(fp);
+
+    free_user_list(user_list);
+
     return TRUE;
 }
 
@@ -68,46 +97,33 @@ User *get_user_list(void)
         User *new_user = malloc(sizeof(User));
         if (new_user == NULL)
         {
-            // Libere os recursos antes de retornar
+
             fclose(fp);
-            User *temp;
-            while (first_user)
-            {
-                temp = first_user;
-                first_user = first_user->next;
-                free(temp);
-            }
+            free_user_list(first_user);
             return NULL;
         }
 
-        // Leia os dados e verifique EOF
         if (fread(new_user, sizeof(User), 1, fp) != 1)
         {
             if (feof(fp))
             {
-                // Final do arquivo alcançado com sucesso
-                free(new_user); // Não adicionar o último malloc
+
+                free(new_user);
                 break;
             }
             else
             {
-                // Erro durante a leitura
+
                 free(new_user);
                 fclose(fp);
-                User *temp;
-                while (first_user)
-                {
-                    temp = first_user;
-                    first_user = first_user->next;
-                    free(temp);
-                }
+                free_user_list(first_user);
+
                 return NULL;
             }
         }
 
         new_user->next = NULL;
 
-        // Construa a lista encadeada
         if (first_user == NULL)
         {
             first_user = new_user;
@@ -124,70 +140,38 @@ User *get_user_list(void)
     return first_user;
 }
 
-int update_user(User *new_data)
+void update_user_list(User *lista)
 {
-    FILE *fp = fopen("data/users.dat", "rb+");
-    if (fp == NULL)
-        return FALSE;
-
-    User user;
-    while (fread(&user, sizeof(User), 1, fp))
+    FILE *fp = fopen("data/users.dat", "wb");
+    if (!fp)
     {
-        if (strcmp(user.cpf, new_data->cpf) == 0)
-        {
-            fseek(fp, -sizeof(User), SEEK_CUR);
-            fwrite(new_data, sizeof(User), 1, fp);
-            fclose(fp);
-            return TRUE;
-        }
-    }
-    fclose(fp);
-    return FALSE;
-}
-
-User *load_user(const char *cpf)
-{
-    FILE *fp = fopen("data/users.dat", "rb");
-    if (fp == NULL)
-        return NULL;
-
-    User *user = (User *)malloc(sizeof(User));
-    while (fread(user, sizeof(User), 1, fp))
-    {
-        if (strcmp(user->cpf, cpf) == 0)
-        {
-            fclose(fp);
-            return user;
-        }
-    }
-
-    fclose(fp);
-    free(user);
-    return NULL;
-}
-
-void report_users(const char condition)
-{
-    FILE *fp = fopen("data/users.dat", "rb");
-    if (fp == NULL)
+        perror("Erro ao abrir o arquivo para salvar");
         return;
-
-    User user;
-    while (fread(&user, sizeof(User), 1, fp))
-    {
-        if (condition == '\0')
-        {
-            display_data_user(&user);
-        }
-        else
-        {
-            if (user.status == condition)
-            {
-                display_data_user(&user);
-            }
-        }
     }
 
-    getchar();
+    User *current = lista;
+    while (current != NULL)
+    {
+        if (fwrite(current, sizeof(User), 1, fp) != 1)
+        {
+            perror("Erro ao salvar usuário no arquivo");
+            break;
+        }
+        current = current->next;
+    }
+
     fclose(fp);
+}
+
+void free_user_list(User *lista)
+{
+    if (lista == NULL)
+        return;
+    User *temp;
+    while (lista)
+    {
+        temp = lista;
+        lista = lista->next;
+        free(temp);
+    }
 }
