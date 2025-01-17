@@ -54,7 +54,7 @@ int insert_user(User *new_user)
     return TRUE;
 }
 
-User *get_user_lit(void)
+User *get_user_list(void)
 {
     FILE *fp = fopen("data/users.dat", "rb");
     if (fp == NULL)
@@ -67,15 +67,47 @@ User *get_user_lit(void)
     {
         User *new_user = malloc(sizeof(User));
         if (new_user == NULL)
-            return NULL;
-
-        if (fread(new_user, sizeof(User), 1, fp) != 1)
         {
-            free(new_user);
+            // Libere os recursos antes de retornar
+            fclose(fp);
+            User *temp;
+            while (first_user)
+            {
+                temp = first_user;
+                first_user = first_user->next;
+                free(temp);
+            }
             return NULL;
         }
 
+        // Leia os dados e verifique EOF
+        if (fread(new_user, sizeof(User), 1, fp) != 1)
+        {
+            if (feof(fp))
+            {
+                // Final do arquivo alcançado com sucesso
+                free(new_user); // Não adicionar o último malloc
+                break;
+            }
+            else
+            {
+                // Erro durante a leitura
+                free(new_user);
+                fclose(fp);
+                User *temp;
+                while (first_user)
+                {
+                    temp = first_user;
+                    first_user = first_user->next;
+                    free(temp);
+                }
+                return NULL;
+            }
+        }
+
         new_user->next = NULL;
+
+        // Construa a lista encadeada
         if (first_user == NULL)
         {
             first_user = new_user;
@@ -87,6 +119,7 @@ User *get_user_lit(void)
             current_user = new_user;
         }
     }
+
     fclose(fp);
     return first_user;
 }
