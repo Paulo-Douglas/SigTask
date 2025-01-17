@@ -11,112 +11,126 @@
 #include "EquipeModel.h"
 #include "EquipesView.h"
 
-int register_team(void)
+int create_team(void)
 {
-    limpa_buffer();
-    Team teams = {0};
+    Team *teams = (Team *)malloc(sizeof(Team));
+    if (teams == NULL)
+    {
+        show_error("Não foi possível alocar memória para time");
+        return FALSE;
+    }
 
     printf("|\tNome da equipe: ");
     char *name = read_string();
-    strcpy(teams.name, name);
+    strcpy(teams->name, name);
 
     printf("|\tDescrição da equipe: ");
     char *description = read_string();
-    strcpy(teams.description, description);
+    strcpy(teams->description, description);
 
-    teams.status = '1';
+    teams->status = ATIVO;
 
     for (int i = 0; i < 10; i++)
     {
-        teams.users[i][0] = '\0';
+        teams->users[i][0] = '\0';
     }
 
-    int result = insert_team(&teams);
+    int result = insert_team(teams);
 
     return result;
 }
 
-void modify_team_data(Team *team)
+void edit_team(Team *team_list, const char id[4])
 {
-    char op;
-    int result = FALSE;
-
-    do
+    Team *current_team = team_list;
+    while (current_team != NULL)
     {
-        printf("|\t[1] Editar nome\n");
-        printf("|\t[2] Editar descrição\n");
-        printf("|\t[0] Sair\n");
-        scanf(" %c", &op);
-
-        switch (op)
+        if (strcmp(current_team->id, id) == 0)
         {
-        case '1':
             limpa_buffer();
-            printf("|\tNome: ");
+            printf("|\tNome da equipe: ");
             char *name = read_string();
-            strcpy(team->name, name);
-            result = update_team(team);
-            result ? show_sucess("Nome editado com sucesso!") : show_error("Erro ao editar o nome");
-            break;
-        case '2':
-            limpa_buffer();
-            printf("|\tDescrição: ");
+            strcpy(current_team->name, name);
+
+            printf("|\tDescrição da equipe: ");
             char *description = read_string();
-            strcpy(team->description, description);
-            result = update_team(team);
-            result ? show_sucess("Descrição editada com sucesso!") : show_error("Erro ao editar a descrição");
-            break;
-        case '0':
-            break;
-        default:
-            show_error("Opção inválida.");
+            strcpy(current_team->description, description);
+
             break;
         }
-    } while (op != '0');
+        current_team = current_team->next;
+    }
+
+    update_team_list(team_list);
 }
 
-int add_user_to_team_data(Team *team)
+void show_all_teams(Team *team_list)
 {
-    printf("|\tInsira o ID do usuário: ");
-    char id[4];
-    scanf("%4s", id);
-
-    if (!user_exists(id))
+    Team *current_team = team_list;
+    while (current_team != NULL)
     {
-        return FALSE;
+        menu_team_display(current_team);
+        current_team = current_team->next;
     }
+}
 
-    for (int i = 0; i < 10; i++)
+void teams_by_status(Team *team_list, const char status)
+{
+    Team *current_team = team_list;
+    while (current_team != NULL)
     {
-        if (team->users[i][0] == '\0')
+        if (current_team->status == status)
         {
-            strcpy(team->users[i], id);
-            update_team(team);
+            menu_team_display(current_team);
+        }
+        current_team = current_team->next;
+    }
+}
+
+void team_by_user(Team *team_list, const char *key)
+{
+    printf("Em desenvolvimento");
+}
+
+int search_id_team(Team *team_list, const char *id)
+{
+    Team *current_team = team_list;
+    while (current_team != NULL)
+    {
+        if (strcmp(current_team->id, id) == 0)
+        {
+            menu_team_display(current_team);
             return TRUE;
         }
-        else if (strcmp(team->users[i], id) == 0)
-        {
-            return FALSE;
-        }
+        current_team = current_team->next;
     }
-
     return FALSE;
 }
 
-int remove_user_from_team_data(Team *team)
+void add_user_to_team(Team *team_list, const char id[4])
 {
-    printf("|\tInsira o ID do usuário: ");
-    char id[4];
-    scanf("%4s", id);
+    printf("Em desenvolvimento");
+}
 
-    for (int i = 0; i < 10; i++)
+void change_team_status(Team *team_list, const char id[4])
+{
+    Team *current_team = team_list;
+    while (current_team != NULL)
     {
-        if (strcmp(team->users[i], id) == 0)
+        if (strcmp(current_team->id, id) == 0)
         {
-            team->users[i][0] = '\0';
-            update_team(team);
-            return TRUE;
+            if (current_team->status == ATIVO)
+            {
+                current_team->status = INATIVO;
+                feedback_team(current_team, "Erro ao alterar o status", "Status alterado com sucesso");
+            }
+            else
+            {
+                current_team->status = ATIVO;
+                feedback_team(current_team, "Erro ao alterar o status", "Status alterado com sucesso");
+            }
         }
+        current_team = current_team->next;
     }
-    return FALSE;
+    update_team_list(team_list);
 }

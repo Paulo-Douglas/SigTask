@@ -8,29 +8,26 @@ void navegacao_times(void)
     char op;
     do
     {
-        op = menu_equipes();
+        op = menu_team();
         switch (op)
         {
         case '1':
-            add_team();
+            menu_team_register();
             break;
         case '2':
-            search_team();
+            menu_search_team();
             break;
         case '3':
-            delete_team();
+            menu_team_status();
             break;
         case '4':
-            reactive_team();
+            menu_team_edit();
             break;
         case '5':
-            edit_team();
+            menu_team_user_edit();
             break;
         case '6':
-            edit_team_user();
-            break;
-        case '7':
-            show_teams();
+            menu_team_report();
             break;
         case '0':
             break;

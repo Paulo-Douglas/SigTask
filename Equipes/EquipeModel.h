@@ -3,21 +3,22 @@
 
 #include "../libs/utils.h"
 
-typedef struct
+typedef struct team Team;
+
+struct team
 {
     char id[4];
     char users[10][4];
     char name[50];
     char description[100];
     char status;
-} Team;
+    Team *next;
+};
 
-void report_teams(const char condition, const char *key);
-void remove_user_inactive_teams(const char id[4]);
-
-int insert_team(Team *teams);
-int update_team(Team *new_team);
 int get_id_team(void);
-Team *load_team(const char *id);
+int insert_team(Team *teams);
+Team *get_team_list(void);
+void update_team_list(Team *list_team);
+void free_team_list(Team *list_team);
 
 #endif

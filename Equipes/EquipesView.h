@@ -3,16 +3,14 @@
 
 #include "EquipeModel.h"
 
-char menu_equipes(void);
-void add_team(void);
-void search_team(void);
-void delete_team(void);
-void reactive_team(void);
-void edit_team(void);
-void edit_team_user(void);
-void display_data_team(const Team *teams);
-void show_teams(void);
-
-Team *load_and_check_team(const char *id);
+char menu_team(void);
+void menu_team_register(void);
+void menu_search_team(void);
+void menu_team_status(void);
+void menu_team_edit(void);
+void menu_team_user_edit(void);
+void menu_team_display(const Team *teams);
+void menu_team_report(void);
+void feedback_team(Team *team, const char *error_message, const char *success_message);
 
 #endif

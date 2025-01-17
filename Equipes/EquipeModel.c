@@ -12,7 +12,9 @@ int get_id_team(void)
 {
     FILE *fp = fopen("data/teams.dat", "rb");
     if (fp == NULL)
+    {
         return FALSE;
+    }
 
     Team last_team;
     int next_id = 1;
@@ -28,127 +30,140 @@ int get_id_team(void)
     return next_id;
 }
 
-int insert_team(Team *teams)
+int insert_team(Team *new_team)
 {
-    int result = FALSE;
-
-    create_path("data/");
-    FILE *fp = fopen("data/teams.dat", "ab");
-    if (fp == NULL)
-        return result;
-
     int id = get_id_team();
+    if (id == 0)
+        id = 1;
 
-    snprintf(teams->id, sizeof(teams->id), "%d", id);
+    snprintf(new_team->id, sizeof(new_team->id), "%d", id);
 
-    if (fwrite(teams, sizeof(Team), 1, fp))
-        result = TRUE;
+    Team *list_team = get_team_list();
+
+    if (!list_team)
+    {
+        list_team = new_team;
+    }
+    else
+    {
+        Team *current = list_team;
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = new_team;
+    }
+
+    FILE *fp = fopen("data/teams.dat", "wb");
+    if (!fp)
+    {
+        perror("Erro ao abrir o arquivo para salvar");
+        free_team_list(list_team);
+        return FALSE;
+    }
+
+    Team *current = list_team;
+    while (current != NULL)
+    {
+        if (fwrite(current, sizeof(Team), 1, fp) != 1)
+        {
+            perror("Erro ao salvar equipe no arquivo");
+            fclose(fp);
+            free_team_list(list_team);
+            break;
+        }
+        current = current->next;
+    }
 
     fclose(fp);
     return TRUE;
 }
 
-Team *load_team(const char *id)
+Team *get_team_list(void)
 {
     FILE *fp = fopen("data/teams.dat", "rb");
     if (fp == NULL)
         return NULL;
 
-    Team *team = (Team *)malloc(sizeof(Team));
-    while (fread(team, sizeof(Team), 1, fp))
+    Team *first_team = NULL;
+    Team *current_team = NULL;
+
+    while (1)
     {
-        if (strcmp(team->id, id) == 0)
+        Team *new_team = malloc(sizeof(Team));
+        if (new_team == NULL)
         {
             fclose(fp);
-            return team;
+            free_team_list(first_team);
+            return NULL;
         }
-    }
-    fclose(fp);
-    free(team);
-    return NULL;
-}
 
-int update_team(Team *new_team)
-{
-    FILE *fp = fopen("data/teams.dat", "rb+");
-    if (fp == NULL)
-        return FALSE;
-
-    Team team;
-    while (fread(&team, sizeof(Team), 1, fp))
-    {
-        if (strcmp(team.id, new_team->id) == 0)
+        if (fread(new_team, sizeof(Team), 1, fp) != 1)
         {
-            fseek(fp, -sizeof(Team), SEEK_CUR);
-            fwrite(new_team, sizeof(Team), 1, fp);
-            fclose(fp);
-            return TRUE;
+            if (feof(fp))
+            {
+                free(new_team);
+                break;
+            }
+            else
+            {
+                free(new_team);
+                fclose(fp);
+                free_team_list(first_team);
+                return NULL;
+            }
+        }
+
+        new_team->next = NULL;
+
+        if (first_team == NULL)
+        {
+            first_team = new_team;
+            current_team = first_team;
+        }
+        else
+        {
+            current_team->next = new_team;
+            current_team = new_team;
         }
     }
+
     fclose(fp);
-    return FALSE;
+    return first_team;
 }
 
-void remove_user_inactive_teams(const char id[4])
+void update_team_list(Team *list_team)
 {
-    FILE *fp = fopen("data/teams.dat", "rb+");
-    if (fp == NULL)
+    FILE *fp = fopen("data/teams.dat", "wb");
+    if (!fp)
+    {
+        perror("Erro ao abrir o arquivo para salvar");
         return;
-
-    Team team;
-    while (fread(&team, sizeof(Team), 1, fp) == 1)
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            if (strcmp(team.users[i], id) == 0)
-            {
-                team.users[i][0] = '\0';
-                update_team(&team);
-            }
-        }
     }
+
+    Team *current = list_team;
+    while (current != NULL)
+    {
+        if (fwrite(current, sizeof(Team), 1, fp) != 1)
+        {
+            perror("Erro ao salvar equipe no arquivo");
+            break;
+        }
+        current = current->next;
+    }
+
+    fclose(fp);
 }
 
-void report_teams(const char condition, const char *key)
+void free_team_list(Team *list_team)
 {
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL)
+    if (list_team == NULL)
         return;
-
-    Team team;
-    while (fread(&team, sizeof(Team), 1, fp))
+    Team *temp;
+    while (list_team)
     {
-        int users = 0;
-
-        for (int i = 0; i < 10; i++)
-        {
-            if (team.users[i][0] != '\0')
-            {
-                users++;
-            }
-        }
-
-        if (condition == '\0' && strcmp(key, "all") == 0)
-        {
-            display_data_team(&team);
-        }
-        else if (team.status == condition && strcmp(key, "status") == 0)
-        {
-            display_data_team(&team);
-        }
-        else if (strcmp(key, "users") == 0)
-        {
-            if (users > 0 && condition == '1')
-            {
-                display_data_team(&team);
-            }
-            else if (users == 0 && condition == '0')
-            {
-                display_data_team(&team);
-            }
-        }
+        temp = list_team;
+        list_team = list_team->next;
+        free(temp);
     }
-
-    getchar();
-    fclose(fp);
 }
