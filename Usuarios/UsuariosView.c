@@ -54,7 +54,7 @@ void user_menu_search(void)
 {
     show_header("Exibir Dados");
     UserList list;
-    create_list(&list);
+    create_list_user(&list);
     get_list_user(&list);
 
     printf("|\tID do usuário: ");
@@ -91,7 +91,7 @@ void user_menu_status(void)
 {
     show_header("Mudar status da Conta");
     UserList list;
-    create_list(&list);
+    create_list_user(&list);
     get_list_user(&list);
 
     printf("|\tID do usuário: ");
@@ -124,7 +124,7 @@ void user_menu_reports(void)
     limpar_tela();
 
     UserList list;
-    create_list(&list);
+    create_list_user(&list);
     get_list_user(&list);
 
     if (list.start == NULL)

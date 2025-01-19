@@ -20,7 +20,7 @@ typedef struct
 } UserList;
 
 int generate_user_id(UserList *list);
-void create_list(UserList *list);
+void create_list_user(UserList *list);
 void add_user_start(UserList *list, User *user);
 void add_user_end(UserList *list, User *user);
 void add_user_order(UserList *list, User *user);

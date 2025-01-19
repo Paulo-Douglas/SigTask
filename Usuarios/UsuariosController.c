@@ -19,7 +19,7 @@ int create_user(void)
         return FALSE;
     memset(new_user, 0, sizeof(User));
 
-    create_list(&user_list);
+    create_list_user(&user_list);
     get_list_user(&user_list);
 
     printf("|\tCPF [XXX.XXX.XXX-XX]: ");
@@ -70,7 +70,7 @@ int create_user(void)
 int edit_user(const int id)
 {
     UserList list;
-    create_list(&list);
+    create_list_user(&list);
     get_list_user(&list);
 
     if (list.start == NULL || !search_id_user(list.start, id))

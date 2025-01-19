@@ -27,7 +27,7 @@ int generate_user_id(UserList *list)
     return max_id;
 }
 
-void create_list(UserList *list)
+void create_list_user(UserList *list)
 {
     list->start = NULL;
     list->lenght = 0;
