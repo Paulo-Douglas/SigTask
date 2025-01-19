@@ -12,12 +12,15 @@
 
 int create_user(void)
 {
-    User *new_user = (User *)malloc(sizeof(User));
+    UserList user_list;
+    User *new_user = malloc(sizeof(User));
+
     if (!new_user)
-    {
-        show_error("Não foi possível alocar memória para o usuário");
         return FALSE;
-    }
+    memset(new_user, 0, sizeof(User));
+
+    create_list(&user_list);
+    get_list_user(&user_list);
 
     printf("|\tCPF [XXX.XXX.XXX-XX]: ");
     char *cpf = read_cpf();
@@ -56,9 +59,21 @@ int create_user(void)
     free(phone);
 
     new_user->status = ATIVO;
+    new_user->id = generate_user_id(&user_list) + 1;
+    add_user_order(&user_list, new_user);
 
-    int result = insert_user(new_user);
+    User *aux = user_list.start;
+    while (aux->next != NULL)
+    {
+        printf("|\tID: %d\n", aux->id);
+        printf("|\tCPF: %s\n", aux->cpf);
+        printf("|\tNome: %s\n", aux->name);
+        printf("|\tTelefone: %s\n", aux->phone);
+        printf("|\tStatus: %s\n", aux->status == ATIVO ? "Ativo" : "Inativo");
+        aux = aux->next;
+    }
 
+    int result = save_user_list(&user_list);
     return result;
 }
 

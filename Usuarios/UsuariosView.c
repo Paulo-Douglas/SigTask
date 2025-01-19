@@ -22,7 +22,7 @@ char user_menu(void)
     printf("|                [1] Cadastre - se               |\n");
     printf("|                [2] Buscar Usuário              |\n");
     printf("|                [3] Editar Dados                |\n");
-    printf("|                 Mudar status da Conta       |\n");
+    printf("|                [4] Mudar status da Conta       |\n");
     printf("|                [5] Relatório de Usuários       |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
@@ -69,6 +69,8 @@ void user_menu_search(void)
     if (!search_id_user(users, id))
     {
         show_error("Usuário não encontrado!");
+        enter();
+        getchar();
         return;
     }
 

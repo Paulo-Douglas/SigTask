@@ -10,6 +10,23 @@
 #include "../libs/validate.h"
 #include "../libs/reads.h"
 
+int generate_user_id(UserList *list)
+{
+    int max_id = 0;
+
+    User *current = list->start;
+    while (current != NULL)
+    {
+        if (current->id > max_id)
+        {
+            max_id = current->id;
+        }
+        current = current->next;
+    }
+
+    return max_id;
+}
+
 void create_list(UserList *list)
 {
     list->start = NULL;
@@ -52,50 +69,41 @@ void add_user_order(UserList *list, User *user)
     list->lenght++;
 }
 
-int insert_user(User *new_user)
+void get_list_user(UserList *list)
 {
+    FILE *fp = fopen("data/users.dat", "rb");
+    if (!fp)
+        return;
 
-    User *user_list = get_user_list();
-
-    if (!user_list)
+    while (!feof(fp))
     {
-        user_list = new_user;
-    }
-    else
-    {
-
-        User *current = user_list;
-        while (current->next != NULL)
+        User *novo_usuario = (User *)malloc(sizeof(User));
+        if (fread(novo_usuario, sizeof(User), 1, fp) != 1)
         {
-            current = current->next;
+            free(novo_usuario);
+            break;
         }
-        current->next = new_user;
-    }
+        novo_usuario->next = NULL;
 
+        add_user_end(list, novo_usuario);
+    }
+    fclose(fp);
+}
+
+int save_user_list(UserList *list)
+{
+    create_path("data/");
     FILE *fp = fopen("data/users.dat", "wb");
     if (!fp)
-    {
-        perror("Erro ao abrir o arquivo para salvar");
-        free_user_list(user_list);
         return FALSE;
-    }
 
-    User *current = user_list;
-    while (current != NULL)
+    User *aux = list->start;
+    while (aux != NULL)
     {
-        if (fwrite(current, sizeof(User), 1, fp) != 1)
-        {
-            perror("Erro ao salvar usuário no arquivo");
-            fclose(fp);
-            free_user_list(user_list);
-            return FALSE;
-        }
-        current = current->next;
+        fwrite(aux, sizeof(User), 1, fp);
+        aux = aux->next;
     }
-
     fclose(fp);
-
-    free_user_list(user_list);
 
     return TRUE;
 }
