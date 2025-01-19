@@ -30,7 +30,9 @@ typedef enum
   BAIXA = 'B',
   EVENTO = 'E',
   REUNIAO = 'R',
-  PROJETO = 'P'
+  PROJETO = 'P',
+  REMOVER = 0,
+  ADICIONAR = 1
 } Definicoes;
 
 void limpa_buffer(void);

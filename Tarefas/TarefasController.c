@@ -27,20 +27,20 @@ char *responsible(void)
     case '1':
         printf("ID do usuário: \n");
         scanf("%4s", choice);
-        if (user_exists(choice))
-        {
-            strcat(choice, "U");
-            return choice;
-        };
+        // if (user_exists(choice))
+        // {
+        //     strcat(choice, "U");
+        //     return choice;
+        // };
         break;
     case '2':
         printf("ID do time: \n");
         scanf("%4s", choice);
-        if (team_exists(choice))
-        {
-            strcat(choice, "T");
-            return choice;
-        };
+        // if (team_exists(choice))
+        // {
+        //     strcat(choice, "T");
+        //     return choice;
+        // };
         break;
     default:
         show_error("Opção inválida.");

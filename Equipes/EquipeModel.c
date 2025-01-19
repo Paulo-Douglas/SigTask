@@ -8,162 +8,130 @@
 #include "EquipeModel.h"
 #include "EquipesView.h"
 
-int get_id_team(void)
+int generate_id_team(TeamList *list)
 {
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL)
-    {
-        return FALSE;
-    }
+    int max_id = 0;
 
-    Team last_team;
-    int next_id = 1;
-
-    fseek(fp, -sizeof(Team), SEEK_END);
-
-    if (fread(&last_team, sizeof(Team), 1, fp))
-    {
-        next_id = atoi(last_team.id) + 1;
-    }
-
-    fclose(fp);
-    return next_id;
-}
-
-int insert_team(Team *new_team)
-{
-    int id = get_id_team();
-    if (id == 0)
-        id = 1;
-
-    snprintf(new_team->id, sizeof(new_team->id), "%d", id);
-
-    Team *list_team = get_team_list();
-
-    if (!list_team)
-    {
-        list_team = new_team;
-    }
-    else
-    {
-        Team *current = list_team;
-        while (current->next != NULL)
-        {
-            current = current->next;
-        }
-        current->next = new_team;
-    }
-
-    FILE *fp = fopen("data/teams.dat", "wb");
-    if (!fp)
-    {
-        perror("Erro ao abrir o arquivo para salvar");
-        free_team_list(list_team);
-        return FALSE;
-    }
-
-    Team *current = list_team;
+    Team *current = list->start;
     while (current != NULL)
     {
-        if (fwrite(current, sizeof(Team), 1, fp) != 1)
+        if (current->id > max_id)
         {
-            perror("Erro ao salvar equipe no arquivo");
-            fclose(fp);
-            free_team_list(list_team);
-            break;
+            max_id = current->id;
         }
         current = current->next;
+    }
+
+    return max_id;
+}
+
+void create_list_team(TeamList *list)
+{
+    list->start = NULL;
+    list->lenght = 0;
+}
+
+void add_team_start(TeamList *list, Team *team)
+{
+    team->next = list->start;
+    list->start = team;
+    list->lenght++;
+}
+
+void add_team_end(TeamList *list, Team *team)
+{
+    if (list->start == NULL)
+        add_team_start(list, team);
+    else
+    {
+        Team *aux = list->start;
+        while (aux->next != NULL)
+            aux = aux->next;
+        aux->next = team;
+    }
+    list->lenght++;
+}
+
+void add_team_order(TeamList *list, Team *team)
+{
+    if (list->start == NULL || strcmp(list->start->name, team->name) > 0)
+        add_team_start(list, team);
+    else
+    {
+        Team *aux = list->start;
+        while (aux->next != NULL && strcmp(aux->next->name, team->name) < 0)
+            aux = aux->next;
+        team->next = aux->next;
+        aux->next = team;
+    }
+    list->lenght++;
+}
+
+void get_list_team(TeamList *list)
+{
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if (!fp)
+        return;
+
+    while (!feof(fp))
+    {
+        Team *new_team = (Team *)malloc(sizeof(Team));
+        if (fread(new_team, sizeof(Team), 1, fp) != 1)
+        {
+            free(new_team);
+            break;
+        }
+        new_team->next = NULL;
+        add_team_end(list, new_team);
+    }
+    fclose(fp);
+}
+
+int save_team_list(TeamList *list)
+{
+    create_path("data/");
+    FILE *fp = fopen("data/teams.dat", "wb");
+    if (!fp)
+        return FALSE;
+
+    Team *aux = list->start;
+    while (aux != NULL)
+    {
+        if (fwrite(aux, sizeof(Team), 1, fp) != 1)
+        {
+            perror("Erro ao escrever no arquivo");
+            fclose(fp);
+            return FALSE;
+        }
+        aux = aux->next;
     }
 
     fclose(fp);
     return TRUE;
 }
 
-Team *get_team_list(void)
-{
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL)
-        return NULL;
-
-    Team *first_team = NULL;
-    Team *current_team = NULL;
-
-    while (1)
-    {
-        Team *new_team = malloc(sizeof(Team));
-        if (new_team == NULL)
-        {
-            fclose(fp);
-            free_team_list(first_team);
-            return NULL;
-        }
-
-        if (fread(new_team, sizeof(Team), 1, fp) != 1)
-        {
-            if (feof(fp))
-            {
-                free(new_team);
-                break;
-            }
-            else
-            {
-                free(new_team);
-                fclose(fp);
-                free_team_list(first_team);
-                return NULL;
-            }
-        }
-
-        new_team->next = NULL;
-
-        if (first_team == NULL)
-        {
-            first_team = new_team;
-            current_team = first_team;
-        }
-        else
-        {
-            current_team->next = new_team;
-            current_team = new_team;
-        }
-    }
-
-    fclose(fp);
-    return first_team;
-}
-
-void update_team_list(Team *list_team)
+void update_team_list(TeamList *list)
 {
     FILE *fp = fopen("data/teams.dat", "wb");
     if (!fp)
-    {
-        perror("Erro ao abrir o arquivo para salvar");
         return;
-    }
 
-    Team *current = list_team;
-    while (current != NULL)
+    Team *aux = list->start;
+    while (aux != NULL)
     {
-        if (fwrite(current, sizeof(Team), 1, fp) != 1)
-        {
-            perror("Erro ao salvar equipe no arquivo");
-            break;
-        }
-        current = current->next;
+        fwrite(aux, sizeof(Team), 1, fp);
+        aux = aux->next;
     }
-
     fclose(fp);
 }
 
-void free_team_list(Team *list_team)
+void free_team_list(TeamList *list)
 {
-    if (list_team == NULL)
-        return;
-    Team *temp;
-    while (list_team)
+    Team *aux = list->start;
+    while (aux != NULL)
     {
-        temp = list_team;
-        list_team = list_team->next;
-        free(temp);
+        Team *next = aux->next;
+        free(aux);
+        aux = next;
     }
 }

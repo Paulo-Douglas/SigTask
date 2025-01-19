@@ -32,7 +32,7 @@ int create_user(void)
     strcpy(new_user->cpf, cpf);
     free(cpf);
 
-    if (user_exists(new_user->cpf))
+    if (user_exists(new_user->cpf, 0))
     {
         free(new_user);
         return FALSE;

@@ -96,7 +96,7 @@ int validate_cpf(char cpf[])
     }
 }
 
-int user_exists(const char *key)
+int user_exists(const char *cpf, const int id)
 {
     int exists = FALSE;
 
@@ -116,13 +116,12 @@ int user_exists(const char *key)
 
     while (fread(user, sizeof(User), 1, fp))
     {
-
-        if ((strcmp(user->cpf, key) == 0) && (strlen(key) > 5))
+        if (cpf != NULL && cpf[0] != '\0' && strcmp(user->cpf, cpf) == 0 && user->status == '1')
         {
             exists = TRUE;
             break;
         }
-        else if (user->id == atoi(key) && (user->status == '1'))
+        else if (id != 0 && user->id == id && user->status == '1')
         {
             exists = TRUE;
             break;
@@ -135,7 +134,7 @@ int user_exists(const char *key)
     return exists;
 }
 
-int team_exists(const char *key)
+int team_exists(const int id)
 {
     int exists = FALSE;
 
@@ -146,7 +145,7 @@ int team_exists(const char *key)
     Team *team = (Team *)malloc(sizeof(Team));
     while (fread(team, sizeof(Team), 1, fp) && !exists)
     {
-        if ((strcmp(team->id, key) == 0) && (team->status == '1'))
+        if (team->id == id && (team->status == '1'))
         {
             exists = TRUE;
         }

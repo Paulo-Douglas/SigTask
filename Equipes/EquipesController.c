@@ -13,12 +13,17 @@
 
 int create_team(void)
 {
+    TeamList team_list;
+    create_list_team(&team_list);
+    get_list_team(&team_list);
+
     Team *teams = (Team *)malloc(sizeof(Team));
     if (teams == NULL)
-    {
-        show_error("Não foi possível alocar memória para time");
         return FALSE;
-    }
+
+    memset(teams, 0, sizeof(Team));
+    teams->status = ATIVO;
+    teams->id = generate_id_team(&team_list) + 1;
 
     printf("|\tNome da equipe: ");
     char *name = read_string();
@@ -28,24 +33,32 @@ int create_team(void)
     char *description = read_string();
     strcpy(teams->description, description);
 
-    teams->status = ATIVO;
-
     for (int i = 0; i < 10; i++)
     {
         teams->users[i][0] = '\0';
     }
 
-    int result = insert_team(teams);
+    add_team_order(&team_list, teams);
+
+    int result = save_team_list(&team_list);
+    free_team_list(&team_list);
 
     return result;
 }
 
-void edit_team(Team *team_list, const char id[4])
+int edit_team(const int id)
 {
-    Team *current_team = team_list;
+    TeamList team_list;
+    create_list_team(&team_list);
+    get_list_team(&team_list);
+
+    if (team_list.start == NULL || !search_id_team(&team_list, id))
+        return FALSE;
+
+    Team *current_team = team_list.start;
     while (current_team != NULL)
     {
-        if (strcmp(current_team->id, id) == 0)
+        if (current_team->id == id)
         {
             limpa_buffer();
             printf("|\tNome da equipe: ");
@@ -61,12 +74,15 @@ void edit_team(Team *team_list, const char id[4])
         current_team = current_team->next;
     }
 
-    update_team_list(team_list);
+    update_team_list(&team_list);
+    free_team_list(&team_list);
+    return TRUE;
 }
 
-void show_all_teams(Team *team_list)
+void show_all_teams(TeamList *team_list)
 {
-    Team *current_team = team_list;
+    limpar_tela();
+    Team *current_team = team_list->start;
     while (current_team != NULL)
     {
         menu_team_display(current_team);
@@ -74,9 +90,10 @@ void show_all_teams(Team *team_list)
     }
 }
 
-void teams_by_status(Team *team_list, const char status)
+void teams_by_status(TeamList *team_list, const char status)
 {
-    Team *current_team = team_list;
+    limpar_tela();
+    Team *current_team = team_list->start;
     while (current_team != NULL)
     {
         if (current_team->status == status)
@@ -87,17 +104,17 @@ void teams_by_status(Team *team_list, const char status)
     }
 }
 
-void team_by_user(Team *team_list, const char *key)
+void team_by_user(TeamList *team_list, const char *key)
 {
     printf("Em desenvolvimento");
 }
 
-int search_id_team(Team *team_list, const char *id)
+int search_id_team(TeamList *team_list, const int id)
 {
-    Team *current_team = team_list;
+    Team *current_team = team_list->start;
     while (current_team != NULL)
     {
-        if (strcmp(current_team->id, id) == 0)
+        if (current_team->id == id)
         {
             menu_team_display(current_team);
             return TRUE;
@@ -107,17 +124,83 @@ int search_id_team(Team *team_list, const char *id)
     return FALSE;
 }
 
-void add_user_to_team(Team *team_list, const char id[4])
+int modify_user_in_team(const int id, const int key)
 {
-    printf("Em desenvolvimento");
-}
+    TeamList team_list;
+    create_list_team(&team_list);
+    get_list_team(&team_list);
+    int result = FALSE;
 
-void change_team_status(Team *team_list, const char id[4])
-{
-    Team *current_team = team_list;
+    if (team_list.start == NULL || !search_id_team(&team_list, id))
+        return result;
+
+    Team *current_team = team_list.start;
     while (current_team != NULL)
     {
-        if (strcmp(current_team->id, id) == 0)
+        if (current_team->id == id)
+        {
+            if (key == 1)
+            {
+
+                for (int i = 0; i < 10; i++)
+                {
+                    if (current_team->users[i][0] == '\0')
+                    {
+                        printf("|\tID do usuário: ");
+                        int user_id;
+                        scanf("%d", &user_id);
+
+                        if (user_exists(NULL, user_id))
+                        {
+
+                            snprintf(current_team->users[i], sizeof(current_team->users[i]), "%d", user_id);
+                            result = TRUE;
+                            break;
+                        }
+                        else
+                        {
+                            show_error("Usuário não encontrado ou inválido!");
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (key == 0)
+            {
+
+                printf("|\tID do usuário para remover: ");
+                int user_id;
+                scanf("%d", &user_id);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    if (current_team->users[i][0] != '\0' && atoi(current_team->users[i]) == user_id)
+                    {
+                        current_team->users[i][0] = '\0';
+                        result = TRUE;
+                        break;
+                    }
+                }
+
+                if (!result)
+                    show_error("Usuário não encontrado na equipe!");
+            }
+            break;
+        }
+        current_team = current_team->next;
+    }
+
+    update_team_list(&team_list);
+    free_team_list(&team_list);
+    return result;
+}
+
+void change_team_status(TeamList *team_list, const int id)
+{
+    Team *current_team = team_list->start;
+    while (current_team != NULL)
+    {
+        if (current_team->id == id)
         {
             if (current_team->status == ATIVO)
             {
