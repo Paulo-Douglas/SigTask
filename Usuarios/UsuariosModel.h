@@ -27,5 +27,6 @@ void add_user_order(UserList *list, User *user);
 void get_list_user(UserList *list);
 int save_user_list(UserList *list);
 void update_user_list(UserList *list);
+void free_user_list(UserList *list);
 
 #endif // USUARIOSMODEL_H

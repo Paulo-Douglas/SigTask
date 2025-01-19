@@ -66,6 +66,7 @@ void user_menu_search(void)
 
     enter();
     getchar();
+    free_user_list(&list);
 }
 
 void user_menu_edit(void)
@@ -103,6 +104,7 @@ void user_menu_status(void)
     change_status_user(&list, id);
     enter();
     getchar();
+    free_user_list(&list);
 }
 
 void user_menu_reports(void)
@@ -151,6 +153,7 @@ void user_menu_reports(void)
 
     enter();
     getchar();
+    free_user_list(&list);
 }
 
 void user_menu_display(const User *user)

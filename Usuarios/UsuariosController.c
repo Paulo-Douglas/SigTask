@@ -63,6 +63,7 @@ int create_user(void)
     add_user_order(&user_list, new_user);
 
     int result = save_user_list(&user_list);
+    free_user_list(&user_list);
     return result;
 }
 
@@ -103,6 +104,7 @@ int edit_user(const int id)
         current_user = current_user->next;
     }
     update_user_list(&list);
+    free_user_list(&list);
     return TRUE;
 }
 

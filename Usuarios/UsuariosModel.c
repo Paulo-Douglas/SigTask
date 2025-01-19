@@ -122,3 +122,14 @@ void update_user_list(UserList *list)
     }
     fclose(fp);
 }
+
+void free_user_list(UserList *list)
+{
+    User *aux = list->start;
+    while (aux != NULL)
+    {
+        User *next = aux->next;
+        free(aux);
+        aux = next;
+    }
+}
