@@ -62,17 +62,6 @@ int create_user(void)
     new_user->id = generate_user_id(&user_list) + 1;
     add_user_order(&user_list, new_user);
 
-    User *aux = user_list.start;
-    while (aux->next != NULL)
-    {
-        printf("|\tID: %d\n", aux->id);
-        printf("|\tCPF: %s\n", aux->cpf);
-        printf("|\tNome: %s\n", aux->name);
-        printf("|\tTelefone: %s\n", aux->phone);
-        printf("|\tStatus: %s\n", aux->status == ATIVO ? "Ativo" : "Inativo");
-        aux = aux->next;
-    }
-
     int result = save_user_list(&user_list);
     return result;
 }
@@ -142,9 +131,9 @@ void change_phone(User *user)
     }
 }
 
-void show_all_users(User *lista)
+void show_all_users(UserList *list)
 {
-    User *usuario_atual = lista;
+    User *usuario_atual = list->start;
     while (usuario_atual != NULL)
     {
         user_menu_display(usuario_atual);
@@ -152,9 +141,9 @@ void show_all_users(User *lista)
     }
 }
 
-void users_by_status(User *lista, const char status)
+void users_by_status(UserList *list, const char status)
 {
-    User *usuario_atual = lista;
+    User *usuario_atual = list->start;
     while (usuario_atual != NULL)
     {
         if (usuario_atual->status == status)
@@ -165,9 +154,9 @@ void users_by_status(User *lista, const char status)
     }
 }
 
-int search_id_user(User *lista, const int id)
+int search_id_user(User *list, const int id)
 {
-    User *current_user = lista;
+    User *current_user = list;
     while (current_user != NULL)
     {
         if (id == current_user->id)
@@ -180,25 +169,31 @@ int search_id_user(User *lista, const int id)
     return FALSE;
 }
 
-void change_status_user(User *user, const int id)
+void change_status_user(UserList *list, const int id)
 {
-    User *current_user = user;
+    if (list == NULL || list->start == NULL)
+    {
+        printf("A lista de usuários está vazia ou não inicializada.\n");
+        return;
+    }
+
+    User *current_user = list->start;
     while (current_user != NULL)
     {
         if (id == current_user->id)
         {
-            if (current_user->status == ATIVO)
-            {
-                current_user->status = INATIVO;
-                feedback_user(current_user, "Erro ao alterar o status", "Status alterado com sucesso");
-            }
-            else
-            {
-                current_user->status = ATIVO;
-                feedback_user(current_user, "Erro ao alterar o status", "Status alterado com sucesso");
-            }
+
+            current_user->status = (current_user->status == ATIVO) ? INATIVO : ATIVO;
+
+            feedback_user(
+                current_user,
+                "Erro ao alterar o status",
+                "Status alterado com sucesso");
+
+            break;
         }
         current_user = current_user->next;
     }
-    // update_user_list(user);
+
+    update_user_list(list);
 }

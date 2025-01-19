@@ -53,10 +53,16 @@ void user_menu_register()
 void user_menu_search(void)
 {
     show_header("Exibir Dados");
+    UserList list;
+    create_list(&list);
+    get_list_user(&list);
 
     printf("|\tID do usuário: ");
     int id;
     scanf("%d", &id);
+
+    if (!search_id_user(list.start, id))
+        show_error("Usuário não encontrado!");
 
     enter();
     getchar();
@@ -82,21 +88,21 @@ void user_menu_edit(void)
 
 void user_menu_status(void)
 {
-    show_header("Excluir Conta");
+    show_header("Mudar status da Conta");
+    UserList list;
+    create_list(&list);
+    get_list_user(&list);
 
     printf("|\tID do usuário: ");
     int id;
     scanf("%d", &id);
 
-    // if (!search_id_user(users, id))
-    // {
-    //     show_error("Usuário não encontrado!");
-    //     return;
-    // }
+    if (!search_id_user(list.start, id))
+        show_error("Usuário não encontrado!");
 
-    // change_status_user(users, id);
-    // free_user_list(users);
+    change_status_user(&list, id);
     enter();
+    getchar();
 }
 
 void user_menu_reports(void)
@@ -110,37 +116,39 @@ void user_menu_reports(void)
     printf("|[0] -> Voltar\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
-    // char op;
-    // printf("Escolha a opção desejada: ");
-    // scanf(" %c", &op);
-    // limpar_tela();
-    // User *user_list = get_user_list();
+    char op;
+    printf("Escolha a opção desejada: ");
+    scanf(" %c", &op);
+    limpar_tela();
 
-    // if (user_list == NULL)
-    // {
-    //     show_error("Nenhum usuário cadastrado!");
-    //     return;
-    // }
+    UserList list;
+    create_list(&list);
+    get_list_user(&list);
 
-    // switch (op)
-    // {
-    // case '1':
-    //     show_all_users(user_list);
-    //     break;
-    // case '2':
-    //     users_by_status(user_list, ATIVO);
-    //     break;
-    // case '3':
-    //     users_by_status(user_list, INATIVO);
-    //     break;
-    // case '0':
-    //     break;
-    // default:
-    //     show_error("Opção inválida!");
-    //     break;
-    // }
+    if (list.start == NULL)
+    {
+        show_error("Nenhum usuário cadastrado!");
+        return;
+    }
 
-    // free_user_list(user_list);
+    switch (op)
+    {
+    case '1':
+        show_all_users(&list);
+        break;
+    case '2':
+        users_by_status(&list, ATIVO);
+        break;
+    case '3':
+        users_by_status(&list, INATIVO);
+        break;
+    case '0':
+        break;
+    default:
+        show_error("Opção inválida!");
+        break;
+    }
+
     enter();
     getchar();
 }
