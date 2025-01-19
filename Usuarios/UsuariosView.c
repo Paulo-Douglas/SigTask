@@ -54,27 +54,10 @@ void user_menu_search(void)
 {
     show_header("Exibir Dados");
 
-    User *users = get_user_list();
-
-    if (users == NULL)
-    {
-        show_error("Lista de usuários indisponivel!");
-        return;
-    }
-
     printf("|\tID do usuário: ");
     int id;
     scanf("%d", &id);
 
-    if (!search_id_user(users, id))
-    {
-        show_error("Usuário não encontrado!");
-        enter();
-        getchar();
-        return;
-    }
-
-    free_user_list(users);
     enter();
     getchar();
 }
@@ -82,22 +65,17 @@ void user_menu_search(void)
 void user_menu_edit(void)
 {
     show_header("Editar Dados");
-    User *users = get_user_list();
-
-    feedback_user(users, "Erro ao acessar a lista", "Lista gerada <Enter>");
 
     printf("|\tID do usuário: ");
     int id;
     scanf("%d", &id);
 
-    if (!search_id_user(users, id))
+    if (!edit_user(id))
     {
-        show_error("Usuário não encontrado!");
+        show_error("Erro ao editar o usuário");
         return;
     }
 
-    edit_user(users, id);
-    free_user_list(users);
     enter();
     getchar();
 }
@@ -105,26 +83,19 @@ void user_menu_edit(void)
 void user_menu_status(void)
 {
     show_header("Excluir Conta");
-    User *users = get_user_list();
-
-    if (users == NULL)
-    {
-        show_error("Lista de usuários indisponivel!");
-        return;
-    }
 
     printf("|\tID do usuário: ");
     int id;
     scanf("%d", &id);
 
-    if (!search_id_user(users, id))
-    {
-        show_error("Usuário não encontrado!");
-        return;
-    }
+    // if (!search_id_user(users, id))
+    // {
+    //     show_error("Usuário não encontrado!");
+    //     return;
+    // }
 
-    change_status_user(users, id);
-    free_user_list(users);
+    // change_status_user(users, id);
+    // free_user_list(users);
     enter();
 }
 
@@ -139,37 +110,37 @@ void user_menu_reports(void)
     printf("|[0] -> Voltar\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
 
-    char op;
-    printf("Escolha a opção desejada: ");
-    scanf(" %c", &op);
-    limpar_tela();
-    User *user_list = get_user_list();
+    // char op;
+    // printf("Escolha a opção desejada: ");
+    // scanf(" %c", &op);
+    // limpar_tela();
+    // User *user_list = get_user_list();
 
-    if (user_list == NULL)
-    {
-        show_error("Nenhum usuário cadastrado!");
-        return;
-    }
+    // if (user_list == NULL)
+    // {
+    //     show_error("Nenhum usuário cadastrado!");
+    //     return;
+    // }
 
-    switch (op)
-    {
-    case '1':
-        show_all_users(user_list);
-        break;
-    case '2':
-        users_by_status(user_list, ATIVO);
-        break;
-    case '3':
-        users_by_status(user_list, INATIVO);
-        break;
-    case '0':
-        break;
-    default:
-        show_error("Opção inválida!");
-        break;
-    }
+    // switch (op)
+    // {
+    // case '1':
+    //     show_all_users(user_list);
+    //     break;
+    // case '2':
+    //     users_by_status(user_list, ATIVO);
+    //     break;
+    // case '3':
+    //     users_by_status(user_list, INATIVO);
+    //     break;
+    // case '0':
+    //     break;
+    // default:
+    //     show_error("Opção inválida!");
+    //     break;
+    // }
 
-    free_user_list(user_list);
+    // free_user_list(user_list);
     enter();
     getchar();
 }

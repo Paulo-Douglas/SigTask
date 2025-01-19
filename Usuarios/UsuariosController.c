@@ -77,9 +77,16 @@ int create_user(void)
     return result;
 }
 
-void edit_user(User *lista, const int id)
+int edit_user(const int id)
 {
-    User *current_user = lista;
+    UserList list;
+    create_list(&list);
+    get_list_user(&list);
+
+    if (list.start == NULL || !search_id_user(list.start, id))
+        return FALSE;
+
+    User *current_user = list.start;
     while (current_user != NULL)
     {
         if (id == current_user->id)
@@ -106,7 +113,8 @@ void edit_user(User *lista, const int id)
         }
         current_user = current_user->next;
     }
-    update_user_list(lista);
+    update_user_list(&list);
+    return TRUE;
 }
 
 void change_name(User *user)
@@ -116,6 +124,7 @@ void change_name(User *user)
     char *name = read_string();
     if (name)
     {
+        memset(user->name, '\0', sizeof(user->name));
         strcpy(user->name, name);
         free(name);
     }
@@ -191,5 +200,5 @@ void change_status_user(User *user, const int id)
         }
         current_user = current_user->next;
     }
-    update_user_list(user);
+    // update_user_list(user);
 }

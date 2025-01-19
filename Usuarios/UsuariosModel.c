@@ -108,95 +108,17 @@ int save_user_list(UserList *list)
     return TRUE;
 }
 
-User *get_user_list(void)
-{
-    FILE *fp = fopen("data/users.dat", "rb");
-    if (fp == NULL)
-        return NULL;
-
-    User *first_user = NULL;
-    User *current_user = NULL;
-
-    while (1)
-    {
-        User *new_user = malloc(sizeof(User));
-        if (new_user == NULL)
-        {
-
-            fclose(fp);
-            free_user_list(first_user);
-            return NULL;
-        }
-
-        if (fread(new_user, sizeof(User), 1, fp) != 1)
-        {
-            if (feof(fp))
-            {
-
-                free(new_user);
-                break;
-            }
-            else
-            {
-
-                free(new_user);
-                fclose(fp);
-                free_user_list(first_user);
-
-                return NULL;
-            }
-        }
-
-        new_user->next = NULL;
-
-        if (first_user == NULL)
-        {
-            first_user = new_user;
-            current_user = first_user;
-        }
-        else
-        {
-            current_user->next = new_user;
-            current_user = new_user;
-        }
-    }
-
-    fclose(fp);
-    return first_user;
-}
-
-void update_user_list(User *lista)
+void update_user_list(UserList *list)
 {
     FILE *fp = fopen("data/users.dat", "wb");
     if (!fp)
-    {
-        perror("Erro ao abrir o arquivo para salvar");
         return;
-    }
 
-    User *current = lista;
-    while (current != NULL)
+    User *aux = list->start;
+    while (aux != NULL)
     {
-        if (fwrite(current, sizeof(User), 1, fp) != 1)
-        {
-            perror("Erro ao salvar usuário no arquivo");
-            break;
-        }
-        current = current->next;
+        fwrite(aux, sizeof(User), 1, fp);
+        aux = aux->next;
     }
-
     fclose(fp);
-}
-
-void free_user_list(User *lista)
-{
-    if (lista == NULL)
-        return;
-    User *temp;
-    while (lista)
-    {
-        temp = lista;
-        lista = lista->next;
-        free(temp);
-    }
 }
