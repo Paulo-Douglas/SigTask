@@ -22,7 +22,7 @@ char user_menu(void)
     printf("|                [1] Cadastre - se               |\n");
     printf("|                [2] Buscar Usuário              |\n");
     printf("|                [3] Editar Dados                |\n");
-    printf("|                [4] Mudar status da Conta       |\n");
+    printf("|                 Mudar status da Conta       |\n");
     printf("|                [5] Relatório de Usuários       |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
@@ -63,8 +63,8 @@ void user_menu_search(void)
     }
 
     printf("|\tID do usuário: ");
-    char id[4];
-    scanf("%4s", id);
+    int id;
+    scanf("%d", &id);
 
     if (!search_id_user(users, id))
     {
@@ -85,8 +85,8 @@ void user_menu_edit(void)
     feedback_user(users, "Erro ao acessar a lista", "Lista gerada <Enter>");
 
     printf("|\tID do usuário: ");
-    char id[4];
-    scanf("%4s", id);
+    int id;
+    scanf("%d", &id);
 
     if (!search_id_user(users, id))
     {
@@ -112,8 +112,8 @@ void user_menu_status(void)
     }
 
     printf("|\tID do usuário: ");
-    char id[4];
-    scanf("%4s", id);
+    int id;
+    scanf("%d", &id);
 
     if (!search_id_user(users, id))
     {
@@ -176,7 +176,7 @@ void user_menu_display(const User *user)
 {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
-    printf("\033[1m|ID:\033[m %s\n", user->id);
+    printf("\033[1m|ID:\033[m %d\n", user->id);
     printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);

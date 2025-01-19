@@ -10,33 +10,8 @@
 #include "../libs/validate.h"
 #include "../libs/reads.h"
 
-int get_id_user(void)
-{
-    FILE *fp = fopen("data/users.dat", "rb");
-    if (fp == NULL)
-        return FALSE;
-
-    User last_user;
-    int next_id = 1;
-
-    fseek(fp, -sizeof(User), SEEK_END);
-
-    if (fread(&last_user, sizeof(User), 1, fp))
-    {
-        next_id = atoi(last_user.id) + 1;
-    }
-
-    fclose(fp);
-    return next_id;
-}
-
 int insert_user(User *new_user)
 {
-    int id = get_id_user();
-    if (id == 0)
-        id = 1;
-
-    snprintf(new_user->id, sizeof(new_user->id), "%d", id);
 
     User *user_list = get_user_list();
 

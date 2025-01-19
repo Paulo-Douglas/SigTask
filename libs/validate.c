@@ -122,7 +122,7 @@ int user_exists(const char *key)
             exists = TRUE;
             break;
         }
-        else if ((strcmp(user->id, key) == 0) && (user->status == '1'))
+        else if (user->id == atoi(key) && (user->status == '1'))
         {
             exists = TRUE;
             break;

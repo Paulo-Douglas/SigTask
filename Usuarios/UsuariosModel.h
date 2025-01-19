@@ -5,7 +5,7 @@ typedef struct user User;
 
 struct user
 {
-    char id[4];
+    int id;
     char cpf[15];
     char name[100];
     char phone[14];

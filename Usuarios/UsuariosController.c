@@ -62,12 +62,12 @@ int create_user(void)
     return result;
 }
 
-void edit_user(User *lista, const char id[4])
+void edit_user(User *lista, const int id)
 {
     User *current_user = lista;
     while (current_user != NULL)
     {
-        if (strcmp(id, current_user->id) == 0)
+        if (id == current_user->id)
         {
             printf("Opção de edição:\n");
             printf("[1] Nome\n");
@@ -141,12 +141,12 @@ void users_by_status(User *lista, const char status)
     }
 }
 
-int search_id_user(User *lista, const char *id)
+int search_id_user(User *lista, const int id)
 {
     User *current_user = lista;
     while (current_user != NULL)
     {
-        if (strcmp(id, current_user->id) == 0)
+        if (id == current_user->id)
         {
             user_menu_display(current_user);
             return TRUE;
@@ -156,12 +156,12 @@ int search_id_user(User *lista, const char *id)
     return FALSE;
 }
 
-void change_status_user(User *user, const char *id)
+void change_status_user(User *user, const int id)
 {
     User *current_user = user;
     while (current_user != NULL)
     {
-        if (strcmp(id, current_user->id) == 0)
+        if (id == current_user->id)
         {
             if (current_user->status == ATIVO)
             {
