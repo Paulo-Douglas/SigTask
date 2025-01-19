@@ -10,6 +10,48 @@
 #include "../libs/validate.h"
 #include "../libs/reads.h"
 
+void create_list(UserList *list)
+{
+    list->start = NULL;
+    list->lenght = 0;
+}
+
+void add_user_start(UserList *list, User *user)
+{
+    user->next = list->start;
+    list->start = user;
+    list->lenght++;
+}
+
+void add_user_end(UserList *list, User *user)
+{
+    if (list->start == NULL)
+        add_user_start(list, user);
+    else
+    {
+        User *aux = list->start;
+        while (aux->next != NULL)
+            aux = aux->next;
+        aux->next = user;
+    }
+    list->lenght++;
+}
+
+void add_user_order(UserList *list, User *user)
+{
+    if (list->start == NULL || strcmp(list->start->name, user->name) > 0)
+        add_user_start(list, user);
+    else
+    {
+        User *aux = list->start;
+        while (aux->next != NULL && strcmp(aux->next->name, user->name) < 0)
+            aux = aux->next;
+        user->next = aux->next;
+        aux->next = user;
+    }
+    list->lenght++;
+}
+
 int insert_user(User *new_user)
 {
 
