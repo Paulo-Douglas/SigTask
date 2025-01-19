@@ -139,10 +139,12 @@ void user_menu_reports(void)
         show_all_users(&list);
         break;
     case '2':
-        users_by_status(&list, ATIVO);
+        if (!users_by_status(&list, ATIVO))
+            show_error("Nenhum usuário ativo cadastrado!");
         break;
     case '3':
-        users_by_status(&list, INATIVO);
+        if (!users_by_status(&list, INATIVO))
+            show_error("Nenhum usuário inativo cadastrado!");
         break;
     case '0':
         break;

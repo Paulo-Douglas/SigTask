@@ -81,7 +81,7 @@ int edit_team(const int id)
 
 void show_all_teams(TeamList *team_list)
 {
-    limpar_tela();
+
     Team *current_team = team_list->start;
     while (current_team != NULL)
     {
@@ -90,22 +90,25 @@ void show_all_teams(TeamList *team_list)
     }
 }
 
-void teams_by_status(TeamList *team_list, const char status)
+int teams_by_status(TeamList *team_list, const char status)
 {
-    limpar_tela();
+    int result = FALSE;
     Team *current_team = team_list->start;
     while (current_team != NULL)
     {
         if (current_team->status == status)
         {
+            result = TRUE;
             menu_team_display(current_team);
         }
         current_team = current_team->next;
     }
+    return result;
 }
 
-void team_by_user(TeamList *team_list, const int key)
+int team_by_user(TeamList *team_list, const int key)
 {
+    int result = FALSE;
     Team *current_team = team_list->start;
 
     while (current_team != NULL)
@@ -123,15 +126,19 @@ void team_by_user(TeamList *team_list, const int key)
 
         if (key == 0 && !has_user)
         {
+            result = TRUE;
             menu_team_display(current_team);
         }
         else if (key == 1 && has_user)
         {
+            result = TRUE;
             menu_team_display(current_team);
         }
 
         current_team = current_team->next;
     }
+
+    return result;
 }
 
 int search_id_team(TeamList *team_list, const int id)

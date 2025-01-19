@@ -224,16 +224,20 @@ void menu_team_report(void)
         show_all_teams(&team_list);
         break;
     case '2':
-        teams_by_status(&team_list, ATIVO);
+        if (teams_by_status(&team_list, ATIVO))
+            show_error("Nenhuma equipe ativa cadastrada!");
         break;
     case '3':
-        teams_by_status(&team_list, INATIVO);
+        if (teams_by_status(&team_list, INATIVO))
+            show_error("Nenhuma equipe inativa cadastrada!");
         break;
     case '4':
-        team_by_user(&team_list, COM_USUARIO);
+        if (!team_by_user(&team_list, COM_USUARIO))
+            show_error("Nenhuma equipe com usuários cadastrada!");
         break;
     case '5':
-        team_by_user(&team_list, SEM_USUARIO);
+        if (!team_by_user(&team_list, SEM_USUARIO))
+            show_error("Nenhuma equipe sem usuários cadastrada!");
         break;
     case '0':
         break;

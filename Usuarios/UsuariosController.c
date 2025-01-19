@@ -143,17 +143,20 @@ void show_all_users(UserList *list)
     }
 }
 
-void users_by_status(UserList *list, const char status)
+int users_by_status(UserList *list, const char status)
 {
+    int result = FALSE;
     User *usuario_atual = list->start;
     while (usuario_atual != NULL)
     {
         if (usuario_atual->status == status)
         {
+            result = TRUE;
             user_menu_display(usuario_atual);
         }
         usuario_atual = usuario_atual->next;
     }
+    return result;
 }
 
 int search_id_user(User *list, const int id)
