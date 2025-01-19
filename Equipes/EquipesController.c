@@ -104,9 +104,34 @@ void teams_by_status(TeamList *team_list, const char status)
     }
 }
 
-void team_by_user(TeamList *team_list, const char *key)
+void team_by_user(TeamList *team_list, const int key)
 {
-    printf("Em desenvolvimento");
+    Team *current_team = team_list->start;
+
+    while (current_team != NULL)
+    {
+        int has_user = FALSE;
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (current_team->users[i][0] != '\0')
+            {
+                has_user = TRUE;
+                break;
+            }
+        }
+
+        if (key == 0 && !has_user)
+        {
+            menu_team_display(current_team);
+        }
+        else if (key == 1 && has_user)
+        {
+            menu_team_display(current_team);
+        }
+
+        current_team = current_team->next;
+    }
 }
 
 int search_id_team(TeamList *team_list, const int id)

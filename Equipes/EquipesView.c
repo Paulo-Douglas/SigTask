@@ -230,10 +230,10 @@ void menu_team_report(void)
         teams_by_status(&team_list, INATIVO);
         break;
     case '4':
-        printf("Em desenvolvimento");
+        team_by_user(&team_list, COM_USUARIO);
         break;
     case '5':
-        printf("Em desenvolvimento");
+        team_by_user(&team_list, SEM_USUARIO);
         break;
     case '0':
         break;

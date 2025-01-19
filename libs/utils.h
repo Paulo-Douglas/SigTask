@@ -32,7 +32,9 @@ typedef enum
   REUNIAO = 'R',
   PROJETO = 'P',
   REMOVER = 0,
-  ADICIONAR = 1
+  ADICIONAR = 1,
+  COM_USUARIO = 1,
+  SEM_USUARIO = 0,
 } Definicoes;
 
 void limpa_buffer(void);
