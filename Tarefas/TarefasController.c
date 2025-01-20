@@ -12,170 +12,267 @@
 #include "../libs/date.h"
 #include "../libs/reads.h"
 
-char *responsible(void)
+int register_task(const char *file_name, const int id)
 {
-    printf("|\tTarefa destinado a:\n");
-    printf("|\t[1] Usuário\n\t[2] Equipe\n");
+    limpa_buffer();
 
-    char *choice = (char *)malloc(4 * sizeof(char));
-    char op;
+    TaskList task_list;
+    Task *task = (Task *)malloc(sizeof(Task));
 
-    scanf(" %c", &op);
+    if (!task)
+        return FALSE;
+    memset(task, 0, sizeof(Task));
 
-    switch (op)
+    create_task_list(&task_list);
+    get_task_list(&task_list, file_name);
+
+    task->responsible_id = id;
+    task->id = genetate_task_id(&task_list) + 1;
+    task->status = ATIVO;
+
+    if (!edit_task_title(task) ||
+        !edit_task_description(task) ||
+        !edit_task_date(task) ||
+        !edit_task_type(task) ||
+        !edit_task_priority(task))
     {
-    case '1':
-        printf("ID do usuário: \n");
-        scanf("%4s", choice);
-        // if (user_exists(choice))
-        // {
-        //     strcat(choice, "U");
-        //     return choice;
-        // };
-        break;
-    case '2':
-        printf("ID do time: \n");
-        scanf("%4s", choice);
-        // if (team_exists(choice))
-        // {
-        //     strcat(choice, "T");
-        //     return choice;
-        // };
-        break;
-    default:
-        show_error("Opção inválida.");
-        break;
+        free(task);
+        return FALSE;
     }
 
-    return NULL;
+    add_task_order(&task_list, task);
+
+    int result = save_task_list(&task_list, file_name);
+    free_task_list(&task_list);
+    return result;
 }
 
-int register_task(void)
+int search_task(TaskList *task_list, const int id)
 {
-    limpa_buffer();
-    int year = year_now();
-
-    Task task = {0};
-
-    char *id = responsible();
-    if (id == NULL)
-        return FALSE;
-
-    strcpy(task.responsible, id);
-
-    limpa_buffer();
-    printf("|\tTítulo: ");
-    char *title = read_string();
-    strcpy(task.title, title);
-
-    printf("|\tDescrição: ");
-    char *description = read_string();
-    strcpy(task.description, description);
-
-    limpa_buffer();
-    char day[MAX_DAY_LENGHT];
-    char month[MAX_MONTH_LENGHT];
-    printf("\tData: \n");
-    read_date(day, month);
-    snprintf(task.date, 12, "%s/%s/%d", day, month, year);
-
-    if (check_dates(task.date))
+    Task *current_task = task_list->start;
+    while (current_task != NULL)
     {
-        show_error("Data não pode ser menor que a data atual!");
-        return FALSE;
+        if (current_task->id == id)
+        {
+            display_data_task(current_task);
+            return TRUE;
+        }
+        current_task = current_task->next;
     }
+    return FALSE;
+}
 
-    limpa_buffer();
-    printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
-    char type = read_generic_123("type");
-    task.type = type;
+int edit_task(const char *file_name, const int id)
+{
+    TaskList task_list;
+    get_task_list(&task_list, file_name);
+    int result = FALSE;
 
-    printf("\tNível de urgência: \n\t[1]Alta \n\t[2]Média \n\t[3]Baixa\n");
-    char priority = read_generic_123("priority");
-    task.priority = priority;
+    Task *current_task = task_list.start;
+    while (current_task != NULL)
+    {
+        if (current_task->id == id)
+        {
+            display_data_task(current_task);
 
-    task.status = '1';
+            printf("\nEditar tarefa: Escolha uma opção:\n");
+            printf("[1] Título\n[2] Descrição\n[3] Data\n[4] Tipo\n[5] Prioridade\n[6] Responsável\n[7] Status\n[0] Salvar dados e sair\n");
 
-    int result = insert_task(&task);
+            char option;
+            while (1)
+            {
+                printf("Opção: ");
+                scanf(" %c", &option);
+
+                do
+                {
+                    switch (option)
+                    {
+                    case '1':
+                        if (edit_task_title(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '2':
+                        if (edit_task_description(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '3':
+                        if (edit_task_date(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '4':
+                        if (edit_task_type(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '5':
+                        if (edit_task_priority(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '6':
+                        if (edit_task_responsible(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '7':
+                        if (edit_task_status(current_task))
+                            show_sucess("Campo alterado com sucesso!");
+                        else
+                            show_error("Erro ao alterar o campo");
+                        break;
+                    case '0':
+                        save_task_list(&task_list, file_name);
+                        result = TRUE;
+                    default:
+                        show_error("Opção inválida!");
+                    }
+                } while (option != '0');
+            }
+        }
+        current_task = current_task->next;
+    }
+    free_task_list(&task_list);
 
     return result;
 }
 
-void edit_task(Task *task)
+int edit_task_date(Task *task)
 {
-    limpa_buffer();
-
     int year = year_now();
-    char opc;
+    char day[MAX_DAY_LENGHT];
+    char month[MAX_MONTH_LENGHT];
+    printf("\tData: \n");
+    read_date(day, month);
+    snprintf(task->date, 12, "%s/%s/%d", day, month, year);
+    if (check_dates(task->date))
+        return TRUE;
+    return FALSE;
+}
+
+int edit_task_status(Task *task)
+{
+    printf("\tStatus da tarefa: \n\t[1]Ativa \n\t[2]Fechada\n");
+    char status = read_generic_123("status");
+    task->status = status;
+    return TRUE;
+}
+
+int edit_task_priority(Task *task)
+{
+    printf("\tNível de urgência: \n\t[1]Alta \n\t[2]Média \n\t[3]Baixa\n");
+    char priority = read_generic_123("priority");
+    task->priority = priority;
+    return TRUE;
+}
+
+int edit_task_type(Task *task)
+{
+    printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
+    char type = read_generic_123("type");
+    task->type = type;
+    return TRUE;
+}
+
+int edit_task_title(Task *task)
+{
+    printf("|\tTítulo: ");
+    char *title = read_string();
+    strcpy(task->title, title);
+    return TRUE;
+}
+
+int edit_task_description(Task *task)
+{
+    printf("|\tDescrição: ");
+    char *description = read_string();
+    strcpy(task->description, description);
+    return TRUE;
+}
+
+int edit_task_responsible(Task *task)
+{
+    printf("|\tResponsável:\n\t[1] Usuário\n\t[2] Equipe\n");
+    char op;
+    scanf(" %c", &op);
+    switch (op)
+    {
+    case '1':
+        printf("|\tID do usuário: ");
+        scanf(" %d", &task->responsible_id);
+        if (!user_exists(NULL, task->responsible_id))
+        {
+            show_error("Usuário nao encontrado!");
+            return FALSE;
+        }
+        return TRUE;
+    case '2':
+        printf("|\tID do time: ");
+        scanf(" %d", &task->responsible_id);
+        if (!team_exists(task->responsible_id))
+        {
+            show_error("Time nao encontrado!");
+            return FALSE;
+        }
+        return TRUE;
+    default:
+        return FALSE;
+    }
+    return TRUE;
+}
+
+int tasks_by_status(TaskList *list, const char status)
+{
+    int result = FALSE;
+    Task *current_task = list->start;
+    while (current_task != NULL)
+    {
+        if (current_task->status == status)
+        {
+            result = TRUE;
+            display_data_task(current_task);
+        }
+        current_task = current_task->next;
+    }
+    return result;
+}
+
+int show_tasks(TaskList *list)
+{
     int result = FALSE;
 
-    do
+    Task *current_task = list->start;
+    while (current_task != NULL)
     {
-        printf("Opção de edição:\n");
-        printf("[1] Responsável\n");
-        printf("[2] Título\n");
-        printf("[3] Descrição\n");
-        printf("[4] Data\n");
-        printf("[5] Prioridade\n");
-        printf("[6] Tipo\n");
-        printf("[0] Sair\n");
-        scanf(" %c", &opc);
+        result = TRUE;
+        display_data_task(current_task);
+        current_task = current_task->next;
+    }
+    return result;
+}
 
-        switch (opc)
+int overdue_tasks(TaskList *list)
+{
+    int result = FALSE;
+
+    Task *curent_task = list->start;
+    while (curent_task->next != NULL)
+    {
+        if (!check_dates(curent_task->date))
         {
-        case '1':
-            limpa_buffer();
-            char *id = responsible();
-            strcpy(task->responsible, id);
-            result = update_task(task);
-            result ? show_sucess("Responsável editado com sucesso!") : show_error("Erro ao editar o responsável");
-        case '2':
-            limpa_buffer();
-            printf("|\tTítulo: ");
-            char *title = read_string();
-            strcpy(task->title, title);
-            result = update_task(task);
-            result ? show_sucess("Título editado com sucesso!") : show_error("Erro ao editar o titulo");
-        case '3':
-            limpa_buffer();
-            printf("|\tDescrição: ");
-            char *description = read_string();
-            strcpy(task->description, description);
-            result = update_task(task);
-            result ? show_sucess("Descrição editada com sucesso!") : show_error("Erro ao editar a descrição");
-            break;
-        case '4':
-            limpa_buffer();
-            char day[MAX_DAY_LENGHT];
-            char month[MAX_MONTH_LENGHT];
-            printf("\tData: \n");
-            read_date(day, month);
-            snprintf(task->date, 12, "%s/%s/%d", day, month, year);
-            result = update_task(task);
-            result ? show_sucess("Data editada com sucesso!") : show_error("Erro ao editar a data");
-            break;
-        case '5':
-            limpa_buffer();
-            printf("\tNível de urgência: \n\t[1]Alta \n\t[2]Média \n\t[3]Baixa\n");
-            char priority = read_generic_123("priority");
-            task->priority = priority;
-            result = update_task(task);
-            result ? show_sucess("Prioridade editada com sucesso!") : show_error("Erro ao editar a prioridade");
-            break;
-        case '6':
-            limpa_buffer();
-            printf("\tTipo de Tarefa: \n\t[1]Evento \n\t[2]Reunião \n\t[3]Projeto\n");
-            char type = read_generic_123("type");
-            task->type = type;
-            result = update_task(task);
-            result ? show_sucess("Tipo editado com sucesso!") : show_error("Erro ao editar o tipo");
-            break;
-        case '0':
-            break;
-        default:
-            show_error("Opção inválida.");
-            break;
+            result = TRUE;
+            display_data_task(curent_task);
         }
-
-    } while (opc != '0');
+        curent_task = curent_task->next;
+    }
+    return result;
 }

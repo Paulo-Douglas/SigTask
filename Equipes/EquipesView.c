@@ -224,11 +224,11 @@ void menu_team_report(void)
         show_all_teams(&team_list);
         break;
     case '2':
-        if (teams_by_status(&team_list, ATIVO))
+        if (!teams_by_status(&team_list, ATIVO))
             show_error("Nenhuma equipe ativa cadastrada!");
         break;
     case '3':
-        if (teams_by_status(&team_list, INATIVO))
+        if (!teams_by_status(&team_list, INATIVO))
             show_error("Nenhuma equipe inativa cadastrada!");
         break;
     case '4':

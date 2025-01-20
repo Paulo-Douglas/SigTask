@@ -3,24 +3,35 @@
 
 #define LINE_COMPROMISE 200
 
-typedef struct
+typedef struct task Task;
+
+struct task
 {
-    char id[4];
-    char responsible[4];
+    int id;
+    int responsible_id;
     char title[100];
     char description[100];
     char date[11];
     char type;
     char priority;
     char status;
+    Task *next;
+};
 
-} Task;
+typedef struct
+{
+    Task *start;
+    int lenght;
+} TaskList;
 
-void show_tasks(const char status, const char *key);
-
-int insert_task(Task *task);
-int get_id_task(void);
-int update_task(Task *task);
-Task *load_task(const char *id);
+void create_task_list(TaskList *list);
+int genetate_task_id(TaskList *list);
+void add_task_start(TaskList *list, Task *task);
+void add_task_end(TaskList *list, Task *task);
+void add_task_order(TaskList *list, Task *task);
+void get_task_list(TaskList *list, const char *file_name);
+int save_task_list(TaskList *list, const char *file_name);
+void update_task_list(TaskList *list, const char *file_name);
+void free_task_list(TaskList *list);
 
 #endif

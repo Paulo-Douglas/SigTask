@@ -14,23 +14,19 @@ void navigation_tasks(void)
         switch (op)
         {
         case '1':
-            add_task();
+            menu_task_register();
             limpa_buffer();
             break;
         case '2':
-            search_task();
+            menu_task_search();
             limpa_buffer();
             break;
         case '3':
-            change_task();
+            menu_task_edit();
             limpa_buffer();
             break;
         case '4':
-            delete_task();
-            limpa_buffer();
-            break;
-        case '5':
-            show_all_tasks();
+            menu_task_reports();
             limpa_buffer();
             break;
         case '0':

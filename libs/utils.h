@@ -45,5 +45,6 @@ void enter(void);
 int check_dates(const char *date1);
 int year_now(void);
 void date_now(char *date);
+int compare_dates(const char *date1, const char *date2);
 
 #endif

@@ -10,131 +10,121 @@
 #include "../libs/validate.h"
 #include "../libs/utils.h"
 
-int get_id_task(void)
+void create_task_list(TaskList *list)
 {
-    FILE *fp = fopen("data/task.dat", "rb");
-    if (fp == NULL)
-    {
-        return FALSE;
-    }
-
-    Task task;
-    int next_id = 1;
-
-    fseek(fp, -sizeof(Task), SEEK_END);
-
-    if (fread(&task, sizeof(Task), 1, fp))
-    {
-        next_id = atoi(task.id) + 1;
-    }
-
-    fclose(fp);
-    return next_id;
+    list->start = NULL;
+    list->lenght = 0;
 }
 
-int insert_task(Task *task)
+int genetate_task_id(TaskList *list)
 {
-    int id = get_id_task();
-    if (id == 0)
-        id = 1;
+    int max_id = 0;
 
-    snprintf(task->id, sizeof(task->id), "%d", id);
-
-    create_path("data/");
-    int result = FALSE;
-
-    FILE *fp = fopen("data/task.dat", "ab");
-    if (fp == NULL)
+    Task *current = list->start;
+    while (current != NULL)
     {
-        return result;
+        if (current->id > max_id)
+            max_id = current->id;
+        current = current->next;
     }
 
-    if (fwrite(task, sizeof(Task), 1, fp))
-    {
-        result = TRUE;
-    }
-
-    fclose(fp);
-    return result;
+    return max_id;
 }
 
-Task *load_task(const char *id)
+void add_task_start(TaskList *list, Task *task)
 {
-    FILE *fp = fopen("data/task.dat", "rb");
-    if (fp == NULL)
-    {
-        return NULL;
-    }
-
-    Task *task = (Task *)malloc(sizeof(Task));
-    while (fread(task, sizeof(Task), 1, fp))
-    {
-        getchar();
-        if (strcmp(task->id, id) == 0)
-        {
-            fclose(fp);
-            return task;
-        }
-    }
-    fclose(fp);
-    free(task);
-    return NULL;
+    task->next = list->start;
+    list->start = task;
+    list->lenght++;
 }
 
-int update_task(Task *new_task)
+void add_task_end(TaskList *list, Task *task)
 {
-    FILE *fp = fopen("data/task.dat", "rb+");
-    if (fp == NULL)
-        return FALSE;
-
-    Task task;
-    while (fread(&task, sizeof(Task), 1, fp))
+    if (list->start == NULL)
+        add_task_start(list, task);
+    else
     {
-        if (strcmp(task.id, new_task->id) == 0)
-        {
-            fseek(fp, -sizeof(Task), SEEK_CUR);
-            fwrite(new_task, sizeof(Task), 1, fp);
-            fclose(fp);
-            return TRUE;
-        }
+        Task *aux = list->start;
+        while (aux->next != NULL)
+            aux = aux->next;
+        aux->next = task;
     }
-    fclose(fp);
-    return FALSE;
+    list->lenght++;
 }
 
-void show_tasks(const char status, const char *key)
+void add_task_order(TaskList *list, Task *task)
 {
-    FILE *fp = fopen("data/task.dat", "rb");
-    if (fp == NULL)
+    if (list->start == NULL || compare_dates(task->date, list->start->date) == 1)
+        add_task_start(list, task);
+    else
+    {
+        Task *aux = list->start;
+        while (aux->next != NULL && compare_dates(task->date, aux->next->date) == -1)
+            aux = aux->next;
+        task->next = aux->next;
+        aux->next = task;
+    }
+}
+
+void get_task_list(TaskList *list, const char *file_name)
+{
+    FILE *fp = fopen(file_name, "rb");
+    if (!fp)
         return;
-    char date[11];
-    date_now(date);
 
-    Task task;
-    while (fread(&task, sizeof(Task), 1, fp))
+    while (!feof(fp))
     {
-
-        if (strcmp(key, "all") == 0)
+        Task *new_task = (Task *)malloc(sizeof(Task));
+        if (fread(new_task, sizeof(Task), 1, fp) != 1)
         {
-            display_data_task(&task);
+            free(new_task);
+            break;
         }
-        else if (task.status == '1' && strcmp(key, "pending") == 0 && check_dates(task.date))
-        {
-            display_data_task(&task);
-        }
-        else if (task.status == status && strcmp(key, "status") == 0)
-        {
-            display_data_task(&task);
-        }
-        else if (strcmp(key, "users") == 0 && strstr(task.responsible, "U"))
-        {
-            display_data_task(&task);
-        }
-        else if (strcmp(key, "teams") == 0 && strstr(task.responsible, "T"))
-        {
-            display_data_task(&task);
-        }
+        new_task->next = NULL;
+        add_task_end(list, new_task);
     }
-
     fclose(fp);
+}
+
+int save_task_list(TaskList *list, const char *file_name)
+{
+    create_path("data/");
+    FILE *fp = fopen(file_name, "wb");
+    if (!fp)
+        return FALSE;
+
+    Task *aux = list->start;
+    while (aux != NULL)
+    {
+        fwrite(aux, sizeof(Task), 1, fp);
+        aux = aux->next;
+    }
+    fclose(fp);
+    return TRUE;
+}
+
+void update_task_list(TaskList *list, const char *file_name)
+{
+    FILE *fp = fopen(file_name, "wb");
+    if (!fp)
+        return;
+
+    Task *aux = list->start;
+    while (aux != NULL)
+    {
+        fwrite(aux, sizeof(Task), 1, fp);
+        aux = aux->next;
+    }
+    fclose(fp);
+}
+
+void free_task_list(TaskList *list)
+{
+    Task *aux = list->start;
+    while (aux != NULL)
+    {
+        Task *next = aux->next;
+        free(aux);
+        aux = next;
+    }
 }
