@@ -6,6 +6,7 @@
 #include "../libs/reads.h"
 #include "../libs/validate.h"
 #include "../libs/styles.h"
+#include "../Usuarios/UsuariosModel.h"
 
 #include "EquipesController.h"
 #include "EquipeModel.h"
@@ -158,6 +159,11 @@ int search_id_team(TeamList *team_list, const int id)
 
 int modify_user_in_team(const int id, const int key)
 {
+    UserList user_list;
+    create_list_user(&user_list);
+    get_list_user(&user_list);
+    User *aux = user_list.start;
+
     TeamList team_list;
     create_list_team(&team_list);
     get_list_team(&team_list);
@@ -171,6 +177,16 @@ int modify_user_in_team(const int id, const int key)
     {
         if (current_team->id == id)
         {
+            while(aux != NULL)
+            {
+                if (aux->id == id && aux->status == INATIVO)
+                {
+                    show_error("Não é possível adicionar um usuário inativo em uma equipe!");
+                    return FALSE;
+                }
+                aux = aux->next;
+            }
+
             if (key == 1)
             {
 
@@ -184,7 +200,6 @@ int modify_user_in_team(const int id, const int key)
 
                         if (user_exists(NULL, user_id))
                         {
-
                             snprintf(current_team->users[i], sizeof(current_team->users[i]), "%d", user_id);
                             result = TRUE;
                             break;

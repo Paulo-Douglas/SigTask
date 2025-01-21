@@ -171,8 +171,6 @@ void menu_team_user_edit(void)
         case '1':
             if (modify_user_in_team(id, ADICIONAR))
                 show_sucess("Usuário adicionado com sucesso!");
-            else
-                show_error("Erro ao adicionar o usuário!");
             break;
         case '2':
             if (modify_user_in_team(id, REMOVER))
