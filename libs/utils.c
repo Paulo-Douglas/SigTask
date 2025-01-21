@@ -7,6 +7,8 @@
 
 #include "utils.h"
 #include "../Tarefas/TarefasController.h"
+#include "../Usuarios/UsuariosModel.h"
+#include "../libs/styles.h"
 
 void limpa_buffer(void)
 {
@@ -107,4 +109,22 @@ int compare_dates(const char *date1, const char *date2)
         return -1;
     else
         return 0;
+}
+
+int check_user_status(const int id){
+    UserList user_list;
+    create_list_user(&user_list);
+    get_list_user(&user_list);
+    User *aux = user_list.start;
+    
+    while(aux != NULL)
+    {
+        if (aux->id == id && aux->status == INATIVO)
+        {
+            show_error("Não é possível adicionar um usuário inativo em uma equipe!");
+            return FALSE;
+        }
+        aux = aux->next;
+    }
+    return TRUE;
 }
