@@ -25,6 +25,7 @@ int get_task_info(TaskInfo *task_info)
         if (!user_exists(NULL, task_info->id))
         {
             show_error("Usuário não encontrado!");
+            getchar();
             return FALSE;
         }
         return TRUE;
@@ -35,6 +36,7 @@ int get_task_info(TaskInfo *task_info)
         if (!team_exists(task_info->id))
         {
             show_error("Time não encontrado!");
+            getchar();
             return FALSE;
         }
         return TRUE;
@@ -79,6 +81,7 @@ void menu_task_register(void)
     else
         show_error("| [ERRO]: Erro ao cadastrar!\n");
 
+    getchar();
     enter();
 }
 
