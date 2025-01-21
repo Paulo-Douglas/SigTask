@@ -34,6 +34,7 @@ int create_user(void)
 
     if (user_exists(new_user->cpf, 0))
     {
+        show_error("Usuário ja cadastrado!");
         free(new_user);
         return FALSE;
     }

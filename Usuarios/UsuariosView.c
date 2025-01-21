@@ -39,14 +39,8 @@ void user_menu_register()
 
     int result = create_user();
     if (result)
-    {
         show_sucess("Usuário cadastrado com sucesso!");
-    }
-    else
-    {
-        show_error("Erro ao cadastrar o usuário");
-    }
-
+    
     enter();
 }
 
