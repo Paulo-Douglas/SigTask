@@ -65,13 +65,19 @@ int search_task(TaskList *task_list, const int id)
 int edit_task(const char *file_name, const int id)
 {
     TaskList task_list;
+    create_task_list(&task_list);
     get_task_list(&task_list, file_name);
     int result = FALSE;
 
     Task *current_task = task_list.start;
+
+    printf("|\tID da task: \n");
+    int id_task;
+    scanf("%d", &id_task);
+
     while (current_task != NULL)
     {
-        if (current_task->id == id)
+        if (current_task->id == id_task)
         {
             display_data_task(current_task);
 
