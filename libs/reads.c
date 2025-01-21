@@ -96,8 +96,6 @@ char *read_cpf(void)
         }
 
     } while (!validate_cpf(cpf));
-
-    limpa_buffer();
     return cpf;
 }
 

@@ -11,8 +11,7 @@
 void limpa_buffer(void)
 {
     int b;
-    while ((b = getchar()) != '\n' && b != EOF)
-        ;
+    while ((b = getchar()) != '\n' && b != EOF);
 }
 
 void enter(void)
