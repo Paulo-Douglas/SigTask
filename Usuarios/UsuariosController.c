@@ -82,6 +82,11 @@ int edit_user(const int id)
     {
         if (id == current_user->id)
         {
+            if (current_user->status == INATIVO)
+            {
+                show_error("Não é possível editar um usuário inativo!");
+                return FALSE;
+            }
             printf("Opção de edição:\n");
             printf("[1] Nome\n");
             printf("[2] Telefone\n");

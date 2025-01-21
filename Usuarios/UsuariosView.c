@@ -71,9 +71,11 @@ void user_menu_edit(void)
     int id;
     scanf("%d", &id);
 
-    if (!edit_user(id))
+    if (edit_user(id))
     {
-        show_error("Erro ao editar o usuário");
+        show_sucess("Edição concluida com sucesso!");
+        getchar();
+        enter();
         return;
     }
 
