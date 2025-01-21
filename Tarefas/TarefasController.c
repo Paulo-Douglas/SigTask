@@ -71,7 +71,7 @@ int edit_task(const char *file_name, const int id)
 
     Task *current_task = task_list.start;
 
-    printf("|\tID da task: \n");
+    printf("|\tID da task: ");
     int id_task;
     scanf("%d", &id_task);
 
@@ -79,21 +79,26 @@ int edit_task(const char *file_name, const int id)
     {
         if (current_task->id == id_task)
         {
+            if (current_task->status == INATIVO)
+            {
+                show_error("Não é possível editar uma tarefa fechada.");
+                return FALSE;
+            }
+
             display_data_task(current_task);
 
-            printf("\nEditar tarefa: Escolha uma opção:\n");
-            printf("[1] Título\n[2] Descrição\n[3] Data\n[4] Tipo\n[5] Prioridade\n[6] Responsável\n[7] Status\n[0] Salvar dados e sair\n");
-
             char option;
-            while (1)
+
+            do
             {
+                printf("\nEditar tarefa: Escolha uma opção:\n");
+                printf("[1] Título\n[2] Descrição\n[3] Data\n[4] Tipo\n[5] Prioridade\n[6] Responsável\n[7] Status\n[0] Salvar dados e sair\n");
                 printf("Opção: ");
                 scanf(" %c", &option);
+                limpa_buffer();
 
-                do
+                switch (option)
                 {
-                    switch (option)
-                    {
                     case '1':
                         if (edit_task_title(current_task))
                             show_sucess("Campo alterado com sucesso!");
@@ -131,19 +136,22 @@ int edit_task(const char *file_name, const int id)
                             show_error("Erro ao alterar o campo");
                         break;
                     case '7':
-                        if (edit_task_status(current_task))
+                        if (edit_task_status(current_task)){
                             show_sucess("Campo alterado com sucesso!");
-                        else
+                        }else{
                             show_error("Erro ao alterar o campo");
+                        }
                         break;
                     case '0':
                         save_task_list(&task_list, file_name);
                         result = TRUE;
+                        break;
                     default:
                         show_error("Opção inválida!");
-                    }
-                } while (option != '0');
-            }
+                        break;
+                }
+            } while (option != '0');
+            
         }
         current_task = current_task->next;
     }
@@ -168,9 +176,26 @@ int edit_task_date(Task *task)
 int edit_task_status(Task *task)
 {
     printf("\tStatus da tarefa: \n\t[1]Ativa \n\t[2]Fechada\n");
-    char status = read_generic_123("status");
-    task->status = status;
-    return TRUE;
+    char status;
+    scanf(" %c", &status);
+
+    int result = FALSE;
+
+    switch (status)
+    {
+    case '1':
+        task->status = ATIVO;
+        result = TRUE;
+        break;
+    case '2':
+        task->status = INATIVO;
+        result = TRUE;
+        break;
+    default:
+        break;
+    }
+
+    return result;
 }
 
 int edit_task_priority(Task *task)
@@ -212,26 +237,26 @@ int edit_task_responsible(Task *task)
     scanf(" %c", &op);
     switch (op)
     {
-    case '1':
-        printf("|\tID do usuário: ");
-        scanf(" %d", &task->responsible_id);
-        if (!user_exists(NULL, task->responsible_id))
-        {
-            show_error("Usuário nao encontrado!");
+        case '1':
+            printf("|\tID do usuário: ");
+            scanf(" %d", &task->responsible_id);
+            if (!user_exists(NULL, task->responsible_id))
+            {
+                show_error("Usuário nao encontrado!");
+                return FALSE;
+            }
+            return TRUE;
+        case '2':
+            printf("|\tID do time: ");
+            scanf(" %d", &task->responsible_id);
+            if (!team_exists(task->responsible_id))
+            {
+                show_error("Time nao encontrado!");
+                return FALSE;
+            }
+            return TRUE;
+        default:
             return FALSE;
-        }
-        return TRUE;
-    case '2':
-        printf("|\tID do time: ");
-        scanf(" %d", &task->responsible_id);
-        if (!team_exists(task->responsible_id))
-        {
-            show_error("Time nao encontrado!");
-            return FALSE;
-        }
-        return TRUE;
-    default:
-        return FALSE;
     }
     return TRUE;
 }
