@@ -8,6 +8,8 @@
 #include "utils.h"
 #include "../Tarefas/TarefasController.h"
 #include "../Usuarios/UsuariosModel.h"
+#include "../Usuarios/UsuariosView.h"
+#include "../Equipes/EquipesView.h"
 #include "../libs/styles.h"
 
 void limpa_buffer(void)
@@ -127,4 +129,44 @@ int check_user_status(const int id){
         aux = aux->next;
     }
     return TRUE;
+}
+
+void show_data(char op, const int id){ // exibe dados da equipe 
+
+    switch (op){
+        case '1': // usuario
+            UserList user_list;
+            create_list_user(&user_list);
+            get_list_user(&user_list);
+
+            User *current_user = user_list.start;
+            
+            while(current_user != NULL)
+            {
+                if (current_user->id == id){
+                    printf("|\t ID: %d\n", current_user->id);
+                    printf("|\t Nome: %s\n", current_user->name);
+                }
+                current_user = current_user->next;
+            }
+            break;
+        case '2': // equipe
+            TeamList team_list;
+            create_list_team(&team_list);
+            get_list_team(&team_list);
+
+            Team *current_team = team_list.start;
+
+            while(current_team != NULL)
+            {
+                if (current_team->id == id){
+                    printf("|\t ID: %d\n", current_team->id);
+                    printf("|\t Nome: %s\n\n", current_team->name);
+                }
+                current_team = current_team->next;
+            }
+            break;
+        default:
+            break;
+    }
 }

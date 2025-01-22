@@ -41,6 +41,7 @@ void limpa_buffer(void);
 void limpar_tela(void);
 void create_path(const char *name_path);
 void enter(void);
+void show_data(char op, const int id);
 
 int check_dates(const char *date1);
 int year_now(void);
