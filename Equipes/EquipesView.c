@@ -257,7 +257,7 @@ void menu_team_display(const Team *teams)
     {
         if (teams->users[i][0] != '\0')
         {
-            printf("\t-> %s\n", teams->users[i]);
+            show_data('1', atoi(teams->users[i]));
         }
     }
     printf("\033[1m|Nome da equuipe:\033[m %s\n", teams->name);
