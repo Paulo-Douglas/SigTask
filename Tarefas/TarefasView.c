@@ -91,7 +91,7 @@ void menu_task_search(void)
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Exibir Tarefa                                                                 |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-
+    //usar isso para pegar a informacao da tarefa
     TaskInfo task_info;
     if (!get_task_info(&task_info))
         return;
@@ -122,6 +122,30 @@ void menu_task_edit(void)
     enter();
 }
 
+int chose_task_to_show(){
+    char op;
+    int id;
+    printf("\nTareva de usuário ou equipe:\n[1]Usuário \n[2]Equipe\n");
+    scanf(" %c", &op);
+
+    switch (op)
+    {
+    case '1':
+        printf("Id do usuário: ");
+        scanf(" %d", &id);
+        limpa_buffer();
+        break;
+    case '2':
+        printf("Id da equipe: ");
+        scanf(" %d", &id);
+        limpa_buffer();
+        break;
+    default:
+        printf("\nOpção inválida!\n");
+    }
+    return id;
+}
+
 void menu_task_reports(void)
 {
     limpar_tela();
@@ -146,6 +170,7 @@ void menu_task_reports(void)
         printf("|[4] -> Tarefas com times\n");
         printf("|[5] -> Todas as tarefas\n");
         printf("|[6] -> Tarefas em atraso\n");
+        printf("|[7] -> Tarefas em andamento\n");
         printf("|[0] -> Voltar\n");
         scanf(" %c", &opc);
 
@@ -213,6 +238,22 @@ void menu_task_reports(void)
             printf("|----------------------------------------------|\n");
             if (!overdue_tasks(&task_users))
                 show_error("Sem tarefas pendentes!");
+            enter();
+            getchar();
+            limpar_tela();
+            break;
+        case '7':
+            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+            printf("|----   Tarefas de equipes em andamento       \n");
+            printf("|----------------------------------------------|\n");
+            int id =chose_task_to_show();
+            if (!in_progress_tasks(&task_teams, id))
+                show_error("Sem tarefas em andamento!");
+            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+            printf("|---   Tarefas de usuários em andamento       \n");
+            printf("|----------------------------------------------|\n");
+            if (!in_progress_tasks(&task_users, id))
+                show_error("Sem tarefas em andamento!");
             enter();
             getchar();
             limpar_tela();

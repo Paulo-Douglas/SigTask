@@ -16,5 +16,6 @@ void menu_task_search(void);
 void menu_task_edit(void);
 void menu_task_reports(void);
 void display_data_task(Task *task);
+int chose_task_to_show();
 
 #endif
