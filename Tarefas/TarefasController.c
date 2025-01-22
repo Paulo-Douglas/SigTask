@@ -307,3 +307,19 @@ int overdue_tasks(TaskList *list)
     }
     return result;
 }
+
+int in_progress_tasks(TaskList *list, const int id)
+{
+    int result = FALSE;
+    Task *current_task = list->start;
+    while (current_task != NULL)
+    {
+        if (current_task->responsible_id == id)
+        {
+            result = TRUE;
+            display_data_task(current_task);
+        }
+        current_task = current_task->next;
+    }
+    return result;
+}

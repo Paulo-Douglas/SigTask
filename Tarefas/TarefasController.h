@@ -16,5 +16,6 @@ int edit_task_responsible(Task *task);
 int tasks_by_status(TaskList *list, const char status);
 int show_tasks(TaskList *list);
 int overdue_tasks(TaskList *list);
+int in_progress_tasks(TaskList *list, const int id);
 
 #endif
