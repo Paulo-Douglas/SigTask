@@ -99,7 +99,13 @@ void menu_task_search(void)
     TaskList task_list;
     get_task_list(&task_list, task_info.file_name);
 
-    if (!search_task(&task_list, task_info.id))
+    const char *name;
+    if(strstr(task_info.file_name, "users") != NULL)
+        name = "user";
+    else 
+        name = "team";
+
+    if (!search_task(&task_list, task_info.id, name))
         show_error("Tarefa não encontrada");
 
     enter();
@@ -178,10 +184,10 @@ void menu_task_reports(void)
         {
         case '1':
             printf("|\t\t\033[1;33mTarefas de equipes não concluídas\033[0m: \n");
-            if (!tasks_by_status(&task_teams, ATIVO))
+            if (!tasks_by_status(&task_teams, ATIVO, "team"))
                 show_error("Sem tarefas não concluídas!");
             printf("|\t\t\033[1;33mTarefas de usuários não concluídas:\033[0m \n");
-            if (!tasks_by_status(&task_users, ATIVO))
+            if (!tasks_by_status(&task_users, ATIVO, "user"))
                 show_error("Sem tarefas não concluídas!");
             enter();
             getchar();
@@ -189,21 +195,21 @@ void menu_task_reports(void)
             break;
         case '2':
             printf("|\t\t\033[1;33mTarefas de equipes concluídas:\033[0m \n");
-            if (!tasks_by_status(&task_teams, INATIVO))
+            if (!tasks_by_status(&task_teams, INATIVO, "team"))
                 show_error("Sem tarefas sem tarefas conluídas!");
             printf("|\t\t\033[1;33mTarefas de usuários concluídas:\033[0m \n");
-            if (!tasks_by_status(&task_users, INATIVO))
+            if (!tasks_by_status(&task_users, INATIVO, "user"))
                 show_error("Sem tarefas sem tarefas conluídas!");
             enter();
             getchar();
             limpar_tela();
             break;
         case '3':
-            if (!show_tasks(&task_users))
+            if (!show_tasks(&task_users, "user"))
                 show_error("Sem tarefas atribuídas a usuários!");
             break;
         case '4':
-            if (!show_tasks(&task_teams))
+            if (!show_tasks(&task_teams, "team"))
                 show_error("Sem tarefas atribuídas a equipes!");
             enter();
             getchar();
@@ -211,10 +217,10 @@ void menu_task_reports(void)
             break;
         case '5':
             printf("|\t\t\033[1;33mTarefas de usuários\033[0m        \n");
-            if (!show_tasks(&task_users))
+            if (!show_tasks(&task_users, "user"))
                 show_error("Sem tarefas!");
             printf("|\t\t\033[1;33mTarefas de equipes\033[0m       \n");
-            if (!show_tasks(&task_teams))
+            if (!show_tasks(&task_teams, "team"))
                 show_error("Sem tarefas!");
             enter();
             getchar();
@@ -222,10 +228,10 @@ void menu_task_reports(void)
             break;
         case '6':
             printf("|\t\t\033[1;33mTarefas de equipes pendentes\033[0m        \n");
-            if (!overdue_tasks(&task_teams))
+            if (!overdue_tasks(&task_teams, "team"))
                 show_error("Sem tarefas pendentes!");
             printf("|\t\t\033[1;33mTarefas de usuários pendentes\033[0m        \n");
-            if (!overdue_tasks(&task_users))
+            if (!overdue_tasks(&task_users, "user"))
                 show_error("Sem tarefas pendentes!");
             enter();
             getchar();
@@ -234,10 +240,10 @@ void menu_task_reports(void)
         case '7':
             printf("|\t\t\033[1;33mTarefas de equipes em andamento\033[0m        \n");
             int id =chose_task_to_show();
-            if (!in_progress_tasks(&task_teams, id))
+            if (!in_progress_tasks(&task_teams, id, "team"))
                 show_error("Sem tarefas em andamento!");
             printf("|\t\t\033[1;33mTarefas de usuários em andamento\033[0m       \n");
-            if (!in_progress_tasks(&task_users, id))
+            if (!in_progress_tasks(&task_users, id, "user"))
                 show_error("Sem tarefas em andamento!");
             enter();
             getchar();
@@ -256,11 +262,18 @@ void menu_task_reports(void)
     free_task_list(&task_users);
 }
 
-void display_data_task(Task *task)
+void display_data_task(Task *task, const char *name)
 {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                 Dados da Tarefa                                                               |\n");
     printf("| \033[1mID:\033[0m %d\n", task->id);
+
+    if (strcmp(name, "team") == 0)
+        show_data('2', task->responsible_id);
+    else if (strcmp(name, "user") == 0)
+        show_data('1', task->responsible_id);
+    else 
+        printf("| \033[1mResponsável:\033[0m %d\n", task->responsible_id);
 
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\033[1m\tTarefa:\033[m %s\n", task->title);

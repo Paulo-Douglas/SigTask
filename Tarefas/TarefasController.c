@@ -47,14 +47,14 @@ int register_task(const char *file_name, const int id)
     return result;
 }
 
-int search_task(TaskList *task_list, const int id)
+int search_task(TaskList *task_list, const int id, const char *name)
 {
     Task *current_task = task_list->start;
     while (current_task != NULL)
     {
         if (current_task->id == id)
         {
-            display_data_task(current_task);
+            display_data_task(current_task, name);
             return TRUE;
         }
         current_task = current_task->next;
@@ -85,7 +85,7 @@ int edit_task(const char *file_name, const int id)
                 return FALSE;
             }
 
-            display_data_task(current_task);
+            display_data_task(current_task, NULL);
 
             char option;
 
@@ -261,7 +261,7 @@ int edit_task_responsible(Task *task)
     return TRUE;
 }
 
-int tasks_by_status(TaskList *list, const char status)
+int tasks_by_status(TaskList *list, const char status, const char *name)
 {
     int result = FALSE;
     Task *current_task = list->start;
@@ -270,14 +270,14 @@ int tasks_by_status(TaskList *list, const char status)
         if (current_task->status == status)
         {
             result = TRUE;
-            display_data_task(current_task);
+            display_data_task(current_task, name);
         }
         current_task = current_task->next;
     }
     return result;
 }
 
-int show_tasks(TaskList *list)
+int show_tasks(TaskList *list, const char *name)
 {
     int result = FALSE;
 
@@ -285,13 +285,13 @@ int show_tasks(TaskList *list)
     while (current_task != NULL)
     {
         result = TRUE;
-        display_data_task(current_task);
+        display_data_task(current_task, name);
         current_task = current_task->next;
     }
     return result;
 }
 
-int overdue_tasks(TaskList *list)
+int overdue_tasks(TaskList *list, const char *name)
 {
     int result = FALSE;
 
@@ -301,14 +301,14 @@ int overdue_tasks(TaskList *list)
         if (!check_dates(curent_task->date))
         {
             result = TRUE;
-            display_data_task(curent_task);
+            display_data_task(curent_task, name);
         }
         curent_task = curent_task->next;
     }
     return result;
 }
 
-int in_progress_tasks(TaskList *list, const int id)
+int in_progress_tasks(TaskList *list, const int id, const char *name)
 {
     int result = FALSE;
     Task *current_task = list->start;
@@ -317,7 +317,7 @@ int in_progress_tasks(TaskList *list, const int id)
         if (current_task->responsible_id == id)
         {
             result = TRUE;
-            display_data_task(current_task);
+            display_data_task(current_task, name);
         }
         current_task = current_task->next;
     }
