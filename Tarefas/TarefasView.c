@@ -125,7 +125,7 @@ void menu_task_edit(void)
 int chose_task_to_show(){
     char op;
     int id;
-    printf("\nTareva de usuário ou equipe:\n[1]Usuário \n[2]Equipe\n");
+    printf("\nTarefa de usuário ou equipe:\n[1]Usuário \n[2]Equipe\n");
     scanf(" %c", &op);
 
     switch (op)
