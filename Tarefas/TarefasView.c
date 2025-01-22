@@ -177,12 +177,10 @@ void menu_task_reports(void)
         switch (opc)
         {
         case '1':
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|----- Tarefas de equipes não concluídas: \n");
+            printf("|\t\t\033[1;33mTarefas de equipes não concluídas\033[0m: \n");
             if (!tasks_by_status(&task_teams, ATIVO))
                 show_error("Sem tarefas não concluídas!");
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|----- Tarefas de usuários não concluídas: \n");
+            printf("|\t\t\033[1;33mTarefas de usuários não concluídas:\033[0m \n");
             if (!tasks_by_status(&task_users, ATIVO))
                 show_error("Sem tarefas não concluídas!");
             enter();
@@ -190,12 +188,10 @@ void menu_task_reports(void)
             limpar_tela();
             break;
         case '2':
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|------- Tarefas de equipes concluídas: \n");
+            printf("|\t\t\033[1;33mTarefas de equipes concluídas:\033[0m \n");
             if (!tasks_by_status(&task_teams, INATIVO))
                 show_error("Sem tarefas sem tarefas conluídas!");
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|------- Tarefas de usuários concluídas: \n");
+            printf("|\t\t\033[1;33mTarefas de usuários concluídas:\033[0m \n");
             if (!tasks_by_status(&task_users, INATIVO))
                 show_error("Sem tarefas sem tarefas conluídas!");
             enter();
@@ -214,13 +210,10 @@ void menu_task_reports(void)
             limpar_tela();
             break;
         case '5':
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|-----         Tarefas de usuários        \n");
+            printf("|\t\t\033[1;33mTarefas de usuários\033[0m        \n");
             if (!show_tasks(&task_users))
                 show_error("Sem tarefas!");
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|-----          Tarefas de equipes        \n");
-            printf("|----------------------------------------------|\n");
+            printf("|\t\t\033[1;33mTarefas de equipes\033[0m       \n");
             if (!show_tasks(&task_teams))
                 show_error("Sem tarefas!");
             enter();
@@ -228,14 +221,10 @@ void menu_task_reports(void)
             limpar_tela();
             break;
         case '6':
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|----   Tarefas de equipes pendentes       \n");
-            printf("|----------------------------------------------|\n");
+            printf("|\t\t\033[1;33mTarefas de equipes pendentes\033[0m        \n");
             if (!overdue_tasks(&task_teams))
                 show_error("Sem tarefas pendentes!");
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|---   Tarefas de usuários pendentes       \n");
-            printf("|----------------------------------------------|\n");
+            printf("|\t\t\033[1;33mTarefas de usuários pendentes\033[0m        \n");
             if (!overdue_tasks(&task_users))
                 show_error("Sem tarefas pendentes!");
             enter();
@@ -243,15 +232,11 @@ void menu_task_reports(void)
             limpar_tela();
             break;
         case '7':
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|----   Tarefas de equipes em andamento       \n");
-            printf("|----------------------------------------------|\n");
+            printf("|\t\t\033[1;33mTarefas de equipes em andamento\033[0m        \n");
             int id =chose_task_to_show();
             if (!in_progress_tasks(&task_teams, id))
                 show_error("Sem tarefas em andamento!");
-            printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-            printf("|---   Tarefas de usuários em andamento       \n");
-            printf("|----------------------------------------------|\n");
+            printf("|\t\t\033[1;33mTarefas de usuários em andamento\033[0m       \n");
             if (!in_progress_tasks(&task_users, id))
                 show_error("Sem tarefas em andamento!");
             enter();
@@ -274,7 +259,7 @@ void menu_task_reports(void)
 void display_data_task(Task *task)
 {
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    printf("|                                                                 Dados do Tarefa                                                               |\n");
+    printf("|                                                                 Dados da Tarefa                                                               |\n");
     printf("| \033[1mID:\033[0m %d\n", task->id);
 
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
