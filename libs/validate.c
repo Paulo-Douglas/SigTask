@@ -54,7 +54,7 @@ int validate_description(char *description)
         return 0;
 
     regex_t descriptionRegex;
-    const char *standardDescription = "^[A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+( [A-Za-zÇçÁÂÉÊÍÓÔÚáâéêíóôú.,!?-]+)*$";
+    const char *standardDescription = "^[A-Za-zÇçÀÁÂÉÊÍÓÔÚàáâéêíóôú.,!?-]+( [A-Za-zÇçÀÁÂÉÊÍÓÔÚàáâéêíóôú.,!?-]+)*$";
     int reti;
 
     reti = regcomp(&descriptionRegex, standardDescription, REG_EXTENDED);

@@ -217,7 +217,7 @@ int edit_task_type(Task *task)
 int edit_task_title(Task *task)
 {
     printf("|\tTítulo: ");
-    char *title = read_string();
+    char *title = read_description();
     strcpy(task->title, title);
     return TRUE;
 }
@@ -225,7 +225,7 @@ int edit_task_title(Task *task)
 int edit_task_description(Task *task)
 {
     printf("|\tDescrição: ");
-    char *description = read_string();
+    char *description = read_description();
     strcpy(task->description, description);
     return TRUE;
 }

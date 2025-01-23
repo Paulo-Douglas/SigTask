@@ -31,7 +31,7 @@ int create_team(void)
     strcpy(teams->name, name);
 
     printf("|\tDescrição da equipe: ");
-    char *description = read_string();
+    char *description = read_description();
     strcpy(teams->description, description);
 
     for (int i = 0; i < 10; i++)
