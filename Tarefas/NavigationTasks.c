@@ -33,6 +33,7 @@ void navigation_tasks(void)
             break;
         default:
             show_error("Opção inválida, por favor, digite outro número.");
+            enter();
             limpa_buffer();
             break;
         }

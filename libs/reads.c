@@ -47,7 +47,7 @@ char *read_string(void)
         if (!is_valid)
         {
             show_error("[ERROR] Entrada inválida!");
-            printf("Tente novamente: ");
+            printf("Digite novamente: ");
             free(string);
         }
     } while (!is_valid);
@@ -66,8 +66,8 @@ char *read_phone(void)
 
         if (!valid_phone(phone))
         {
-            show_error("Número de telefone inválido: (XX X XXXXXXXX)");
-            printf("Tente novamente: ");
+            show_error("Número de telefone inválido. Cheque o formato.");
+            printf("Digite novamente: ");
             free(phone);
         }
 
@@ -91,8 +91,8 @@ char *read_cpf(void)
 
         if (!validate_cpf(cpf))
         {
-            show_error("CPF inválido (Formato correto: XXX.XXX.XXX-XX)");
-            printf("Tente novamente: ");
+            show_error("CPF inválido. Cheque o formato ou sequência.");
+            printf("Digite novamente: ");
         }
 
     } while (!validate_cpf(cpf));
@@ -112,7 +112,7 @@ char *read_description(void)
         if (!is_valid)
         {
             show_error("[ERROR] Entrada inválida!");
-            printf("Tente novamente ");
+            printf("Digite novamente ");
             free(description);
         }
     } while (!is_valid);
@@ -130,7 +130,7 @@ char read_generic_123(const char *dir)
         if (prompt == NULL || *prompt < '1' || *prompt > '3')
         {
             show_error("É preciso digitar uma opção: 1, 2 ou 3\n");
-            printf("Tente novamente: ");
+            printf("Digite novamente: ");
             free(prompt);
             prompt = NULL;
         }
