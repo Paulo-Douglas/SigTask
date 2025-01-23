@@ -2,7 +2,8 @@
 #include "Menus.h"
 #include "../libs/utils.h"
 
-char menuPrincipal(void) {
+char menuPrincipal(void)
+{
     char op;
     printf("\n");
     printf("---------------------------------------------------------------------\n");
@@ -24,7 +25,8 @@ char menuPrincipal(void) {
     return op;
 }
 
-void menuSobre(void) {
+void menuSobre(void)
+{
     printf("\n");
     printf("---------------------------------------------------------------------\n");
     printf("|                                                                   |\n");

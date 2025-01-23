@@ -10,86 +10,126 @@
 #include "../libs/validate.h"
 #include "../libs/reads.h"
 
+int generate_user_id(UserList *list)
+{
+    int max_id = 0;
 
-int get_id_user(void){
-    FILE * fp = fopen("data/users.dat", "rb");
-    if (fp == NULL) return FALSE;
-
-    User last_user;
-    int next_id = 1;
-
-    fseek(fp, -sizeof(User), SEEK_END);
-
-    if (fread(&last_user, sizeof(User), 1, fp)){
-        next_id = atoi(last_user.id) + 1;
-    }
-
-    fclose(fp);
-    return next_id;
-}
-
-
-int insert_user(User *user){
-    int id = get_id_user();
-    if (id == 0) id = 1;
-
-    snprintf(user->id, sizeof(user->id), "%d", id);
-    create_path("data/");
-
-    FILE *fp = fopen("data/users.dat", "ab");
-    if (fp == NULL) return FALSE;
-    int result = FALSE;
-
-    if (fwrite(user, sizeof(User), 1, fp)) result = TRUE;
-
-    fclose(fp);
-    return result;
-}
-
-
-int update_user(User *new_data){
-    FILE *fp = fopen("data/users.dat", "rb+");
-    if (fp == NULL) return FALSE;
-
-    User user;
-    while (fread(&user, sizeof(User), 1, fp)){
-
-        if(strcmp(user.cpf, new_data->cpf) == 0){
-            fseek(fp, -sizeof(User), SEEK_CUR);
-            fwrite(new_data, sizeof(User), 1, fp);
-            fclose(fp);
-            return TRUE;
+    User *current = list->start;
+    while (current != NULL)
+    {
+        if (current->id > max_id)
+        {
+            max_id = current->id;
         }
-    }
-    fclose(fp);
-    return FALSE;
-}
-
-
-User* load_user(const char *cpf){
-    FILE * fp = fopen("data/users.dat", "rb");
-    if (fp == NULL) return NULL;
-
-    User *user = (User *)malloc(sizeof(User));
-    while (fread(user, sizeof(User), 1, fp)){
-        if (strcmp(user->cpf, cpf) == 0){
-            fclose(fp);
-            return user;
-        }
+        current = current->next;
     }
 
-    fclose(fp);
-    free(user);
-    return NULL;
+    return max_id;
 }
 
-void show_users(void){
+void create_list_user(UserList *list)
+{
+    list->start = NULL;
+    list->lenght = 0;
+}
+
+void add_user_start(UserList *list, User *user)
+{
+    user->next = list->start;
+    list->start = user;
+    list->lenght++;
+}
+
+void add_user_end(UserList *list, User *user)
+{
+    if (list->start == NULL)
+        add_user_start(list, user);
+    else
+    {
+        User *aux = list->start;
+        while (aux->next != NULL)
+            aux = aux->next;
+        aux->next = user;
+    }
+    list->lenght++;
+}
+
+void add_user_order(UserList *list, User *user)
+{
+    if (list->start == NULL || strcmp(list->start->name, user->name) > 0)
+        add_user_start(list, user);
+    else
+    {
+        User *aux = list->start;
+        while (aux->next != NULL && strcmp(aux->next->name, user->name) < 0)
+            aux = aux->next;
+        user->next = aux->next;
+        aux->next = user;
+    }
+    list->lenght++;
+}
+
+void get_list_user(UserList *list)
+{
     FILE *fp = fopen("data/users.dat", "rb");
-    if (fp == NULL) return;
+    if (!fp)
+        return;
 
-    User user;
-    while (fread(&user, sizeof(User), 1, fp)){
-        display_data_user(&user);
+    while (!feof(fp))
+    {
+        User *novo_usuario = (User *)malloc(sizeof(User));
+        if (fread(novo_usuario, sizeof(User), 1, fp) != 1)
+        {
+            free(novo_usuario);
+            break;
+        }
+        novo_usuario->next = NULL;
+
+        add_user_end(list, novo_usuario);
     }
     fclose(fp);
+}
+
+int save_user_list(UserList *list)
+{
+    create_path("data/");
+    FILE *fp = fopen("data/users.dat", "wb");
+    if (!fp)
+        return FALSE;
+
+    User *aux = list->start;
+    while (aux != NULL)
+    {
+        fwrite(aux, sizeof(User), 1, fp);
+        aux = aux->next;
+    }
+    fclose(fp);
+
+    return TRUE;
+}
+
+void update_user_list(UserList *list)
+{
+    FILE *fp = fopen("data/users.dat", "wb");
+    if (!fp)
+        return;
+
+    User *aux = list->start;
+    while (aux != NULL)
+    {
+        fwrite(aux, sizeof(User), 1, fp);
+        aux = aux->next;
+    }
+    fclose(fp);
+}
+
+void free_user_list(UserList *list)
+{
+    User *aux = list->start;
+    while (aux != NULL)
+    {
+        User *next = aux->next;
+        free(aux);
+        aux = next;
+    }
 }

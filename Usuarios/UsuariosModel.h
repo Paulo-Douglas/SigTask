@@ -1,24 +1,32 @@
 #ifndef USUARIOSMODEL_H
 #define USUARIOSMODEL_H
 
-typedef struct
+typedef struct user User;
+
+struct user
 {
-    char id[4];
+    int id;
     char cpf[15];
     char name[100];
     char phone[14];
     char status;
-} User;
+    User *next;
+};
 
-#define CPF_SIZE 14
-#define NAME_SIZE 228
-#define PHONE_SIZE 13
-#define LINE_USER (CPF_SIZE + NAME_SIZE + PHONE_SIZE + 6)
+typedef struct
+{
+    User *start;
+    int lenght;
+} UserList;
 
-void show_users(void);
-
-int insert_user(User *users);
-int update_user(User *new_data);
-User* load_user(const char *cpf);
+int generate_user_id(UserList *list);
+void create_list_user(UserList *list);
+void add_user_start(UserList *list, User *user);
+void add_user_end(UserList *list, User *user);
+void add_user_order(UserList *list, User *user);
+void get_list_user(UserList *list);
+int save_user_list(UserList *list);
+void update_user_list(UserList *list);
+void free_user_list(UserList *list);
 
 #endif // USUARIOSMODEL_H

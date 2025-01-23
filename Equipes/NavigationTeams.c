@@ -3,40 +3,39 @@
 #include "EquipesView.h"
 #include "../libs/utils.h"
 
-void navegacao_times(void){
+void navegacao_times(void)
+{
     char op;
-    do{
-        op = menu_equipes();
-        switch(op){
-            case '1':  
-                add_team();
-                break;
-            case '2':
-                search_team();
-                break;
-            case '3':
-                delete_team();
-                break;
-            case '4':
-                reactive_team();
-                break;
-            case '5':
-                edit_team();
-                break;
-            case '6':
-                add_user_to_team();
-                break;
-            case '8':
-                show_all_teams();
-                break;
-            case '0':
-                break;
-            default:
-                printf("Opção inválida, por favor, digite outro valor\n");
-                break;
+    do
+    {
+        op = menu_team();
+        switch (op)
+        {
+        case '1':
+            menu_team_register();
+            break;
+        case '2':
+            menu_search_team();
+            break;
+        case '3':
+            menu_team_status();
+            break;
+        case '4':
+            menu_team_edit();
+            break;
+        case '5':
+            menu_team_user_edit();
+            break;
+        case '6':
+            menu_team_report();
+            break;
+        case '0':
+            break;
+        default:
+            printf("Opção inválida, por favor, digite outro valor\n");
+            break;
         }
-            
+
     } while (op != '0');
-    limpa_buffer();
     limpar_tela();
 }

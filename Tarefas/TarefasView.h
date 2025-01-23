@@ -3,13 +3,19 @@
 
 #include "TarefasController.h"
 
-char menu_task(void);
-void add_task(void);
-void search_task(void);
-void change_task(void);
-void delete_task(void);
-void display_data_task(Task *task);
-void show_all_tasks(void);
+typedef struct
+{
+    const char *file_name;
+    int id;
+} TaskInfo;
 
+int get_task_info(TaskInfo *task_info);
+char menu_task(void);
+void menu_task_register(void);
+void menu_task_search(void);
+void menu_task_edit(void);
+void menu_task_reports(void);
+void display_data_task(Task *task, const char *name);
+int chose_task_to_show();
 
 #endif

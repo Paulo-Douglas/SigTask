@@ -9,30 +9,33 @@
 #include "../Equipes/EquipesView.h"
 #include "../Equipes/NavigationTeams.h"
 
-void navegacao_modulos(void) {
-    char op;    
-    do {
+void navegacao_modulos(void)
+{
+    char op;
+    do
+    {
         op = menuPrincipal();
-        switch (op) {
-            case '1':
-                navigation_users();
-                break;
-            case '2':
-                navegacao_times();
-                break;
-            case '3':
-                navigation_tasks();
-                break;
-            case '5':
-                menuSobre();
-                break;
-            case '0':
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opção inválida, por favor, digite outro valor\n");
-                limpa_buffer();
-                break;
+        switch (op)
+        {
+        case '1':
+            navigation_users();
+            break;
+        case '2':
+            navegacao_times();
+            break;
+        case '3':
+            navigation_tasks();
+            break;
+        case '5':
+            menuSobre();
+            break;
+        case '0':
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida, por favor, digite outro valor\n");
+            limpa_buffer();
+            break;
         }
 
     } while (op != '0');

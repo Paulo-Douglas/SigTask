@@ -8,84 +8,130 @@
 #include "EquipeModel.h"
 #include "EquipesView.h"
 
+int generate_id_team(TeamList *list)
+{
+    int max_id = 0;
 
-int get_id_team(void){
-    FILE * fp = fopen("data/teams.dat", "rb");
-    if (fp == NULL) return FALSE;
-
-    Team last_team;
-    int next_id = 1;
-
-    fseek(fp, -sizeof(Team), SEEK_END);
-
-    if (fread(&last_team, sizeof(Team), 1, fp)){
-        next_id = atoi(last_team.id) + 1;
+    Team *current = list->start;
+    while (current != NULL)
+    {
+        if (current->id > max_id)
+        {
+            max_id = current->id;
+        }
+        current = current->next;
     }
 
-    fclose(fp);
-    return next_id;
+    return max_id;
 }
 
+void create_list_team(TeamList *list)
+{
+    list->start = NULL;
+    list->lenght = 0;
+}
 
-int insert_team(Team *teams){
-    int result = FALSE;
+void add_team_start(TeamList *list, Team *team)
+{
+    team->next = list->start;
+    list->start = team;
+    list->lenght++;
+}
 
+void add_team_end(TeamList *list, Team *team)
+{
+    if (list->start == NULL)
+        add_team_start(list, team);
+    else
+    {
+        Team *aux = list->start;
+        while (aux->next != NULL)
+            aux = aux->next;
+        aux->next = team;
+    }
+    list->lenght++;
+}
+
+void add_team_order(TeamList *list, Team *team)
+{
+    if (list->start == NULL || strcmp(list->start->name, team->name) > 0)
+        add_team_start(list, team);
+    else
+    {
+        Team *aux = list->start;
+        while (aux->next != NULL && strcmp(aux->next->name, team->name) < 0)
+            aux = aux->next;
+        team->next = aux->next;
+        aux->next = team;
+    }
+    list->lenght++;
+}
+
+void get_list_team(TeamList *list)
+{
+    FILE *fp = fopen("data/teams.dat", "rb");
+    if (!fp)
+        return;
+
+    while (!feof(fp))
+    {
+        Team *new_team = (Team *)malloc(sizeof(Team));
+        if (fread(new_team, sizeof(Team), 1, fp) != 1)
+        {
+            free(new_team);
+            break;
+        }
+        new_team->next = NULL;
+        add_team_end(list, new_team);
+    }
+    fclose(fp);
+}
+
+int save_team_list(TeamList *list)
+{
     create_path("data/");
-    FILE *fp = fopen("data/teams.dat", "ab");   
-    if (fp == NULL) return result;
+    FILE *fp = fopen("data/teams.dat", "wb");
+    if (!fp)
+        return FALSE;
 
-    int id = get_id_team();
-
-    snprintf(teams->id, sizeof(teams->id), "%d", id);
-
-    if (fwrite(teams, sizeof(Team), 1, fp)) result = TRUE;
+    Team *aux = list->start;
+    while (aux != NULL)
+    {
+        if (fwrite(aux, sizeof(Team), 1, fp) != 1)
+        {
+            perror("Erro ao escrever no arquivo");
+            fclose(fp);
+            return FALSE;
+        }
+        aux = aux->next;
+    }
 
     fclose(fp);
     return TRUE;
 }
 
+void update_team_list(TeamList *list)
+{
+    FILE *fp = fopen("data/teams.dat", "wb");
+    if (!fp)
+        return;
 
-Team *load_team(const char *id){
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if(fp == NULL) return NULL;
-
-    Team *team = (Team *)malloc(sizeof(Team));
-    while(fread(team, sizeof(Team), 1, fp)){
-        if(strcmp(team->id, id) == 0){
-            fclose(fp);
-            return team;
-        }
+    Team *aux = list->start;
+    while (aux != NULL)
+    {
+        fwrite(aux, sizeof(Team), 1, fp);
+        aux = aux->next;
     }
     fclose(fp);
-    free(team);
-    return NULL;
 }
 
-
-int update_team(Team *new_team){
-    FILE *fp = fopen("data/teams.dat", "rb+");
-    if(fp == NULL) return FALSE;
-
-    Team team;
-    while(fread(&team, sizeof(Team), 1, fp)){
-        if(strcmp(team.id, new_team->id) == 0){
-            fseek(fp, -sizeof(Team), SEEK_CUR);
-            fwrite(new_team, sizeof(Team), 1, fp);
-            fclose(fp);
-            return TRUE;
-        }
+void free_team_list(TeamList *list)
+{
+    Team *aux = list->start;
+    while (aux != NULL)
+    {
+        Team *next = aux->next;
+        free(aux);
+        aux = next;
     }
-    fclose(fp);
-    return FALSE;
-}
-
-void show_teams(void){
-    FILE *fp = fopen("data/teams.dat", "rb");
-    if(fp == NULL) return;
-
-    Team team;
-    while(fread(&team, sizeof(Team), 1, fp)){
-        display_data_team(&team);
-    }
-    fclose(fp);
 }

@@ -7,29 +7,23 @@
 #include "UsuariosController.h"
 #include "UsuariosModel.h"
 
+#include "../Equipes/EquipeModel.h"
 #include "../libs/utils.h"
 #include "../libs/reads.h"
 #include "../libs/styles.h"
 
-
-/**
- * Exibe o menu de usuários com opções para cadastrar, exibir dados,
- * editar dados, excluir conta, reativar conta ou sair.
- * 
- * @return O caractere que representa a opção de menu escolhida.
- */
-char user_menu(void) {
+char user_menu(void)
+{
     char op;
     limpar_tela();
     printf("--------------------------------------------------\n");
     printf("|                     Usuários                   |\n");
     printf("--------------------------------------------------\n");
     printf("|                [1] Cadastre - se               |\n");
-    printf("|                [2] Exibir Dados                |\n");
+    printf("|                [2] Buscar Usuário              |\n");
     printf("|                [3] Editar Dados                |\n");
-    printf("|                [4] Excluir Conta               |\n");
-    printf("|                [5] Reativar Conta              |\n");
-    printf("|                [6] Relatório de Usuários       |\n");
+    printf("|                [4] Mudar status da Conta       |\n");
+    printf("|                [5] Relatório de Usuários       |\n");
     printf("|                [0] Sair                        |\n");
     printf("--------------------------------------------------\n");
     printf("Escolha a opção desejada: ");
@@ -39,131 +33,149 @@ char user_menu(void) {
     return op;
 }
 
-
-/**
- * Exibe a tela de cadastro de usuários.
- * 
- * Se o cadastro for efetuado com sucesso, exibe mensagem de sucesso.
- * Caso contrário, exibe mensagem de erro e informa que o CPF ja esta cadastrado ou
- * que houve um erro ao cadastrar.
- * 
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- */
-void register_user() {
+void user_menu_register()
+{
     show_header("Cadastrar Usuário");
 
-    if(add_user()){
-        printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_sucess("| Cadastrado com sucesso!\n");
-    } else {
-        printf("|-------------------------------------------------------------------------------------------------------|\n");
-        show_error("| [ERRO]: CPF ja cadastrado ou erro ao cadastrar!\n");
-    }
+    int result = create_user();
+    if (result)
+        show_sucess("Usuário cadastrado com sucesso!");
+    
     enter();
 }
 
-
-/**
- * Exibe a tela de exibir dados dos usuários.
- * 
- * Esta tela apenas exibe os dados dos usuários sem realizar nenhuma ação.
- * 
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- */
-void search_user(void) {
+void user_menu_search(void)
+{
     show_header("Exibir Dados");
+    UserList list;
+    create_list_user(&list);
+    get_list_user(&list);
 
-    printf("|\tCPF: ");
-    char *cpf = read_cpf();
-    User *user = load_user(cpf);
+    printf("|\tID do usuário: ");
+    int id;
+    scanf("%d", &id);
 
-    if(user == NULL) show_error("| CPF não alcançado!\n");
-    else if (user->status == '0') show_error("| Usuário não pode ser acessado");
-    else display_data_user(user);
+    if (!search_id_user(list.start, id))
+        show_error("Usuário não encontrado!");
 
     enter();
+    getchar();
+    free_user_list(&list);
 }
 
-
-/**
- * Exibe a tela de alterar dados dos usuários.
- * 
- * Esta tela pede o CPF do usuário e, se encontrado, permite alterar os dados do usuário.
- * 
- * A tela aguarda que o usuário tecle <ENTER> para continuar.
- * 
- **/
-void modify_user_data(void) {
+void user_menu_edit(void)
+{
     show_header("Editar Dados");
 
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
+    printf("|\tID do usuário: ");
+    int id;
+    scanf("%d", &id);
 
-    if (user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '0') show_error("| Não é possível editar esse usuário");
-    else {
-        display_data_user(user);
-        edit_user(user);   
+    if (edit_user(id))
+    {
+        show_sucess("Edição concluida com sucesso!");
+        getchar();
+        enter();
+        return;
     }
 
     enter();
+    getchar();
 }
 
+void user_menu_status(void)
+{
+    show_header("Mudar status da Conta");
+    UserList list;
+    create_list_user(&list);
+    get_list_user(&list);
 
-void delete_user(void) {
-    show_header("Excluir Conta");
+    printf("|\tID do usuário: ");
+    int id;
+    scanf("%d", &id);
 
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
+    if (!search_id_user(list.start, id))
+        show_error("Usuário não encontrado!");
 
-    if(user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '0') show_error("| Não é possível acessar este usuário");
-    else {
-        display_data_user(user);
-        user->status = '0';
-        update_user(user);
-        show_sucess("Usuário desativado");
-    }
-
+    change_status_user(&list, id);
     enter();
+    getchar();
+    free_user_list(&list);
 }
 
-
-void reactivate_user(void) {
-    show_header("Reativar Conta");
-
-    printf("|\tCPF:\t");
-    const char *cpf = read_cpf();
-    User *user = load_user(cpf);
-
-    if(user == NULL) show_error("| CPF não encontrado");
-    else if (user->status == '1') show_error("| Não é possível reativar uma conta ativa");
-    else {
-        display_data_user(user);
-        user->status = '1';
-        update_user(user);
-        show_sucess("Usuário ativado");
-    }
-
-    enter();
-}
-
-void show_all_users(void) {
+void user_menu_reports(void)
+{
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|                                                                   Relatório                                                                   |\n");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
-    show_users();
+    printf("|[1] -> Todos os Usuários\n");
+    printf("|[2] -> Usuários Ativos\n");
+    printf("|[3] -> Usuários Inativos\n");
+    printf("|[0] -> Voltar\n");
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+
+    char op;
+    printf("Escolha a opção desejada: ");
+    scanf(" %c", &op);
+    limpar_tela();
+
+    UserList list;
+    create_list_user(&list);
+    get_list_user(&list);
+
+    if (list.start == NULL)
+    {
+        show_error("Nenhum usuário cadastrado!");
+        return;
+    }
+
+    switch (op)
+    {
+    case '1':
+        show_all_users(&list);
+        break;
+    case '2':
+        if (!users_by_status(&list, ATIVO))
+            show_error("Nenhum usuário ativo cadastrado!");
+        break;
+    case '3':
+        if (!users_by_status(&list, INATIVO))
+            show_error("Nenhum usuário inativo cadastrado!");
+        break;
+    case '0':
+        break;
+    default:
+        show_error("Opção inválida!");
+        break;
+    }
+
     enter();
+    getchar();
+    free_user_list(&list);
 }
 
-void display_data_user(const User *user) {
+void user_menu_display(const User *user)
+{
+    printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
     printf("|\t\t\033[1m-> Dados do Usuário\033[m \n");
-    printf("\033[1m|ID:\033[m %s\n", user->id);
-    printf("\033[1m|CPF:\033[m %s\n", user->status == '0' ? "Desativado" : user->cpf);
+    printf("\033[1m|ID:\033[m %d\n", user->id);
+    printf("\033[1m|CPF:\033[m %s\n", user->cpf);
     printf("\033[1m|Nome:\033[m %s\n", user->name);
     printf("\033[1m|Telefone:\033[m %s\n", user->phone);
-    printf("\033[1m|Status:\033[m %s\n", user->status == '1' ? "Ativo" : "Inativo");
+    printf("\033[1m|Status:\033[m %s\n", user->status == ATIVO ? "Ativo" : "Inativo");
     printf("|+---------------------------------------------------------------------+-----------------------------------------------------------------------+|\n");
+}
+
+void feedback_user(User *current_user, const char *error_message, const char *success_message)
+{
+    if (current_user == NULL)
+    {
+        show_error(error_message);
+        getchar();
+    }
+    else
+    {
+        show_sucess(success_message);
+        getchar();
+    }
 }
