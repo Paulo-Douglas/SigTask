@@ -18,6 +18,7 @@ void read_day(char *day, int max_day) {
   do {
     printf("| Dia: ");
     scanf(" %s", day);
+    getchar();
     if(atoi(day) < 1 || atoi(day) > max_day) {
       printf("| Dia inválido!\n");
       printf("| Tente novamente: ");

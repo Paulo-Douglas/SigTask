@@ -67,7 +67,7 @@ int check_dates(const char *date1)
 
     sscanf(date1, "%d/%d/%d", &tm1.tm_mday, &tm1.tm_mon, &tm1.tm_year);
     sscanf(date2, "%d/%d/%d", &tm2.tm_mday, &tm2.tm_mon, &tm2.tm_year);
-
+    int s = date1 == date2;
     // Ajustes
     tm1.tm_year -= 1900;
     tm2.tm_year -= 1900;
@@ -79,7 +79,7 @@ int check_dates(const char *date1)
 
     double diff = difftime(t1, t2); // Diferença em segundos
 
-    if (diff > 0)
+    if (diff >= 0)
         return TRUE;
     else
         return FALSE;
