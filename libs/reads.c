@@ -52,7 +52,7 @@ char *read_string(void)
         }
     } while (!is_valid);
 
-    limpa_buffer();
+    // limpa_buffer();
     return string;
 }
 
@@ -72,7 +72,7 @@ char *read_phone(void)
         }
 
     } while (valid_phone(phone) == FALSE);
-    limpa_buffer();
+    // limpa_buffer();
     return phone;
 }
 
@@ -116,7 +116,7 @@ char *read_description(void)
             free(description);
         }
     } while (!is_valid);
-    limpa_buffer();
+    // limpa_buffer();
     return description;
 }
 
