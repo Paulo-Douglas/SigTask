@@ -46,7 +46,7 @@ char *read_string(void)
 
         if (!is_valid)
         {
-            show_error("[ERROR] Entrada inválida!");
+            show_error("Entrada inválida!");
             printf("Digite novamente: ");
             free(string);
         }
@@ -111,7 +111,7 @@ char *read_description(void)
 
         if (!is_valid)
         {
-            show_error("[ERROR] Entrada inválida!");
+            show_error("Entrada inválida!");
             printf("Digite novamente ");
             free(description);
         }
